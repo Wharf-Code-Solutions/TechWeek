@@ -14,7 +14,77 @@ El proyecto estará dirigido a tres grupos principales:
 - **Autoridades de turismo y cultura**, quienes podrán utilizar la plataforma o herramienta como un medio para difundir eventos, coordinar acciones con el sector empresarial y obtener información sobre la afluencia, preferencias y necesidades de los visitantes.
 # ¿Comó usar ... ?
 # ¿Comó instalar ...?
-# Tecnologias Utilizadas
+## 01. Frontend
+**Interfaz de usuario**
+
+| Tecnología | Uso |
+|---|---|
+| **React + Vite** | Desarrollo y compilación de la aplicación web SPA. |
+| **React Router** | Navegación entre mapa, pasaporte, retos y agenda. |
+| **CSS Modules** | Gestión de estilos independientes por componente. |
+| **Framer Motion** | Animaciones, transiciones y funcionalidades Drag & Drop. |
+
+## 02. Mapa 3D
+**Geolocalización y visualización cartográfica**
+
+| Tecnología | Uso |
+|---|---|
+| **Mapbox GL** | Motor cartográfico y visualización del mapa 3D. |
+| **react-map-gl** | Integración de Mapbox con React. |
+| **Extrusión 3D** | Representación tridimensional de edificios y elementos urbanos. |
+| **Bounding Box** | Delimitación de la vista al Centro Histórico. |
+
+## 03. Cámara y códigos QR
+**Interacción con el entorno físico**
+
+| Tecnología | Uso |
+|---|---|
+| **html5-qrcode** | Escaneo y lectura de códigos QR mediante la cámara del dispositivo desde el navegador. |
+
+## 04. Backend y base de datos
+**Gestión de información y autenticación**
+
+| Tecnología | Uso |
+|---|---|
+| **Supabase** | Plataforma backend para gestionar los servicios de la aplicación. |
+| **PostgreSQL** | Base de datos para usuarios, locaciones, retos y Clacos. |
+| **Supabase Auth** | Autenticación y administración de usuarios. |
+| **Google OAuth** | Inicio de sesión mediante cuentas de Google. |
+
+## 05. Internacionalización
+**Soporte multidioma**
+
+| Tecnología | Uso |
+|---|---|
+| **react-i18next** | Implementación de una interfaz bilingüe (Español / Inglés). |
+
+## 06. Despliegue
+**Publicación y alojamiento**
+
+| Tecnología | Uso |
+|---|---|
+| **Vercel** | Alojamiento, publicación y despliegue de la aplicación web en producción. |
+
+---
+
+## Arquitectura tecnológica
+
+```text
+                  REACT + VITE
+                (Frontend / SPA)
+                       |
+          +------------+------------+
+          |            |            |
+       MAPBOX       SUPABASE    HTML5-QRCODE
+       (Mapa 3D)    (Backend)    (Escáner QR)
+                       |
+                 POSTGRESQL
+                 (Base de datos)
+                       |
+                  VERCEL
+                (Despliegue)
+```
+
 # Bitacora de IA
 # Datos
 - Grajeda Rosado, R. M., Diaz Olaldez, M., Prieto Alonso, E. T., y Mondragón Olán, M. (2025). Informe: Opinión pública del Centro de Veracruz. La voz de los veracruzanos: Percepción y desafíos en el Centro de Veracruz. Observatorio Universitario Metropolitano de Veracruz; Universidad Veracruzana. https://www.uv.mx/veracruz/omv/files/2025/09/2025-Encuesta-Informe.pdf
