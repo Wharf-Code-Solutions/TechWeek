@@ -47,7 +47,7 @@ El proyecto estará dirigido a tres grupos principales:
 | Tecnología | Uso |
 |---|---|
 | **Supabase** | Plataforma backend para gestionar los servicios de la aplicación. |
-| **PostgreSQL** | Base de datos para usuarios, locaciones, retos y Clacos. |
+| **PostgreSQL** | Base de datos para usuarios, locaciones, retos y Tlacos. |
 | **Supabase Auth** | Autenticación y administración de usuarios. |
 | **Google OAuth** | Inicio de sesión mediante cuentas de Google. |
 
