@@ -14,6 +14,7 @@ El proyecto estará dirigido a tres grupos principales:
 - **Autoridades de turismo y cultura**, quienes podrán utilizar la plataforma o herramienta como un medio para difundir eventos, coordinar acciones con el sector empresarial y obtener información sobre la afluencia, preferencias y necesidades de los visitantes.
 # ¿Comó usar ... ?
 # ¿Comó instalar ...?
+# Tecnológias
 ## 01. Frontend
 **Interfaz de usuario**
 
