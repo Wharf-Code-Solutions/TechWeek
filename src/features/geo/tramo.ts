@@ -32,3 +32,25 @@ export function tramoRestante(linea: Coord[], desde: Punto, hasta: Punto): Coord
   if (j <= i) return [a, b]
   return [a, ...linea.slice(i, j + 1), b]
 }
+
+/** Distancia (m) del punto a la línea más cercana de la ruta, contando los segmentos, no solo los vértices. */
+export function distanciaALinea(linea: Coord[], p: Punto): number {
+  if (!linea.length) return Infinity
+  // Plano local en metros alrededor del punto (basta para distancias de unas cuadras).
+  const mLat = 111_320
+  const mLng = 111_320 * Math.cos((p.lat * Math.PI) / 180)
+  const xy = ([lng, lat]: Coord) => [(lng - p.lng) * mLng, (lat - p.lat) * mLat] as const
+  if (linea.length === 1) return Math.hypot(...xy(linea[0]))
+  let min = Infinity
+  for (let i = 1; i < linea.length; i++) {
+    const [ax, ay] = xy(linea[i - 1])
+    const [bx, by] = xy(linea[i])
+    const dx = bx - ax
+    const dy = by - ay
+    const largo2 = dx * dx + dy * dy
+    // Proyección del punto (el origen) sobre el segmento, recortada a sus extremos.
+    const t = largo2 > 0 ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / largo2)) : 0
+    min = Math.min(min, Math.hypot(ax + t * dx, ay + t * dy))
+  }
+  return min
+}

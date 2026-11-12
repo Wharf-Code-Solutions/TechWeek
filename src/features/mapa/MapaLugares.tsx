@@ -12,7 +12,7 @@ import type { Comercio, Evento, Lugar } from '../../types/contratos'
 import type { Punto } from '../geo/tipos'
 import { useModoManual, usePosition } from '../geo/usePosition'
 import { moverManual } from '../geo/posicionManual'
-import { tramoRestante } from '../geo/tramo'
+import { useGuia } from '../geo/useGuia'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
@@ -289,11 +289,12 @@ export default function MapaLugares({
   // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
   // Sale de tu posición a la siguiente parada siguiendo la línea azul.
   const destino = useMemo(() => lugares.find((l) => l.slug === siguiente) ?? null, [lugares, siguiente])
-  const datosGuia = useMemo(() => {
-    let coordinates: [number, number][] = []
-    if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
-    return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
-  }, [pos, destino, linea])
+  // Si el turista se desvía de verdad, la guía se recalcula por otras calles hasta la misma parada (useGuia).
+  const guia = useGuia(linea, pos, destino)
+  const datosGuia = useMemo(
+    () => ({ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: guia } }),
+    [guia],
+  )
   const hayGuia = datosGuia.geometry.coordinates.length > 1
 
   // Pulso: un halo amarillo que se expande y se desvanece sobre el tramo que falta, para ubicar de un vistazo hacia

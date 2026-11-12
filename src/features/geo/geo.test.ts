@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { distanciaM } from './distancia'
 import { lugarCercano } from './useLlegada'
 import { claveRuta, lineaRecta } from './useRutaCaminable'
-import { tramoRestante } from './tramo'
+import { distanciaALinea, tramoRestante } from './tramo'
 import { RADIO_CENTRO_M, ZOCALO, distanciaAlCentro, estaLejosDelCentro } from './centro'
 import type { Lugar } from '../../types/contratos'
 
@@ -82,3 +82,20 @@ describe('tramo restante de la línea', () => {
   })
 })
 
+describe('distancia a la línea (para saber si el turista se desvió)', () => {
+  // Calle de oeste a este de ~210 m con solo dos vértices: cuenta el segmento, no solo las esquinas.
+  const calle: [number, number][] = [[-96.141, 19.2], [-96.139, 19.2]]
+
+  it('sobre la calle, a media cuadra entre vértices, está a ~0 m', () => {
+    expect(distanciaALinea(calle, { lat: 19.2, lng: -96.14 })).toBeLessThan(1)
+  })
+  it('una cuadra al norte (~110 m) cuenta como desvío; media cuadra de ruido GPS no', () => {
+    expect(distanciaALinea(calle, { lat: 19.201, lng: -96.14 })).toBeGreaterThan(100)
+    expect(distanciaALinea(calle, { lat: 19.2002, lng: -96.14 })).toBeLessThan(60)
+  })
+  it('más allá del final mide hasta el extremo', () => {
+    const d = distanciaALinea(calle, { lat: 19.2, lng: -96.138 })
+    expect(d).toBeGreaterThan(100)
+    expect(d).toBeLessThan(110)
+  })
+})

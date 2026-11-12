@@ -1,5 +1,5 @@
-// Caminos por las calles (Mapbox Directions, perfil walking). Los usan la línea azul de la ruta, el tramo hacia la
-// siguiente parada y la caminata de la personita. Sin token o si falla la red, quien llama dibuja una línea recta.
+// Caminos por las calles (Mapbox Directions, perfil walking). Los usan la línea azul de la ruta y el tramo hacia la
+// siguiente parada cuando el turista se desvía. Sin token o si falla la red, quien llama dibuja una línea recta.
 import type { Punto } from './tipos'
 
 export type Coord = [number, number]
