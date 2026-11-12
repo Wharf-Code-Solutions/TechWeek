@@ -41,7 +41,7 @@ const FLUJO_PASOS: number[][] = [
   [0, 4, 3], [0.5, 4, 2.5], [1, 4, 2], [1.5, 4, 1.5], [2, 4, 1], [2.5, 4, 0.5], [3, 4, 0],
   [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5],
 ]
-const FLUJO_PASO_MS = 70
+const FLUJO_PASO_MS = 170
 // Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
 const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
