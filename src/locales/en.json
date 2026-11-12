@@ -30,7 +30,10 @@
       "comida": "Food",
       "mar": "Sea",
       "artesania": "Crafts"
-    }
+    },
+    "armando": "Building your route…",
+    "error_ruta": "We couldn't build your route.",
+    "reintentar": "Try again"
   },
   "permiso": {
     "titulo": "Your location",

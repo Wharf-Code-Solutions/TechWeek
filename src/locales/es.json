@@ -30,7 +30,10 @@
       "comida": "Comida",
       "mar": "Mar",
       "artesania": "Artesanía"
-    }
+    },
+    "armando": "Armando tu ruta…",
+    "error_ruta": "No pudimos armar tu ruta.",
+    "reintentar": "Reintentar"
   },
   "permiso": {
     "titulo": "Tu ubicación",

@@ -1,5 +1,5 @@
 // Pantalla 01: Preferencias (entrada) · Responsable: Dev 3 (M3 lógica de ruta: Dev 1)
-import { useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -14,7 +14,9 @@ import Boton from '../components/ui/Boton'
 import Tarjeta from '../components/ui/Tarjeta'
 import { activarExplorador } from '../features/geo/explorador'
 import { esModoDemo } from '../features/geo/demoStore'
+import { obtenerGps } from '../features/geo/gpsStore'
 import PermisoUbicacion from '../features/geo/PermisoUbicacion'
+import { api } from '../lib/api'
 import type { Categoria, Idioma } from '../types/contratos'
 import estilos from './Preferencias.module.css'
 
@@ -23,6 +25,8 @@ export default function Preferencias() {
   const navegar = useNavigate()
   const [pref, setPref] = useState<Prefs>(cargarPreferencias)
   const [paso, setPaso] = useState<'preferencias' | 'permiso'>('preferencias')
+  const [ruta, setRuta] = useState<'inactivo' | 'armando' | 'error'>('inactivo')
+  const armando = useRef(false)
 
   function cambiarIdioma(idioma: Idioma) {
     setPref((p) => ({ ...p, idioma }))
@@ -36,11 +40,38 @@ export default function Preferencias() {
     }))
   }
 
+  // Crea la ruta en el servidor (algoritmo M3 de Dev 1). Sin ruta activa, terminar la ruta da 404.
+  async function armarRuta() {
+    if (armando.current) return
+    armando.current = true
+    setRuta('armando')
+    const demo = esModoDemo()
+    const gps = demo ? null : obtenerGps().posicion
+    try {
+      await api.crearRuta({
+        tiempo_min: pref.tiempoMin,
+        intereses: pref.intereses,
+        demo,
+        ...(gps ? { lat: gps.lat, lng: gps.lng } : {}),
+      })
+      navegar('/mapa')
+    } catch {
+      setRuta('error')
+    } finally {
+      armando.current = false
+    }
+  }
+
+  // Referencia estable para que el efecto del permiso no se dispare de nuevo en cada render.
+  const armarRef = useRef(armarRuta)
+  armarRef.current = armarRuta
+  const alListo = useCallback(() => void armarRef.current(), [])
+
   function continuar() {
     guardarPreferencias(pref)
     if (esModoDemo()) {
       activarExplorador(false)
-      navegar('/mapa')
+      void armarRuta()
     } else {
       setPaso('permiso')
     }
@@ -53,7 +84,7 @@ export default function Preferencias() {
         <h1 className={estilos.titulo}>{t('pantallas.preferencias')}</h1>
 
         {paso === 'permiso' ? (
-          <PermisoUbicacion onListo={() => navegar('/mapa')} />
+          <PermisoUbicacion onListo={alListo} />
         ) : (
           <>
             <Tarjeta>
@@ -109,8 +140,18 @@ export default function Preferencias() {
               </fieldset>
             </Tarjeta>
 
-            <Boton ancho onClick={continuar}>
+            <Boton ancho disabled={ruta === 'armando'} onClick={continuar}>
               {t('preferencias.continuar')}
+            </Boton>
+          </>
+        )}
+
+        {ruta === 'armando' && <p role="status">{t('preferencias.armando')}</p>}
+        {ruta === 'error' && (
+          <>
+            <p role="alert">{t('preferencias.error_ruta')}</p>
+            <Boton ancho variante="amarillo" onClick={() => void armarRuta()}>
+              {t('preferencias.reintentar')}
             </Boton>
           </>
         )}
