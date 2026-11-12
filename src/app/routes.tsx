@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import PantallaCarga from '../components/ui/PantallaCarga'
 import Preferencias from '../pages/Preferencias'
-import estilos from './routes.module.css'
 
 const Mapa = lazy(() => import('../pages/Mapa'))
 const Lugar = lazy(() => import('../pages/Lugar'))
@@ -17,15 +17,10 @@ const Fin = lazy(() => import('../pages/Fin'))
 const Vitrina = lazy(() => import('../pages/Vitrina'))
 const Comercio = lazy(() => import('../pages/Comercio'))
 
-/** Mientras baja la pantalla: un aviso sencillo con el color de JARANA. */
+/** Mientras baja la pantalla (sobre todo el mapa): los jarochos bailan y los mensajes se turnan. */
 function Cargando() {
   const { t } = useTranslation()
-  return (
-    <main className={estilos.cargando} role="status" aria-live="polite">
-      <span className={estilos.punto} aria-hidden="true" />
-      <p>{t('comun.cargando')}</p>
-    </main>
-  )
+  return <PantallaCarga mensajes={t('carga.mapa', { returnObjects: true }) as string[]} />
 }
 
 /**

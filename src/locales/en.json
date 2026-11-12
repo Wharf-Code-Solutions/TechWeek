@@ -8,6 +8,18 @@
     "cupon": "Swipe to redeem",
     "fin": "End of route"
   },
+  "carga": {
+    "ruta": [
+      "Finding places for you…",
+      "Picking your best route…",
+      "Tuning the jarana…"
+    ],
+    "mapa": [
+      "Loading the map…",
+      "Hanging the bunting…",
+      "Almost there…"
+    ]
+  },
   "comun": {
     "cargando": "Loading…",
     "error": "Something went wrong. Please try again."

@@ -8,6 +8,18 @@
     "cupon": "Desliza para canjear",
     "fin": "Fin de ruta"
   },
+  "carga": {
+    "ruta": [
+      "Buscando lugares para ti…",
+      "Eligiendo tu mejor ruta…",
+      "Afinando la jarana…"
+    ],
+    "mapa": [
+      "Cargando el mapa…",
+      "Colgando los banderines…",
+      "Ya casi llegamos…"
+    ]
+  },
   "comun": {
     "cargando": "Cargando…",
     "error": "Algo salió mal. Intenta de nuevo."

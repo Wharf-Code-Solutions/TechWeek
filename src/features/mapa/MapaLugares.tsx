@@ -16,6 +16,7 @@ import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
+import PantallaCarga from '../../components/ui/PantallaCarga'
 import TarjetaComercio from '../vitrina/TarjetaComercio'
 import { comidaCercana, ilustracionDeTipo } from '../vitrina/vitrina'
 import { useVitrina } from '../vitrina/useVitrina'
@@ -152,6 +153,12 @@ export default function MapaLugares({
   // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
   const [menu, setMenu] = useState(false)
+  // Pantalla de carga hasta que el mapa termina de pintarse (o pasan 9 s: sin red no debe quedarse ahí).
+  const [listo, setListo] = useState(false)
+  useEffect(() => {
+    const id = window.setTimeout(() => setListo(true), 9000)
+    return () => window.clearTimeout(id)
+  }, [])
   const [comercio, setComercio] = useState<Comercio | null>(null)
   const { comercios } = useVitrina()
   const comida = useMemo(() => (comer ? comidaCercana(comercios, pos).map((x) => x.comercio) : []), [comer, comercios, pos])
@@ -332,6 +339,7 @@ export default function MapaLugares({
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
         onLoad={() => aplicarNombres(nombres)}
+        onIdle={() => setListo(true)}
         style={{ width: '100%', height: '100%' }}
       >
         {linea.length > 1 && (
@@ -453,6 +461,14 @@ export default function MapaLugares({
           </Marker>
         )}
       </Map>
+
+      <AnimatePresence>
+        {!listo && (
+          <motion.div key="carga" exit={{ opacity: 0, transition: { duration: 0.25 } }}>
+            <PantallaCarga mensajes={t('carga.mapa', { returnObjects: true }) as string[]} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {arriba && <div className="mapa-arriba">{arriba}</div>}
 

@@ -1,0 +1,87 @@
+.pantalla {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--lila);
+  color: var(--tinta);
+}
+/* Por encima de cualquier pantalla mientras algo carga. */
+.fija { position: fixed; inset: 0; z-index: 200; animation: aparece 180ms ease-out; }
+@keyframes aparece { from { opacity: 0; } }
+
+.banderines { flex-shrink: 0; }
+.centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 24px 64px;
+}
+
+.escena { position: relative; width: 220px; height: 200px; }
+.baile { width: 100%; height: 100%; overflow: visible; }
+
+/* Cada figura se mece sobre sus pies; la falda y el abanico se mueven aparte. */
+.hombre { transform-box: view-box; transform-origin: 16px 46px; animation: paso 0.9s ease-in-out infinite alternate; }
+.mujer { transform-box: view-box; transform-origin: 35px 46px; animation: paso 0.9s ease-in-out infinite alternate-reverse; }
+.falda { transform-box: view-box; transform-origin: 35.5px 22px; animation: falda 0.45s ease-in-out infinite alternate; }
+.abanico { transform-box: view-box; transform-origin: 39px 23px; animation: abanico 0.45s ease-in-out infinite alternate; }
+.sombra { transform-box: view-box; transform-origin: 24px 46px; animation: sombra 0.9s ease-in-out infinite alternate; }
+
+@keyframes paso {
+  from { transform: translateY(0) rotate(-3.5deg); }
+  to { transform: translateY(-2.2px) rotate(3.5deg); }
+}
+@keyframes falda {
+  from { transform: scaleX(0.93) skewX(-2deg); }
+  to { transform: scaleX(1.07) skewX(2deg); }
+}
+@keyframes abanico {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(10deg); }
+}
+@keyframes sombra {
+  from { transform: scaleX(1); opacity: 0.16; }
+  to { transform: scaleX(0.88); opacity: 0.1; }
+}
+
+/* Notas musicales que suben y se desvanecen alrededor de la pareja. */
+.nota { position: absolute; color: var(--rosa); opacity: 0; animation: nota 2.6s ease-out infinite; }
+.nota1 { left: 6px; top: 70px; animation-delay: 0s; color: var(--morado); }
+.nota2 { right: 2px; top: 56px; animation-delay: 0.9s; }
+.nota3 { left: 70px; top: 14px; animation-delay: 1.7s; color: var(--cobalto); }
+@keyframes nota {
+  0% { transform: translateY(14px) rotate(-8deg) scale(0.8); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-34px) rotate(10deg) scale(1.05); opacity: 0; }
+}
+
+.mensaje {
+  margin: 0;
+  min-height: 1.4em;
+  font: 700 1.15rem/1.3 var(--fuente-titulo);
+  letter-spacing: -0.01em;
+  text-align: center;
+  animation: mensaje 360ms var(--suave);
+}
+@keyframes mensaje { from { opacity: 0; transform: translateY(6px); } }
+
+/* Barrita que corre de lado a lado, para que se note que algo avanza. */
+.barra { position: relative; width: 140px; height: 6px; overflow: hidden; border-radius: 99px; background: rgb(21 10 46 / 0.12); }
+.barra::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  border-radius: 99px;
+  background: var(--rosa);
+  animation: corre 1.1s ease-in-out infinite;
+}
+@keyframes corre { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hombre, .mujer, .falda, .abanico, .sombra, .nota, .barra::after, .mensaje, .fija { animation: none; }
+  .nota { opacity: 0; }
+}

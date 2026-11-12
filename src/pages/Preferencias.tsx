@@ -1,6 +1,6 @@
 // Pantalla 01: Preferencias (entrada) · Responsable: Dev 3 (M3 lógica de ruta: Dev 1)
 // Diseño 01: hoja blanca con asa, personaje y apodo, tiempo e intereses.
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -20,6 +20,7 @@ import {
 import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
+import PantallaCarga from '../components/ui/PantallaCarga'
 import { esExplorador } from '../features/geo/explorador'
 import { esperarPosicion, obtenerGps } from '../features/geo/gpsStore'
 import { salidaDeLaRuta } from '../features/geo/posicionManual'
@@ -39,6 +40,11 @@ export default function Preferencias() {
   const [paso, setPaso] = useState<'preferencias' | 'permiso'>('preferencias')
   const [ruta, setRuta] = useState<'inactivo' | 'armando' | 'error'>('inactivo')
   const armando = useRef(false)
+  // El mapa es lo más pesado (mapbox-gl): se baja en segundo plano mientras el turista elige sus preferencias.
+  useEffect(() => {
+    const id = window.setTimeout(() => void import('./Mapa'), 800)
+    return () => window.clearTimeout(id)
+  }, [])
   // El aviso de interés obligatorio aparece solo después de intentar continuar.
   const [faltaInteres, setFaltaInteres] = useState(false)
 
@@ -216,7 +222,7 @@ export default function Preferencias() {
           </>
         )}
 
-        {ruta === 'armando' && <p role="status">{t('preferencias.armando')}</p>}
+        {ruta === 'armando' && <PantallaCarga mensajes={t('carga.ruta', { returnObjects: true }) as string[]} />}
         {ruta === 'error' && (
           <>
             <p role="alert">{t('preferencias.error_ruta')}</p>
