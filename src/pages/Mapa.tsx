@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { useLugares } from '../app/datos'
 import { cargarPreferencias } from '../app/preferencias'
-import Banderines from '../components/ui/Banderines'
 import { MapaLugares, Panel } from '../features/mapa'
 import Cabecera from '../features/mapa/Cabecera'
 import RutaLista from '../features/mapa/RutaLista'
@@ -81,16 +80,28 @@ export default function Mapa() {
           : t('mapa.tuRuta')
         : null
 
+  // El mapa ocupa toda la pantalla y el panel flota encima; la cámara deja libre esa franja.
+  const demo = esModoDemo()
+  const altoPanel = demo ? '0px' : plegado ? ALTO_PANEL.plegado : ALTO_PANEL.abierto
+  const [altoVentana, setAltoVentana] = useState(() => window.innerHeight)
+  useEffect(() => {
+    const alCambiar = () => setAltoVentana(window.innerHeight)
+    window.addEventListener('resize', alCambiar)
+    return () => window.removeEventListener('resize', alCambiar)
+  }, [])
+  const padAbajo = demo ? 0 : plegado ? 108 : Math.round(altoVentana * 0.48)
+
   const abrir = (p: Pestana) => {
     setPestana(p)
     setPlegado(false)
   }
 
   return (
-    <main style={{ ['--alto-panel' as string]: plegado ? ALTO_PANEL.plegado : ALTO_PANEL.abierto }}>
+    <main style={{ ['--alto-panel' as string]: altoPanel }}>
       <h1 className="solo-lectores">{t('pantallas.mapa')}</h1>
       <MapaLugares
         lugares={todos}
+        padAbajo={padAbajo}
         enRuta={enRuta}
         hechos={slugsHechos}
         siguiente={siguiente?.slug ?? null}
@@ -102,23 +113,20 @@ export default function Mapa() {
         eventos={eventos.filter((e) => enCurso(e))}
         onEvento={() => abrir('agenda')}
         arriba={
-          <>
-            <Banderines />
-            <Cabecera
-              avatar={personaje}
-              nombreRuta={nombreRuta}
-              completados={completados}
-              total={total}
-              saldo={saldo}
-              onAvatar={() => abrir('pasaporte')}
-              onSaldo={() => abrir('cartera')}
-            />
-          </>
+          <Cabecera
+            avatar={personaje}
+            nombreRuta={nombreRuta}
+            completados={completados}
+            total={total}
+            saldo={saldo}
+            onAvatar={() => abrir('pasaporte')}
+            onSaldo={() => abrir('cartera')}
+          />
         }
         abajo={<ControlRecorrido />}
       />
       {/* En la demo el recorrido virtual ocupa la parte baja: el panel se oculta para no encimarse. */}
-      {!esModoDemo() && (
+      {!demo && (
         <Panel
           activa={pestana}
           onActiva={setPestana}

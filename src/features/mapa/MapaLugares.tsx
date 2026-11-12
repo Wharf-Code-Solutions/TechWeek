@@ -44,6 +44,8 @@ interface Props {
   /** Eventos en curso: se marcan en el mapa. */
   eventos?: Evento[]
   onEvento?: () => void
+  /** Alto (px) de lo que tapa la parte baja del mapa (panel): la cámara centra sobre lo que queda a la vista. */
+  padAbajo?: number
   arriba?: ReactNode
   abajo?: ReactNode
 }
@@ -58,6 +60,7 @@ export default function MapaLugares({
   etiquetaSiguiente,
   eventos = [],
   onEvento,
+  padAbajo = 0,
   arriba,
   abajo,
 }: Props) {
@@ -73,6 +76,11 @@ export default function MapaLugares({
     if (demo && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 400 })
   }, [demo, pos])
 
+  // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
+  useEffect(() => {
+    mapa.current?.easeTo({ padding: { top: 0, left: 0, right: 0, bottom: padAbajo }, duration: 250 })
+  }, [padAbajo])
+
   const estado = (slug: string): Estado =>
     hechos.has(slug) ? 'hecho' : slug === siguiente ? 'siguiente' : enRuta.size === 0 || enRuta.has(slug) ? 'ruta' : 'fuera'
 
@@ -83,7 +91,7 @@ export default function MapaLugares({
       <Map
         ref={mapa}
         mapboxAccessToken={TOKEN}
-        initialViewState={vistaInicial(lugares)}
+        initialViewState={{ ...vistaInicial(lugares), padding: { top: 0, left: 0, right: 0, bottom: padAbajo } }}
         maxBounds={LIMITES}
         minZoom={ZOOM_MIN}
         maxPitch={60}
