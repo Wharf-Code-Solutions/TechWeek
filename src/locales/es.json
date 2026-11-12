@@ -102,7 +102,9 @@
     "sello": "Sello de canje",
     "saldo_insuficiente": "No te alcanzan los Tlacos para este cupón.",
     "no_disponible": "Esta promoción ya no está disponible.",
-    "volver": "Volver al mapa"
+    "volver": "Volver al mapa",
+    "muestraAlMesero": "Muestra al mesero",
+    "aviso": "Desliza <b>frente al mesero</b>: una vez canjeado no se puede deshacer."
   },
   "recorrido": {
     "etiqueta": "Recorrido virtual",

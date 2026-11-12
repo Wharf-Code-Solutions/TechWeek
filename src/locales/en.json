@@ -102,7 +102,9 @@
     "sello": "Redemption stamp",
     "saldo_insuficiente": "You don't have enough Tlacos for this coupon.",
     "no_disponible": "This promotion is no longer available.",
-    "volver": "Back to the map"
+    "volver": "Back to the map",
+    "muestraAlMesero": "Show the waiter",
+    "aviso": "Swipe <b>in front of the waiter</b>: once redeemed it can't be undone."
   },
   "recorrido": {
     "etiqueta": "Virtual walk",

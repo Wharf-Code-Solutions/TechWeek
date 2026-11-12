@@ -1,81 +1,135 @@
+/* Diseño 14: fondo turquesa, boleto blanco con muescas y deslizador tinta. */
 .pantalla {
-  min-height: 100dvh;
-  max-width: 480px;
-  margin: 0 auto;
-  background: #fff;
-}
-
-.contenido {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
   padding: 16px;
+  background:
+    radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.18) 0 3px, transparent 4px) 0 0 / 40px 40px,
+    var(--turquesa);
 }
 
-.titulo {
-  margin: 8px 0 0;
-  font-family: var(--fuente-titulo);
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--rosa);
-}
-
-.promo p {
-  margin: 4px 0 0;
-}
-
-.nombre {
-  font-size: 1.3rem;
-}
-
-.pista {
-  position: relative;
+.barra {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 64px;
-  border: var(--borde);
-  border-radius: 999px;
-  background: var(--lila);
-  overflow: hidden;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.texto {
-  font-weight: 900;
-  padding-left: 56px;
-}
-
-.asa {
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  width: 52px;
-  height: 52px;
+.volver {
+  display: grid;
+  place-items: center;
+  width: 49px;
+  height: 49px;
+  padding: 0;
   border: var(--borde);
   border-radius: 50%;
-  background: var(--rosa);
-  color: #fff;
-  font: 900 1.5rem var(--fuente-texto);
-  cursor: grab;
-  touch-action: none;
+  background: #fff;
+  color: var(--tinta);
+  cursor: pointer;
 }
 
-.asa:focus-visible {
-  outline: 3px solid var(--cobalto);
-  outline-offset: 2px;
+.pildora {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--amarillo);
+  font: 900 0.8rem var(--fuente-texto);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.cupon {
+.boleto {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  padding: 22px 18px 20px;
+  border: var(--borde);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--sombra-dura);
   text-align: center;
+}
+
+/* Muescas a los lados del corte punteado. */
+.boleto::before,
+.boleto::after {
+  content: '';
+  position: absolute;
+  top: 118px;
+  width: 26px;
+  height: 26px;
+  border: var(--borde);
+  border-radius: 50%;
   background: var(--turquesa);
 }
 
-.cupon p {
+.boleto::before {
+  left: -16px;
+}
+
+.boleto::after {
+  right: -16px;
+}
+
+.comercio {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a0005a;
+}
+
+.nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--rosa);
+}
+
+.detalle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4a3f66;
+}
+
+.corte {
+  align-self: stretch;
+  margin: 14px -4px 6px;
+  border-top: 3px dashed var(--tinta);
+}
+
+.circulo {
+  display: grid;
+  place-items: center;
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  background: #ffe0ef;
+}
+
+.aviso {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: var(--tinta);
+}
+
+.valido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.valido p {
   margin: 0;
+  font-weight: 800;
 }
 
 .sello {
@@ -84,22 +138,81 @@
 }
 
 .etiqueta {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .codigo {
   font-family: var(--fuente-titulo);
   font-size: 2.4rem;
+  font-weight: 400;
   letter-spacing: 0.1em;
 }
 
 .reloj {
+  margin: 0;
   font: 900 1.6rem var(--fuente-texto);
   font-variant-numeric: tabular-nums;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .sello {
-    animation: none;
-  }
+.error {
+  margin: 0;
+  padding: 10px 14px;
+  border: var(--borde);
+  border-radius: 14px;
+  background: #fff;
+  font-weight: 800;
+}
+
+.pista {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  margin-top: auto;
+  border: var(--borde);
+  border-radius: 999px;
+  background: var(--tinta);
+  overflow: hidden;
+}
+
+.relleno {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--rosa);
+}
+
+.texto {
+  position: relative;
+  padding-left: 56px;
+  color: #fff;
+  font-weight: 900;
+}
+
+.asa {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  display: grid;
+  place-items: center;
+  width: 57px;
+  height: 57px;
+  padding: 0;
+  border: var(--borde);
+  border-radius: 50%;
+  background: var(--amarillo);
+  color: var(--tinta);
+  cursor: grab;
+  touch-action: none;
+}
+
+.volver:focus-visible,
+.asa:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 3px;
 }

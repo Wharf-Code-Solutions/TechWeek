@@ -1,20 +1,26 @@
 // Pantalla 14: Desliza para canjear · Responsable: Dev 3 (M10)
 // El cupón lleva un sello giratorio y un reloj en vivo para que una captura de pantalla no sirva.
-import { animate, motion, useMotionValue } from 'framer-motion'
+import { CaretLeft, CaretRight } from '@phosphor-icons/react'
+import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { usePromociones } from '../app/datos'
 import { useCampo } from '../app/idioma'
-import Banderines from '../components/ui/Banderines'
-import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
-import Tarjeta from '../components/ui/Tarjeta'
 import { guardarCupon, leerCupon, type CuponGuardado } from '../features/cartera/cuponGuardado'
 import { ApiError, api } from '../lib/api'
 import estilos from './Cupon.module.css'
 
-const ASA = 56 // ancho del botón que se desliza (px)
+const ASA = 57 // ancho del botón que se desliza (px)
+
+// Ilustración grande de cada promoción (slug → nombre en el set).
+const ILUSTRACION: Record<string, string> = {
+  'cafe-2x1': 'cafe-lechero',
+  volovan: 'volovan',
+  nieve: 'nieve',
+  'lancha-20': 'artesania',
+}
 
 function RelojEnVivo() {
   const { t, i18n } = useTranslation()
@@ -44,6 +50,8 @@ export default function Cupon() {
   const pista = useRef<HTMLDivElement>(null)
   const x = useMotionValue(0)
   const [tope, setTope] = useState(0)
+  // El relleno rosa acompaña a la perilla.
+  const fondo = useTransform(x, (v) => v + ASA + 8)
   useEffect(() => {
     setTope(Math.max((pista.current?.clientWidth ?? 0) - ASA - 8, 0))
   }, [cupon])
@@ -71,22 +79,30 @@ export default function Cupon() {
     }
   }
 
+  const ilustracion = ILUSTRACION[slug] ?? 'moneda'
+
   return (
     <main className={estilos.pantalla}>
-      <Banderines cuerda />
-      <div className={estilos.contenido}>
-        <h1 className={estilos.titulo}>{cupon ? t('cupon.valido') : t('pantallas.cupon')}</h1>
+      <div className={estilos.barra}>
+        <button type="button" className={estilos.volver} aria-label={t('cupon.volver')} onClick={() => navegar('/mapa')}>
+          <CaretLeft size={22} weight="bold" aria-hidden="true" />
+        </button>
+        <span className={estilos.pildora}>{cupon ? t('cupon.valido') : t('cupon.muestraAlMesero')}</span>
+      </div>
+      <h1 className="solo-lectores">{cupon ? t('cupon.valido') : t('pantallas.cupon')}</h1>
 
+      <div className={estilos.boleto}>
         {promo && (
-          <Tarjeta className={estilos.promo}>
+          <>
+            <span className={estilos.comercio}>{promo.comercio}</span>
             <strong className={estilos.nombre}>{campo(promo, 'titulo')}</strong>
-            <p>{promo.comercio}</p>
-            <p>{t('cartera.costo', { n: promo.costo_tlacos })}</p>
-          </Tarjeta>
+            <span className={estilos.detalle}>{t('cartera.costo', { n: promo.costo_tlacos })}</span>
+          </>
         )}
+        <span className={estilos.corte} aria-hidden="true" />
 
         {cupon ? (
-          <Tarjeta className={estilos.cupon}>
+          <div className={estilos.valido}>
             <motion.div
               className={estilos.sello}
               aria-label={t('cupon.sello')}
@@ -94,45 +110,57 @@ export default function Cupon() {
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 6, ease: 'linear' }}
             >
-              <Ilustracion nombre="moneda" tamano={72} />
+              <Ilustracion nombre="moneda" tamano={96} />
             </motion.div>
             <p>{t('cupon.muestralo')}</p>
-            <p className={estilos.etiqueta}>{t('cupon.codigo')}</p>
+            <span className={estilos.etiqueta}>{t('cupon.codigo')}</span>
             <strong className={estilos.codigo}>{cupon.codigo}</strong>
             <RelojEnVivo />
-          </Tarjeta>
-        ) : (
-          <div ref={pista} className={estilos.pista}>
-            <span className={estilos.texto}>{canjeando ? t('cupon.canjeando') : t('cupon.deslizar')} →</span>
-            <motion.button
-              type="button"
-              className={estilos.asa}
-              aria-label={t('cupon.confirmar')}
-              style={{ x }}
-              drag="x"
-              dragConstraints={{ left: 0, right: tope }}
-              dragElastic={0}
-              dragMomentum={false}
-              onDragEnd={() => (x.get() >= tope * 0.85 ? void confirmar() : animate(x, 0))}
-              onKeyDown={(e) => {
-                // Alternativa accesible al arrastre: Enter o espacio confirman.
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  void confirmar()
-                }
-              }}
-            >
-              →
-            </motion.button>
           </div>
+        ) : (
+          <>
+            <span className={estilos.circulo}>
+              <Ilustracion nombre={ilustracion} tamano={150} />
+            </span>
+            <p className={estilos.aviso}>
+              <Trans i18nKey="cupon.aviso" components={{ b: <b /> }} />
+            </p>
+          </>
         )}
-
-        {error && <p role="alert">{error}</p>}
-
-        <Boton ancho variante="blanco" onClick={() => navegar('/mapa')}>
-          {t('cupon.volver')}
-        </Boton>
       </div>
+
+      {error && (
+        <p role="alert" className={estilos.error}>
+          {error}
+        </p>
+      )}
+
+      {!cupon && (
+        <div ref={pista} className={estilos.pista}>
+          <motion.span className={estilos.relleno} style={{ width: fondo }} aria-hidden="true" />
+          <span className={estilos.texto}>{canjeando ? t('cupon.canjeando') : t('cupon.deslizar')} →</span>
+          <motion.button
+            type="button"
+            className={estilos.asa}
+            aria-label={t('cupon.confirmar')}
+            style={{ x }}
+            drag="x"
+            dragConstraints={{ left: 0, right: tope }}
+            dragElastic={0}
+            dragMomentum={false}
+            onDragEnd={() => (x.get() >= tope * 0.85 ? void confirmar() : animate(x, 0))}
+            onKeyDown={(e) => {
+              // Alternativa accesible al arrastre: Enter o espacio confirman.
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                void confirmar()
+              }
+            }}
+          >
+            <CaretRight size={26} weight="bold" aria-hidden="true" />
+          </motion.button>
+        </div>
+      )}
     </main>
   )
 }
