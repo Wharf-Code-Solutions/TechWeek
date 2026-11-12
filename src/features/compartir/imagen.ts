@@ -76,7 +76,7 @@ export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Pro
   const mx = 90
   const mw = ANCHO - mx * 2
   const mh = (mw * 2) / 3
-  const my = 420
+  const my = 400
   c.fillStyle = TINTA
   rectRedondo(c, mx - 12, my - 12, mw + 24, mh + 24, 28)
   c.fill()
@@ -108,34 +108,34 @@ export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Pro
 
   c.fillStyle = '#fff'
   c.font = `800 40px ${TEXTO}`
-  c.fillText(d.titulo, ANCHO / 2, my + mh + 80, mw)
+  c.fillText(d.titulo, ANCHO / 2, my + mh + 75, mw)
   c.font = `900 30px ${TEXTO}`
   c.fillStyle = '#FFD400'
-  c.fillText(et.piezas, ANCHO / 2, my + mh + 124)
+  c.fillText(et.piezas, ANCHO / 2, my + mh + 115)
 
   // Cifras: una tarjeta por dato.
   const datos = cifras(d, et)
   const gap = 24
   const cw = (mw - gap * (datos.length - 1)) / datos.length
-  const cy = my + mh + 170
+  const cy = my + mh + 145
   datos.forEach(([etiqueta, valor], i) => {
     const x = mx + i * (cw + gap)
     c.fillStyle = '#fff'
     c.strokeStyle = TINTA
     c.lineWidth = 5
-    rectRedondo(c, x, cy, cw, 130, 22)
+    rectRedondo(c, x, cy, cw, 120, 22)
     c.fill()
     c.stroke()
     c.fillStyle = TINTA
     c.font = `400 54px ${TITULO}`
-    c.fillText(valor, x + cw / 2, cy + 68, cw - 20)
+    c.fillText(valor, x + cw / 2, cy + 64, cw - 20)
     c.font = `800 24px ${TEXTO}`
-    c.fillText(etiqueta, x + cw / 2, cy + 106, cw - 20)
+    c.fillText(etiqueta, x + cw / 2, cy + 98, cw - 20)
   })
 
   c.fillStyle = '#fff'
   c.font = `800 30px ${TEXTO}`
-  c.fillText(et.pie, ANCHO / 2, ALTO - 50)
+  c.fillText(et.pie, ANCHO / 2, ALTO - 38)
 
   return new Promise((resolve, reject) =>
     lienzo.toBlob((b) => (b ? resolve(b) : reject(new Error('sin imagen'))), 'image/png'),
