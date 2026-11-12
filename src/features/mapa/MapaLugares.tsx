@@ -12,7 +12,8 @@ import { useRecorridoDemo } from '../geo/demoStore'
 import { distanciaM } from '../geo/distancia'
 import { RECORRIDO_DEMO } from '../geo/rutaDemo'
 import type { Punto } from '../geo/tipos'
-import { usePosition } from '../geo/usePosition'
+import { moverManual } from '../geo/posicionManual'
+import { useModoManual, usePosition } from '../geo/usePosition'
 import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
@@ -157,6 +158,8 @@ export default function MapaLugares({
   const { t, i18n } = useTranslation()
   const en = i18n.language === 'en'
   const pos = usePosition()
+  // Lejos del Centro (o sin GPS) el turista sale del Zócalo y se mueve tocando el mapa.
+  const modoManual = useModoManual()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
@@ -339,6 +342,11 @@ export default function MapaLugares({
         renderWorldCopies={false}
         maxTileCacheSize={60}
         fadeDuration={120}
+        onClick={(e) => {
+          // Un toque en el mapa mueve al turista; los toques en pines y en su propio marcador no.
+          if (!modoManual || (e.originalEvent.target as HTMLElement).closest('.marcador, .mapa-yo')) return
+          moverManual({ lat: e.lngLat.lat, lng: e.lngLat.lng })
+        }}
         onZoomEnd={(e) => setZoom(e.viewState.zoom)}
         minZoom={ZOOM_MIN}
         maxPitch={60}
@@ -484,6 +492,11 @@ export default function MapaLugares({
       </Map>
 
       {arriba && <div className="mapa-arriba">{arriba}</div>}
+      {modoManual && (
+        <p className="mapa-pista" role="status">
+          {t('mapa.pista_toque')}
+        </p>
+      )}
 
       <button
         type="button"
@@ -536,7 +549,13 @@ export default function MapaLugares({
             <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
             <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
             {/* ¡Llegaste! registra la llegada (con GPS valida los 40 m; en la demo vale) y desde ahí se juega el reto. */}
-            <Boton ancho onClick={() => navegar(`/lugar/${elegido.slug}`)}>
+            <Boton
+              ancho
+              onClick={() => {
+                if (modoManual) moverManual(elegido) // lejos del Centro, "ir" es caminar hasta el lugar
+                navegar(`/lugar/${elegido.slug}`)
+              }}
+            >
               {t('mapa.irAlLugar')}
             </Boton>
           </Tarjeta>

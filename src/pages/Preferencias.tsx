@@ -22,7 +22,8 @@ import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
 import { activarExplorador, esExplorador } from '../features/geo/explorador'
 import { esModoDemo } from '../features/geo/demoStore'
-import { esperarPosicion } from '../features/geo/gpsStore'
+import { esperarPosicion, obtenerGps } from '../features/geo/gpsStore'
+import { salidaDeLaRuta } from '../features/geo/posicionManual'
 import { guardarOrigen } from '../features/geo/origen'
 import PermisoUbicacion from '../features/geo/PermisoUbicacion'
 import { api } from '../lib/api'
@@ -62,7 +63,10 @@ export default function Preferencias() {
     setRuta('armando')
     const demo = esModoDemo()
     // La ruta parte de donde está el turista: si el GPS aún no responde se espera un momento.
-    const gps = demo || esExplorador() ? null : await esperarPosicion(ESPERA_GPS_MS)
+    // Lejos del Centro (o sin GPS) la ruta sale del Zócalo; la ruta siempre se arma con las preferencias elegidas.
+    const sinUbicacion = demo || esExplorador()
+    const real = sinUbicacion ? null : await esperarPosicion(ESPERA_GPS_MS)
+    const gps = sinUbicacion ? null : salidaDeLaRuta(real, obtenerGps().estado)
     try {
       await api.crearRuta({
         tiempo_min: pref.tiempoMin,

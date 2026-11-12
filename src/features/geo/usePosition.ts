@@ -5,6 +5,7 @@ import { useMemo, useSyncExternalStore } from 'react'
 import { esModoDemo, metrosDemo, suscribirDemo } from './demoStore'
 import { esExplorador } from './explorador'
 import { obtenerGps, suscribirGps } from './gpsStore'
+import { obtenerManual, posicionEfectiva, suscribirManual, usaPosicionManual } from './posicionManual'
 import { RECORRIDO_DEMO } from './rutaDemo'
 import type { EstadoUbicacion, Posicion } from './tipos'
 
@@ -28,8 +29,20 @@ export function usePosition(): Posicion | null {
     return { lat, lng, precision: 5, fuente: 'demo' }
   }, [metros])
 
+  const manual = useSyncExternalStore(suscribirManual, obtenerManual)
+  const efectiva = useMemo(
+    () => posicionEfectiva(gps.posicion, gps.estado, manual),
+    [gps.posicion, gps.estado, manual],
+  )
+
   if (demo) return posDemo
-  return esExplorador() ? null : gps.posicion
+  return esExplorador() ? null : efectiva
+}
+
+/** ¿Se usa la posición por toque (GPS lejos del Centro o sin GPS)? Entonces tocar el mapa mueve al turista. */
+export function useModoManual(): boolean {
+  const gps = useGps()
+  return !esModoDemo() && !esExplorador() && usaPosicionManual(gps.posicion, gps.estado)
 }
 
 /** Para las pantallas de permiso y el modo explorador. */

@@ -118,6 +118,7 @@
     "direccion": "La siguiente parada queda a {{grados}} grados de hacia donde miras"
   },
   "mapa": {
+    "pista_toque": "Estás lejos del Centro: toca el mapa para caminar.",
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",
     "cerrar": "Cerrar",
