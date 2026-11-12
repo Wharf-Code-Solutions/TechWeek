@@ -1,2 +1,4 @@
 // M8 Minijuegos · Dev 2 (UI) / Dev 1 (validación)
-export {}
+export { default as JuegoPalabras } from './JuegoPalabras'
+export { default as JuegoOrden } from './JuegoOrden'
+export * from './logica'

@@ -1,0 +1,46 @@
+.reto { max-width: 560px; margin: 0 auto; padding: 0 16px 32px; }
+.reto h1 { font: 400 2rem/1.15 var(--fuente-titulo); margin: 16px 0 4px; }
+.reto-premio { font: 1.4rem var(--fuente-nota); color: var(--morado); margin: 0 0 8px; }
+.reto-instrucciones { font-weight: 800; margin: 0 0 16px; }
+.reto-acciones { display: grid; gap: 12px; margin-top: 24px; }
+.reto-aviso { font-weight: 800; color: var(--rojo); margin: 16px 0 0; }
+
+.juego-texto { font-size: 1.15rem; font-weight: 700; line-height: 2.6; margin: 0; }
+.juego-hueco {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  min-height: var(--tactil-min);
+  padding: 0 12px;
+  margin: 0 4px;
+  border: 0;
+  border-bottom: var(--borde);
+  border-radius: 8px 8px 0 0;
+  background: var(--lila);
+  font: inherit;
+  font-weight: 900;
+  color: var(--tinta);
+  vertical-align: middle;
+  line-height: 1.2;
+}
+.juego-hueco--lleno { background: var(--amarillo); cursor: pointer; }
+.juego-hueco:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+
+.juego-opciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+.juego-orden { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.juego-evento { display: flex; align-items: center; gap: 8px; padding: 10px; }
+.juego-evento-texto { flex: 1; font-weight: 800; }
+.juego-evento .boton { padding: 0; }
+.juego-numero {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 900;
+}

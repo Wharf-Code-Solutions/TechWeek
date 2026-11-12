@@ -92,5 +92,22 @@
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
     "tuPosicion": "Your position",
     "cerrar": "Close"
+  },
+  "reto": {
+    "cargando": "Loading challenge…",
+    "error": "We could not load or send the challenge. Check your connection.",
+    "volver": "Back to map",
+    "premio": "Worth {{n}} Tlacos",
+    "instrucciones_palabras": "Tap the words to complete the story. Tap a blank to clear it.",
+    "instrucciones_orden": "Put the events in order, oldest first.",
+    "hueco": "Blank {{n}}, empty",
+    "quitar": "Remove {{palabra}}",
+    "subir": "Move up: {{texto}}",
+    "bajar": "Move down: {{texto}}",
+    "comprobar": "Check",
+    "incorrecto_one": "Almost. {{count}} try left.",
+    "incorrecto_other": "Almost. {{count}} tries left.",
+    "sinIntentos": "No tries left, but you can keep going.",
+    "revelar": "Continue with {{n}} Tlacos"
   }
 }

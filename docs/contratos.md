@@ -85,6 +85,8 @@ Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuest
 `/` preferencias · `/mapa` · `/lugar/:slug` · `/reto/:slug` · `/recompensa/:slug` · `/cupon/:id` · `/fin`.
 El parámetro `?demo=1` activa el recorrido virtual.
 
+`/reto/:slug` requiere la llegada registrada (si no, el backend responde 409). Al completarse navega a `/recompensa/:slug` con el resultado de `api.completarReto()` en `location.state`: `{ correcto, completado, tlacos_ganados, saldo }`. Si `correcto` es `false`, el turista siguió con el premio reducido.
+
 ## Estructura del proyecto
 
 ```
