@@ -475,3 +475,98 @@ def test_vidas_por_tipo():
     vidas = {"verdadero_falso": 1, "trivia": 2, "intruso": 2, "palabras": 3, "orden": 3}
     for r in SEED["retos"]:
         assert r["intentos_max"] == vidas[r["tipo"]], r["lugar_slug"]
+
+
+# ───────────── Afluencia ─────────────
+
+def _id(slug):
+    return next(l["id"] for l in LUGARES if l["slug"] == slug)
+
+
+def test_nivel_y_peso_de_afluencia():
+    from app.ruta import CONCURRIDO, LLENO, TRANQUILO, nivel_afluencia, peso_afluencia
+    assert [nivel_afluencia(o) for o in (0, 0.49, 0.5, 0.99, 1, 3)] == [TRANQUILO, TRANQUILO, CONCURRIDO, CONCURRIDO, LLENO, LLENO]
+    pesos = [peso_afluencia(o) for o in (0.3, 0.7, 1.0, 1.5, 3.0, 10.0)]
+    assert pesos[0] == 1.0 and pesos == sorted(pesos, reverse=True) and len(set(pesos)) == len(pesos) and pesos[-1] > 0
+
+
+def test_ruta_deja_fuera_el_lugar_lleno():
+    sin = calcular_ruta(LUGARES, 240, [], inicio=ZOCALO)
+    assert "zocalo" in [l["slug"] for l in sin.lugares]
+    lleno = {_id("zocalo"): 60}  # el doble de su capacidad
+    con = calcular_ruta(LUGARES, 240, [], inicio=ZOCALO, afluencia=lleno)
+    assert "zocalo" not in [l["slug"] for l in con.lugares] and len(con.lugares) >= 3
+
+
+def test_lugar_lleno_se_usa_si_no_hay_otra_opcion():
+    # Con tres lugares y todos llenos, la ruta no queda vacía.
+    pocos = LUGARES[:3]
+    llenos = {l["id"]: 100 for l in pocos}
+    assert len(calcular_ruta(pocos, 240, [], inicio=ZOCALO, afluencia=llenos).lugares) == 3
+
+
+def test_afluencia_no_cambia_la_ruta_si_todo_esta_tranquilo():
+    base = calcular_ruta(LUGARES, 120, ["historia"], inicio=ZOCALO)
+    tranquila = calcular_ruta(LUGARES, 120, ["historia"], inicio=ZOCALO, afluencia={_id("zocalo"): 2})
+    assert [l["slug"] for l in base.lugares] == [l["slug"] for l in tranquila.lugares]
+
+
+def test_endpoint_afluencia_y_ruta_evitan_lo_lleno(cliente):
+    from app.routers import visitas
+    c, base = cliente
+    visitas._cache_afluencia["hasta"] = 0.0
+    for i in range(40):  # 40 celulares llegaron al Zócalo en la última hora (capacidad 30)
+        base.t["visitas"].append({"id": 900 + i, "perfil_id": f"otro-{i}", "lugar_id": _id("zocalo"), "reto_ok": None,
+                                  "llegada_en": "2099-01-01T00:00:00+00:00"})
+    por_slug = {a["slug"]: a for a in c.get("/api/afluencia").json()}
+    assert por_slug["zocalo"]["nivel"] == "lleno" and por_slug["zocalo"]["llegadas"] == 40
+    assert por_slug["catedral"]["nivel"] == "tranquilo"
+    ruta = c.post("/api/rutas", json={"tiempo_min": 240, "intereses": []}).json()
+    assert "zocalo" not in [l["slug"] for l in ruta["lugares"]]
+    visitas._cache_afluencia["hasta"] = 0.0
+
+
+# ───────────── Rutas para varias personas ─────────────
+
+def _cargas(rutas):
+    carga = {}
+    for r in rutas:
+        for l in r.lugares:
+            carga[l["id"]] = carga.get(l["id"], 0) + 1
+    return carga
+
+
+def test_grupo_reparte_en_vez_de_mandar_a_todos_al_mismo_lugar():
+    from app.ruta import Solicitud, calcular_rutas_grupo
+    n = 40
+    sols = [Solicitud(60, [], ZOCALO) for _ in range(n)]
+    ingenuo = _cargas([calcular_ruta(LUGARES, 60, [], inicio=ZOCALO)] * n)  # todos reciben la misma ruta
+    repartido = _cargas(calcular_rutas_grupo(LUGARES, sols))
+    assert max(ingenuo.values()) == n
+    assert max(repartido.values()) <= 30  # la capacidad por hora de un lugar
+    assert len(repartido) >= 2 * len(ingenuo)
+
+
+def test_grupo_con_todo_saturado_sigue_repartiendo():
+    from app.ruta import Solicitud, calcular_rutas_grupo
+    saturado = {l["id"]: 40 for l in LUGARES}  # todos por encima de su capacidad
+    rutas = calcular_rutas_grupo(LUGARES, [Solicitud(60, [], ZOCALO) for _ in range(40)], saturado)
+    carga = _cargas(rutas)
+    assert all(len(r.lugares) >= 1 for r in rutas) and max(carga.values()) < 40 * 0.75
+
+
+def test_grupo_no_modifica_la_carga_previa_ni_cambia_a_una_sola_persona():
+    from app.ruta import Solicitud, calcular_rutas_grupo
+    previa = {_id("zocalo"): 5}
+    sola = calcular_rutas_grupo(LUGARES, [Solicitud(120, ["historia"], ZOCALO)], previa)[0]
+    assert previa == {_id("zocalo"): 5}
+    assert [l["slug"] for l in sola.lugares] == [l["slug"] for l in calcular_ruta(LUGARES, 120, ["historia"], inicio=ZOCALO, afluencia=previa).lugares]
+
+
+def test_rutas_activas_cuentan_como_gente_en_camino(cliente):
+    c, base = cliente
+    for i in range(40):  # 40 celulares ya van al Zócalo, aunque nadie ha llegado
+        base.t["rutas_usuario"].append({"id": 500 + i, "perfil_id": f"otro-{i}", "estado": "activa",
+                                        "lugares": [_id("zocalo")], "creado_en": "2099-01-01T00:00:00+00:00"})
+    ruta = c.post("/api/rutas", json={"tiempo_min": 240, "intereses": []}).json()
+    assert "zocalo" not in [l["slug"] for l in ruta["lugares"]]

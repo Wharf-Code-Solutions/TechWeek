@@ -8,6 +8,7 @@ from .. import db
 from ..auth import perfil_id_actual
 import random
 
+from ..afluencia import carga_actual
 from ..ruta import calcular_ruta, metros_entre_paradas, tlacos_por_distancia
 
 router = APIRouter(prefix="/api", tags=["rutas"])
@@ -82,7 +83,10 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     # Los lugares con sello (reto completado) no se vuelven a ofrecer: ya no dan doblones.
     visitas = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}")
     visitados = {v["lugar_id"] for v in visitas if v["reto_ok"] is not None}
-    calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, visitados=visitados)
+    calc = calcular_ruta(
+        lugares, datos.tiempo_min, list(datos.intereses), inicio,
+        visitados=visitados, afluencia=await carga_actual(excepto_perfil=perfil_id),
+    )
 
     await db.asegurar_perfil(perfil_id)
     anterior = await db.seleccionar("rutas_usuario", perfil_id=f"eq.{perfil_id}", order="creado_en.desc", limit="1")
