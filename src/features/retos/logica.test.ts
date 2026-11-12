@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { barajar, colocar, contarHuecos, indiceHueco, mover, quitar } from './logica'
+import { barajar, colocar, colocarEn, contarHuecos, indiceHueco, mover, quitar } from './logica'
 
 describe('palabras', () => {
   it('detecta los huecos', () => {
@@ -27,5 +27,21 @@ describe('orden', () => {
     expect(sinCambio).not.toEqual(ids)
     expect([...sinCambio].sort()).toEqual(ids)
     for (let k = 0; k < 50; k++) expect(barajar(ids)).not.toEqual(ids)
+  })
+})
+
+describe('arrastrar a un hueco', () => {
+  it('coloca la palabra en el hueco elegido', () => {
+    expect(colocarEn([null, null, null], 'x', 1)).toEqual([null, 'x', null])
+  })
+  it('si el hueco estaba ocupado, la palabra anterior queda libre', () => {
+    expect(colocarEn(['a', 'b'], 'x', 0)).toEqual(['x', 'b'])
+  })
+  it('mover una palabra de un hueco a otro la quita del primero', () => {
+    expect(colocarEn(['x', null], 'x', 1)).toEqual([null, 'x'])
+  })
+  it('ignora huecos que no existen', () => {
+    expect(colocarEn([null], 'x', 3)).toEqual([null])
+    expect(colocarEn([null], 'x', -1)).toEqual([null])
   })
 })

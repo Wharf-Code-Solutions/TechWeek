@@ -6,10 +6,12 @@
   font-family: var(--fuente-texto);
 }
 .reto--palabras {
+  --fondo-reto: var(--morado);
   color: #fff;
   background: radial-gradient(circle, rgb(255 255 255 / 0.12) 1.5px, transparent 1.6px) 0 0 / 18px 18px var(--morado);
 }
 .reto--orden {
+  --fondo-reto: var(--turquesa);
   color: var(--tinta);
   background: radial-gradient(circle, rgb(255 255 255 / 0.22) 1.5px, transparent 1.6px) 0 0 / 18px 18px var(--turquesa);
 }
@@ -17,12 +19,12 @@
 /* Escena ilustrada de arriba */
 .reto-escena {
   position: relative;
-  height: 200px;
+  height: clamp(110px, 17dvh, 200px);
   flex-shrink: 0;
   border-radius: 0 0 28px 28px;
   background: #2e1a66 center / cover no-repeat;
 }
-.reto--orden .reto-escena { height: 190px; background-color: var(--amarillo); }
+.reto--orden .reto-escena { height: clamp(110px, 17dvh, 190px); background-color: var(--amarillo); }
 .reto-barra { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: center; }
 .reto-salir {
   width: 44px;
@@ -63,8 +65,13 @@
 
 /* Pie con intentos y botón: al fondo de la pantalla, o tras el juego si este es largo */
 .reto-pie {
+  /* Siempre a la vista: Comprobar no debe quedar debajo de la pantalla */
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
   margin-top: auto;
-  padding: 16px 18px 24px;
+  padding: 20px 18px calc(14px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, transparent, var(--fondo-reto) 24px);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -107,7 +114,7 @@
   background: #fff;
   color: var(--tinta);
 }
-.juego-texto { margin: 0; font-size: 16px; font-weight: 700; line-height: 2.6; }
+.juego-texto { margin: 0; font-size: 16px; font-weight: 700; line-height: 2.3; }
 .juego-hueco {
   display: inline-block;
   min-width: 76px;
@@ -121,11 +128,14 @@
   font: 900 15px/38px var(--fuente-texto);
   vertical-align: middle;
 }
+.juego-hueco--sobre { background: var(--amarillo); border-style: solid; border-color: var(--tinta); transform: scale(1.06); }
 .juego-hueco--lleno { border-style: solid; border-color: var(--tinta); cursor: pointer; }
 .juego-hueco:focus-visible,
 .juego-opcion:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 
 .juego-opciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.juego-opcion { touch-action: none; user-select: none; }
+.juego-opcion:not(:disabled) { cursor: grab; }
 .juego-opcion {
   min-height: 44px;
   padding: 0 16px;
@@ -168,7 +178,7 @@
   box-shadow: 4px 4px 0 var(--tinta);
   background: #fff;
 }
-.juego-asa { flex-shrink: 0; opacity: 0.5; }
+.juego-asa { flex-shrink: 0; opacity: 0.5; cursor: grab; touch-action: none; }
 .juego-evento-texto { flex: 1; min-width: 0; font-size: 14px; line-height: 1.3; font-weight: 800; }
 .juego-flechas { display: flex; gap: 4px; }
 .juego-flechas button {

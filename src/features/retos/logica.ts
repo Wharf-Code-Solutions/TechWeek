@@ -23,6 +23,12 @@ export function colocar(llenos: (string | null)[], palabra: string) {
   return i === -1 ? llenos : llenos.map((p, j) => (j === i ? palabra : p))
 }
 
+/** Pone la palabra en el hueco `i` (arrastrar y soltar). Si ese hueco ya tenía otra palabra, esa queda libre. */
+export function colocarEn(llenos: (string | null)[], palabra: string, i: number) {
+  if (i < 0 || i >= llenos.length) return llenos
+  return llenos.map((p, j) => (j === i ? palabra : p === palabra ? null : p))
+}
+
 export const quitar = (llenos: (string | null)[], i: number) => llenos.map((p, j) => (j === i ? null : p))
 
 /** Mueve el elemento `i` una posición (delta -1 sube, +1 baja). */
