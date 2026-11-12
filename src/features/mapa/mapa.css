@@ -73,13 +73,30 @@
 .marcador--evento .marcador-etiqueta { background: var(--naranja); color: var(--tinta); }
 
 .mapa-yo {
+  position: relative;
   display: block;
   width: 22px;
   height: 22px;
   border: 4px solid #fff;
   border-radius: 50%;
   background: var(--cobalto);
-  box-shadow: 0 0 0 10px rgb(20 70 200 / 0.2);
+  box-shadow: 0 2px 6px rgb(21 10 46 / 0.4);
+}
+/* Halo que late: se distingue de los pines y se entiende que es "tú" */
+.mapa-yo::after {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: rgb(20 70 200 / 0.28);
+  animation: mapa-yo-latido 2s ease-out infinite;
+}
+@keyframes mapa-yo-latido {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mapa-yo::after { animation: none; }
 }
 
 /* ── Capas sobre el mapa ────────────────────────────────── */
@@ -128,6 +145,7 @@
   box-shadow: 0 3px 10px rgb(21 10 46 / 0.22);
   cursor: pointer;
 }
+.mapa-ubicacion { top: calc(128px + env(safe-area-inset-top)); }
 .mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
 .mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 

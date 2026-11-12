@@ -1,12 +1,12 @@
 // M4 Mapa Mapbox · Dev 2. Lugares del catálogo con su estado en la ruta (diseño 03), eventos en curso,
 // posición de usePosition() y tarjeta del lugar elegido.
 // `arriba` y `abajo` son capas sobre el mapa (cabecera, flechas del recorrido).
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, TextAa, X } from '@phosphor-icons/react'
+import { Check, Crosshair, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
 import { usePosition } from '../geo/usePosition'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
@@ -23,6 +23,8 @@ const LIMITES: [[number, number], [number, number]] = [[-96.148, 19.188], [-96.1
 // Abre en ZOOM y solo deja alejar un poco (hasta ZOOM_MIN); acercar no tiene límite.
 const ZOOM = 17
 const ZOOM_MIN = 16.6
+// Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
+const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
@@ -75,6 +77,39 @@ const leerNombres = () => {
 // Azul de la ruta; el contorno blanco la separa de calles y edificios.
 const AZUL_RUTA = '#1446C8'
 
+interface PinProps {
+  lugar: Lugar
+  estado: Estado
+  etiqueta: string | null
+  etiquetaAria: string
+  elegido: boolean
+  onElegir: (l: Lugar) => void
+}
+
+/** Un pin del mapa. Está memoizado: mover la cámara o la posición no vuelve a dibujar los 24 pines. */
+const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, onElegir }: PinProps) {
+  return (
+    <Marker latitude={lugar.lat} longitude={lugar.lng} anchor="bottom" style={{ zIndex: estado === 'siguiente' ? 2 : 1 }}>
+      <button
+        type="button"
+        className={`marcador marcador--${estado}`}
+        aria-label={etiquetaAria}
+        aria-pressed={elegido}
+        onClick={() => onElegir(lugar)}
+      >
+        <span className="marcador-circulo">
+          {estado === 'hecho' ? (
+            <Check size={24} weight="bold" color="#fff" aria-hidden="true" />
+          ) : (
+            <Ilustracion nombre={lugar.ilustracion} tamano={estado === 'siguiente' ? 32 : 28} />
+          )}
+        </span>
+        {etiqueta && <span className="marcador-etiqueta">{etiqueta}</span>}
+      </button>
+    </Marker>
+  )
+})
+
 export default function MapaLugares({
   lugares,
   ruta = SIN_RUTA,
@@ -94,6 +129,8 @@ export default function MapaLugares({
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   const mapa = useRef<MapRef>(null)
+  const [zoom, setZoom] = useState(ZOOM)
+  const elegir = useCallback((l: Lugar) => setElegido(l), [])
   const navegar = useNavigate()
   const linea = useRutaCaminable(ruta)
   // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
@@ -140,6 +177,18 @@ export default function MapaLugares({
     mapa.current?.easeTo({ padding: { top: 0, left: 0, right: 0, bottom: padAbajo }, duration: 250 })
   }, [padAbajo])
 
+  // Si el turista se movió del mapa, este botón lo vuelve a centrar en su posición.
+  const irAMiUbicacion = () => {
+    if (!pos) return
+    mapa.current?.flyTo({ center: [pos.lng, pos.lat], zoom: Math.max(zoom, ZOOM + 0.5), duration: 800 })
+  }
+
+  // La línea de la ruta solo se reconstruye cuando cambia la ruta, no con cada render.
+  const datosRuta = useMemo(
+    () => ({ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: linea } }),
+    [linea],
+  )
+
   const estado = (slug: string): Estado =>
     hechos.has(slug) ? 'hecho' : slug === siguiente ? 'siguiente' : enRuta.size === 0 || enRuta.has(slug) ? 'ruta' : 'fuera'
 
@@ -152,6 +201,12 @@ export default function MapaLugares({
         mapboxAccessToken={TOKEN}
         initialViewState={{ ...vistaInicial(lugares), padding: { top: 0, left: 0, right: 0, bottom: padAbajo } }}
         maxBounds={LIMITES}
+        // Rendimiento: sin suavizado de bordes ni copias del mundo, y una caché de teselas acotada.
+        antialias={false}
+        renderWorldCopies={false}
+        maxTileCacheSize={60}
+        fadeDuration={120}
+        onZoomEnd={(e) => setZoom(e.viewState.zoom)}
         minZoom={ZOOM_MIN}
         maxPitch={60}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
@@ -163,7 +218,7 @@ export default function MapaLugares({
           <Source
             id="ruta"
             type="geojson"
-            data={{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: linea } }}
+            data={datosRuta}
           >
             {/* slot "middle": sobre calles y edificios, bajo los textos del estilo Standard */}
             <Layer
@@ -185,27 +240,18 @@ export default function MapaLugares({
         {lugares.map((l) => {
           const e = estado(l.slug)
           const nombre = en ? l.nombre_en : l.nombre_es
+          const tocado = elegido?.slug === l.slug
+          const conNombre = e === 'siguiente' || tocado || zoom >= ZOOM_ETIQUETAS
           return (
-            <Marker key={l.slug} latitude={l.lat} longitude={l.lng} anchor="bottom" style={{ zIndex: e === 'siguiente' ? 2 : 1 }}>
-              <button
-                type="button"
-                className={`marcador marcador--${e}`}
-                aria-label={e === 'ruta' || e === 'fuera' ? nombre : t(`mapa.estado_${e}`, { nombre })}
-                aria-pressed={elegido?.slug === l.slug}
-                onClick={() => setElegido(l)}
-              >
-                <span className="marcador-circulo">
-                  {e === 'hecho' ? (
-                    <Check size={24} weight="bold" color="#fff" aria-hidden="true" />
-                  ) : (
-                    <Ilustracion nombre={l.ilustracion} tamano={e === 'siguiente' ? 32 : 28} />
-                  )}
-                </span>
-                {(e === 'siguiente' || elegido?.slug === l.slug) && (
-                  <span className="marcador-etiqueta">{e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre}</span>
-                )}
-              </button>
-            </Marker>
+            <Pin
+              key={l.slug}
+              lugar={l}
+              estado={e}
+              etiqueta={conNombre ? (e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre) : null}
+              etiquetaAria={e === 'ruta' || e === 'fuera' ? nombre : t(`mapa.estado_${e}`, { nombre })}
+              elegido={tocado}
+              onElegir={elegir}
+            />
           )
         })}
         {eventos.map((ev) => (
@@ -223,7 +269,7 @@ export default function MapaLugares({
           </Marker>
         ))}
         {pos && (
-          <Marker latitude={pos.lat} longitude={pos.lng}>
+          <Marker latitude={pos.lat} longitude={pos.lng} style={{ zIndex: 3 }}>
             <span className="mapa-yo" role="img" aria-label={t('mapa.tuPosicion')} />
           </Marker>
         )}
@@ -241,6 +287,18 @@ export default function MapaLugares({
       >
         <TextAa size={22} weight="bold" aria-hidden="true" />
       </button>
+
+      {pos && (
+        <button
+          type="button"
+          className="mapa-nombres mapa-ubicacion"
+          aria-label={t('mapa.miUbicacion')}
+          title={t('mapa.miUbicacion')}
+          onClick={irAMiUbicacion}
+        >
+          <Crosshair size={22} weight="bold" aria-hidden="true" />
+        </button>
+      )}
 
       <div className="mapa-abajo">
         {elegido && (
