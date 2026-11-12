@@ -95,38 +95,35 @@
   color: var(--morado);
 }
 
-.fila {
-  display: flex;
-  gap: 8px;
-}
-
+/* Dos personajes jarochos */
 .personajes {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .avatar {
   display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  padding: 0;
+  justify-items: center;
+  gap: 4px;
+  padding: 10px 6px;
   border: 3px solid transparent;
-  border-radius: 14px;
+  border-radius: 16px;
   background: #f4f1fa;
+  color: var(--tinta);
+  font: 800 0.9rem var(--fuente-texto);
   cursor: pointer;
 }
 
 .avatar[aria-pressed='true'] {
   border-color: var(--tinta);
   background: #fff3b0;
+  box-shadow: var(--sombra-dura);
 }
 
 .apodo {
-  flex: 1;
-  min-width: 110px;
+  display: block;
+  margin-top: 10px;
 }
 
 .apodo input {
@@ -140,10 +137,70 @@
   font: 800 1rem var(--fuente-texto);
 }
 
-.tiempos {
+/* Tiempo disponible: deslizador de 30 min a 8 h */
+.tiempoValor {
+  margin: 0 0 4px;
+  font: 400 1.7rem var(--fuente-titulo);
+  color: var(--rosa);
+}
+
+.deslizador {
+  display: block;
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.deslizador::-webkit-slider-runnable-track {
+  height: 12px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--rosa) var(--avance), #ede6f7 var(--avance));
+}
+
+.deslizador::-moz-range-track {
+  height: 12px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--rosa) var(--avance), #ede6f7 var(--avance));
+}
+
+.deslizador::-webkit-slider-thumb {
+  width: 30px;
+  height: 30px;
+  margin-top: -10px;
+  border: 3px solid var(--tinta);
+  border-radius: 50%;
+  background: var(--amarillo);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.deslizador::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--tinta);
+  border-radius: 50%;
+  background: var(--amarillo);
+}
+
+.extremos {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #4a3f66;
+}
+
+.atajos {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+  margin-top: 8px;
 }
 
 .opcion {
@@ -166,6 +223,18 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+}
+
+.interesesError {
+  padding: 6px;
+  border: 3px solid var(--rojo);
+  border-radius: 18px;
+}
+
+.error {
+  margin: -6px 0 0;
+  font-weight: 800;
+  color: #b0121a;
 }
 
 .interes {
@@ -191,7 +260,8 @@
 .opcion:focus-visible,
 .interes:focus-visible,
 .idiomas button:focus-visible,
-.apodo input:focus-visible {
+.apodo input:focus-visible,
+.deslizador:focus-visible {
   outline: 3px solid var(--cobalto);
   outline-offset: 3px;
 }

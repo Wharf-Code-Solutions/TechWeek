@@ -17,12 +17,6 @@
     "tiempo": "¿Cuánto tiempo tienes?",
     "intereses": "¿Qué te interesa?",
     "continuar": "Armar mi ruta",
-    "tiempos": {
-      "t30": "30 min",
-      "t60": "1 h",
-      "t120": "2 h",
-      "t240": "Medio día"
-    },
     "categorias": {
       "historia": "Historia",
       "leyendas": "Leyendas",
@@ -38,7 +32,8 @@
     "bajada": "Dinos qué te gusta y armamos tu ruta por el Centro Histórico.",
     "personaje": "Tu personaje",
     "apodo": "Tu apodo",
-    "apodo_ejemplo": "Ej. Lupe"
+    "apodo_ejemplo": "Ej. Lupe",
+    "elige_interes": "Elige al menos un interés para armar tu ruta."
   },
   "permiso": {
     "titulo": "Te avisamos cuando llegues",
@@ -227,7 +222,7 @@
     "completa": "¡Completaste la foto!",
     "tlacos": "{{n}} Tlacos",
     "antetitulo": "Pasaporte jarocho",
-    "avatar_avatar-flor": "Jarochita",
+    "avatar_avatar-flor": "Jarocha",
     "guardado": "Guardado en este celular · sin cuenta",
     "sellosRuta": "Sellos · Ruta de {{ruta}}",
     "sellosTitulo": "Mis sellos",
@@ -237,8 +232,6 @@
     "fotoOculta": "Foto oculta",
     "faltan_one": "Te falta una pieza…",
     "faltan_other": "Te faltan {{count}} piezas…",
-    "avatar_avatar-sombrero": "Jarocho",
-    "avatar_avatar-gorra": "Marinero",
-    "avatar_avatar-paliacate": "Paliacate"
+    "avatar_avatar-sombrero": "Jarocho"
   }
 }

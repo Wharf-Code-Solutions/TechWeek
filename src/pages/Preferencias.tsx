@@ -7,9 +7,14 @@ import {
   APODO_MAX,
   AVATARES,
   INTERESES,
-  TIEMPOS_MIN,
+  TIEMPO_MAX,
+  TIEMPO_MIN,
+  TIEMPO_PASO,
+  TIEMPOS_ATAJO,
   cargarPreferencias,
+  formatoTiempo,
   guardarPreferencias,
+  tieneIntereses,
   type Preferencias as Prefs,
 } from '../app/preferencias'
 import Banderines from '../components/ui/Banderines'
@@ -30,6 +35,8 @@ export default function Preferencias() {
   const [paso, setPaso] = useState<'preferencias' | 'permiso'>('preferencias')
   const [ruta, setRuta] = useState<'inactivo' | 'armando' | 'error'>('inactivo')
   const armando = useRef(false)
+  // El aviso de interés obligatorio aparece solo después de intentar continuar.
+  const [faltaInteres, setFaltaInteres] = useState(false)
 
   function cambiarIdioma(idioma: Idioma) {
     setPref((p) => ({ ...p, idioma }))
@@ -41,6 +48,7 @@ export default function Preferencias() {
       ...p,
       intereses: p.intereses.includes(c) ? p.intereses.filter((i) => i !== c) : [...p.intereses, c],
     }))
+    setFaltaInteres(false)
   }
 
   // Crea la ruta en el servidor (algoritmo M3 de Dev 1). Sin ruta activa, terminar la ruta da 404.
@@ -71,6 +79,10 @@ export default function Preferencias() {
   const alListo = useCallback(() => void armarRef.current(), [])
 
   function continuar() {
+    if (!tieneIntereses(pref)) {
+      setFaltaInteres(true)
+      return
+    }
     guardarPreferencias(pref)
     if (esModoDemo()) {
       activarExplorador(false)
@@ -79,6 +91,8 @@ export default function Preferencias() {
       setPaso('permiso')
     }
   }
+
+  const avance = ((pref.tiempoMin - TIEMPO_MIN) / (TIEMPO_MAX - TIEMPO_MIN)) * 100
 
   return (
     <main className={estilos.pantalla}>
@@ -110,37 +124,54 @@ export default function Preferencias() {
             <fieldset className={estilos.grupo}>
               <legend>{t('preferencias.personaje')}</legend>
               <div className={estilos.personajes}>
-                <div className={estilos.fila}>
-                  {AVATARES.map((a) => (
-                    <button
-                      key={a}
-                      type="button"
-                      className={estilos.avatar}
-                      aria-pressed={pref.personaje === a}
-                      aria-label={t(`pasaporte.avatar_${a}`)}
-                      onClick={() => setPref((p) => ({ ...p, personaje: a }))}
-                    >
-                      <Ilustracion nombre={a} tamano={44} />
-                    </button>
-                  ))}
-                </div>
-                <label className={estilos.apodo}>
-                  <input
-                    type="text"
-                    value={pref.apodo}
-                    maxLength={APODO_MAX}
-                    placeholder={t('preferencias.apodo_ejemplo')}
-                    aria-label={t('preferencias.apodo')}
-                    onChange={(e) => setPref((p) => ({ ...p, apodo: e.target.value }))}
-                  />
-                </label>
+                {AVATARES.map((a) => (
+                  <button
+                    key={a}
+                    type="button"
+                    className={estilos.avatar}
+                    aria-pressed={pref.personaje === a}
+                    onClick={() => setPref((p) => ({ ...p, personaje: a }))}
+                  >
+                    <Ilustracion nombre={a} tamano={64} />
+                    <span>{t(`pasaporte.avatar_${a}`)}</span>
+                  </button>
+                ))}
               </div>
+              <label className={estilos.apodo}>
+                <input
+                  type="text"
+                  value={pref.apodo}
+                  maxLength={APODO_MAX}
+                  placeholder={t('preferencias.apodo_ejemplo')}
+                  aria-label={t('preferencias.apodo')}
+                  onChange={(e) => setPref((p) => ({ ...p, apodo: e.target.value }))}
+                />
+              </label>
             </fieldset>
 
             <fieldset className={estilos.grupo}>
               <legend>{t('preferencias.tiempo')}</legend>
-              <div className={estilos.tiempos}>
-                {TIEMPOS_MIN.map((min) => (
+              <p className={estilos.tiempoValor} aria-live="polite">
+                {formatoTiempo(pref.tiempoMin)}
+              </p>
+              <input
+                type="range"
+                className={estilos.deslizador}
+                min={TIEMPO_MIN}
+                max={TIEMPO_MAX}
+                step={TIEMPO_PASO}
+                value={pref.tiempoMin}
+                aria-label={t('preferencias.tiempo')}
+                aria-valuetext={formatoTiempo(pref.tiempoMin)}
+                style={{ ['--avance' as string]: `${avance}%` }}
+                onChange={(e) => setPref((p) => ({ ...p, tiempoMin: Number(e.target.value) }))}
+              />
+              <div className={estilos.extremos} aria-hidden="true">
+                <span>{formatoTiempo(TIEMPO_MIN)}</span>
+                <span>{formatoTiempo(TIEMPO_MAX)}</span>
+              </div>
+              <div className={estilos.atajos}>
+                {TIEMPOS_ATAJO.map((min) => (
                   <button
                     key={min}
                     type="button"
@@ -148,7 +179,7 @@ export default function Preferencias() {
                     aria-pressed={pref.tiempoMin === min}
                     onClick={() => setPref((p) => ({ ...p, tiempoMin: min }))}
                   >
-                    {t(`preferencias.tiempos.t${min}`)}
+                    {formatoTiempo(min)}
                   </button>
                 ))}
               </div>
@@ -156,7 +187,7 @@ export default function Preferencias() {
 
             <fieldset className={estilos.grupo}>
               <legend>{t('preferencias.intereses')}</legend>
-              <div className={estilos.intereses}>
+              <div className={`${estilos.intereses}${faltaInteres ? ` ${estilos.interesesError}` : ''}`}>
                 {INTERESES.map((c) => (
                   <button
                     key={c}
@@ -172,6 +203,11 @@ export default function Preferencias() {
               </div>
             </fieldset>
 
+            {faltaInteres && (
+              <p className={estilos.error} role="alert">
+                {t('preferencias.elige_interes')}
+              </p>
+            )}
             <Boton ancho disabled={ruta === 'armando'} onClick={continuar}>
               {t('preferencias.continuar')}
             </Boton>

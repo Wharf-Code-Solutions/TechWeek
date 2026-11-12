@@ -17,12 +17,6 @@
     "tiempo": "How much time do you have?",
     "intereses": "What interests you?",
     "continuar": "Build my route",
-    "tiempos": {
-      "t30": "30 min",
-      "t60": "1 h",
-      "t120": "2 h",
-      "t240": "Half a day"
-    },
     "categorias": {
       "historia": "History",
       "leyendas": "Legends",
@@ -38,7 +32,8 @@
     "bajada": "Tell us what you like and we'll build your route through the Historic Center.",
     "personaje": "Your character",
     "apodo": "Your nickname",
-    "apodo_ejemplo": "E.g. Lupe"
+    "apodo_ejemplo": "E.g. Lupe",
+    "elige_interes": "Pick at least one interest to build your route."
   },
   "permiso": {
     "titulo": "We'll tell you when you arrive",
@@ -227,7 +222,7 @@
     "completa": "You completed the photo!",
     "tlacos": "{{n}} Tlacos",
     "antetitulo": "Jarocho passport",
-    "avatar_avatar-flor": "Jarochita",
+    "avatar_avatar-flor": "Jarocha",
     "guardado": "Saved on this phone · no account",
     "sellosRuta": "Stamps · {{ruta}} route",
     "sellosTitulo": "My stamps",
@@ -237,8 +232,6 @@
     "fotoOculta": "Hidden photo",
     "faltan_one": "One piece to go…",
     "faltan_other": "{{count}} pieces to go…",
-    "avatar_avatar-sombrero": "Jarocho",
-    "avatar_avatar-gorra": "Sailor",
-    "avatar_avatar-paliacate": "Bandana"
+    "avatar_avatar-sombrero": "Jarocho"
   }
 }
