@@ -15,14 +15,14 @@
 
 .cabecera h1 {
   margin: 0;
-  font: 400 1.7rem/1.1 var(--fuente-titulo);
+  font: 700 1.7rem/1.1 var(--fuente-titulo);
   color: var(--rosa);
 }
 
 .cabecera p {
   margin: 2px 0 0;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #4a3f66;
 }
 
@@ -62,13 +62,13 @@
   border-radius: 999px;
   background: #fff;
   color: var(--tinta);
-  font: 800 0.9rem var(--fuente-texto);
+  font: 700 0.9rem var(--fuente-texto);
   cursor: pointer;
 }
 
 .filtros button span {
   margin-left: 4px;
-  font-weight: 900;
+  font-weight: 700;
   color: #6b5f87;
 }
 
@@ -120,7 +120,7 @@
   border: 0;
   background: transparent;
   color: var(--morado);
-  font: 800 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   text-decoration: underline;
   cursor: pointer;
 }

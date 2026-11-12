@@ -11,9 +11,9 @@
   --tinta: #150A2E;
   --lila: #DCD6EC;
 
-  --fuente-titulo: 'Shrikhand', cursive;
-  --fuente-texto: 'Nunito', sans-serif;
-  --fuente-nota: 'Caveat Brush', cursive;
+  --fuente-titulo: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fuente-texto: 'DM Sans', system-ui, sans-serif;
+  --fuente-nota: 'DM Sans', system-ui, sans-serif;
 
   --borde: 3px solid var(--tinta);
   --radio: 16px;

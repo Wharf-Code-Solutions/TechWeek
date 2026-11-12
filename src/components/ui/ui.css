@@ -11,7 +11,7 @@
   border: var(--borde);
   border-radius: 999px;
   box-shadow: var(--sombra-dura);
-  font: 900 1.05rem/1.1 var(--fuente-texto);
+  font: 700 1.05rem/1.1 var(--fuente-texto);
   color: var(--tinta);
   background: #fff;
   cursor: pointer;

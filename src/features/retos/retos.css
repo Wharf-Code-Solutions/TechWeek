@@ -54,21 +54,19 @@
   background: var(--amarillo);
   color: var(--tinta);
   font-size: 15px;
-  font-weight: 900;
+  font-weight: 700;
 }
 .reto--orden .reto-pastilla {
   border: 0;
   background: var(--tinta);
   color: var(--amarillo);
   font-size: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
 }
 
 .reto-cuerpo { padding: 14px 18px 0; display: flex; flex-direction: column; gap: 12px; }
-.reto-antetitulo { font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amarillo); }
-.reto h1 { margin: 2px 0 0; font: 400 26px/1.1 var(--fuente-titulo); }
-.reto-instrucciones { margin: 4px 0 0; font-size: 14px; font-weight: 800; }
+.reto-antetitulo { font-size: 12px; font-weight: 700; color: var(--amarillo); }
+.reto h1 { margin: 2px 0 0; font: 700 26px/1.1 var(--fuente-titulo); }
+.reto-instrucciones { margin: 4px 0 0; font-size: 14px; font-weight: 700; }
 
 /* Pie con intentos y botón: al fondo de la pantalla, o tras el juego si este es largo */
 .reto-pie {
@@ -83,7 +81,7 @@
   flex-direction: column;
   gap: 8px;
 }
-.reto-intentos { margin: 0; display: flex; justify-content: center; gap: 6px; font-size: 13px; font-weight: 800; }
+.reto-intentos { margin: 0; display: flex; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; }
 .reto-corazones { color: var(--amarillo); letter-spacing: 2px; }
 .reto--orden .reto-corazones { color: var(--rosa); }
 .reto-corazones-perdidos { opacity: 0.3; }
@@ -94,7 +92,7 @@
   border-radius: 14px;
   background: #fff;
   color: var(--tinta);
-  font-weight: 800;
+  font-weight: 700;
   text-align: center;
 }
 .reto-comprobar {
@@ -105,7 +103,7 @@
   box-shadow: 4px 4px 0 var(--tinta);
   background: var(--rosa);
   color: #fff;
-  font: 900 17px var(--fuente-texto);
+  font: 700 17px var(--fuente-texto);
   cursor: pointer;
 }
 .reto-comprobar:disabled { box-shadow: none; background: #5a2490; color: #d9c4f0; cursor: not-allowed; }
@@ -121,7 +119,7 @@
   background: #fff;
   color: var(--tinta);
 }
-.juego-texto { margin: 0; font-size: 16px; font-weight: 700; line-height: 2.3; }
+.juego-texto { margin: 0; font-size: 16px; font-weight: 500; line-height: 2.3; }
 .juego-hueco {
   display: inline-block;
   min-width: 76px;
@@ -132,7 +130,7 @@
   border-radius: 10px;
   background: #f3e8ff;
   color: var(--morado);
-  font: 900 15px/38px var(--fuente-texto);
+  font: 700 15px/38px var(--fuente-texto);
   vertical-align: middle;
 }
 .juego-hueco--sobre { background: var(--amarillo); border-style: solid; border-color: var(--tinta); transform: scale(1.06); }
@@ -149,7 +147,7 @@
   border: 3px solid var(--tinta);
   border-radius: 14px;
   box-shadow: 3px 3px 0 var(--tinta);
-  font: 900 16px var(--fuente-texto);
+  font: 700 16px var(--fuente-texto);
   cursor: pointer;
 }
 .juego-opcion:disabled {
@@ -171,7 +169,7 @@
   place-items: center;
   border: 3px solid var(--tinta);
   border-radius: 50%;
-  font: 900 16px var(--fuente-texto);
+  font: 700 16px var(--fuente-texto);
 }
 .juego-evento {
   flex: 1;
@@ -186,7 +184,7 @@
   background: #fff;
 }
 .juego-asa { flex-shrink: 0; opacity: 0.5; cursor: grab; touch-action: none; }
-.juego-evento-texto { flex: 1; min-width: 0; font-size: 14px; line-height: 1.3; font-weight: 800; }
+.juego-evento-texto { flex: 1; min-width: 0; font-size: 14px; line-height: 1.3; font-weight: 700; }
 .juego-flechas { display: flex; gap: 4px; }
 .juego-flechas button {
   width: 44px;
@@ -203,7 +201,7 @@
 .juego-flechas button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 
 /* ── Retos rápidos (trivia, verdadero/falso, intruso) ──── */
-.juego-pregunta p { margin: 0; font: 800 19px/1.35 var(--fuente-texto); }
+.juego-pregunta p { margin: 0; font: 700 19px/1.35 var(--fuente-texto); }
 .juego-rapidas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .juego-rapidas--pareja { flex-direction: row; }
 .juego-rapidas--pareja li { flex: 1; }
@@ -220,7 +218,7 @@
   box-shadow: 4px 4px 0 var(--tinta);
   background: #fff;
   color: var(--tinta);
-  font: 900 17px/1.2 var(--fuente-texto);
+  font: 700 17px/1.2 var(--fuente-texto);
   text-align: center;
   cursor: pointer;
   transition: transform 0.12s;
@@ -253,14 +251,14 @@
 }
 .reto-respuesta-titulo {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .reto-respuesta strong {
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 700;
 }
 .reto-respuesta ol {
   margin: 0;
   padding-left: 22px;
-  font-weight: 800;
+  font-weight: 700;
 }

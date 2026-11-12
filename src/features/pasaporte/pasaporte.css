@@ -11,14 +11,14 @@
   color: #fff;
 }
 .pasaporte-tarjeta .ilustracion { border: 3px solid #fff; border-radius: 50%; }
-.pasaporte-antetitulo { font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--amarillo); }
-.pasaporte-tarjeta h2 { margin: 0; font: 400 26px/1.1 var(--fuente-titulo); }
-.pasaporte-saldo { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; font-size: 18px; font-weight: 900; }
-.pasaporte-nota { display: flex; align-items: center; gap: 6px; margin: -4px 0 0; font-size: 12px; font-weight: 700; color: #4a3f66; }
+.pasaporte-antetitulo { font-size: 12px; font-weight: 700; color: var(--amarillo); }
+.pasaporte-tarjeta h2 { margin: 0; font: 700 26px/1.1 var(--fuente-titulo); }
+.pasaporte-saldo { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; font-size: 18px; font-weight: 700; }
+.pasaporte-nota { display: flex; align-items: center; gap: 6px; margin: -4px 0 0; font-size: 12px; font-weight: 500; color: #4a3f66; }
 
 .pasaporte-encabezado { display: flex; justify-content: space-between; align-items: baseline; }
-.pasaporte-encabezado h3 { margin: 0; font: 400 20px var(--fuente-titulo); }
-.pasaporte-encabezado span { font-size: 13px; font-weight: 900; color: var(--morado); }
+.pasaporte-encabezado h3 { margin: 0; font: 700 20px var(--fuente-titulo); }
+.pasaporte-encabezado span { font-size: 13px; font-weight: 700; color: var(--morado); }
 
 .pasaporte-album {
   list-style: none;
@@ -43,7 +43,7 @@
   box-shadow: 0 2px 0 var(--tinta-sello);
 }
 .pasaporte-sello .ilustracion { width: 52px; height: 52px; }
-.pasaporte-sello-nombre { font-size: 12px; font-weight: 900; line-height: 1.15; color: var(--tinta); }
+.pasaporte-sello-nombre { font-size: 12px; font-weight: 700; line-height: 1.15; color: var(--tinta); }
 .pasaporte-hueco {
   width: 88px;
   height: 88px;
@@ -53,9 +53,9 @@
   border-radius: 50%;
   background: #fff;
   color: #9a8fb8;
-  font: 400 26px var(--fuente-titulo);
+  font: 700 26px var(--fuente-titulo);
 }
-.pasaporte-hueco-nombre { font-size: 12px; font-weight: 800; line-height: 1.15; color: #4a3f66; }
+.pasaporte-hueco-nombre { font-size: 12px; font-weight: 700; line-height: 1.15; color: #4a3f66; }
 .pasaporte-foto-oculta {
   width: 88px;
   height: 88px;
@@ -69,7 +69,7 @@
   background: var(--amarillo);
   color: var(--tinta);
   font-size: 11px;
-  font-weight: 900;
+  font-weight: 700;
   text-align: center;
   text-decoration: none;
 }
@@ -82,7 +82,7 @@
   border-radius: 20px;
   background: radial-gradient(circle, rgb(255 212 0 / 0.45) 2px, transparent 2.2px) 0 0 / 20px 20px var(--naranja);
 }
-.pasaporte-rompe h3 { margin: 0 0 12px; font: 400 22px/1.1 var(--fuente-titulo); color: #fff; text-shadow: 2px 2px 0 var(--tinta); }
+.pasaporte-rompe h3 { margin: 0 0 12px; font: 700 22px/1.1 var(--fuente-titulo); color: #fff; }
 .pasaporte-rompe .pasaporte-antetitulo { color: var(--tinta); }
 .pasaporte-marco {
   padding: 12px;
@@ -110,7 +110,7 @@
 }
 .pasaporte-pieza--falta { background: var(--lila); color: var(--tinta); }
 .pasaporte-progreso { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
-.pasaporte-progreso span { font: 400 20px var(--fuente-titulo); color: #fff; text-shadow: 2px 2px 0 var(--tinta); }
+.pasaporte-progreso span { font: 700 20px var(--fuente-titulo); color: #fff; }
 .pasaporte-barra { flex: 1; height: 18px; overflow: hidden; border: 3px solid var(--tinta); border-radius: 99px; background: #fff; }
 .pasaporte-barra > div {
   height: 100%;
@@ -123,4 +123,4 @@
     var(--verde) 54px 72px
   );
 }
-.pasaporte-faltan { margin: 10px 0 0; font: 22px var(--fuente-nota); color: var(--tinta); }
+.pasaporte-faltan { margin: 10px 0 0; font: 500 15px var(--fuente-texto); color: var(--tinta); }

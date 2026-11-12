@@ -10,10 +10,10 @@
   box-shadow: 4px 4px 0 var(--tinta);
   background: var(--turquesa);
   color: var(--tinta);
-  font: 900 17px var(--fuente-texto);
+  font: 700 17px var(--fuente-texto);
   cursor: pointer;
 }
 .compartir-boton:disabled { opacity: 0.6; cursor: wait; }
 .compartir-boton:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-.compartir-nota { text-align: center; font-weight: 800; opacity: 0.9; }
-.compartir-mensaje { margin: 0; padding: 8px 12px; border-radius: 14px; background: var(--tinta); color: #fff; font-weight: 800; text-align: center; }
+.compartir-nota { text-align: center; font-weight: 700; opacity: 0.9; }
+.compartir-mensaje { margin: 0; padding: 8px 12px; border-radius: 14px; background: var(--tinta); color: #fff; font-weight: 700; text-align: center; }

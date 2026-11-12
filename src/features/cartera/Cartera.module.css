@@ -20,17 +20,15 @@
 
 .etiqueta {
   display: block;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .cifra {
   display: block;
   font-family: var(--fuente-titulo);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.05;
   font-variant-numeric: tabular-nums;
 }
@@ -46,12 +44,13 @@
   margin: 0;
   font-family: var(--fuente-titulo);
   font-size: 1.35rem;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .nota {
-  font-family: var(--fuente-nota);
-  font-size: 1.1rem;
+  font-family: var(--fuente-texto);
+  font-weight: 500;
+  font-size: 0.95rem;
   color: var(--rosa);
 }
 
@@ -101,7 +100,7 @@
 
 .faltan {
   font-size: 0.8rem;
-  font-weight: 900;
+  font-weight: 700;
   color: #a0005a;
 }
 
@@ -128,7 +127,7 @@
 
 .canjear span {
   font-size: 0.65rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .costo {
@@ -141,7 +140,7 @@
   border-radius: 14px;
   color: #4a3f66;
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .canjear:focus-visible {

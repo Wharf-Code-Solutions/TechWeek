@@ -36,7 +36,7 @@
   border-radius: 999px;
   background: var(--amarillo);
   color: var(--tinta);
-  font: 900 0.75rem var(--fuente-texto);
+  font: 700 0.75rem var(--fuente-texto);
 }
 
 .cuerpo {
@@ -46,17 +46,15 @@
 }
 
 .tipo {
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: var(--morado);
 }
 
 .cuerpo h1,
 .cuerpo h2 {
   margin: 0;
-  font: 400 1.3rem/1.15 var(--fuente-titulo);
+  font: 700 1.3rem/1.15 var(--fuente-titulo);
   color: var(--tinta);
 }
 
@@ -67,7 +65,7 @@
   background: #ffe0ef;
   color: #a0005a;
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .descripcion {
@@ -84,7 +82,7 @@
   border-top: 2px dashed #e1daf0;
   list-style: none;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #4a3f66;
 }
 
@@ -111,7 +109,7 @@
   border-radius: 14px;
   background: var(--rosa);
   color: #fff;
-  font: 900 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   cursor: pointer;
 }
 
@@ -126,7 +124,7 @@
   border-radius: 14px;
   background: var(--tinta);
   color: #fff;
-  font: 900 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   cursor: pointer;
 }
 
