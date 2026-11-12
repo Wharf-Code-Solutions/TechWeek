@@ -1,0 +1,105 @@
+.pantalla {
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.titulo {
+  margin: 8px 0 0;
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--rosa);
+}
+
+.promo p {
+  margin: 4px 0 0;
+}
+
+.nombre {
+  font-size: 1.3rem;
+}
+
+.pista {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  border: var(--borde);
+  border-radius: 999px;
+  background: var(--lila);
+  overflow: hidden;
+}
+
+.texto {
+  font-weight: 900;
+  padding-left: 56px;
+}
+
+.asa {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 52px;
+  height: 52px;
+  border: var(--borde);
+  border-radius: 50%;
+  background: var(--rosa);
+  color: #fff;
+  font: 900 1.5rem var(--fuente-texto);
+  cursor: grab;
+  touch-action: none;
+}
+
+.asa:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 2px;
+}
+
+.cupon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  background: var(--turquesa);
+}
+
+.cupon p {
+  margin: 0;
+}
+
+.sello {
+  display: grid;
+  place-items: center;
+}
+
+.etiqueta {
+  font-size: 0.9rem;
+}
+
+.codigo {
+  font-family: var(--fuente-titulo);
+  font-size: 2.4rem;
+  letter-spacing: 0.1em;
+}
+
+.reloj {
+  font: 900 1.6rem var(--fuente-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sello {
+    animation: none;
+  }
+}

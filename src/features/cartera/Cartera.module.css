@@ -1,0 +1,53 @@
+.cartera {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.titulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--rosa);
+}
+
+.subtitulo {
+  margin: 8px 0 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.saldo {
+  background: var(--amarillo);
+  text-align: center;
+}
+
+.saldo p {
+  margin: 0;
+}
+
+.cifra {
+  font-size: 1.8rem;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detalle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
