@@ -4,12 +4,16 @@ Plataforma web turística y gamificada del **Centro Histórico de Veracruz**. El
 
 🌐 **Demo en vivo:** https://techweek-eta.vercel.app
 
+---
+
 # Problema
 A pesar de contar con atractivos históricos, culturales y turísticos de primer nivel, el Centro Histórico de Veracruz no logra retener a los visitantes ni integrarlos plenamente en la vida comercial y cultural local. Los recorridos suelen ser breves y carecen de conexión con la oferta comercial, por lo que el gasto por visitante es bajo y el flujo turístico no se traduce en un consumo significativo para los negocios de la zona.
 
 Esta situación reduce la rentabilidad de los comercios, favorece el cierre temprano o definitivo de negocios y contribuye a la vacancia de locales. A su vez, la pérdida de actividad comercial genera menos empleos y una menor recaudación municipal, lo que limita los recursos disponibles para el mantenimiento, la seguridad y la mejora del espacio público.
 
 Como resultado, el Centro Histórico pierde atractivo y competitividad frente a otros destinos, y desaprovecha su potencial como motor económico y cultural de la ciudad. La falta de difusión efectiva de eventos y actividades agrava esta problemática, ya que impide que visitantes y residentes descubran y participen en la oferta cultural y comercial disponible.
+
+---
 
 # Usuarios
 El proyecto estará dirigido a tres grupos principales:
@@ -19,6 +23,8 @@ El proyecto estará dirigido a tres grupos principales:
 - **Comerciantes y prestadores de servicios del centro**, incluyendo tiendas, restaurantes, cafeterías, hoteles, guías, artesanos y otros negocios, quienes podrán dar mayor visibilidad a sus productos, servicios y actividades, y atraer con mayor eficacia al flujo de visitantes.
 
 - **Autoridades de turismo y cultura**, quienes podrán utilizar la plataforma o herramienta como un medio para difundir eventos, coordinar acciones con el sector empresarial y obtener información sobre la afluencia, preferencias y necesidades de los visitantes.
+
+---
 
 # ¿Cómo usar JARANA?
 No hay que instalar nada ni crear una cuenta: se abre en el navegador del celular y el progreso se guarda en ese dispositivo con una sesión anónima.
@@ -36,6 +42,8 @@ No hay que instalar nada ni crear una cuenta: se abre en el navegador del celula
 4. **Colecciona.** Cada reto te da un sello en tu **pasaporte** y una pieza del **rompecabezas** de una foto o postal del puerto.
 5. **Descubre y canjea.** En el panel del mapa están tu **cartera**, la **agenda** de eventos del Centro y la **vitrina** de comercios (cafés, restaurantes, fondas, librerías, tiendas y artesanías). Canjea tus doblones por promociones deslizando el cupón frente al mesero.
 6. **Termina la ruta** para recibir el bono final y doblones extra por la distancia recorrida, y compártela.
+
+---
 
 # ¿Cómo instalar JARANA?
 Requisitos: **Node.js 20+**, **Python 3.12+** y acceso a las llaves del proyecto (Supabase y Vercel).
@@ -67,7 +75,11 @@ Frontend, en la raíz: `npm run dev` y abrir http://localhost:5173. Vite redirig
 
 Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.md` y `reglas.md`.
 
+---
+
 # Tecnologías
+JARANA es una aplicación web que se abre en el navegador del celular, sin instalar nada. Se eligieron herramientas conocidas y con versión gratuita para que el equipo pudiera construir, probar y publicar en pocos días: una interfaz en React, una API propia en Python que concentra las reglas del juego, una base de datos en Supabase y un mapa de Mapbox. Cada sección explica qué parte del producto resuelve cada tecnología.
+
 ## 01. Frontend
 **Interfaz de usuario**
 
@@ -152,19 +164,44 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 
 El navegador nunca habla directo con la base de datos: todo pasa por el backend, que valida las respuestas de los retos y es el único que puede sumar o restar doblones.
 
+**Seguridad.** Que el backend sea la única puerta evita que alguien se invente doblones o respuestas desde el celular, y mantiene las llaves de la base fuera del navegador. El mapa es lo único que el celular consulta por su cuenta, y solo para dibujar. Como frontend y backend viven en el mismo dominio, no hay configuración de permisos entre ambos y la app sigue sencilla de desplegar.
+
+**Afluencia.** Para que muchos turistas a la vez no terminen todos en el mismo lugar, el servidor cuenta cuántas personas llegaron a cada sitio en la última hora y cuántas llevan una ruta activa hacia él. Los lugares llenos se dejan fuera de las rutas nuevas mientras haya alternativas, y los concurridos pierden prioridad. Esa cuenta solo incluye a quienes usan JARANA: no mide a los turistas que no tienen la app.
+
+---
+
 # Bitácora de IA
-El equipo usó inteligencia artificial como apoyo durante el hackathon; todo lo generado se revisó, probó y ajustó a mano antes de integrarlo.
+El equipo usó inteligencia artificial como apoyo durante el hackathon en tres frentes: **planear** (ordenar el trabajo y repartirlo entre tres desarrolladores), **investigar** (reunir y contrastar información del Centro Histórico) y **programar** (escribir código, pruebas y contenido a partir de lo que el equipo decidía). Las decisiones de producto —qué construir, el nombre del proyecto, la moneda (doblones) y las reglas del juego— las tomó el equipo, y todo lo generado se revisó, probó y ajustó antes de integrarlo.
 
 | Etapa | Herramienta | Uso | Revisión humana |
 | --- | --- | --- | --- |
-| Planeación | Gemini | Plan de módulos y dependencias, reparto entre 3 desarrolladores y lienzo de diseño de las pantallas. | El equipo validó decisiones, cambió el nombre y la moneda. |
-| Investigación | Gemini | Inventario de sitios del Centro Histórico y verificación de leyendas (p. ej. se descartó el Callejón del Diamante por ser de Xalapa). | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
-| Backend y datos | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap/Mapbox y pruebas. | Cada cambio se revisó y se probó contra la base real y en producción. |
-| Frontend y mapa | Claude Code | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
-| Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación, y su traducción al francés. | Revisado por el equipo; ningún dato sin fuente. Las traducciones al francés de los retos de "completa la frase" están pendientes de revisión por un hablante nativo. |
+| Planeación | Gemini | Plan de módulos y dependencias, reparto entre 3 desarrolladores y lienzo de diseño de las pantallas. Sirvió para saber qué podía avanzar en paralelo y qué dependía de qué. | El equipo validó cada decisión, cambió el nombre del proyecto y de la moneda, y ajustó el alcance al tiempo disponible. |
+| Investigación | Gemini | Inventario de 104 sitios del Centro Histórico en un CSV, con dirección, vigencia en 2026, horario, descripción y fuente de cada uno. También se contrastaron las leyendas con fuentes publicadas; por ejemplo, se descartó el Callejón del Diamante porque pertenece a Xalapa y no a Veracruz. | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
+| Backend y datos | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap y Mapbox, algoritmo de ruta y de reparto de gente, y pruebas automáticas. | Cada cambio importante se revisó y se probó contra la base real y en producción; antes de publicar se realizó la compilación, el análisis de código y las pruebas automáticas. |
+| Frontend y mapa | Claude Code | Apoyo en componentes, mapa, animaciones, pantalla de carga y estilos. | Revisado por cada desarrollador. |
+| Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV de sitios y la investigación, y su traducción al francés. | Revisado por el equipo; ningún dato sin fuente. Las traducciones al francés de los retos de "completa la frase" están pendientes de revisión por un hablante nativo. |
 
+## ¿Cómo se trabajó con la IA?
+Se le pedía una tarea concreta (por ejemplo, "armar la ruta según intereses y tiempo"), se revisaba lo que proponía y se probaba antes de aceptarlo. El resultado se comprobaba siempre con la aplicación abierta y, cuando algo no funcionaba, se corregía en una nueva ronda. El historial de decisiones y pendientes de cada jornada se llevó en un archivo de seguimiento del proyecto (`memory.md`), que permitió retomar el trabajo sin perder contexto.
+
+---
 
 # Datos
+JARANA trabaja con dos clases de datos. La primera es el **contenido del Centro Histórico**: los lugares que se visitan, los retos, los comercios y los eventos. Es información que el equipo reunió antes de la demostración y que vive en un solo archivo (`src/data/seed.json`), de donde se carga a la base de datos. La segunda son los **datos que genera cada turista al usar la app**: su ruta, sus visitas y sus doblones.
+
+## Contenido del Centro Histórico
+
+Son **34 lugares**, las paradas de la ruta, cada uno con su curiosidad en español e inglés; salen de un inventario de 104 sitios (`sitios-turisticos-veracruz.csv`) y sus coordenadas se ubicaron con OpenStreetMap y Mapbox. Cada lugar tiene su **reto** (34 en total), un minijuego escrito a partir de su curiosidad que da doblones y un sello en el pasaporte. Las **6 fotos históricas** (una fotografía de dominio público y cinco ilustraciones del proyecto) se arman como rompecabezas.
+
+La vitrina reúne **37 comercios** del mismo inventario (librerías, fondas, tiendas, cafeterías y otros negocios, con dirección y horario) y **4 promociones** de ejemplo que se canjean con doblones. La agenda del Centro muestra **20 eventos** de ejemplo.
+
+## Datos que genera el turista
+Cada celular abre una sesión anónima: no se pide nombre, correo ni contraseña. Con esa sesión la app guarda las **visitas** a cada lugar (qué lugar y a qué hora), la **ruta** armada (los lugares, el tiempo elegido y los intereses) y el **libro de doblones** (cada ganancia y cada canje). Sirven para tres cosas: recordar el progreso del turista y su pasaporte, validar que cada recompensa se cobre una sola vez, y calcular cuánta gente hay en cada lugar para repartir mejor las rutas.
+
+## Alcance de la información
+Las promociones y los 20 eventos son de demostración: muestran cómo funcionan la vitrina y la agenda, y no implican un acuerdo con los negocios. La afluencia se calcula con las personas que usan JARANA. Cualquier cifra de una simulación se identifica como tal.
+
+**Fuentes consultadas**
 - Grajeda Rosado, R. M., Diaz Olaldez, M., Prieto Alonso, E. T., y Mondragón Olán, M. (2025). Informe: Opinión pública del Centro de Veracruz. La voz de los veracruzanos: Percepción y desafíos en el Centro de Veracruz. Observatorio Universitario Metropolitano de Veracruz; Universidad Veracruzana. https://www.uv.mx/veracruz/omv/files/2025/09/2025-Encuesta-Informe.pdf
 - E-Consulta Veracruz. (2024, 29 de octubre). Las leyendas de Veracruz: Marina y la Condesa de Malibrán. https://e-veracruz.mx/nota/2024-10-29/municipios/las-leyendas-de-veracruz-marina-y-la-condesa-de-malibran
 - Gobierno del Estado de Veracruz. (2026, 20 de octubre). Inaugura SECVER las exposiciones La piel de la ciudad y Galería. https://www.veracruz.gob.mx/2026/10/20/inaugura-secver-las-exposiciones-la-piel-de-la-ciudad-y-galeria-imagen-de-veracruz/
