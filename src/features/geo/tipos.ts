@@ -1,5 +1,5 @@
 // Tipos del contrato 2 (usePosition). Viven aparte para no crear dependencias circulares.
-export type FuentePosicion = 'gps' | 'demo'
+export type FuentePosicion = 'gps'
 
 export interface Punto {
   lat: number
@@ -12,4 +12,4 @@ export interface Posicion extends Punto {
 }
 
 /** Estado del permiso de ubicación. 'denegado' y 'no-disponible' activan el modo explorador. */
-export type EstadoUbicacion = 'pendiente' | 'concedido' | 'denegado' | 'no-disponible' | 'demo'
+export type EstadoUbicacion = 'pendiente' | 'concedido' | 'denegado' | 'no-disponible'

@@ -2,7 +2,7 @@
 import type { EstadoUbicacion, Posicion } from './tipos'
 
 interface InstantaneaGps {
-  estado: Exclude<EstadoUbicacion, 'demo'>
+  estado: EstadoUbicacion
   posicion: Posicion | null
 }
 

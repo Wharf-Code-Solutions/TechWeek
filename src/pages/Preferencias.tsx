@@ -20,8 +20,7 @@ import {
 import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
-import { activarExplorador, esExplorador } from '../features/geo/explorador'
-import { esModoDemo } from '../features/geo/demoStore'
+import { esExplorador } from '../features/geo/explorador'
 import { esperarPosicion, obtenerGps } from '../features/geo/gpsStore'
 import { salidaDeLaRuta } from '../features/geo/posicionManual'
 import { guardarOrigen } from '../features/geo/origen'
@@ -61,17 +60,15 @@ export default function Preferencias() {
     if (armando.current) return
     armando.current = true
     setRuta('armando')
-    const demo = esModoDemo()
     // La ruta parte de donde está el turista: si el GPS aún no responde se espera un momento.
     // Lejos del Centro (o sin GPS) la ruta sale del Zócalo; la ruta siempre se arma con las preferencias elegidas.
-    const sinUbicacion = demo || esExplorador()
+    const sinUbicacion = esExplorador()
     const real = sinUbicacion ? null : await esperarPosicion(ESPERA_GPS_MS)
     const gps = sinUbicacion ? null : salidaDeLaRuta(real, obtenerGps().estado)
     try {
       await api.crearRuta({
         tiempo_min: pref.tiempoMin,
         intereses: pref.intereses,
-        demo,
         ...(gps ? { lat: gps.lat, lng: gps.lng } : {}),
       })
       guardarOrigen(gps)
@@ -94,12 +91,7 @@ export default function Preferencias() {
       return
     }
     guardarPreferencias(pref)
-    if (esModoDemo()) {
-      activarExplorador(false)
-      void armarRuta()
-    } else {
-      setPaso('permiso')
-    }
+    setPaso('permiso')
   }
 
   const avance = ((pref.tiempoMin - TIEMPO_MIN) / (TIEMPO_MAX - TIEMPO_MIN)) * 100

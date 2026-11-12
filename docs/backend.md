@@ -28,15 +28,15 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `POST /api/retos/{slug}/completar` | Valida `{respuesta, revelar, idioma}` y paga | Una sola vez; `revelar` paga menos y nunca bloquea |
 | `POST /api/promociones/{slug}/canjear` | Descuenta y devuelve `{codigo, saldo}` | Atómico (función SQL); 402 si no alcanza |
 | `GET /api/perfil` · `PUT /api/perfil` | Lee o guarda `{apodo, avatar, idioma, preferencias}` | Solo el del celular |
-| `POST /api/rutas` | Arma y guarda la ruta `{tiempo_min, intereses, lat?, lng?, demo?}` → `{lugares[], estimado_min, caminata_m, …}` | Algoritmo M3; la ruta activa anterior queda `abandonada` |
+| `POST /api/rutas` | Arma y guarda la ruta `{tiempo_min, intereses, lat?, lng?}` → `{lugares[], estimado_min, caminata_m, …}` | Algoritmo M3; la ruta activa anterior queda `abandonada` |
 | `GET /api/rutas/actual` | Ruta activa con sus lugares en orden | 404 si no hay |
 | `PATCH /api/rutas/actual` | Saltar o recortar: `{lugares: [slugs en orden]}` | Al menos 1 lugar |
 | `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, distancia_m, tlacos_distancia, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 doblones una sola vez por celular, si completó al menos un reto; más 1 doblón por 100 m entre las paradas completadas (tope 60, una vez por ruta, motivo `distancia`) |
 | `GET /api/pasaporte` | `{sellos[], piezas: {total, ganadas, indices[], completa}, foto, ruta_terminada}` | Por ruta: 1 pieza por reto completado en la ruta actual; total = nº de paradas. Al crear otra ruta vuelve a cero y cambia de imagen (los sellos se quedan) |
 
-**Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición. Con `demo: true` devuelve las 5 paradas del guion en orden.
+**Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición.
 
-**Modo demo:** el avance se simula tocando posiciones sobre la ruta (adelante o atrás, estilo Maps); la llegada se registra con `metodo: "demo"`.
+**Lejos del Centro:** el modo demo se eliminó. Si el GPS está lejos del Centro (o no hay GPS), la app coloca al turista en el Zócalo y se mueve tocando el mapa; la ruta se arma igual (algoritmo y preferencias reales) y la llegada se valida a 40 m con `metodo: "gps"` y las coordenadas enviadas.
 
 ## Carpetas
 
@@ -115,7 +115,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 
 ## Ruta inteligente (migración 0005, Dev 3)
 
-- **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior; con `demo: true` siempre es la primera, para que el ensayo sea predecible.
+- **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior.
 - **`POST /api/visitas`** guarda `visitas.ruta_id` (ruta activa). Si llega otra vez a un lugar sin haber jugado, la visita pasa a la ruta de ahora.
 - **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 doblones (antes 409).
 - **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (`distancia` único por ruta, `compartir` único por celular) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.

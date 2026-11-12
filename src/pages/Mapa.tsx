@@ -11,8 +11,6 @@ import RutaLista from '../features/mapa/RutaLista'
 import type { Pestana } from '../features/mapa/Panel'
 import { altoNivel, type Nivel } from '../features/mapa/nivelesPanel'
 import { formatoDistancia, progresoRuta } from '../features/mapa/progreso'
-import ControlRecorrido from '../features/geo/ControlRecorrido'
-import { esModoDemo } from '../features/geo/demoStore'
 import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import AvisoLlegada from '../features/geo/AvisoLlegada'
@@ -26,7 +24,6 @@ import type { Evento, Lugar } from '../types/contratos'
 
 const NINGUNO: Lugar[] = []
 /** Alto aproximado del panel del recorrido virtual (px): espacio que la cámara deja libre abajo. */
-const ALTO_CONTROL_DEMO = 200
 
 
 export default function Mapa() {
@@ -105,17 +102,15 @@ export default function Mapa() {
         : null
 
   // El mapa ocupa toda la pantalla y el panel flota encima; la cámara deja libre esa franja.
-  const demo = esModoDemo()
   const [altoVentana, setAltoVentana] = useState(() => window.innerHeight)
   useEffect(() => {
     const alCambiar = () => setAltoVentana(window.innerHeight)
     window.addEventListener('resize', alCambiar)
     return () => window.removeEventListener('resize', alCambiar)
   }, [])
-  const altoPanel = demo ? 0 : altoNivel(nivel, altoVentana)
+  const altoPanel = altoNivel(nivel, altoVentana)
   // En pantalla completa el mapa queda tapado: la cámara se queda como en el nivel medio.
-  // En el recorrido virtual los controles tapan la parte baja: la cámara deja ese espacio para ver al personaje.
-  const padAbajo = demo ? ALTO_CONTROL_DEMO : altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
+  const padAbajo = altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
 
   const abrir = (p: Pestana) => {
     setPestana(p)
@@ -160,32 +155,24 @@ export default function Mapa() {
             onSaldo={() => abrir('cartera')}
           />
         }
-        abajo={
-          <>
-            <AvisoLlegada lugar={llegando} />
-            <ControlRecorrido />
-          </>
+        abajo={<AvisoLlegada lugar={llegando} />}
+      />
+      <Panel
+        activa={pestana}
+        onActiva={setPestana}
+        nivel={nivel}
+        onNivel={setNivel}
+        ruta={
+          <RutaLista
+            ruta={ruta}
+            hechos={hechos}
+            siguiente={siguiente}
+            pos={pos}
+            onCambio={setRuta}
+            onEnfocar={enfocarLugar}
+          />
         }
       />
-      {/* En la demo el recorrido virtual ocupa la parte baja: el panel se oculta para no encimarse. */}
-      {!demo && (
-        <Panel
-          activa={pestana}
-          onActiva={setPestana}
-          nivel={nivel}
-          onNivel={setNivel}
-          ruta={
-            <RutaLista
-              ruta={ruta}
-              hechos={hechos}
-              siguiente={siguiente}
-              pos={pos}
-              onCambio={setRuta}
-              onEnfocar={enfocarLugar}
-            />
-          }
-        />
-      )}
     </main>
   )
 }

@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 class LlegadaIn(BaseModel):
     lugar_slug: str
-    metodo: Literal["gps", "demo"]
+    metodo: Literal["gps"] = "gps"
     lat: float | None = None
     lng: float | None = None
 

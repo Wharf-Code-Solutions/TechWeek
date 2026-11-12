@@ -8,9 +8,6 @@ import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Check, Crosshair, ForkKnife, Storefront, TextAa, X } from '@phosphor-icons/react'
 import type { Comercio, Evento, Lugar } from '../../types/contratos'
-import { useRecorridoDemo } from '../geo/demoStore'
-import { distanciaM } from '../geo/distancia'
-import { RECORRIDO_DEMO } from '../geo/rutaDemo'
 import type { Punto } from '../geo/tipos'
 import { moverManual } from '../geo/posicionManual'
 import { useModoManual, usePosition } from '../geo/usePosition'
@@ -48,9 +45,8 @@ const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
-/** Empieza en el Zócalo; en el recorrido demo, donde está el personaje y mirando hacia donde camina. */
-function vistaInicial(lugares: Lugar[], demo: { lat: number; lng: number; rumbo: number } | null) {
-  if (demo) return { latitude: demo.lat, longitude: demo.lng, zoom: ZOOM + 0.5, pitch: 55, bearing: demo.rumbo }
+/** Empieza en el Zócalo. */
+function vistaInicial(lugares: Lugar[]) {
   const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
   return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM, pitch: 55 }
 }
@@ -226,31 +222,14 @@ export default function MapaLugares({
     })
   }, [llegando, lugares])
 
-  // En el recorrido virtual la cámara sigue al turista y gira hacia donde camina; con GPS se deja mover libre.
-  const demo = pos?.fuente === 'demo'
-  const rec = useRecorridoDemo()
-  const previa = useRef<Punto | null>(null)
-  useEffect(() => {
-    if (!demo || !pos) return
-    const m = mapa.current
-    // Un salto grande (ir a la siguiente parada) se recorre volando; un paso corto, con un movimiento suave.
-    const salto = previa.current ? distanciaM(previa.current, pos) > 60 : false
-    previa.current = pos
-    const camara = { center: [pos.lng, pos.lat] as [number, number], bearing: rec.rumbo, pitch: 55 }
-    if (salto) m?.flyTo({ ...camara, duration: 1200 })
-    else m?.easeTo({ ...camara, duration: 500 })
-  }, [demo, pos, rec.rumbo])
-
   // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
-  // En la demo sale del recorrido virtual; con GPS, de tu posición a la siguiente parada siguiendo la línea azul.
-  const siguienteParada = Math.min(rec.parada + 1, rec.paradas.length - 1)
+  // Sale de tu posición a la siguiente parada siguiendo la línea azul.
   const destino = useMemo(() => lugares.find((l) => l.slug === siguiente) ?? null, [lugares, siguiente])
   const datosGuia = useMemo(() => {
     let coordinates: [number, number][] = []
-    if (demo) coordinates = RECORRIDO_DEMO.camino(rec.metros, RECORRIDO_DEMO.metrosDeParada(siguienteParada))
-    else if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
+    if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
     return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
-  }, [demo, rec.metros, siguienteParada, pos, destino, linea])
+  }, [pos, destino, linea])
   const hayGuia = datosGuia.geometry.coordinates.length > 1
 
   // Pulso: un halo amarillo que se expande y se desvanece sobre el tramo que falta, para ubicar de un vistazo hacia
@@ -333,7 +312,7 @@ export default function MapaLugares({
         ref={mapa}
         mapboxAccessToken={TOKEN}
         initialViewState={{
-          ...vistaInicial(lugares, demo && pos ? { lat: pos.lat, lng: pos.lng, rumbo: rec.rumbo } : null),
+          ...vistaInicial(lugares),
           padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
         }}
         maxBounds={LIMITES}
@@ -486,7 +465,7 @@ export default function MapaLugares({
         })}
         {pos && (
           <Marker latitude={pos.lat} longitude={pos.lng} style={{ zIndex: 3 }}>
-            <span className={`mapa-yo${demo ? ' mapa-yo--demo' : ''}`} role="img" aria-label={t('mapa.tuPosicion')} />
+            <span className="mapa-yo" role="img" aria-label={t('mapa.tuPosicion')} />
           </Marker>
         )}
       </Map>
@@ -548,7 +527,7 @@ export default function MapaLugares({
             </Boton>
             <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
             <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
-            {/* ¡Llegaste! registra la llegada (con GPS valida los 40 m; en la demo vale) y desde ahí se juega el reto. */}
+            {/* ¡Llegaste! registra la llegada (valida los 40 m) y desde ahí se juega el reto. */}
             <Boton
               ancho
               onClick={() => {

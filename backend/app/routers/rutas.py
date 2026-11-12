@@ -29,7 +29,6 @@ class RutaIn(BaseModel):
     intereses: list[CATEGORIAS] = []
     lat: float | None = None  # posición actual, si hay permiso de GPS
     lng: float | None = None
-    demo: bool = False  # ?demo=1: las 5 paradas del guion
 
 
 # ───────────── Perfil ─────────────
@@ -64,16 +63,11 @@ async def _con_lugares(ruta: dict) -> dict:
     return {**ruta, "lugares": [por_id[i] for i in ids if i in por_id]}
 
 
-async def elegir_foto(ultima_id: int | None, demo: bool = False) -> int | None:
-    """Imagen del rompecabezas: al azar, distinta de la última ruta cuando hay más de una.
-
-    En la demo siempre es la primera (la foto histórica) para que el ensayo sea predecible.
-    """
+async def elegir_foto(ultima_id: int | None) -> int | None:
+    """Imagen del rompecabezas: al azar, distinta de la última ruta cuando hay más de una."""
     fotos = await db.seleccionar("fotos_historicas", order="id.asc")
     if not fotos:
         return None
-    if demo:
-        return fotos[0]["id"]
     otras = [f for f in fotos if f["id"] != ultima_id]
     return random.choice(otras or fotos)["id"]
 
@@ -88,12 +82,12 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     # Los lugares con sello (reto completado) no se vuelven a ofrecer: ya no dan doblones.
     visitas = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}")
     visitados = {v["lugar_id"] for v in visitas if v["reto_ok"] is not None}
-    calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, datos.demo, visitados)
+    calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, visitados=visitados)
 
     await db.asegurar_perfil(perfil_id)
     anterior = await db.seleccionar("rutas_usuario", perfil_id=f"eq.{perfil_id}", order="creado_en.desc", limit="1")
     await db.actualizar("rutas_usuario", {"estado": "abandonada"}, perfil_id=f"eq.{perfil_id}", estado="eq.activa")
-    foto_id = await elegir_foto(anterior[0].get("foto_id") if anterior else None, datos.demo)
+    foto_id = await elegir_foto(anterior[0].get("foto_id") if anterior else None)
     fila = (
         await db.insertar(
             "rutas_usuario",

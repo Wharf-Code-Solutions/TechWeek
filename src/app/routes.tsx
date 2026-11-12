@@ -1,4 +1,4 @@
-// Contrato 5 · Rutas de pantalla. ?demo=1 activa el recorrido virtual.
+// Contrato 5 · Rutas de pantalla.
 // Solo Preferencias (la entrada) se carga de inmediato; las demás pantallas se descargan al abrirlas, así el mapa
 // (mapbox-gl pesa casi 2 MB) no retrasa la primera pantalla.
 import { motion } from 'framer-motion'

@@ -43,7 +43,7 @@ Fuera de la demo: Palacio Municipal y Faro Venustiano Carranza. **Regla:** solo 
 ## 2 · `usePosition()` (`src/features/geo/usePosition.ts`)
 
 ```ts
-usePosition(): { lat: number; lng: number; precision: number; fuente: 'gps' | 'demo' } | null
+usePosition(): { lat: number; lng: number; precision: number; fuente: 'gps' } | null
 ```
 El mapa, la detección de llegada y el recorrido virtual **solo** hablan con este hook. Si devuelve `null`, no hay permiso de ubicación y la app entra en modo explorador.
 
@@ -96,7 +96,7 @@ Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuest
 
 | Endpoint | Entrada | Devuelve | Regla |
 | --- | --- | --- | --- |
-| `POST /api/visitas` | `lugar_slug, metodo ('gps'\|'demo'), lat?, lng?` | la visita | Una sola vez por celular y lugar; con `gps` valida el radio |
+| `POST /api/visitas` | `lugar_slug, metodo ('gps'), lat, lng` | la visita | Una sola vez por celular y lugar; valida siempre el radio |
 | `POST /api/retos/{slug}/completar` | `respuesta, revelar, idioma` | `{ correcto, completado, tlacos_ganados, saldo }` | Paga una sola vez |
 | `POST /api/promociones/{slug}/canjear` | — | `{ codigo, saldo }` | Atómico (función SQL `canjear`); 402 si no alcanza |
 
@@ -111,7 +111,7 @@ Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuest
 ## 6 · Rutas de pantalla (`src/app/routes.tsx`)
 
 `/` preferencias · `/mapa` · `/lugar/:slug` · `/reto/:slug` · `/recompensa/:slug` · `/cupon/:id` · `/fin`.
-El parámetro `?demo=1` activa el recorrido virtual.
+Ya no existe el modo demo (`?demo=1`): lejos del Centro la posición se mueve tocando el mapa.
 
 `/reto/:slug` requiere la llegada registrada (si no, el backend responde 409). Al completarse navega a `/recompensa/:slug` con el resultado de `api.completarReto()` en `location.state`: `{ correcto, completado, tlacos_ganados, saldo }`. Si `correcto` es `false`, el turista siguió con el premio reducido.
 

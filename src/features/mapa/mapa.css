@@ -137,20 +137,6 @@
   background: rgb(20 70 200 / 0.28);
   animation: mapa-yo-latido 2s ease-out infinite;
 }
-/* En el recorrido virtual el mapa gira con el personaje: el cono siempre apunta hacia arriba (hacia donde mira) */
-.mapa-yo--demo::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: -26px;
-  width: 0;
-  height: 0;
-  margin-left: -9px;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-bottom: 22px solid var(--cobalto);
-  filter: drop-shadow(0 1px 1px rgb(21 10 46 / 0.4));
-}
 @keyframes mapa-yo-latido {
   0% { transform: scale(0.5); opacity: 1; }
   100% { transform: scale(1.4); opacity: 0; }

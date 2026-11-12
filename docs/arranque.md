@@ -35,7 +35,7 @@ Mientras Supabase no esté listo, el frontend puede leer `src/data/seed.json` y 
 ```ts
 import { api } from '../lib/api'
 await api.lugares()
-await api.registrarLlegada('catedral', 'gps', lat, lng)   // 'demo' con ?demo=1
+await api.registrarLlegada('catedral', 'gps', lat, lng)
 await api.completarReto('catedral', ['palabra1'], false, 'es')
 await api.canjear('cafe-2x1')
 ```

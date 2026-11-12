@@ -1,8 +1,6 @@
 // Línea azul de la ruta: sigue las calles (Mapbox Directions, perfil walking) y cae a línea recta si falla.
-// La ruta de la demo ya trae su trazado guardado (rutaDemoCalles.ts) y no consulta la red.
 import { useEffect, useMemo, useState } from 'react'
 import type { Punto } from './tipos'
-import { LINEA_DEMO, PARADAS_DEMO } from './rutaDemo'
 
 type Coord = [number, number]
 type ConSlug = Punto & { slug: string }
@@ -16,7 +14,6 @@ export const claveRuta = (paradas: { slug: string }[], origen?: Punto | null) =>
 
 export const lineaRecta = (paradas: Punto[]): Coord[] => paradas.map((p) => [p.lng, p.lat])
 
-const esDemo = (paradas: { slug: string }[]) => claveRuta(paradas) === claveRuta(PARADAS_DEMO)
 
 function leerCache(clave: string): Coord[] | null {
   try {
@@ -49,13 +46,13 @@ async function pedirCalles(paradas: Punto[], señal: AbortSignal): Promise<Coord
 /** Devuelve la línea [lng, lat] de la ruta por calles; mientras llega (o si falla) es la línea recta. */
 export function useRutaCaminable(paradas: ConSlug[], origen: Punto | null = null): Coord[] {
   const clave = claveRuta(paradas, origen)
-  // La línea arranca donde estaba el turista al armar la ruta; en la demo, en la primera parada.
-  const puntos = useMemo<Punto[]>(() => (origen && !esDemo(paradas) ? [origen, ...paradas] : paradas), [origen, paradas])
+  // La línea arranca donde estaba el turista al armar la ruta (si no se conoce, en la primera parada).
+  const puntos = useMemo<Punto[]>(() => (origen ? [origen, ...paradas] : paradas), [origen, paradas])
   const recta = useMemo(() => lineaRecta(puntos), [puntos])
   const [calles, setCalles] = useState<{ clave: string; linea: Coord[] } | null>(null)
 
   useEffect(() => {
-    if (puntos.length < 2 || puntos.length > MAX_PUNTOS || esDemo(paradas) || !TOKEN) return
+    if (puntos.length < 2 || puntos.length > MAX_PUNTOS || !TOKEN) return
     const guardada = leerCache(clave)
     if (guardada) {
       setCalles({ clave, linea: guardada })
@@ -74,6 +71,5 @@ export function useRutaCaminable(paradas: ConSlug[], origen: Punto | null = null
   }, [clave])
 
   if (puntos.length < 2) return []
-  if (esDemo(paradas)) return LINEA_DEMO
   return calles?.clave === clave ? calles.linea : recta
 }

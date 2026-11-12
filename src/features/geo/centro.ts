@@ -1,5 +1,5 @@
-// ¿El turista está en el Centro Histórico o lejos de él? Sirve para ofrecer el modo demo (recorrido virtual)
-// a quien prueba la app desde otra parte de la ciudad, como en un hackatón.
+// ¿El turista está en el Centro Histórico o lejos de él? Si está lejos, la app lo coloca en el Zócalo
+// y se mueve tocando el mapa (ver posicionManual.ts).
 import { distanciaM } from './distancia'
 import type { Punto } from './tipos'
 

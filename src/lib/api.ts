@@ -29,8 +29,6 @@ export interface RutaIn {
   /** Posición actual, si hay permiso de GPS. */
   lat?: number
   lng?: number
-  /** ?demo=1: las 5 paradas del guion. */
-  demo?: boolean
 }
 export interface Ruta {
   id: number
@@ -147,7 +145,7 @@ export const api = {
   // Progreso del celular (con sesión)
   saldo: () => privado<{ saldo: number }>('/api/saldo'),
   /** Idempotente: una sola petición por lugar y sesión; un 409 ("ya existe") cuenta como éxito. */
-  registrarLlegada: (lugar_slug: string, metodo: 'gps' | 'demo', lat?: number, lng?: number) => {
+  registrarLlegada: (lugar_slug: string, metodo: 'gps', lat?: number, lng?: number) => {
     let p = llegadas.get(lugar_slug)
     if (!p) {
       p = privado('/api/visitas', { method: 'POST', body: JSON.stringify({ lugar_slug, metodo, lat, lng }) }).catch(

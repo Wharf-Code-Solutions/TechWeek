@@ -102,21 +102,6 @@
     "muestraAlMesero": "Muestra al mesero",
     "aviso": "Desliza <b>frente al mesero</b>: una vez canjeado no se puede deshacer."
   },
-  "recorrido": {
-    "etiqueta": "Recorrido virtual",
-    "avanzar": "Avanzar",
-    "retroceder": "Retroceder",
-    "siguiente": "Siguiente parada",
-    "parada": "Parada {{actual}} de {{total}}",
-    "demo": "Demo {{tiempo}}",
-    "siguiente_parada": "Siguiente: {{nombre}} ({{n}} de {{total}})",
-    "distancia": "{{m}} m",
-    "completo": "¡Recorrido completo!",
-    "saltar_parada": "Ir a la siguiente parada",
-    "ayuda": "Toca para dar un paso, mantén presionado para caminar.",
-    "llegaste": "¡Llegaste a {{nombre}}!",
-    "direccion": "La siguiente parada queda a {{grados}} grados de hacia donde miras"
-  },
   "mapa": {
     "pista_toque": "Estás lejos del Centro: toca el mapa para caminar.",
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",

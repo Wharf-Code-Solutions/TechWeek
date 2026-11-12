@@ -128,21 +128,14 @@ def calcular_ruta(
     tiempo_min: int,
     intereses: list[str],
     inicio: tuple[float, float] | None = None,
-    demo: bool = False,
     visitados: set[int] | frozenset[int] = frozenset(),
 ) -> RutaCalculada:
     """Arma la ruta.
 
-    - `demo=True`: las paradas marcadas `en_demo`, en su orden sugerido (guion de 4 minutos).
-    - Si no: sin los `visitados` (ids de lugar), con los lugares de sus intereses que más
+    - Sin los `visitados` (ids de lugar), con los lugares de sus intereses que más
       puntos den en `tiempo_min`; si quedan menos de 3 paradas se completa con otros lugares
       mientras quepan. Siempre hay al menos 1 parada.
     """
-    if demo:
-        orden = sorted((l for l in lugares if l.get("en_demo")), key=lambda l: l.get("orden_sugerido") or 999)
-        minutos, metros = _medir(orden, inicio)
-        return RutaCalculada(orden, round(minutos), round(metros))
-
     disponibles = [l for l in lugares if l.get("id") not in visitados] or list(lugares)
     gustos = set(intereses)
     orden_sug = lambda l: l.get("orden_sugerido") or 999  # noqa: E731

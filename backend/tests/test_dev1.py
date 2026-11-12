@@ -21,11 +21,6 @@ ZOCALO = (19.20023, -96.13853)
 
 # ───────────── Algoritmo de ruta ─────────────
 
-def test_ruta_demo_son_las_5_paradas_en_orden():
-    r = calcular_ruta(LUGARES, 60, [], demo=True)
-    assert [l["slug"] for l in r.lugares] == ["catedral", "condesa-malibran", "baluarte-santiago", "portales", "zocalo"]
-
-
 def test_ruta_cabe_en_el_tiempo():
     for minutos in (30, 60, 120):
         r = calcular_ruta(LUGARES, minutos, [], inicio=ZOCALO)
@@ -135,6 +130,21 @@ def cliente(monkeypatch):
     app.dependency_overrides.clear()
 
 
+DEMO5 = ["catedral", "condesa-malibran", "baluarte-santiago", "portales", "zocalo"]
+
+
+def armar(c, slugs=None):
+    """Crea una ruta real y la ajusta (PATCH) a estos lugares para tener paradas conocidas. Devuelve la ruta."""
+    c.post("/api/rutas", json={"tiempo_min": 240, "intereses": ["historia"]})
+    return c.patch("/api/rutas/actual", json={"lugares": slugs or DEMO5}).json()
+
+
+def llegar(c, slug):
+    """Llegada por GPS justo en el lugar."""
+    l = next(x for x in LUGARES if x["slug"] == slug)
+    return c.post("/api/visitas", json={"lugar_slug": slug, "metodo": "gps", "lat": l["lat"], "lng": l["lng"]})
+
+
 # ───────────── Visitas (llegada) ─────────────
 
 def test_llegada_gps_dentro_del_radio(cliente):
@@ -154,48 +164,50 @@ def test_llegada_gps_sin_coordenadas(cliente):
     assert c.post("/api/visitas", json={"lugar_slug": "zocalo", "metodo": "gps"}).status_code == 422
 
 
-def test_llegada_demo_y_no_se_duplica(cliente):
+def test_llegada_no_se_duplica(cliente):
     c, base = cliente
-    a = c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"}).json()
-    b = c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"}).json()
+    a = llegar(c, "catedral").json()
+    b = llegar(c, "catedral").json()
     assert a["id"] == b["id"] and len(base.t["visitas"]) == 1
 
 
 def test_llegada_lugar_inexistente(cliente):
     c, _ = cliente
-    assert c.post("/api/visitas", json={"lugar_slug": "callejon-del-diamante", "metodo": "demo"}).status_code == 404
+    r = c.post("/api/visitas", json={"lugar_slug": "callejon-del-diamante", "metodo": "gps", "lat": 0, "lng": 0})
+    assert r.status_code == 404
 
 
 # ───────────── Rutas y bono ─────────────
 
 def test_crear_y_leer_ruta(cliente):
     c, _ = cliente
-    r = c.post("/api/rutas", json={"tiempo_min": 60, "intereses": ["historia"], "demo": True})
-    assert r.status_code == 201 and len(r.json()["lugares"]) == 5
+    r = c.post("/api/rutas", json={"tiempo_min": 120, "intereses": ["historia", "mar"]})
+    assert r.status_code == 201 and len(r.json()["lugares"]) >= 3
+    primero = r.json()["lugares"][0]["slug"]
     actual = c.get("/api/rutas/actual").json()
-    assert [l["slug"] for l in actual["lugares"]][0] == "catedral"
+    assert [l["slug"] for l in actual["lugares"]][0] == primero
 
 
 def test_ajustar_ruta_saltando_un_lugar(cliente):
     c, _ = cliente
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    armar(c)
     r = c.patch("/api/rutas/actual", json={"lugares": ["catedral", "zocalo"]})
     assert [l["slug"] for l in r.json()["lugares"]] == ["catedral", "zocalo"]
 
 
 def test_bono_solo_con_reto_y_una_vez(cliente):
     c, base = cliente
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    armar(c)
     sin_reto = c.post("/api/rutas/actual/terminar").json()
     assert sin_reto["bono"] == 0
 
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
-    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})
+    armar(c)
+    llegar(c, "catedral")
     base.t["visitas"][0]["reto_ok"] = True
     fin = c.post("/api/rutas/actual/terminar").json()
     assert fin["bono"] == 100 and fin["saldo"] == 100 and fin["retos_completados"] == 1
 
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    armar(c)
     otra = c.post("/api/rutas/actual/terminar").json()
     assert otra["bono"] == 0 and otra["saldo"] == 100
 
@@ -220,9 +232,9 @@ def test_pasaporte_sellos_y_piezas(cliente):
     vacio = c.get("/api/pasaporte").json()
     assert vacio["sellos"] == [] and vacio["piezas"]["ganadas"] == 0
 
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    armar(c)
     for slug in ("catedral", "condesa-malibran", "baluarte-santiago"):
-        c.post("/api/visitas", json={"lugar_slug": slug, "metodo": "demo"})
+        llegar(c, slug)
     for v in base.t["visitas"][:2]:
         v["reto_ok"] = True  # dos retos completados; el tercero solo tiene llegada
     p = c.get("/api/pasaporte").json()
@@ -232,7 +244,7 @@ def test_pasaporte_sellos_y_piezas(cliente):
     c.post("/api/rutas/actual/terminar")  # terminar ya no regala una pieza
     assert c.get("/api/pasaporte").json()["piezas"]["ganadas"] == 2
 
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})  # otra ruta: el rompecabezas vuelve a cero
+    armar(c)  # otra ruta: el rompecabezas vuelve a cero
     nuevo = c.get("/api/pasaporte").json()
     assert nuevo["piezas"]["ganadas"] == 0 and len(nuevo["sellos"]) == 2  # los sellos se conservan
 
@@ -295,7 +307,6 @@ def test_retos_rapidos_no_envian_la_respuesta():
 
 def test_seed_retos_bien_formados():
     from app.retos import validar
-    demo = {l["slug"] for l in SEED["lugares"] if l["en_demo"]}
     lugares = {l["slug"] for l in SEED["lugares"]}
     assert {r["lugar_slug"] for r in SEED["retos"]} == lugares  # todos los lugares tienen reto
     for r in SEED["retos"]:
@@ -311,7 +322,7 @@ def test_seed_retos_bien_formados():
                 assert c["correcta"] in c["opciones"] and c["opciones"][0] != c["correcta"]
                 assert validar(r["tipo"], c, [c["correcta"]])
         if r["tipo"] in ("trivia", "verdadero_falso", "intruso"):
-            assert r["lugar_slug"] not in demo and r["tlacos"] < 50, r["lugar_slug"]
+            assert r["tlacos"] < 50, r["lugar_slug"]
 
 
 # ───────────── Bloque 2: ruta inteligente, piezas por ruta, distancia ─────────────
@@ -365,8 +376,8 @@ def test_tlacos_por_distancia():
 
 def test_crear_ruta_no_ofrece_lugares_con_sello(cliente):
     c, base = cliente
-    c.post("/api/rutas", json={"tiempo_min": 240, "intereses": ["historia"], "demo": True})
-    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})
+    armar(c)
+    llegar(c, "catedral")
     base.t["visitas"][0]["reto_ok"] = True
     nueva = c.post("/api/rutas", json={"tiempo_min": 240, "intereses": ["historia"]}).json()
     assert "catedral" not in [l["slug"] for l in nueva["lugares"]]
@@ -374,11 +385,11 @@ def test_crear_ruta_no_ofrece_lugares_con_sello(cliente):
 
 def test_la_visita_queda_ligada_a_la_ruta_activa(cliente):
     c, base = cliente
-    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
-    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})
+    ruta = armar(c)
+    llegar(c, "catedral")
     assert base.t["visitas"][0]["ruta_id"] == ruta["id"]
-    otra = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
-    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})  # sin jugar: pasa a la ruta nueva
+    otra = armar(c)
+    llegar(c, "catedral")  # sin jugar: pasa a la ruta nueva
     assert base.t["visitas"][0]["ruta_id"] == otra["id"]
 
 
@@ -388,17 +399,11 @@ def test_ruta_nueva_cambia_de_foto(cliente):
     assert all(a != b for a, b in zip(fotos, fotos[1:]))
 
 
-def test_la_demo_siempre_usa_la_misma_foto(cliente):
-    c, _ = cliente
-    fotos = {c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["foto_id"] for _ in range(6)}
-    assert fotos == {1}
-
-
 def test_puntos_por_distancia_una_vez_por_ruta(cliente):
     c, base = cliente
-    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    armar(c)
     for slug in ("catedral", "condesa-malibran", "baluarte-santiago"):
-        c.post("/api/visitas", json={"lugar_slug": slug, "metodo": "demo"})
+        llegar(c, slug)
     for v in base.t["visitas"]:
         v["reto_ok"] = True
     fin = c.post("/api/rutas/actual/terminar").json()
@@ -428,7 +433,7 @@ def test_reto_ya_completado_no_es_error(monkeypatch):
 
 def test_compartir_paga_una_vez_con_ruta_terminada(cliente):
     c, base = cliente
-    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    ruta = armar(c)
     assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 409  # sigue activa
     fin = c.post("/api/rutas/actual/terminar").json()
     assert fin["ruta_id"] == ruta["id"]
@@ -442,7 +447,7 @@ def test_compartir_no_se_repite_creando_rutas(cliente):
     c, base = cliente
     ids = []
     for _ in range(3):
-        ids.append(c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["id"])
+        ids.append(armar(c)["id"])
         c.post("/api/rutas/actual/terminar")
     assert [c.post(f"/api/rutas/{i}/compartir").json()["tlacos"] for i in ids] == [30, 0, 0]
     assert len([m for m in base.t["movimientos_tlacos"] if m["motivo"] == "compartir"]) == 1
@@ -451,6 +456,6 @@ def test_compartir_no_se_repite_creando_rutas(cliente):
 def test_compartir_ruta_ajena_o_inexistente(cliente):
     c, base = cliente
     assert c.post("/api/rutas/999/compartir").status_code == 404
-    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    ruta = armar(c)
     base.t["rutas_usuario"][0]["perfil_id"] = "otro-celular"
     assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 404
