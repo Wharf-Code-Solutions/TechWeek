@@ -1,0 +1,240 @@
+{
+  "_meta": {
+    "version": 1,
+    "actualizado": "2026-11-11",
+    "notas": "Coordenadas APROXIMADAS (verificar: true). Verificar en campo o en Google Maps antes de la fase 2: el radio de llegada es de 40 m. Fuentes: sitios-turisticos-veracruz.csv e investigación del Centro Histórico."
+  },
+  "lugares": [
+    {
+      "slug": "catedral",
+      "nombre_es": "Catedral de la Asunción",
+      "nombre_en": "Cathedral of the Assumption",
+      "categoria": "historia",
+      "lat": 19.19905,
+      "lng": -96.13640,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "Se levantó en el siglo XVII al costado este de la Plaza Mayor, tal como pedían las ordenanzas reales para el templo principal de la ciudad.",
+      "curiosidad_en": "It was built in the 17th century on the east side of the Main Square, just as the royal ordinances required for the city's main church.",
+      "ilustracion": "catedral",
+      "orden_sugerido": 1,
+      "en_demo": true
+    },
+    {
+      "slug": "condesa-malibran",
+      "nombre_es": "Solar de la Condesa de Malibrán",
+      "nombre_en": "Site of the Countess of Malibrán",
+      "categoria": "leyendas",
+      "lat": 19.19870,
+      "lng": -96.13800,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "La leyenda habla de una condesa bruja, pero el personaje real fue Doña Beatriz del Real, una viuda que vivió aquí en el siglo XVIII y murió en 1802.",
+      "curiosidad_en": "The legend tells of a witch countess, but the real person was Doña Beatriz del Real, a widow who lived here in the 18th century and died in 1802.",
+      "ilustracion": "fantasma",
+      "orden_sugerido": 2,
+      "en_demo": true
+    },
+    {
+      "slug": "baluarte-santiago",
+      "nombre_es": "Baluarte de Santiago",
+      "nombre_en": "Santiago Bastion",
+      "categoria": "historia",
+      "lat": 19.19560,
+      "lng": -96.13350,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "Es el único de los nueve baluartes de la antigua muralla que sigue en pie. Se construyó con piedra muca (coral) y ladrillo. Su interior reabre en 2027.",
+      "curiosidad_en": "It is the only one of the nine bastions of the old city wall still standing, built from coral stone and brick. Its interior reopens in 2027.",
+      "ilustracion": "baluarte",
+      "orden_sugerido": 3,
+      "en_demo": true
+    },
+    {
+      "slug": "portales",
+      "nombre_es": "Portales y café lechero",
+      "nombre_en": "Arcades and café lechero",
+      "categoria": "comida",
+      "lat": 19.19960,
+      "lng": -96.13660,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "Bajo los portales frente a la Plaza Mayor se pide el café lechero golpeando el vaso con la cuchara, mientras suena la marimba.",
+      "curiosidad_en": "Under the arcades facing the Main Square, people order café lechero by tapping the glass with a spoon while the marimba plays.",
+      "ilustracion": "cafe-lechero",
+      "orden_sugerido": 4,
+      "en_demo": true
+    },
+    {
+      "slug": "zocalo",
+      "nombre_es": "Zócalo / Plaza de Armas",
+      "nombre_en": "Zócalo / Main Square",
+      "categoria": "musica",
+      "lat": 19.19935,
+      "lng": -96.13705,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "La Plaza Mayor es el punto de partida de la traza de la ciudad del siglo XVII: de aquí salen sus calles en cuadrícula.",
+      "curiosidad_en": "The Main Square is where the 17th-century city grid begins: the streets spread out from here in a checkerboard.",
+      "ilustracion": "pareja-danzon",
+      "orden_sugerido": 5,
+      "en_demo": true
+    },
+    {
+      "slug": "palacio-municipal",
+      "nombre_es": "Palacio Municipal",
+      "nombre_en": "City Hall",
+      "categoria": "historia",
+      "lat": 19.19975,
+      "lng": -96.13740,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "Es la sede del primer cabildo (ayuntamiento) de la América continental. Su torre de reloj y sus arcos son de piedra muca.",
+      "curiosidad_en": "It is home to the first town council in mainland America. Its clock tower and arches are made of coral stone.",
+      "ilustracion": "palacio-municipal",
+      "orden_sugerido": 6,
+      "en_demo": false
+    },
+    {
+      "slug": "faro-carranza",
+      "nombre_es": "Faro Venustiano Carranza",
+      "nombre_en": "Venustiano Carranza Lighthouse",
+      "categoria": "mar",
+      "lat": 19.20150,
+      "lng": -96.13500,
+      "verificar": true,
+      "radio_m": 40,
+      "curiosidad_es": "Lo inauguró Porfirio Díaz y en 1914 fue la sede del gobierno de Venustiano Carranza. Hoy es comandancia de la Marina: solo se aprecia por fuera.",
+      "curiosidad_en": "It was opened by Porfirio Díaz and in 1914 it was Venustiano Carranza's seat of government. Today it is a Navy command: exterior view only.",
+      "ilustracion": "faro-carranza",
+      "orden_sugerido": 7,
+      "en_demo": false
+    }
+  ],
+  "retos": [
+    {
+      "lugar_slug": "condesa-malibran",
+      "tipo": "palabras",
+      "clacos": 50,
+      "clacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Cuenta la leyenda que la condesa recurría a la ",
+          "{0}",
+          " mientras su esposo viajaba. Al volver, el conde enloqueció y gritaba por las calles: \"¡Que muera la Condesa de ",
+          "{1}",
+          "!\". En realidad, aquí vivió Doña Beatriz del ",
+          "{2}",
+          ", una viuda que murió en 1802."
+        ],
+        "respuestas": ["brujería", "Malibrán", "Real"],
+        "opciones": ["brujería", "Malibrán", "Real", "medicina", "Ulúa", "Castillo"]
+      },
+      "contenido_en": {
+        "texto": [
+          "Legend says the countess turned to ",
+          "{0}",
+          " while her husband was away. When he returned, the count went mad and shouted in the streets: \"Death to the Countess of ",
+          "{1}",
+          "!\". In reality, Doña Beatriz del ",
+          "{2}",
+          ", a widow who died in 1802, lived here."
+        ],
+        "respuestas": ["witchcraft", "Malibrán", "Real"],
+        "opciones": ["witchcraft", "Malibrán", "Real", "medicine", "Ulúa", "Castillo"]
+      }
+    },
+    {
+      "lugar_slug": "baluarte-santiago",
+      "tipo": "orden",
+      "clacos": 60,
+      "clacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "eventos": [
+          { "id": "e1", "anio": 1635, "texto": "Se construye el Baluarte de Santiago" },
+          { "id": "e2", "anio": 1683, "texto": "El pirata Lorencillo ataca el puerto" },
+          { "id": "e3", "anio": 1763, "texto": "Se levanta la muralla marina" },
+          { "id": "e4", "anio": 1880, "texto": "Se demuele casi toda la muralla" }
+        ],
+        "orden_correcto": ["e1", "e2", "e3", "e4"]
+      },
+      "contenido_en": {
+        "eventos": [
+          { "id": "e1", "anio": 1635, "texto": "Santiago Bastion is built" },
+          { "id": "e2", "anio": 1683, "texto": "The pirate Lorencillo raids the port" },
+          { "id": "e3", "anio": 1763, "texto": "The sea wall is built" },
+          { "id": "e4", "anio": 1880, "texto": "Most of the city wall is torn down" }
+        ],
+        "orden_correcto": ["e1", "e2", "e3", "e4"]
+      }
+    }
+  ],
+  "fotos_historicas": [
+    {
+      "slug": "puerto-antiguo",
+      "url": "",
+      "titulo_es": "Puerto de Veracruz (pendiente: foto de dominio público)",
+      "titulo_en": "Port of Veracruz (pending: public domain photo)",
+      "piezas": 6
+    }
+  ],
+  "comercios": [
+    {
+      "slug": "comercio-cafe",
+      "nombre": "[Café de los portales]",
+      "categoria": "comida",
+      "lat": 19.19960,
+      "lng": -96.13660,
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "comercio-volovan",
+      "nombre": "[Panadería de volovanes]",
+      "categoria": "comida",
+      "lat": 19.19900,
+      "lng": -96.13600,
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "comercio-nieve",
+      "nombre": "[Nevería del Parque Zamora]",
+      "categoria": "comida",
+      "lat": 19.19700,
+      "lng": -96.13800,
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "comercio-lancha",
+      "nombre": "[Paseo en lancha del Malecón]",
+      "categoria": "mar",
+      "lat": 19.20050,
+      "lng": -96.13450,
+      "pendiente_confirmar": true
+    }
+  ],
+  "promociones": [
+    { "slug": "cafe-2x1", "comercio_slug": "comercio-cafe", "titulo_es": "Café lechero 2×1", "titulo_en": "Café lechero 2-for-1", "costo_clacos": 80, "activa": true },
+    { "slug": "volovan", "comercio_slug": "comercio-volovan", "titulo_es": "Volován de regalo", "titulo_en": "Free volován", "costo_clacos": 60, "activa": true },
+    { "slug": "nieve", "comercio_slug": "comercio-nieve", "titulo_es": "Nieve de regalo", "titulo_en": "Free sorbet", "costo_clacos": 40, "activa": true },
+    { "slug": "lancha-20", "comercio_slug": "comercio-lancha", "titulo_es": "−20 % en paseo en lancha", "titulo_en": "20% off boat ride", "costo_clacos": 300, "activa": true }
+  ],
+  "eventos": [
+    {
+      "slug": "danzon-zocalo",
+      "titulo_es": "Danzón en el Zócalo",
+      "titulo_en": "Danzón at the Zócalo",
+      "lugar": "Zócalo / Plaza de Armas",
+      "lat": 19.19935,
+      "lng": -96.13705,
+      "inicio": "2026-11-20T19:00:00-06:00",
+      "fin": "2026-11-20T21:00:00-06:00",
+      "categoria": "musica",
+      "pendiente_confirmar": true
+    }
+  ],
+  "economia": {
+    "bono_fin_ruta": 100
+  }
+}
