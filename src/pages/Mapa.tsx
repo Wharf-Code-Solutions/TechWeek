@@ -36,6 +36,8 @@ export default function Mapa() {
   // undefined: cargando · null: sin ruta activa (entró directo o falló la red) · Lugar[]: la ruta
   const [ruta, setRuta] = useState<Lugar[] | null | undefined>(undefined)
   const [hechos, setHechos] = useState<ReadonlyMap<string, number>>(new Map())
+  // Hasta saber qué lugares ya se visitaron no se vigila ninguna llegada (si no, se reabriría uno ya jugado).
+  const [hechosListos, setHechosListos] = useState(false)
   const [saldo, setSaldo] = useState<number | null>(null)
   const [eventos, setEventos] = useState<Evento[]>(seed.eventos as Evento[])
   // Otras pantallas pueden abrir el mapa en una pestaña: navigate('/mapa', { state: { pestana: 'pasaporte' } })
@@ -55,6 +57,7 @@ export default function Mapa() {
       .pasaporte()
       .then((p) => vivo && setHechos(new Map((p as PasaporteDatos).sellos.map((s) => [s.lugar_slug, s.tlacos]))))
       .catch(() => {})
+      .finally(() => vivo && setHechosListos(true))
     api
       .saldo()
       .then((s) => vivo && setSaldo(s.saldo))
@@ -68,8 +71,13 @@ export default function Mapa() {
     }
   }, [])
 
-  // Mientras carga la ruta no se vigila nada, para no abrir un lugar que no está en ella.
-  const { llegando } = useIrAlLlegar(ruta === undefined ? NINGUNO : (ruta ?? todos))
+  // Se vigilan solo los lugares de la ruta que todavía no se han jugado: los visitados se siguen mostrando
+  // (marcados como hechos) pero ya no abren ¡Llegaste! ni dan puntos. Mientras carga, no se vigila nada.
+  const aVigilar = useMemo(
+    () => (ruta === undefined || !hechosListos ? NINGUNO : (ruta ?? todos).filter((l) => !hechos.has(l.slug))),
+    [ruta, hechosListos, todos, hechos],
+  )
+  const { llegando } = useIrAlLlegar(aVigilar)
 
   const slugsHechos = useMemo(() => new Set(hechos.keys()), [hechos])
   const enRuta = useMemo(() => new Set((ruta ?? []).map((l) => l.slug)), [ruta])

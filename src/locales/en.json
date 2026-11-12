@@ -58,7 +58,8 @@
     "antetitulo": "{{categoria}} · Stop {{n}} of {{total}}",
     "jugar_premio": "Play the challenge · +{{n}} Tlacos",
     "seguir": "Not now, keep walking",
-    "jugar_demo": "I'm far away: play in demo mode"
+    "jugar_demo": "I'm far away: play in demo mode",
+    "ya_visitado": "You've already visited this place: you can see it again, but it no longer earns Tlacos."
   },
   "recompensa": {
     "ganaste": "You earned {{n}} Tlacos!",

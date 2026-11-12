@@ -58,7 +58,8 @@
     "antetitulo": "{{categoria}} · Parada {{n}} de {{total}}",
     "jugar_premio": "Jugar el reto · +{{n}} Tlacos",
     "seguir": "Ahora no, seguir caminando",
-    "jugar_demo": "Estoy lejos: jugar en modo demo"
+    "jugar_demo": "Estoy lejos: jugar en modo demo",
+    "ya_visitado": "Ya visitaste este lugar: puedes verlo otra vez, pero ya no da Tlacos."
   },
   "recompensa": {
     "ganaste": "¡Ganaste {{n}} Tlacos!",

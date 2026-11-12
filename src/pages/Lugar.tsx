@@ -11,6 +11,7 @@ import { escenaDe } from '../components/ui/escenas'
 import { urlIlustracion } from '../components/ui/ilustraciones'
 import { activarExplorador } from '../features/geo/explorador'
 import { usePosition, useEstadoUbicacion } from '../features/geo/usePosition'
+import type { PasaporteDatos } from '../features/pasaporte/tipos'
 import { ApiError, api } from '../lib/api'
 import estilos from './Lugar.module.css'
 
@@ -34,11 +35,17 @@ export default function Lugar() {
   const [, setReintento] = useState(0)
   const [parada, setParada] = useState<{ n: number; total: number } | null>(null)
   const [premio, setPremio] = useState<number | null>(null)
+  // Un lugar ya jugado se puede volver a ver, pero no da puntos ni se vuelve a jugar.
+  const [yaVisitado, setYaVisitado] = useState(false)
 
   // Parada n de N (ruta activa) y Tlacos del reto: son adornos, si fallan la pantalla funciona igual.
   useEffect(() => {
     if (!slug) return
     let vivo = true
+    api
+      .pasaporte()
+      .then((p) => vivo && setYaVisitado((p as PasaporteDatos).sellos.some((x) => x.lugar_slug === slug)))
+      .catch(() => {})
     api
       .rutaActual()
       .then((r) => {
@@ -149,13 +156,15 @@ export default function Lugar() {
           </Boton>
         )}
 
-        {registro === 'fuera' && !explorador && (
+        {yaVisitado && <p role="status" className={estilos.visitado}>{t('lugar.ya_visitado')}</p>}
+
+        {registro === 'fuera' && !explorador && !yaVisitado && (
           <Boton ancho variante="amarillo" onClick={jugarEnDemo}>
             {t('lugar.jugar_demo')}
           </Boton>
         )}
 
-        {!explorador && (
+        {!explorador && !yaVisitado && (
           <Boton ancho disabled={registro !== 'ok'} onClick={() => navegar(`/reto/${lugar.slug}`)}>
             {premio ? t('lugar.jugar_premio', { n: premio }) : t('lugar.jugar')}
           </Boton>

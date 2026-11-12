@@ -121,3 +121,12 @@
   outline: 3px solid var(--cobalto);
   outline-offset: 3px;
 }
+
+.visitado {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #e3f7e8;
+  color: #0b5a24;
+  font-weight: 800;
+}
