@@ -25,9 +25,16 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `GET /api/saldo` | Saldo de Tlacos del celular | Suma del libro |
 | `POST /api/visitas` | Registra la llegada `{lugar_slug, metodo, lat?, lng?}` | Una vez por lugar; con `gps` valida el radio (haversine) |
 | `POST /api/retos/{slug}/completar` | Valida `{respuesta, revelar, idioma}` y paga | Una sola vez; `revelar` paga menos y nunca bloquea |
-| `POST /api/promociones/{slug}/canjear` | Descuenta y devuelve `{codigo, saldo}` | Revisa saldo (402 si no alcanza) |
+| `POST /api/promociones/{slug}/canjear` | Descuenta y devuelve `{codigo, saldo}` | Atómico (función SQL); 402 si no alcanza |
+| `GET /api/perfil` · `PUT /api/perfil` | Lee o guarda `{apodo, avatar, idioma, preferencias}` | Solo el del celular |
+| `POST /api/rutas` | Arma y guarda la ruta `{tiempo_min, intereses, lat?, lng?, demo?}` → `{lugares[], estimado_min, caminata_m, …}` | Algoritmo M3; la ruta activa anterior queda `abandonada` |
+| `GET /api/rutas/actual` | Ruta activa con sus lugares en orden | 404 si no hay |
+| `PATCH /api/rutas/actual` | Saltar o recortar: `{lugares: [slugs en orden]}` | Al menos 1 lugar |
+| `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 Tlacos una sola vez, si completó al menos un reto |
 
-Pendientes de API: bono de fin de ruta (`bono_fin`), guardar ruta y perfil, `?demo=1` sin GPS.
+**Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición. Con `demo: true` devuelve las 5 paradas del guion en orden.
+
+**Modo demo:** el avance se simula tocando posiciones sobre la ruta (adelante o atrás, estilo Maps); la llegada se registra con `metodo: "demo"`.
 
 ## Carpetas
 
@@ -39,7 +46,7 @@ backend/
   app/db.py              Cliente PostgREST (service_role) y nombres de la moneda
   app/geo.py             Distancia en metros (radio de 40 m)
   app/retos.py           Validación de los dos minijuegos
-  app/routers/           sesion y catalogo (Dev 3); visitas, retos y canjes (Dev 1)
+  app/routers/           sesion y catalogo (Dev 3); visitas, retos, canjes y rutas (Dev 1)
   tests/                 pytest
 src/lib/api.ts           Único cliente del frontend (sesión + token)
 ```
@@ -63,7 +70,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 2. ✅ Renombrar `clacos` → `tlacos` en SQL, `seed.json`, tipos y `backend/app/db.py`.
 3. Migración 0002: cerrar las tablas al rol `anon` (quitar políticas de lectura pública), restricciones de "una sola vez" y, si hace falta, función SQL atómica para el canje.
 4. Cargar el seed real (coordenadas verificadas, retos de las 5 paradas) y probar `retos` y `canjes` contra él.
-5. Dueño de `routers/visitas.py` (llegada y radio GPS), `retos.py` y `canjes.py`. Endpoint de bono de fin de ruta, guardar ruta y perfil (`rutas_usuario`, `perfiles`) y el algoritmo de ruta (M3).
+5. Dueño de `routers/visitas.py` (llegada y radio GPS), `retos.py`, `canjes.py` y `rutas.py`. ✅ Bono de fin de ruta, guardar ruta y perfil (`rutas_usuario`, `perfiles`) y algoritmo de ruta (M3, `app/ruta.py`).
 6. Tests de lógica del backend con datos falsos de Supabase.
 
 ### Dev 2 · Luis — Mapa e interfaz
