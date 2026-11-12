@@ -199,7 +199,7 @@ export default function MapaLugares({
   // "Ver en el mapa" desde la vitrina: la cámara vuela hasta el negocio.
   useEffect(() => {
     if (!comercioFocal) return
-    mapa.current?.flyTo({ center: [comercioFocal.lng, comercioFocal.lat], zoom: ZOOM + 1, duration: 1000 })
+    mapa.current?.flyTo({ center: [comercioFocal.lng, comercioFocal.lat], zoom: ZOOM + 1, duration: 700 })
   }, [comercioFocal])
 
   // Al llegar a una parada la cámara se acerca y gira un poco hacia ella, mientras sale el aviso y suben las olas.
@@ -212,7 +212,7 @@ export default function MapaLugares({
       center: [l.lng, l.lat],
       zoom: m.getZoom() + 1,
       bearing: m.getBearing() + 35,
-      duration: 800,
+      duration: 600,
       easing: (t) => 1 - Math.pow(1 - t, 3),
     })
   }, [llegando, lugares])
@@ -276,7 +276,7 @@ export default function MapaLugares({
     ultimoEnfoque.current = enfocar.n
     setElegido(l)
     const m = mapa.current
-    m?.flyTo({ center: [l.lng, l.lat], zoom: Math.max(m.getZoom(), ZOOM + 0.5), duration: 900 })
+    m?.flyTo({ center: [l.lng, l.lat], zoom: Math.max(m.getZoom(), ZOOM + 0.5), duration: 650 })
   }, [enfocar, lugares])
 
   useEffect(() => {
@@ -284,14 +284,14 @@ export default function MapaLugares({
     mapa.current?.easeTo({
       padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
       ...(comercio ? { center: [comercio.lng, comercio.lat] as [number, number] } : {}),
-      duration: comercio ? 600 : 250,
+      duration: comercio ? 450 : 200,
     })
   }, [padAbajo, comercio])
 
   // Si el turista se movió del mapa, este botón lo vuelve a centrar en su posición.
   const irAMiUbicacion = () => {
     if (!pos) return
-    mapa.current?.flyTo({ center: [pos.lng, pos.lat], zoom: Math.max(zoom, ZOOM + 0.5), duration: 800 })
+    mapa.current?.flyTo({ center: [pos.lng, pos.lat], zoom: Math.max(zoom, ZOOM + 0.5), duration: 600 })
   }
 
   // La línea de la ruta solo se reconstruye cuando cambia la ruta, no con cada render.
@@ -476,8 +476,8 @@ export default function MapaLugares({
           className="mapa-menu"
           style={{ transformOrigin: 'top right' }}
           initial={{ opacity: 0, y: -8, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 30 } }}
-          exit={{ opacity: 0, y: -6, scale: 0.96, transition: { duration: 0.12 } }}
+          animate={{ opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 560, damping: 34 } }}
+          exit={{ opacity: 0, y: -6, scale: 0.96, transition: { duration: 0.09 } }}
           onKeyDown={(e) => e.key === 'Escape' && setMenu(false)}
         >
           <li>
@@ -511,8 +511,8 @@ export default function MapaLugares({
             key="vitrina"
             className="mapa-vitrina-hoja"
             initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } }}
-            exit={{ opacity: 0, y: 36, transition: { duration: 0.16 } }}
+            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 460, damping: 34 } }}
+            exit={{ opacity: 0, y: 36, transition: { duration: 0.12 } }}
           >
             <button type="button" className="mapa-vitrina-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setComercio(null)}>
               <X size={20} weight="bold" aria-hidden="true" />
@@ -526,8 +526,8 @@ export default function MapaLugares({
           <motion.div
             key="pin"
             initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 320, damping: 30 } }}
-            exit={{ opacity: 0, y: 28, transition: { duration: 0.14 } }}
+            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 480, damping: 34 } }}
+            exit={{ opacity: 0, y: 28, transition: { duration: 0.1 } }}
           >
           <Tarjeta className="mapa-tarjeta">
             <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>

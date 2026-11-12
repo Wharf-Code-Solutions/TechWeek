@@ -11,7 +11,7 @@ import { usePosition } from './usePosition'
  * Tiempo entre llegar y empezar la transición: durante él sale el aviso "¡Llegaste a …!", el pin pulsa y la cámara
  * se acerca y gira. Luego suben las olas (olas.ts) y recién entonces se abre la pantalla del lugar.
  */
-export const PAUSA_LLEGADA_MS = 900
+export const PAUSA_LLEGADA_MS = 650
 
 // A nivel de módulo: sobrevive a que el mapa se desmonte al abrir la pantalla del lugar,
 // así no se vuelve a abrir en bucle mientras el turista sigue dentro del radio.

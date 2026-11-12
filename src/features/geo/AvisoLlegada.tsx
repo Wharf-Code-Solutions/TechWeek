@@ -17,8 +17,8 @@ export default function AvisoLlegada({ lugar }: { lugar: Lugar | null }) {
           className={estilos.aviso}
           role="status"
           initial={{ opacity: 0, y: 24, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 340, damping: 26 } }}
-          exit={{ opacity: 0, y: 16, transition: { duration: 0.15 } }}
+          animate={{ opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 480, damping: 30 } }}
+          exit={{ opacity: 0, y: 16, transition: { duration: 0.1 } }}
         >
           <MapPinLine size={26} weight="duotone" aria-hidden="true" />
           <span>{t('recorrido.llegaste', { nombre: campo(lugar, 'nombre') })}</span>

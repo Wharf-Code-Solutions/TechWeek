@@ -6,7 +6,7 @@ import { useSyncExternalStore } from 'react'
 export type EstadoOlas = 'oculto' | 'cubriendo' | 'descubriendo'
 
 /** Lo que tarda la ola en subir y cubrir la pantalla, y en irse (ms). */
-export const DURACION_OLAS_MS = 700
+export const DURACION_OLAS_MS = 500
 /** Si la pantalla nueva no avisa, las olas se retiran solas para no dejar la app tapada. */
 const SEGURO_MS = 4000
 

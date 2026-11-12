@@ -57,8 +57,8 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
       style={alto === undefined ? undefined : { height: alto }}
       aria-label={t('panel.titulo')}
       initial={{ y: 80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1, transition: { type: 'spring', stiffness: 260, damping: 30 } }}
-      exit={{ y: 120, opacity: 0, transition: { duration: 0.22, ease: 'easeIn' } }}
+      animate={{ y: 0, opacity: 1, transition: { type: 'spring', stiffness: 420, damping: 34 } }}
+      exit={{ y: 120, opacity: 0, transition: { duration: 0.14, ease: 'easeIn' } }}
     >
       <motion.div
         className="panel-cabeza"
@@ -106,7 +106,7 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
                   <motion.span
                     layoutId="panel-pestana-linea"
                     className="panel-pestana-linea"
-                    transition={{ type: 'spring', stiffness: 420, damping: 36 }}
+                    transition={{ type: 'spring', stiffness: 560, damping: 42 }}
                   />
                 )}
               </button>
@@ -119,9 +119,9 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
           <motion.div
             key={activa}
             custom={direccion}
-            initial={{ opacity: 0, x: 18 * direccion }}
-            animate={{ opacity: 1, x: 0, transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] } }}
-            exit={{ opacity: 0, x: -18 * direccion, transition: { duration: 0.12, ease: 'easeIn' } }}
+            initial={{ opacity: 0, x: 12 * direccion }}
+            animate={{ opacity: 1, x: 0, transition: { duration: 0.16, ease: [0.22, 1, 0.36, 1] } }}
+            exit={{ opacity: 0, x: -12 * direccion, transition: { duration: 0.07, ease: 'easeIn' } }}
           >
             {activa === 'ruta' ? ruta : activa === 'agenda' ? <Agenda /> : activa === 'pasaporte' ? <Pasaporte /> : <Cartera />}
           </motion.div>

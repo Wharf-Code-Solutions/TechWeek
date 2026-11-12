@@ -32,7 +32,7 @@ function useContador(final: number) {
       setN(final)
       return
     }
-    const control = animate(0, final, { duration: 0.9, onUpdate: (v) => setN(Math.round(v)) })
+    const control = animate(0, final, { duration: 0.6, onUpdate: (v) => setN(Math.round(v)) })
     return () => control.stop()
   }, [final])
   return n
@@ -98,8 +98,8 @@ export default function Recompensa() {
   const piezas = pasaporte?.piezas ?? null
   const reducido = useReducedMotion()
   // El sello se estampa primero y la pieza cae después, para que se vean los dos premios por separado.
-  const RETRASO_SELLO = 0.5
-  const RETRASO_PIEZA = 1.3
+  const RETRASO_SELLO = 0.25
+  const RETRASO_PIEZA = 0.8
 
   const alPasaporte = () => navegar('/mapa', { state: { pestana: 'pasaporte' } })
 
@@ -127,7 +127,7 @@ export default function Recompensa() {
               className={estilos.sello}
               initial={reducido ? false : { scale: 2.8, rotate: -40, opacity: 0 }}
               animate={{ scale: 1, rotate: -8, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 15, delay: RETRASO_SELLO }}
+              transition={{ type: 'spring', stiffness: 340, damping: 17, delay: RETRASO_SELLO }}
             >
               {lugar && <Ilustracion nombre={lugar.ilustracion} tamano={64} />}
               {!reducido && (
@@ -136,7 +136,7 @@ export default function Recompensa() {
                   aria-hidden="true"
                   initial={{ scale: 1, opacity: 0.8 }}
                   animate={{ scale: 1.9, opacity: 0 }}
-                  transition={{ duration: 0.7, delay: RETRASO_SELLO + 0.35, ease: 'easeOut' }}
+                  transition={{ duration: 0.5, delay: RETRASO_SELLO + 0.25, ease: 'easeOut' }}
                 />
               )}
             </motion.span>

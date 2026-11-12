@@ -154,7 +154,7 @@
   right: 16px;
   z-index: 10;
   bottom: calc(var(--alto-panel, 0px) + 14px);
-  transition: bottom 380ms var(--suave);
+  transition: bottom 260ms var(--suave);
   display: grid;
   gap: 12px;
 }
@@ -259,7 +259,7 @@
 }
 .cabecera-ruta span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .cabecera-barra { height: 8px; overflow: hidden; border-radius: 99px; background: #ede6f7; }
-.cabecera-barra > div { height: 100%; background: var(--rosa); transition: width 300ms; }
+.cabecera-barra > div { height: 100%; background: var(--rosa); transition: width 220ms; }
 .cabecera-saldo {
   height: 44px;
   display: flex;
@@ -293,7 +293,7 @@
   border-radius: 24px 24px 0 0;
   box-shadow: 0 -6px 24px rgb(21 10 46 / 0.18);
   background: #fff;
-  transition: height 380ms var(--suave);
+  transition: height 280ms var(--suave);
   /* Por encima de la cabecera, el botón hamburguesa y su menú (z-index 10): al subir el panel los cubre. */
   z-index: 11;
 }
@@ -336,7 +336,7 @@
   font: 500 11px var(--fuente-texto);
   cursor: pointer;
 }
-.panel-pestana { transition: color 200ms ease; }
+.panel-pestana { transition: color 140ms ease; }
 .panel-pestana[aria-selected='true'] { color: var(--tinta); font-weight: 700; }
 /* Raya rosa que se desliza de una pestaña a la otra */
 .panel-pestana-linea { position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; border-radius: 3px; background: var(--rosa); }

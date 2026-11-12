@@ -19,6 +19,6 @@ img, svg { -webkit-user-drag: none; }
 
 /* Respuesta al tocar: todos los botones se hunden un poco y vuelven con suavidad (propiedad `scale`, que no pisa
    los transform de cada componente). Los botones con sombra dura ya se desplazan por su cuenta. */
-button { transition: scale 160ms var(--suave), background-color 200ms ease, opacity 200ms ease; }
-button:active:not(:disabled):not(.boton) { scale: 0.96; transition-duration: 70ms; }
+button { transition: scale 120ms var(--suave), background-color 150ms ease, opacity 150ms ease; }
+button:active:not(:disabled):not(.boton) { scale: 0.96; transition-duration: 50ms; }
 @media (prefers-reduced-motion: reduce) { button:active:not(:disabled):not(.boton) { scale: 1; } }

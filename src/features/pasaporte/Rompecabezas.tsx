@@ -53,7 +53,7 @@ export default function Rompecabezas({ piezas, url, nueva = null, retraso = 0 }:
               style={conAncho}
               initial={{ scale: 3.2, y: -160, rotate: -22, opacity: 0 }}
               animate={{ scale: 1, y: 0, rotate: 0, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 150, damping: 13, delay: retraso }}
+              transition={{ type: 'spring', stiffness: 230, damping: 17, delay: retraso }}
             />
           )
         }
