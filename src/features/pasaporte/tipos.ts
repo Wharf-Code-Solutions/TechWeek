@@ -5,6 +5,7 @@ export interface Sello {
   lugar_slug: string
   nombre_es: string
   nombre_en: string
+  nombre_fr?: string | null
   categoria: Categoria
   ilustracion: string
   /** false: cerró el reto con "seguir con menos doblones". */

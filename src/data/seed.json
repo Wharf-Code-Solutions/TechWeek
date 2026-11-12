@@ -11,6 +11,7 @@
       "slug": "catedral",
       "nombre_es": "Catedral de la Asunción",
       "nombre_en": "Cathedral of the Assumption",
+      "nombre_fr": "Cathédrale de l’Assomption",
       "categoria": "historia",
       "lat": 19.19979,
       "lng": -96.13825,
@@ -18,6 +19,7 @@
       "radio_m": 40,
       "curiosidad_es": "Se levantó en el siglo XVII al costado este de la Plaza Mayor, tal como pedían las ordenanzas reales para el templo principal de la ciudad.",
       "curiosidad_en": "It was built in the 17th century on the east side of the Main Square, just as the royal ordinances required for the city's main church.",
+      "curiosidad_fr": "Elle fut construite au XVIIe siècle du côté est de la Grand-Place, comme l’exigeaient les ordonnances royales pour l’église principale de la ville.",
       "ilustracion": "catedral",
       "orden_sugerido": 1,
       "en_demo": true
@@ -26,6 +28,7 @@
       "slug": "condesa-malibran",
       "nombre_es": "Solar de la Condesa de Malibrán",
       "nombre_en": "Site of the Countess of Malibrán",
+      "nombre_fr": "Demeure de la comtesse de Malibrán",
       "categoria": "leyendas",
       "lat": 19.19706,
       "lng": -96.13756,
@@ -33,6 +36,7 @@
       "radio_m": 40,
       "curiosidad_es": "La leyenda habla de una condesa bruja, pero el personaje real fue Doña Beatriz del Real, una viuda que vivió aquí en el siglo XVIII y murió en 1802.",
       "curiosidad_en": "The legend tells of a witch countess, but the real person was Doña Beatriz del Real, a widow who lived here in the 18th century and died in 1802.",
+      "curiosidad_fr": "La légende parle d’une comtesse sorcière, mais la vraie personne était Doña Beatriz del Real, une veuve qui vécut ici au XVIIIe siècle et mourut en 1802.",
       "ilustracion": "fantasma",
       "orden_sugerido": 2,
       "en_demo": true
@@ -41,6 +45,7 @@
       "slug": "baluarte-santiago",
       "nombre_es": "Baluarte de Santiago",
       "nombre_en": "Santiago Bastion",
+      "nombre_fr": "Bastion de Santiago",
       "categoria": "historia",
       "lat": 19.1981,
       "lng": -96.1332,
@@ -48,6 +53,7 @@
       "radio_m": 40,
       "curiosidad_es": "Es el único de los nueve baluartes de la antigua muralla que sigue en pie. Se construyó con piedra muca (coral) y ladrillo. Su interior reabre en 2027.",
       "curiosidad_en": "It is the only one of the nine bastions of the old city wall still standing, built from coral stone and brick. Its interior reopens in 2027.",
+      "curiosidad_fr": "C’est le seul des neuf bastions de l’ancienne muraille encore debout, bâti en pierre de corail et en brique. Son intérieur rouvrira en 2027.",
       "ilustracion": "baluarte",
       "orden_sugerido": 3,
       "en_demo": true
@@ -56,6 +62,7 @@
       "slug": "portales",
       "nombre_es": "Portales y café lechero",
       "nombre_en": "Arcades and café lechero",
+      "nombre_fr": "Arcades et café lechero",
       "categoria": "comida",
       "lat": 19.19964,
       "lng": -96.13857,
@@ -63,6 +70,7 @@
       "radio_m": 40,
       "curiosidad_es": "Bajo los portales frente a la Plaza Mayor se pide el café lechero golpeando el vaso con la cuchara, mientras suena la marimba.",
       "curiosidad_en": "Under the arcades facing the Main Square, people order café lechero by tapping the glass with a spoon while the marimba plays.",
+      "curiosidad_fr": "Sous les arcades face à la Grand-Place, on commande le café lechero en tapant le verre avec une cuillère au son du marimba.",
       "ilustracion": "cafe-lechero",
       "orden_sugerido": 4,
       "en_demo": true
@@ -71,6 +79,7 @@
       "slug": "zocalo",
       "nombre_es": "Zócalo / Plaza de Armas",
       "nombre_en": "Zócalo / Main Square",
+      "nombre_fr": "Zócalo / Grand-Place",
       "categoria": "musica",
       "lat": 19.20023,
       "lng": -96.13853,
@@ -78,6 +87,7 @@
       "radio_m": 40,
       "curiosidad_es": "La Plaza Mayor es el punto de partida de la traza de la ciudad del siglo XVII: de aquí salen sus calles en cuadrícula.",
       "curiosidad_en": "The Main Square is where the 17th-century city grid begins: the streets spread out from here in a checkerboard.",
+      "curiosidad_fr": "C’est sur la Grand-Place que commence le tracé de la ville du XVIIe siècle : les rues partent d’ici en damier.",
       "ilustracion": "pareja-danzon",
       "orden_sugerido": 5,
       "en_demo": true
@@ -86,6 +96,7 @@
       "slug": "palacio-municipal",
       "nombre_es": "Palacio Municipal",
       "nombre_en": "City Hall",
+      "nombre_fr": "Hôtel de ville",
       "categoria": "historia",
       "lat": 19.2006,
       "lng": -96.13774,
@@ -93,6 +104,7 @@
       "radio_m": 40,
       "curiosidad_es": "Es la sede del primer cabildo (ayuntamiento) de la América continental. Su torre de reloj y sus arcos son de piedra muca.",
       "curiosidad_en": "It is home to the first town council in mainland America. Its clock tower and arches are made of coral stone.",
+      "curiosidad_fr": "Il abrite le premier conseil municipal du continent américain. Sa tour de l’horloge et ses arcades sont en pierre de corail.",
       "ilustracion": "palacio-municipal",
       "orden_sugerido": 6,
       "en_demo": false
@@ -101,6 +113,7 @@
       "slug": "faro-carranza",
       "nombre_es": "Faro Venustiano Carranza",
       "nombre_en": "Venustiano Carranza Lighthouse",
+      "nombre_fr": "Phare Venustiano Carranza",
       "categoria": "mar",
       "lat": 19.20191,
       "lng": -96.13351,
@@ -108,6 +121,7 @@
       "radio_m": 40,
       "curiosidad_es": "Lo inauguró Porfirio Díaz y en 1914 fue la sede del gobierno de Venustiano Carranza. Hoy es comandancia de la Marina: solo se aprecia por fuera.",
       "curiosidad_en": "It was opened by Porfirio Díaz and in 1914 it was Venustiano Carranza's seat of government. Today it is a Navy command: exterior view only.",
+      "curiosidad_fr": "Inauguré par Porfirio Díaz, il fut en 1914 le siège du gouvernement de Venustiano Carranza. C’est aujourd’hui un commandement de la Marine : à voir seulement de l’extérieur.",
       "ilustracion": "faro-carranza",
       "orden_sugerido": 7,
       "en_demo": false
@@ -116,6 +130,7 @@
       "slug": "museo-ciudad",
       "nombre_es": "Museo de la Ciudad",
       "nombre_en": "City Museum",
+      "nombre_fr": "Musée de la Ville",
       "categoria": "historia",
       "lat": 19.1979,
       "lng": -96.13581,
@@ -123,6 +138,7 @@
       "radio_m": 40,
       "curiosidad_es": "Ocupa el antiguo Hospicio Zamora, un edificio neoclásico del siglo XIX. Cuenta la historia de Veracruz desde la época prehispánica y su patio se usa para conciertos.",
       "curiosidad_en": "It is housed in the old Zamora Hospice, a 19th-century neoclassical building. It tells the story of Veracruz from pre-Hispanic times, and its courtyard hosts concerts.",
+      "curiosidad_fr": "Il occupe l’ancien hospice Zamora, un édifice néoclassique du XIXe siècle. Il raconte l’histoire de Veracruz depuis l’époque préhispanique, et sa cour accueille des concerts.",
       "ilustracion": "historia",
       "orden_sugerido": 8,
       "en_demo": false
@@ -131,6 +147,7 @@
       "slug": "casa-diaz-miron",
       "nombre_es": "Casa Museo Salvador Díaz Mirón",
       "nombre_en": "Salvador Díaz Mirón House Museum",
+      "nombre_fr": "Maison-musée Salvador Díaz Mirón",
       "categoria": "historia",
       "lat": 19.19959,
       "lng": -96.13672,
@@ -138,6 +155,7 @@
       "radio_m": 40,
       "curiosidad_es": "Casona del siglo XVIII hecha de piedra muca y ladrillo donde vivió el poeta Salvador Díaz Mirón. Conserva su biblioteca, manuscritos y muebles de época.",
       "curiosidad_en": "An 18th-century mansion of coral stone and brick where the poet Salvador Díaz Mirón lived. It keeps his library, manuscripts and period furniture.",
+      "curiosidad_fr": "Une demeure du XVIIIe siècle en pierre de corail et en brique où vécut le poète Salvador Díaz Mirón. Elle conserve sa bibliothèque, ses manuscrits et des meubles d’époque.",
       "ilustracion": "historia",
       "orden_sugerido": 9,
       "en_demo": false
@@ -146,6 +164,7 @@
       "slug": "atarazanas",
       "nombre_es": "Centro Cultural Atarazanas",
       "nombre_en": "Atarazanas Cultural Center",
+      "nombre_fr": "Centre culturel Atarazanas",
       "categoria": "artesania",
       "lat": 19.19839,
       "lng": -96.13461,
@@ -153,6 +172,7 @@
       "radio_m": 40,
       "curiosidad_es": "Fueron los almacenes reales de marina en 1764. Hoy cuidan el son jarocho, el fandango, el telar de cintura y la artesanía tradicional.",
       "curiosidad_en": "These were the royal navy warehouses in 1764. Today they safeguard son jarocho, fandango, backstrap weaving and traditional crafts.",
+      "curiosidad_fr": "Ce furent les entrepôts de la marine royale en 1764. Ils préservent aujourd’hui le son jarocho, le fandango, le tissage au métier à ceinture et l’artisanat traditionnel.",
       "ilustracion": "artesania",
       "orden_sugerido": 10,
       "en_demo": false
@@ -161,6 +181,7 @@
       "slug": "leyes-reforma",
       "nombre_es": "Recinto de las Leyes de Reforma",
       "nombre_en": "Reform Laws Site",
+      "nombre_fr": "Lieu des lois de Réforme",
       "categoria": "historia",
       "lat": 19.20297,
       "lng": -96.13969,
@@ -168,6 +189,7 @@
       "radio_m": 40,
       "curiosidad_es": "Recuerda la época en que Benito Juárez instaló en Veracruz el gobierno liberal y promulgó aquí las Leyes de Reforma.",
       "curiosidad_en": "It recalls the time when Benito Juárez set up the liberal government in Veracruz and issued the Reform Laws here.",
+      "curiosidad_fr": "Il rappelle l’époque où Benito Juárez installa le gouvernement libéral à Veracruz et y promulgua les lois de Réforme.",
       "ilustracion": "historia",
       "orden_sugerido": 11,
       "en_demo": false
@@ -176,6 +198,7 @@
       "slug": "teatro-clavijero",
       "nombre_es": "Teatro Francisco Javier Clavijero",
       "nombre_en": "Francisco Javier Clavijero Theater",
+      "nombre_fr": "Théâtre Francisco Javier Clavijero",
       "categoria": "musica",
       "lat": 19.20126,
       "lng": -96.14026,
@@ -183,6 +206,7 @@
       "radio_m": 40,
       "curiosidad_es": "El principal teatro de la ciudad, del siglo XIX, con forma de herradura al estilo italiano. Recibe ópera, conciertos sinfónicos y danza.",
       "curiosidad_en": "The city's main theater, from the 19th century, with an Italian horseshoe shape. It hosts opera, symphony concerts and dance.",
+      "curiosidad_fr": "Le principal théâtre de la ville, du XIXe siècle, en fer à cheval à l’italienne. Il accueille opéra, concerts symphoniques et danse.",
       "ilustracion": "jarana",
       "orden_sugerido": 12,
       "en_demo": false
@@ -191,6 +215,7 @@
       "slug": "plazuela-lagunilla",
       "nombre_es": "Callejón y Plazuela de la Lagunilla",
       "nombre_en": "La Lagunilla Alley and Square",
+      "nombre_fr": "Ruelle et placette de La Lagunilla",
       "categoria": "leyendas",
       "lat": 19.19829,
       "lng": -96.13793,
@@ -198,6 +223,7 @@
       "radio_m": 40,
       "curiosidad_es": "Es la única calle del puerto que conserva su nombre desde hace más de 400 años. Por aquí pasaba el arroyo Tenoya y aquí empiezan los recorridos nocturnos de leyendas.",
       "curiosidad_en": "It is the only street in the port that has kept its name for over 400 years. The Tenoya stream ran here, and night legend tours start here.",
+      "curiosidad_fr": "C’est la seule rue du port qui garde son nom depuis plus de 400 ans. Le ruisseau Tenoya passait ici, et c’est d’ici que partent les visites nocturnes des légendes.",
       "ilustracion": "escena-leyenda",
       "orden_sugerido": 13,
       "en_demo": false
@@ -206,6 +232,7 @@
       "slug": "plazuela-campana",
       "nombre_es": "Plazuela de la Campana",
       "nombre_en": "Campana Square",
+      "nombre_fr": "Placette de la Campana",
       "categoria": "leyendas",
       "lat": 19.19885,
       "lng": -96.13699,
@@ -213,6 +240,7 @@
       "radio_m": 40,
       "curiosidad_es": "Rincón virreinal adoquinado y protegido por decreto, con arquitectura colonial y cafés al aire libre.",
       "curiosidad_en": "A cobblestoned colonial corner protected by decree, with colonial architecture and open-air cafés.",
+      "curiosidad_fr": "Un coin colonial pavé, protégé par décret, avec son architecture coloniale et ses cafés en plein air.",
       "ilustracion": "linterna",
       "orden_sugerido": 14,
       "en_demo": false
@@ -221,6 +249,7 @@
       "slug": "callejon-tona-la-negra",
       "nombre_es": "Callejón Toña la Negra",
       "nombre_en": "Toña la Negra Alley",
+      "nombre_fr": "Ruelle Toña la Negra",
       "categoria": "musica",
       "lat": 19.19517,
       "lng": -96.13228,
@@ -228,6 +257,7 @@
       "radio_m": 40,
       "curiosidad_es": "Corazón del barrio de La Huaca, fundado por africanos liberados en el siglo XVII fuera de la muralla. Cuna de Toña la Negra y Agustín Lara, la vigila su estatua de bronce.",
       "curiosidad_en": "The heart of La Huaca, a neighborhood founded by freed Africans in the 17th century outside the city wall. Birthplace of Toña la Negra and Agustín Lara; her bronze statue watches over it.",
+      "curiosidad_fr": "Le cœur de La Huaca, un quartier fondé au XVIIe siècle par des Africains affranchis, hors de la muraille. Berceau de Toña la Negra et d’Agustín Lara ; sa statue de bronze veille sur la ruelle.",
       "ilustracion": "pareja-danzon",
       "orden_sugerido": 15,
       "en_demo": false
@@ -236,6 +266,7 @@
       "slug": "callejon-holtzinger",
       "nombre_es": "Callejón Holtzinger",
       "nombre_en": "Holtzinger Alley",
+      "nombre_fr": "Ruelle Holtzinger",
       "categoria": "leyendas",
       "lat": 19.19958,
       "lng": -96.14118,
@@ -243,6 +274,7 @@
       "radio_m": 40,
       "curiosidad_es": "Pasaje estrecho catalogado por el INAH, muy presente en las crónicas de misterio del puerto. Evoca el ataque del pirata Lorencillo en 1683.",
       "curiosidad_en": "A narrow passage listed by INAH and a staple of the port's mystery tales. It recalls the 1683 raid by the pirate Lorencillo.",
+      "curiosidad_fr": "Un passage étroit classé par l’INAH et un classique des récits mystérieux du port. Il rappelle l’attaque du pirate Lorencillo en 1683.",
       "ilustracion": "fantasma",
       "orden_sugerido": 16,
       "en_demo": false
@@ -251,6 +283,7 @@
       "slug": "cafe-parroquia",
       "nombre_es": "Gran Café de la Parroquia",
       "nombre_en": "Gran Café de la Parroquia",
+      "nombre_fr": "Gran Café de la Parroquia",
       "categoria": "comida",
       "lat": 19.20113,
       "lng": -96.13509,
@@ -258,6 +291,7 @@
       "radio_m": 40,
       "curiosidad_es": "El café más famoso del puerto, fundado en 1808. Aquí el café lechero se pide tintineando la cuchara en el vaso, con vista al malecón.",
       "curiosidad_en": "The port's most famous café, founded in 1808. Here you order café lechero by clinking the spoon on the glass, with a view of the boardwalk.",
+      "curiosidad_fr": "Le café le plus célèbre du port, fondé en 1808. Ici, on commande le café lechero en faisant tinter la cuillère contre le verre, avec vue sur le front de mer.",
       "ilustracion": "cafe-lechero",
       "orden_sugerido": 17,
       "en_demo": false
@@ -266,6 +300,7 @@
       "slug": "neveria-yucatan",
       "nombre_es": "Gran Nevería Yucatán",
       "nombre_en": "Gran Nevería Yucatán",
+      "nombre_fr": "Gran Nevería Yucatán",
       "categoria": "comida",
       "lat": 19.1946,
       "lng": -96.13566,
@@ -273,6 +308,7 @@
       "radio_m": 40,
       "curiosidad_es": "Fundada en 1932 en medio del Parque Zamora; ícono jarocho de helados artesanales, malteadas y música en vivo.",
       "curiosidad_en": "Founded in 1932 in the middle of Zamora Park; a jarocho icon of handmade ice cream, milkshakes and live music.",
+      "curiosidad_fr": "Fondée en 1932 au milieu du parc Zamora ; une icône jarocha des glaces artisanales, des milk-shakes et de la musique live.",
       "ilustracion": "nieve",
       "orden_sugerido": 18,
       "en_demo": false
@@ -281,6 +317,7 @@
       "slug": "mercado-hidalgo",
       "nombre_es": "Mercado Hidalgo",
       "nombre_en": "Hidalgo Market",
+      "nombre_fr": "Marché Hidalgo",
       "categoria": "comida",
       "lat": 19.19347,
       "lng": -96.13705,
@@ -288,6 +325,7 @@
       "radio_m": 40,
       "curiosidad_es": "El principal mercado de abasto y comida popular del centro, remodelado en 2015. Sus fondas sirven picadas, gorditas y empanadas.",
       "curiosidad_en": "The center's main food market, remodeled in 2015. Its food stalls serve picadas, gorditas and empanadas.",
+      "curiosidad_fr": "Le principal marché alimentaire du centre, rénové en 2015. Ses comptoirs servent picadas, gorditas et empanadas.",
       "ilustracion": "volovan",
       "orden_sugerido": 19,
       "en_demo": false
@@ -296,6 +334,7 @@
       "slug": "museo-naval",
       "nombre_es": "Museo Naval México",
       "nombre_en": "Mexico Naval Museum",
+      "nombre_fr": "Musée naval du Mexique",
       "categoria": "mar",
       "lat": 19.19923,
       "lng": -96.13507,
@@ -303,6 +342,7 @@
       "radio_m": 40,
       "curiosidad_es": "Está en el edificio de la antigua Escuela Naval Militar. Tiene más de 25 salas, simuladores y piezas de historia naval.",
       "curiosidad_en": "It is in the former Military Naval School building. It has more than 25 rooms, simulators and pieces of naval history.",
+      "curiosidad_fr": "Il se trouve dans l’ancien bâtiment de l’École navale militaire. Il compte plus de 25 salles, des simulateurs et des pièces d’histoire navale.",
       "ilustracion": "lancha",
       "orden_sugerido": 20,
       "en_demo": false
@@ -311,6 +351,7 @@
       "slug": "malecon",
       "nombre_es": "Paseo del Malecón",
       "nombre_en": "Boardwalk",
+      "nombre_fr": "Front de mer (Malecón)",
       "categoria": "mar",
       "lat": 19.20091,
       "lng": -96.13109,
@@ -318,6 +359,7 @@
       "radio_m": 40,
       "curiosidad_es": "Corredor peatonal junto al mar: mirador de barcos mercantes, de los tradicionales nadadores de monedas y de desfiles cívicos.",
       "curiosidad_en": "A seaside promenade: a lookout for cargo ships, the traditional coin divers and civic parades.",
+      "curiosidad_fr": "Une promenade au bord de la mer : un belvédère sur les cargos, les plongeurs de pièces traditionnels et les défilés civiques.",
       "ilustracion": "escena-puerto",
       "orden_sugerido": 21,
       "en_demo": false
@@ -326,6 +368,7 @@
       "slug": "mercado-artesanias",
       "nombre_es": "Mercado de Artesanías Miguel Alemán",
       "nombre_en": "Miguel Alemán Crafts Market",
+      "nombre_fr": "Marché d’artisanat Miguel Alemán",
       "categoria": "artesania",
       "lat": 19.20112,
       "lng": -96.13681,
@@ -333,6 +376,7 @@
       "radio_m": 40,
       "curiosidad_es": "Mercado emblemático del malecón con recuerdos hechos de conchas de mar, sombreros jarochos y artesanía marina.",
       "curiosidad_en": "An emblematic boardwalk market with souvenirs made of seashells, jarocho hats and sea-themed crafts.",
+      "curiosidad_fr": "Un marché emblématique du front de mer avec des souvenirs en coquillages, des chapeaux jarochos et de l’artisanat marin.",
       "ilustracion": "artesania",
       "orden_sugerido": 22,
       "en_demo": false
@@ -341,6 +385,7 @@
       "slug": "cristo-buen-viaje",
       "nombre_es": "Iglesia del Cristo del Buen Viaje",
       "nombre_en": "Church of Christ of the Good Voyage",
+      "nombre_fr": "Église du Christ du Bon Voyage",
       "categoria": "mar",
       "lat": 19.19433,
       "lng": -96.13434,
@@ -348,6 +393,7 @@
       "radio_m": 40,
       "curiosidad_es": "Santuario marinero del siglo XVII a la salida sur de la ciudad. Aquí se encomendaban los marineros antes de zarpar al Atlántico.",
       "curiosidad_en": "A 17th-century sailors' shrine at the south exit of the city. Sailors prayed here before setting sail to the Atlantic.",
+      "curiosidad_fr": "Un sanctuaire de marins du XVIIe siècle à la sortie sud de la ville. Les marins y priaient avant de partir vers l’Atlantique.",
       "ilustracion": "mar",
       "orden_sugerido": 23,
       "en_demo": false
@@ -356,6 +402,7 @@
       "slug": "fototeca",
       "nombre_es": "Fototeca de Veracruz Juan Malpica Mimendi",
       "nombre_en": "Juan Malpica Mimendi Photo Library",
+      "nombre_fr": "Photothèque Juan Malpica Mimendi",
       "categoria": "historia",
       "lat": 19.20026,
       "lng": -96.13752,
@@ -363,6 +410,7 @@
       "radio_m": 40,
       "curiosidad_es": "Recinto de la Secretaría de Cultura con salas de fotografía histórica, talleres y un laboratorio. Custodia el patrimonio visual del puerto.",
       "curiosidad_en": "A state culture venue with historic photography galleries, workshops and a darkroom. It safeguards the port's visual heritage.",
+      "curiosidad_fr": "Un lieu culturel de l’État avec des galeries de photographie historique, des ateliers et une chambre noire. Elle préserve le patrimoine visuel du port.",
       "ilustracion": "historia",
       "orden_sugerido": 24,
       "en_demo": false
@@ -371,6 +419,7 @@
       "slug": "ex-convento-betlemita",
       "nombre_es": "Centro Cultural Ex-Convento Betlemita",
       "nombre_en": "Former Bethlehemite Convent",
+      "nombre_fr": "Ancien couvent bethléémite",
       "categoria": "historia",
       "lat": 19.19753,
       "lng": -96.13513,
@@ -378,6 +427,7 @@
       "radio_m": 40,
       "curiosidad_es": "Antiguo convento y hospital de la orden betlemita (siglos XVII y XVIII), hoy sede de la Secretaría de Cultura. Bajo él hay una cripta abovedada del siglo XVIII.",
       "curiosidad_en": "A former convent and hospital of the Bethlehemite order (17th–18th centuries), now home of the state Culture Ministry. Beneath it lies an 18th-century vaulted crypt.",
+      "curiosidad_fr": "Ancien couvent et hôpital de l’ordre bethléémite (XVIIe–XVIIIe siècles), aujourd’hui siège du ministère de la Culture de l’État. Il abrite une crypte voûtée du XVIIIe siècle.",
       "ilustracion": "historia",
       "orden_sugerido": 25,
       "en_demo": false
@@ -386,6 +436,7 @@
       "slug": "puerta-merced",
       "nombre_es": "Antigua Puerta de la Merced",
       "nombre_en": "Old Merced Gate",
+      "nombre_fr": "Ancienne porte de la Merced",
       "categoria": "leyendas",
       "lat": 19.1959,
       "lng": -96.1356,
@@ -393,6 +444,7 @@
       "radio_m": 40,
       "curiosidad_es": "Era la salida sur de la ciudad amurallada. De aquí partía el camino de 2.8 km hacia la hacienda de Malibrán, escenario de la leyenda de la Condesa.",
       "curiosidad_en": "It was the south exit of the walled city. From here a 2.8 km road led to the Malibrán estate, setting of the Countess legend.",
+      "curiosidad_fr": "C’était la sortie sud de la ville fortifiée. D’ici partait un chemin de 2,8 km vers l’hacienda Malibrán, décor de la légende de la comtesse.",
       "ilustracion": "linterna",
       "orden_sugerido": 26,
       "en_demo": false
@@ -401,6 +453,7 @@
       "slug": "callejon-portal-miranda",
       "nombre_es": "Callejón del Portal de Miranda",
       "nombre_en": "Portal de Miranda Alley",
+      "nombre_fr": "Ruelle du Portal de Miranda",
       "categoria": "historia",
       "lat": 19.20015,
       "lng": -96.1377,
@@ -408,6 +461,7 @@
       "radio_m": 40,
       "curiosidad_es": "Pasaje colonial con arquería de piedra muca del siglo XVIII. Da paso a la Fototeca y a la librería del Fondo de Cultura Económica.",
       "curiosidad_en": "A colonial passage with an 18th-century coral-stone arcade. It leads to the Photo Library and the Fondo de Cultura Económica bookstore.",
+      "curiosidad_fr": "Un passage colonial avec une arcade en pierre de corail du XVIIIe siècle. Il mène à la Photothèque et à la librairie du Fondo de Cultura Económica.",
       "ilustracion": "historia",
       "orden_sugerido": 27,
       "en_demo": false
@@ -416,6 +470,7 @@
       "slug": "callejon-reforma",
       "nombre_es": "Callejón Reforma",
       "nombre_en": "Reforma Alley",
+      "nombre_fr": "Ruelle Reforma",
       "categoria": "historia",
       "lat": 19.19449,
       "lng": -96.13781,
@@ -423,6 +478,7 @@
       "radio_m": 40,
       "curiosidad_es": "Callejón con edificios catalogados por el INAH que conserva la forma de las calles coloniales dentro de la antigua muralla.",
       "curiosidad_en": "An alley with INAH-listed buildings that keeps the shape of colonial streets inside the old city wall.",
+      "curiosidad_fr": "Une ruelle aux bâtiments classés par l’INAH qui conserve le tracé des rues coloniales à l’intérieur de l’ancienne muraille.",
       "ilustracion": "historia",
       "orden_sugerido": 28,
       "en_demo": false
@@ -431,6 +487,7 @@
       "slug": "plaza-republica",
       "nombre_es": "Plaza de la República",
       "nombre_en": "Republic Square",
+      "nombre_fr": "Place de la République",
       "categoria": "mar",
       "lat": 19.20268,
       "lng": -96.13858,
@@ -438,6 +495,7 @@
       "radio_m": 40,
       "curiosidad_es": "Antigua plaza portuaria rodeada por el Palacio de Correos y Telégrafos (1902) y la Antigua Aduana Marítima, hoy Tercera Región Naval.",
       "curiosidad_en": "The old port square, framed by the Post and Telegraph Palace (1902) and the Old Maritime Customs House, now the Third Naval Region.",
+      "curiosidad_fr": "L’ancienne place du port, encadrée par le Palais des Postes et Télégraphes (1902) et l’ancienne Douane maritime, aujourd’hui Troisième Région navale.",
       "ilustracion": "escena-puerto",
       "orden_sugerido": 29,
       "en_demo": false
@@ -446,6 +504,7 @@
       "slug": "iglesia-la-pastora",
       "nombre_es": "Iglesia de La Pastora",
       "nombre_en": "La Pastora Church",
+      "nombre_fr": "Église de La Pastora",
       "categoria": "historia",
       "lat": 19.20175,
       "lng": -96.14173,
@@ -453,6 +512,7 @@
       "radio_m": 40,
       "curiosidad_es": "Templo del siglo XVII catalogado por el INAH, de líneas austeras y levantado con piedra muca de los arrecifes.",
       "curiosidad_en": "A 17th-century church listed by INAH, with plain lines and built from coral stone from the reefs.",
+      "curiosidad_fr": "Une église du XVIIe siècle classée par l’INAH, aux lignes sobres et bâtie en pierre de corail des récifs.",
       "ilustracion": "catedral",
       "orden_sugerido": 30,
       "en_demo": false
@@ -461,6 +521,7 @@
       "slug": "teatro-reforma",
       "nombre_es": "Teatro de la Reforma",
       "nombre_en": "Reforma Theater",
+      "nombre_fr": "Théâtre Reforma",
       "categoria": "musica",
       "lat": 19.19546,
       "lng": -96.13665,
@@ -468,6 +529,7 @@
       "radio_m": 40,
       "curiosidad_es": "Histórico teatro remodelado con tecnología moderna para obras de gran aforo, congresos y festivales artísticos.",
       "curiosidad_en": "A historic theater remodeled with modern technology for large-audience plays, conventions and arts festivals.",
+      "curiosidad_fr": "Un théâtre historique rénové avec une technologie moderne pour les spectacles à grand public, les congrès et les festivals d’art.",
       "ilustracion": "jarana",
       "orden_sugerido": 31,
       "en_demo": false
@@ -476,6 +538,7 @@
       "slug": "casa-principal",
       "nombre_es": "Centro Cultural Casa Principal",
       "nombre_en": "Casa Principal Cultural Center",
+      "nombre_fr": "Centre culturel Casa Principal",
       "categoria": "artesania",
       "lat": 19.19902,
       "lng": -96.13904,
@@ -483,6 +546,7 @@
       "radio_m": 40,
       "curiosidad_es": "Galería pública de arte visual contemporáneo, diseño gráfico, grabado y fotografía, coordinada por la Secretaría de Cultura.",
       "curiosidad_en": "A public gallery of contemporary visual art, graphic design, printmaking and photography, run by the state Culture Ministry.",
+      "curiosidad_fr": "Une galerie publique d’art visuel contemporain, de design graphique, de gravure et de photographie, gérée par le ministère de la Culture de l’État.",
       "ilustracion": "artesania",
       "orden_sugerido": 32,
       "en_demo": false
@@ -491,6 +555,7 @@
       "slug": "casa-artes-mucara",
       "nombre_es": "Casa de las Artes Múcara",
       "nombre_en": "Múcara House of the Arts",
+      "nombre_fr": "Maison des arts Múcara",
       "categoria": "artesania",
       "lat": 19.19677,
       "lng": -96.13455,
@@ -498,6 +563,7 @@
       "radio_m": 40,
       "curiosidad_es": "Espacio cultural independiente que impulsa a artistas locales con talleres de plástica, escultura, fotografía y recitales íntimos.",
       "curiosidad_en": "An independent cultural space that supports local artists with art, sculpture and photography workshops and intimate recitals.",
+      "curiosidad_fr": "Un espace culturel indépendant qui soutient les artistes locaux avec des ateliers d’art, de sculpture et de photographie et des récitals intimistes.",
       "ilustracion": "artesania",
       "orden_sugerido": 33,
       "en_demo": false
@@ -506,6 +572,7 @@
       "slug": "cevart",
       "nombre_es": "Centro Veracruzano de las Artes Hugo Argüelles (CEVART)",
       "nombre_en": "Hugo Argüelles Veracruz Arts Center (CEVART)",
+      "nombre_fr": "Centre des arts de Veracruz Hugo Argüelles (CEVART)",
       "categoria": "musica",
       "lat": 19.20169,
       "lng": -96.13996,
@@ -513,6 +580,7 @@
       "radio_m": 40,
       "curiosidad_es": "Escuela de alta especialización en artes escénicas, plásticas y música, en una elegante casona virreinal de la avenida Independencia.",
       "curiosidad_en": "A specialized school for performing arts, visual arts and music in an elegant colonial mansion on Independencia Avenue.",
+      "curiosidad_fr": "Une école spécialisée en arts de la scène, arts visuels et musique, dans une élégante demeure coloniale de l’avenue Independencia.",
       "ilustracion": "jarana",
       "orden_sugerido": 34,
       "en_demo": false
@@ -582,6 +650,35 @@
           "papal",
           "flower"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La cathédrale fut construite au ",
+          "{0}",
+          " siècle, du côté ",
+          "{1}",
+          " de la Grand-Place, comme l’exigeaient les ordonnances ",
+          "{2}",
+          ". En face, un kiosque à ",
+          "{3}",
+          " est ouvert depuis plus d’un demi-siècle."
+        ],
+        "respuestas": [
+          "XVIIe",
+          "est",
+          "royales",
+          "journaux"
+        ],
+        "opciones": [
+          "ouest",
+          "royales",
+          "XVIIe",
+          "est",
+          "journaux",
+          "XIXe",
+          "papales",
+          "fleurs"
+        ]
       }
     },
     {
@@ -635,6 +732,30 @@
           "witchcraft",
           "Real",
           "medicine",
+          "Castillo"
+        ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La légende raconte que la comtesse s’adonna à la ",
+          "{0}",
+          " pendant l’absence de son mari. À son retour, le comte devint fou et cria dans les rues : « Mort à la comtesse de ",
+          "{1}",
+          " ! ». En réalité, c’est Doña Beatriz del ",
+          "{2}",
+          ", une veuve morte en 1802, qui vécut ici."
+        ],
+        "respuestas": [
+          "sorcellerie",
+          "Malibrán",
+          "Real"
+        ],
+        "opciones": [
+          "Ulúa",
+          "Malibrán",
+          "sorcellerie",
+          "Real",
+          "médecine",
           "Castillo"
         ]
       }
@@ -704,6 +825,36 @@
           "e3",
           "e4"
         ]
+      },
+      "contenido_fr": {
+        "eventos": [
+          {
+            "id": "e1",
+            "anio": 1635,
+            "texto": "Construction du bastion de Santiago"
+          },
+          {
+            "id": "e2",
+            "anio": 1683,
+            "texto": "Le pirate Lorencillo attaque le port"
+          },
+          {
+            "id": "e3",
+            "anio": 1763,
+            "texto": "Construction de la digue"
+          },
+          {
+            "id": "e4",
+            "anio": 1880,
+            "texto": "La majeure partie de la muraille est démolie"
+          }
+        ],
+        "orden_correcto": [
+          "e1",
+          "e2",
+          "e3",
+          "e4"
+        ]
       }
     },
     {
@@ -758,6 +909,30 @@
           "spoon",
           "marimba",
           "guitar"
+        ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Au port, on commande le café lechero en tapant le verre avec une ",
+          "{0}",
+          ". Le café le plus célèbre a ouvert en ",
+          "{1}",
+          ", et sous les arcades de la Grand-Place joue le ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "cuillère",
+          "1808",
+          "marimba"
+        ],
+        "opciones": [
+          "clochette",
+          "1808",
+          "1932",
+          "cuillère",
+          "marimba",
+          "guitare"
         ]
       }
     },
@@ -828,6 +1003,37 @@
           "e3",
           "e4"
         ]
+      },
+      "contenido_fr": {
+        "eventos": [
+          {
+            "id": "e1",
+            "anio": 1600,
+            "anio_texto": "XVIIe siècle",
+            "texto": "Le tracé de la ville part de la Grand-Place"
+          },
+          {
+            "id": "e2",
+            "anio": 1808,
+            "texto": "Ouverture du café le plus célèbre du port"
+          },
+          {
+            "id": "e3",
+            "anio": 1932,
+            "texto": "Ouverture du glacier Gran Nevería Yucatán dans le parc Zamora"
+          },
+          {
+            "id": "e4",
+            "anio": 2004,
+            "texto": "Le Centre historique est déclaré zone de monuments historiques"
+          }
+        ],
+        "orden_correcto": [
+          "e1",
+          "e2",
+          "e3",
+          "e4"
+        ]
       }
     },
     {
@@ -843,6 +1049,10 @@
       "contenido_en": {
         "afirmacion": "City Hall was home to the first town council in mainland America.",
         "correcta": true
+      },
+      "contenido_fr": {
+        "afirmacion": "L’hôtel de ville a abrité le premier conseil municipal du continent américain.",
+        "correcta": true
       }
     },
     {
@@ -857,6 +1067,10 @@
       },
       "contenido_en": {
         "afirmacion": "The Carranza Lighthouse was opened by Benito Juárez.",
+        "correcta": false
+      },
+      "contenido_fr": {
+        "afirmacion": "Le phare Carranza a été inauguré par Benito Juárez.",
         "correcta": false
       }
     },
@@ -913,6 +1127,30 @@
           "courtyard",
           "Market"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Le musée occupe l’ancien ",
+          "{0}",
+          " Zamora, un édifice ",
+          "{1}",
+          " du XIXe siècle, et des concerts ont lieu dans sa ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "hospice",
+          "néoclassique",
+          "cour"
+        ],
+        "opciones": [
+          "baroque",
+          "hospice",
+          "néoclassique",
+          "cave",
+          "cour",
+          "marché"
+        ]
       }
     },
     {
@@ -968,6 +1206,30 @@
           "manuscripts",
           "library"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Le ",
+          "{0}",
+          " Salvador Díaz Mirón vécut dans cette demeure ; elle conserve encore sa ",
+          "{1}",
+          " et ses ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "poète",
+          "bibliothèque",
+          "manuscrits"
+        ],
+        "opciones": [
+          "pirate",
+          "barque",
+          "poète",
+          "canons",
+          "manuscrits",
+          "bibliothèque"
+        ]
       }
     },
     {
@@ -992,6 +1254,16 @@
           "Son jarocho",
           "Mariachi",
           "Backstrap weaving",
+          "Fandango"
+        ],
+        "correcta": "Mariachi"
+      },
+      "contenido_fr": {
+        "pregunta": "Laquelle de ces traditions n’est PAS enseignée au centre culturel Atarazanas ?",
+        "opciones": [
+          "Son jarocho",
+          "Mariachi",
+          "Tissage au métier à ceinture",
           "Fandango"
         ],
         "correcta": "Mariachi"
@@ -1050,6 +1322,30 @@
           "Reform",
           "Porfirio"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Ici, ",
+          "{0}",
+          " Juárez installa le gouvernement ",
+          "{1}",
+          " et promulgua les lois de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Benito",
+          "libéral",
+          "Réforme"
+        ],
+        "opciones": [
+          "impérial",
+          "Benito",
+          "libéral",
+          "Indes",
+          "Réforme",
+          "Porfirio"
+        ]
       }
     },
     {
@@ -1075,6 +1371,15 @@
           "Rectangular, like a cinema"
         ],
         "correcta": "Horseshoe, Italian style"
+      },
+      "contenido_fr": {
+        "pregunta": "Quelle forme a la salle du théâtre Clavijero, du XIXe siècle ?",
+        "opciones": [
+          "Ronde, comme une arène",
+          "En fer à cheval, à l’italienne",
+          "Rectangulaire, comme un cinéma"
+        ],
+        "correcta": "En fer à cheval, à l’italienne"
       }
     },
     {
@@ -1129,6 +1434,30 @@
           "100",
           "Moré",
           "stream"
+        ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La Lagunilla garde son nom depuis plus de ",
+          "{0}",
+          " ans ; le ",
+          "{1}",
+          " Tenoya passait ici, et sa placette a une statue de Benny ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "400",
+          "ruisseau",
+          "Moré"
+        ],
+        "opciones": [
+          "fleuve",
+          "Lara",
+          "400",
+          "100",
+          "Moré",
+          "ruisseau"
         ]
       }
     },
@@ -1185,6 +1514,30 @@
           "colonial",
           "Corona"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La placette de la ",
+          "{0}",
+          " est un coin ",
+          "{1}",
+          " au sol ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Campana",
+          "colonial",
+          "pavé"
+        ],
+        "opciones": [
+          "moderne",
+          "pavé",
+          "Campana",
+          "moquetté",
+          "colonial",
+          "Corona"
+        ]
       }
     },
     {
@@ -1199,6 +1552,10 @@
       },
       "contenido_en": {
         "afirmacion": "The La Huaca neighborhood was founded inside the city wall.",
+        "correcta": false
+      },
+      "contenido_fr": {
+        "afirmacion": "Le quartier de La Huaca a été fondé à l’intérieur de la muraille.",
         "correcta": false
       }
     },
@@ -1255,6 +1612,30 @@
           "1683",
           "IMSS"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La ruelle rappelle l’attaque du ",
+          "{0}",
+          " Lorencillo en ",
+          "{1}",
+          " ; elle est classée par l’",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "pirate",
+          "1683",
+          "INAH"
+        ],
+        "opciones": [
+          "1810",
+          "vice-roi",
+          "INAH",
+          "pirate",
+          "1683",
+          "IMSS"
+        ]
       }
     },
     {
@@ -1274,6 +1655,15 @@
       },
       "contenido_en": {
         "pregunta": "In what year did Gran Café de la Parroquia, famous for its café lechero, open?",
+        "opciones": [
+          "1965",
+          "1808",
+          "1932"
+        ],
+        "correcta": "1808"
+      },
+      "contenido_fr": {
+        "pregunta": "En quelle année a ouvert le Gran Café de la Parroquia, célèbre pour son café lechero ?",
         "opciones": [
           "1965",
           "1808",
@@ -1305,6 +1695,15 @@
           "In the middle of Zamora Park"
         ],
         "correcta": "In the middle of Zamora Park"
+      },
+      "contenido_fr": {
+        "pregunta": "Où se trouve la Gran Nevería Yucatán, qui sert des sorbets depuis 1932 ?",
+        "opciones": [
+          "À côté du phare Carranza",
+          "Sur le front de mer",
+          "Au milieu du parc Zamora"
+        ],
+        "correcta": "Au milieu du parc Zamora"
       }
     },
     {
@@ -1327,6 +1726,16 @@
         "pregunta": "Which one is NOT a typical jarocho snack at the Hidalgo Market food stalls?",
         "opciones": [
           "Black gorditas",
+          "Picadas",
+          "Empanadas",
+          "Cochinita pibil"
+        ],
+        "correcta": "Cochinita pibil"
+      },
+      "contenido_fr": {
+        "pregunta": "Lequel n’est PAS un en-cas jarocho typique des comptoirs du marché Hidalgo ?",
+        "opciones": [
+          "Gorditas noires",
           "Picadas",
           "Empanadas",
           "Cochinita pibil"
@@ -1357,6 +1766,15 @@
           "The old Military Naval School"
         ],
         "correcta": "The old Military Naval School"
+      },
+      "contenido_fr": {
+        "pregunta": "Quel bâtiment abrite aujourd’hui le Musée naval du Mexique ?",
+        "opciones": [
+          "Un ancien couvent",
+          "Une ancienne gare",
+          "L’ancienne École navale militaire"
+        ],
+        "correcta": "L’ancienne École navale militaire"
       }
     },
     {
@@ -1371,6 +1789,10 @@
       },
       "contenido_en": {
         "afirmacion": "On the boardwalk, swimmers dive into the sea to catch coins.",
+        "correcta": true
+      },
+      "contenido_fr": {
+        "afirmacion": "Sur le front de mer, des nageurs plongent dans la mer pour attraper des pièces.",
         "correcta": true
       }
     },
@@ -1399,6 +1821,16 @@
           "Jarocho hat"
         ],
         "correcta": "Saltillo serape"
+      },
+      "contenido_fr": {
+        "pregunta": "Lequel n’est PAS un souvenir typique du marché d’artisanat du front de mer ?",
+        "opciones": [
+          "Artisanat en coquillages",
+          "Chemise guayabera",
+          "Sarape de Saltillo",
+          "Chapeau jarocho"
+        ],
+        "correcta": "Sarape de Saltillo"
       }
     },
     {
@@ -1454,6 +1886,30 @@
           "Atlantic",
           "soldiers"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Avant de partir vers l’",
+          "{0}",
+          ", les ",
+          "{1}",
+          " priaient ici le Christ du Bon ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Atlantique",
+          "marins",
+          "Voyage"
+        ],
+        "opciones": [
+          "Chemin",
+          "Pacifique",
+          "marins",
+          "Voyage",
+          "Atlantique",
+          "soldats"
+        ]
       }
     },
     {
@@ -1477,6 +1933,15 @@
           "La Lagunilla Alley",
           "Portal de Miranda",
           "Holtzinger Alley"
+        ],
+        "correcta": "Portal de Miranda"
+      },
+      "contenido_fr": {
+        "pregunta": "Dans quel passage colonial se trouve la Photothèque de Veracruz ?",
+        "opciones": [
+          "Ruelle de La Lagunilla",
+          "Portal de Miranda",
+          "Ruelle Holtzinger"
         ],
         "correcta": "Portal de Miranda"
       }
@@ -1534,6 +1999,30 @@
           "hospital",
           "market"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Ce fut un couvent et un ",
+          "{0}",
+          " de l’ordre bethléémite ; en dessous se trouve une ",
+          "{1}",
+          " voûtée du ",
+          "{2}",
+          " siècle."
+        ],
+        "respuestas": [
+          "hôpital",
+          "crypte",
+          "XVIIIe"
+        ],
+        "opciones": [
+          "XXe",
+          "piscine",
+          "crypte",
+          "XVIIIe",
+          "hôpital",
+          "marché"
+        ]
       }
     },
     {
@@ -1585,6 +2074,30 @@
           "modern",
           "walled",
           "2.8",
+          "40",
+          "Ulúa",
+          "Malibrán"
+        ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Par cette porte, on sortait de la ville ",
+          "{0}",
+          " ; d’ici, le chemin menait à l’hacienda ",
+          "{1}",
+          ", à environ ",
+          "{2}",
+          " km."
+        ],
+        "respuestas": [
+          "fortifiée",
+          "Malibrán",
+          "2,8"
+        ],
+        "opciones": [
+          "moderne",
+          "fortifiée",
+          "2,8",
           "40",
           "Ulúa",
           "Malibrán"
@@ -1644,6 +2157,30 @@
           "18th",
           "Library"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La ruelle a une ",
+          "{0}",
+          " en pierre de corail du ",
+          "{1}",
+          " siècle et mène à la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "arcade",
+          "XVIIIe",
+          "Photothèque"
+        ],
+        "opciones": [
+          "Plage",
+          "XXe",
+          "fontaine",
+          "arcade",
+          "XVIIIe",
+          "Photothèque"
+        ]
       }
     },
     {
@@ -1699,6 +2236,30 @@
           "INAH",
           "IMSS"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Ses bâtiments sont classés par l’",
+          "{0}",
+          " et elle garde le tracé ",
+          "{1}",
+          " de l’intérieur de la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "INAH",
+          "colonial",
+          "muraille"
+        ],
+        "opciones": [
+          "colonial",
+          "muraille",
+          "moderne",
+          "jungle",
+          "INAH",
+          "IMSS"
+        ]
       }
     },
     {
@@ -1714,6 +2275,10 @@
       "contenido_en": {
         "afirmacion": "The Post Office Palace on Republic Square opened in 1902.",
         "correcta": true
+      },
+      "contenido_fr": {
+        "afirmacion": "Le Palais des Postes de la place de la République a été inauguré en 1902.",
+        "correcta": true
       }
     },
     {
@@ -1728,6 +2293,10 @@
       },
       "contenido_en": {
         "afirmacion": "La Pastora Church was built with volcanic stone brought from the mountains.",
+        "correcta": false
+      },
+      "contenido_fr": {
+        "afirmacion": "L’église de La Pastora a été construite en pierre volcanique apportée des montagnes.",
         "correcta": false
       }
     },
@@ -1782,6 +2351,30 @@
           "festivals",
           "Reforma",
           "size",
+          "Merced"
+        ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Le théâtre ",
+          "{0}",
+          " a été rénové pour des spectacles à grand ",
+          "{1}",
+          " et des ",
+          "{2}",
+          " d’art."
+        ],
+        "respuestas": [
+          "Reforma",
+          "public",
+          "festivals"
+        ],
+        "opciones": [
+          "matchs",
+          "public",
+          "festivals",
+          "Reforma",
+          "format",
           "Merced"
         ]
       }
@@ -1839,6 +2432,30 @@
           "swimming",
           "printmaking"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "La Casa Principal est une ",
+          "{0}",
+          " d’art contemporain avec du design graphique, de la ",
+          "{1}",
+          " et de la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "galerie",
+          "gravure",
+          "photographie"
+        ],
+        "opciones": [
+          "cuisine",
+          "boxe",
+          "galerie",
+          "photographie",
+          "natation",
+          "gravure"
+        ]
       }
     },
     {
@@ -1894,6 +2511,30 @@
           "sports",
           "foreign"
         ]
+      },
+      "contenido_fr": {
+        "texto": [
+          "Múcara est un espace ",
+          "{0}",
+          " qui soutient les artistes ",
+          "{1}",
+          " avec des ateliers de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "indépendant",
+          "locaux",
+          "sculpture"
+        ],
+        "opciones": [
+          "sculpture",
+          "indépendant",
+          "locaux",
+          "mécanique",
+          "sport",
+          "étrangers"
+        ]
       }
     },
     {
@@ -1921,6 +2562,16 @@
           "Architecture"
         ],
         "correcta": "Architecture"
+      },
+      "contenido_fr": {
+        "pregunta": "Le CEVART forme des artistes dans trois domaines. Lequel n’en fait PAS partie ?",
+        "opciones": [
+          "Arts de la scène",
+          "Musique",
+          "Arts visuels",
+          "Architecture"
+        ],
+        "correcta": "Architecture"
       }
     }
   ],
@@ -1930,6 +2581,7 @@
       "url": "/fotos/palacio-municipal-1880.jpg",
       "titulo_es": "Palacio Municipal y el puerto de Veracruz (1880–1900)",
       "titulo_en": "City Hall and the port of Veracruz (1880–1900)",
+      "titulo_fr": "L’hôtel de ville et le port de Veracruz (1880–1900)",
       "piezas": 6,
       "autor": "Abel Briquet",
       "fecha": "1880–1900",
@@ -1941,6 +2593,7 @@
       "url": "/rompecabezas/faro.svg",
       "titulo_es": "Faro Carranza al amanecer",
       "titulo_en": "Carranza Lighthouse at dawn",
+      "titulo_fr": "Le phare Carranza à l’aube",
       "piezas": 6,
       "autor": "JARANA",
       "fecha": "2026",
@@ -1952,6 +2605,7 @@
       "url": "/rompecabezas/baluarte.svg",
       "titulo_es": "Baluarte de Santiago",
       "titulo_en": "Santiago Bulwark",
+      "titulo_fr": "Le bastion de Santiago",
       "piezas": 6,
       "autor": "JARANA",
       "fecha": "2026",
@@ -1963,6 +2617,7 @@
       "url": "/rompecabezas/catedral.svg",
       "titulo_es": "Catedral y portales",
       "titulo_en": "Cathedral and arcades",
+      "titulo_fr": "La cathédrale et les arcades",
       "piezas": 6,
       "autor": "JARANA",
       "fecha": "2026",
@@ -1974,6 +2629,7 @@
       "url": "/rompecabezas/danzon.svg",
       "titulo_es": "Noche de danzón en el Zócalo",
       "titulo_en": "Danzón night at the Zócalo",
+      "titulo_fr": "Soirée de danzón au Zócalo",
       "piezas": 6,
       "autor": "JARANA",
       "fecha": "2026",
@@ -1985,6 +2641,7 @@
       "url": "/rompecabezas/puerto.svg",
       "titulo_es": "El puerto de Veracruz",
       "titulo_en": "The port of Veracruz",
+      "titulo_fr": "Le port de Veracruz",
       "piezas": 6,
       "autor": "JARANA",
       "fecha": "2026",
@@ -2002,11 +2659,14 @@
       "lng": -96.13857,
       "descripcion_es": "Café y restaurante bajo los portales frente a la Plaza Mayor y la Catedral, con música de marimba y comida jarocha.",
       "descripcion_en": "Café and restaurant under the arcades facing the Main Square and the Cathedral, with marimba music and jarocho food.",
+      "descripcion_fr": "Café-restaurant sous les arcades face à la Grand-Place et à la cathédrale, avec marimba et cuisine jarocha.",
       "dato_es": "Bajo los portales",
       "dato_en": "Under the arcades",
+      "dato_fr": "Sous les arcades",
       "direccion": "Av. Independencia 1187",
       "horario_es": "Todos los días 07:00–23:00",
       "horario_en": "Daily 7:00 am–11:00 pm",
+      "horario_fr": "Tous les jours 7 h–23 h",
       "foto_url": null,
       "aliado": true,
       "verificar": false,
@@ -2022,11 +2682,14 @@
       "lng": -96.13509,
       "descripcion_es": "El café más famoso del puerto: café lechero servido con tintineo de cuchara en el vaso, canillas calientes y vista al malecón.",
       "descripcion_en": "The port's most famous café: café lechero served with a clink of the spoon, warm canillas and a view of the boardwalk.",
+      "descripcion_fr": "Le café le plus célèbre du port : café lechero servi au tintement de la cuillère, canillas tièdes et vue sur le front de mer.",
       "dato_es": "Desde 1808",
       "dato_en": "Since 1808",
+      "dato_fr": "Depuis 1808",
       "direccion": "Calle Valentín Gómez Farías 34",
       "horario_es": "Todos los días 07:00–00:00",
       "horario_en": "Daily 7:00 am–12:00 am",
+      "horario_fr": "Tous les jours 7 h–minuit",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2042,11 +2705,14 @@
       "lng": -96.1308,
       "descripcion_es": "Café de especialidad con granos de altura veracruzanos de Coatepec y Huatusco, preparados con métodos artesanales.",
       "descripcion_en": "Specialty coffee from Veracruz highland beans (Coatepec and Huatusco), brewed with hand methods.",
+      "descripcion_fr": "Café de spécialité à base de grains des hauteurs de Veracruz (Coatepec et Huatusco), préparé avec des méthodes manuelles.",
       "dato_es": "Café de altura veracruzano",
       "dato_en": "Veracruz highland coffee",
+      "dato_fr": "Café des hauteurs de Veracruz",
       "direccion": "Calle Francisco Hernández y Hernández 541, Col. Faros",
       "horario_es": "Lunes a sábado 08:00–21:00",
       "horario_en": "Mon–Sat 8:00 am–9:00 pm",
+      "horario_fr": "Lun–sam 8 h–21 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2062,11 +2728,14 @@
       "lng": -96.13525,
       "descripcion_es": "Cocina contemporánea de autor en una casona histórica restaurada del centro.",
       "descripcion_en": "Contemporary signature cuisine in a restored historic mansion downtown.",
+      "descripcion_fr": "Cuisine d’auteur contemporaine dans une demeure historique restaurée du centre.",
       "dato_es": "En Food and Travel México",
       "dato_en": "Featured in Food and Travel México",
+      "dato_fr": "Recommandé par Food and Travel México",
       "direccion": "Av. Ignacio Zaragoza 445",
       "horario_es": "Martes a domingo 13:00–23:00",
       "horario_en": "Tue–Sun 1:00–11:00 pm",
+      "horario_fr": "Mar–dim 13 h–23 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2082,11 +2751,14 @@
       "lng": -96.13493,
       "descripcion_es": "Restaurante clásico de servicio rápido con mariscos frescos, cazuelas y cocina veracruzana.",
       "descripcion_en": "Classic quick-service restaurant with fresh seafood, cazuelas and Veracruz cooking.",
+      "descripcion_fr": "Restaurant classique au service rapide avec fruits de mer frais, cazuelas et cuisine de Veracruz.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Calle Ignacio López Rayón 609",
       "horario_es": "Todos los días 08:00–19:00",
       "horario_en": "Daily 8:00 am–7:00 pm",
+      "horario_fr": "Tous les jours 8 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2102,11 +2774,14 @@
       "lng": -96.13879,
       "descripcion_es": "Tortería tradicional famosa por sus tortas cubanas, tostadas de pierna, molletes y aguas frescas.",
       "descripcion_en": "Traditional torta shop famous for its tortas cubanas, pork tostadas, molletes and aguas frescas.",
+      "descripcion_fr": "Tortería traditionnelle célèbre pour ses tortas cubanas, tostadas de porc, molletes et aguas frescas.",
       "dato_es": "+40 años",
       "dato_en": "40+ years",
+      "dato_fr": "Plus de 40 ans",
       "direccion": "Calle Francisco Canal esq. Av. Miguel Hidalgo",
       "horario_es": "Todos los días 10:00–20:00",
       "horario_en": "Daily 10:00 am–8:00 pm",
+      "horario_fr": "Tous les jours 10 h–20 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2122,11 +2797,14 @@
       "lng": -96.13705,
       "descripcion_es": "Las fondas favoritas de turistas y locales: picadas de salsa ranchera, gorditas dulces y negras, empanadas y mondongo.",
       "descripcion_en": "A favorite of visitors and locals: picadas with ranchera salsa, sweet and black gorditas, empanadas and mondongo.",
+      "descripcion_fr": "Le favori des visiteurs et des habitants : picadas à la sauce ranchera, gorditas sucrées et noires, empanadas et mondongo.",
       "dato_es": "Favoritas de los jarochos",
       "dato_en": "A local favorite",
+      "dato_fr": "Le favori du quartier",
       "direccion": "Interior del Mercado Hidalgo, Av. Francisco I. Madero",
       "horario_es": "Todos los días 07:00–17:00",
       "horario_en": "Daily 7:00 am–5:00 pm",
+      "horario_fr": "Tous les jours 7 h–17 h",
       "foto_url": null,
       "aliado": true,
       "verificar": false,
@@ -2142,11 +2820,14 @@
       "lng": -96.13795,
       "descripcion_es": "Caldos de mariscos, cazuelas de pescado, guisados caseros y comida corrida con sazón jarocha.",
       "descripcion_en": "Seafood soups, fish cazuelas, home-style stews and set lunches with jarocho flavor.",
+      "descripcion_fr": "Soupes de fruits de mer, cazuelas de poisson, ragoûts maison et menus du jour au goût jarocho.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Calle Juan Soto esq. Nicolás Bravo",
       "horario_es": "Todos los días 07:00–16:00",
       "horario_en": "Daily 7:00 am–4:00 pm",
+      "horario_fr": "Tous les jours 7 h–16 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2162,11 +2843,14 @@
       "lng": -96.13183,
       "descripcion_es": "Corredor de fondas populares junto a los mercados, especialistas en picadas gigantes al comal y desayunos tradicionales.",
       "descripcion_en": "A row of local eateries next to the markets, known for giant griddle picadas and traditional breakfasts.",
+      "descripcion_fr": "Une rangée de petits restos près des marchés, connus pour leurs picadas géantes à la plancha et leurs petits-déjeuners traditionnels.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Calle Mariano Abasolo, entre 16 de Septiembre y 20 de Noviembre",
       "horario_es": "Todos los días 07:30–17:00",
       "horario_en": "Daily 7:30 am–5:00 pm",
+      "horario_fr": "Tous les jours 7 h 30–17 h",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2182,11 +2866,14 @@
       "lng": -96.13853,
       "descripcion_es": "Puesto nocturno de elotes tiernos y esquites con queso de hebra y chile.",
       "descripcion_en": "Evening stand for tender corn on the cob and esquites with string cheese and chili.",
+      "descripcion_fr": "Stand du soir pour épis de maïs tendres et esquites avec fromage en ficelle et piment.",
       "dato_es": "Botana nocturna del Zócalo",
       "dato_en": "Zócalo evening snack",
+      "dato_fr": "En-cas du soir au Zócalo",
       "direccion": "Zócalo / Plaza Mayor",
       "horario_es": "Todos los días 17:00–23:00",
       "horario_en": "Daily 5:00–11:00 pm",
+      "horario_fr": "Tous les jours 17 h–23 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2202,11 +2889,14 @@
       "lng": -96.13832,
       "descripcion_es": "Puesto tradicional de elotes desgranados hervidos con epazote en las esquinas del primer cuadro.",
       "descripcion_en": "Traditional stand for corn kernels boiled with epazote on the corners of the old town.",
+      "descripcion_fr": "Stand traditionnel de grains de maïs cuits à l’epazote, aux coins de la vieille ville.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Av. Independencia esq. Calle Mario Molina",
       "horario_es": "Todos los días 17:00–23:00",
       "horario_en": "Daily 5:00–11:00 pm",
+      "horario_fr": "Tous les jours 17 h–23 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2222,11 +2912,14 @@
       "lng": -96.13567,
       "descripcion_es": "Ícono jarocho en medio del Parque Zamora: helados artesanales, malteadas, tortas y música en vivo.",
       "descripcion_en": "A jarocho icon in the middle of Zamora Park: handmade ice cream, milkshakes, tortas and live music.",
+      "descripcion_fr": "Une icône jarocha au milieu du parc Zamora : glaces artisanales, milk-shakes, tortas et musique live.",
       "dato_es": "Desde 1932",
       "dato_en": "Since 1932",
+      "dato_fr": "Depuis 1932",
       "direccion": "Parque Zamora (cruce de Av. Independencia y Rayón)",
       "horario_es": "Todos los días 09:00–22:00",
       "horario_en": "Daily 9:00 am–10:00 pm",
+      "horario_fr": "Tous les jours 9 h–22 h",
       "foto_url": null,
       "aliado": true,
       "verificar": false,
@@ -2242,11 +2935,14 @@
       "lng": -96.1359,
       "descripcion_es": "Carritos de nieve artesanal con sabores tropicales: guanábana, jobo, nanche, coco, mamey y limón.",
       "descripcion_en": "Handmade sorbet carts with tropical flavors: soursop, jobo, nanche, coconut, mamey and lime.",
+      "descripcion_fr": "Chariots de sorbets artisanaux aux saveurs tropicales : corossol, jobo, nanche, coco, mamey et citron vert.",
       "dato_es": "Sabores tropicales",
       "dato_en": "Tropical flavors",
+      "dato_fr": "Saveurs tropicales",
       "direccion": "Kiosco y andadores del Parque Zamora",
       "horario_es": "Todos los días 10:00–21:00",
       "horario_en": "Daily 10:00 am–9:00 pm",
+      "horario_fr": "Tous les jours 10 h–21 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2262,11 +2958,14 @@
       "lng": -96.13705,
       "descripcion_es": "El principal mercado de abasto y comida popular del centro, corazón del comercio y la vida diaria jarocha.",
       "descripcion_en": "The center's main food market, the heart of everyday jarocho trade and life.",
+      "descripcion_fr": "Le principal marché alimentaire du centre, cœur du commerce et de la vie jarocha au quotidien.",
       "dato_es": "Remodelado en 2015",
       "dato_en": "Renovated in 2015",
+      "dato_fr": "Rénové en 2015",
       "direccion": "Av. Francisco I. Madero s/n, entre Cortés y Canal",
       "horario_es": "Todos los días 06:00–18:00",
       "horario_en": "Daily 6:00 am–6:00 pm",
+      "horario_fr": "Tous les jours 6 h–18 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2282,11 +2981,14 @@
       "lng": -96.13805,
       "descripcion_es": "Conocido como el Mercado Viejo, conserva el ambiente más tradicional del puerto y su memoria popular.",
       "descripcion_en": "Known as the Old Market, it keeps the port's most traditional atmosphere and folk memory.",
+      "descripcion_fr": "Appelé le Vieux Marché, il garde l’ambiance la plus traditionnelle et la mémoire populaire du port.",
       "dato_es": "El mercado más tradicional",
       "dato_en": "The most traditional market",
+      "dato_fr": "Le marché le plus traditionnel",
       "direccion": "Entre calles Juan Soto, Nicolás Bravo y Guerrero",
       "horario_es": "Todos los días 06:00–18:00",
       "horario_en": "Daily 6:00 am–6:00 pm",
+      "horario_fr": "Tous les jours 6 h–18 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2302,11 +3004,14 @@
       "lng": -96.13682,
       "descripcion_es": "Mercado emblemático del malecón con recuerdos de conchas de mar, sombreros jarochos, playeras y artesanía marina.",
       "descripcion_en": "An emblematic boardwalk market with seashell souvenirs, jarocho hats, T-shirts and sea-themed crafts.",
+      "descripcion_fr": "Un marché emblématique du front de mer avec souvenirs en coquillages, chapeaux jarochos, tee-shirts et artisanat marin.",
       "dato_es": "Frente al mar",
       "dato_en": "By the sea",
+      "dato_fr": "Au bord de la mer",
       "direccion": "Paseo del Malecón s/n",
       "horario_es": "Todos los días 08:30–21:00",
       "horario_en": "Daily 8:30 am–9:00 pm",
+      "horario_fr": "Tous les jours 8 h 30–21 h",
       "foto_url": null,
       "aliado": true,
       "verificar": false,
@@ -2322,11 +3027,14 @@
       "lng": -96.13473,
       "descripcion_es": "Plaza frente al mar con locales de artesanos de toritos, café y textiles, junto a un vestigio de la muralla de 1763.",
       "descripcion_en": "A seafront plaza with artisan stalls for toritos, coffee and textiles, next to a remnant of the 1763 city wall.",
+      "descripcion_fr": "Une place face à la mer avec des stands d’artisans (toritos, café, textiles), à côté d’un vestige de la muraille de 1763.",
       "dato_es": "Junto a la muralla de 1763",
       "dato_en": "Next to the 1763 wall",
+      "dato_fr": "À côté de la muraille de 1763",
       "direccion": "Frente marítimo, entre el Baluarte de Santiago y la Antigua Aduana",
       "horario_es": "Todos los días 09:00–22:00",
       "horario_en": "Daily 9:00 am–10:00 pm",
+      "horario_fr": "Tous les jours 9 h–22 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2342,11 +3050,14 @@
       "lng": -96.13657,
       "descripcion_es": "Taller tradicional de cartonería: piñatas de picos, figuras festivas y personajes jarochos.",
       "descripcion_en": "Traditional papier-mâché workshop: star piñatas, festive figures and jarocho characters.",
+      "descripcion_fr": "Atelier traditionnel de papier mâché : piñatas en étoile, figures de fête et personnages jarochos.",
       "dato_es": "Cartonería artesanal",
       "dato_en": "Handmade papier-mâché",
+      "dato_fr": "Papier mâché fait main",
       "direccion": "Calle Francisco Canal s/n, Zona Centro",
       "horario_es": "Lunes a sábado 09:30–19:30",
       "horario_en": "Mon–Sat 9:30 am–7:30 pm",
+      "horario_fr": "Lun–sam 9 h 30–19 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2362,11 +3073,14 @@
       "lng": -96.1355,
       "descripcion_es": "Tienda tradicional que ha vestido a generaciones jarochas: trajes de gala, vestidos, mercería y uniformes.",
       "descripcion_en": "A traditional store that has dressed generations of jarochos: formalwear, dresses, notions and uniforms.",
+      "descripcion_fr": "Un magasin traditionnel qui a habillé des générations de Jarochos : tenues de soirée, robes, mercerie et uniformes.",
       "dato_es": "Décadas en el centro",
       "dato_en": "Decades downtown",
+      "dato_fr": "Des décennies au centre",
       "direccion": "Av. Independencia esq. Calle Ignacio López Rayón",
       "horario_es": "Lunes a sábado 10:00–20:00, domingo 10:00–15:30",
       "horario_en": "Mon–Sat 10:00 am–8:00 pm, Sun 10:00 am–3:30 pm",
+      "horario_fr": "Lun–sam 10 h–20 h, dim 10 h–15 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2382,11 +3096,14 @@
       "lng": -96.13684,
       "descripcion_es": "El centro comercial vertical más antiguo de Veracruz: cinco niveles con farmacia, cafetería y tiendas de ropa.",
       "descripcion_en": "The oldest vertical shopping center in Veracruz: five floors with a pharmacy, café and clothing stores.",
+      "descripcion_fr": "Le plus ancien centre commercial vertical de Veracruz : cinq étages avec pharmacie, café et boutiques de vêtements.",
       "dato_es": "El más antiguo del puerto",
       "dato_en": "The port's oldest",
+      "dato_fr": "Le plus ancien du port",
       "direccion": "Calle Ignacio López Rayón, entre Independencia e Hidalgo",
       "horario_es": "Lunes a sábado 08:00–20:00",
       "horario_en": "Mon–Sat 8:00 am–8:00 pm",
+      "horario_fr": "Lun–sam 8 h–20 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2402,11 +3119,14 @@
       "lng": -96.14216,
       "descripcion_es": "Antigüedades portuarias: muebles de caoba y cedro, porcelanas, monedas y objetos náuticos de colección.",
       "descripcion_en": "Port antiques: mahogany and cedar furniture, porcelain, coins and collectible nautical objects.",
+      "descripcion_fr": "Antiquités du port : meubles en acajou et en cèdre, porcelaine, monnaies et objets nautiques de collection.",
       "dato_es": "Reliquias del puerto",
       "dato_en": "Port relics",
+      "dato_fr": "Reliques du port",
       "direccion": "Calle Carlos Cruz 608, Zona Centro",
       "horario_es": "Lunes a sábado 10:00–18:30",
       "horario_en": "Mon–Sat 10:00 am–6:30 pm",
+      "horario_fr": "Lun–sam 10 h–18 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2422,11 +3142,14 @@
       "lng": -96.1379,
       "descripcion_es": "Abarrotes finos, dulces regionales de leche y productos tradicionales del puerto.",
       "descripcion_en": "Fine groceries, regional milk sweets and traditional port products.",
+      "descripcion_fr": "Épicerie fine, douceurs régionales au lait et produits traditionnels du port.",
       "dato_es": "Dulces típicos jarochos",
       "dato_en": "Typical jarocho sweets",
+      "dato_fr": "Douceurs typiques jarochas",
       "direccion": "Calle Francisco Canal esq. Deheza",
       "horario_es": "Lunes a sábado 08:30–19:00",
       "horario_en": "Mon–Sat 8:30 am–7:00 pm",
+      "horario_fr": "Lun–sam 8 h 30–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2442,11 +3165,14 @@
       "lng": -96.13914,
       "descripcion_es": "Boutique local de ropa para dama y caballero con textiles de algodón pensados para el clima costero.",
       "descripcion_en": "Local boutique for women's and men's clothing in cotton fabrics made for the coastal climate.",
+      "descripcion_fr": "Boutique locale de vêtements pour femmes et hommes en coton, pensés pour le climat de la côte.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Av. Francisco I. Madero esq. Mariano Arista",
       "horario_es": "Lunes a sábado 10:00–19:30",
       "horario_en": "Mon–Sat 10:00 am–7:30 pm",
+      "horario_fr": "Lun–sam 10 h–19 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2462,11 +3188,14 @@
       "lng": -96.139,
       "descripcion_es": "Regalos, bisutería artesanal, joyería de fantasía y accesorios de moda.",
       "descripcion_en": "Gifts, handmade costume jewelry and fashion accessories.",
+      "descripcion_fr": "Cadeaux, bijoux fantaisie faits main et accessoires de mode.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Calle Mariano Arista s/n, Zona Centro",
       "horario_es": "Lunes a sábado 10:00–19:00",
       "horario_en": "Mon–Sat 10:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 10 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2482,11 +3211,14 @@
       "lng": -96.13742,
       "descripcion_es": "Libros antiguos y agotados, clásicos universales y novedades, a una cuadra del Mercado Hidalgo.",
       "descripcion_en": "Old and out-of-print books, world classics and new titles, one block from the Hidalgo Market.",
+      "descripcion_fr": "Livres anciens et épuisés, classiques mondiaux et nouveautés, à une rue du marché Hidalgo.",
       "dato_es": "71 años de historia",
       "dato_en": "71 years of history",
+      "dato_fr": "71 ans d’histoire",
       "direccion": "Calle Ignacio López Rayón casi esq. Av. Francisco I. Madero",
       "horario_es": "Horario comercial",
       "horario_en": "Business hours",
+      "horario_fr": "Heures d’ouverture des commerces",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2502,11 +3234,14 @@
       "lng": -96.13826,
       "descripcion_es": "Puesto familiar de periódicos y revistas, referente de la prensa escrita porteña.",
       "descripcion_en": "Family-run newsstand, a landmark of the port's print press.",
+      "descripcion_fr": "Kiosque à journaux familial, un repère de la presse du port.",
       "dato_es": "Medio siglo frente a la Catedral",
       "dato_en": "Half a century facing the Cathedral",
+      "dato_fr": "Un demi-siècle face à la cathédrale",
       "direccion": "Calle Mario Molina esq. Av. Independencia (frente a la Catedral)",
       "horario_es": "Todos los días por la mañana",
       "horario_en": "Daily, mornings",
+      "horario_fr": "Tous les jours, le matin",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2522,11 +3257,14 @@
       "lng": -96.13752,
       "descripcion_es": "Librería del Fondo de Cultura Económica en el histórico Portal de Miranda, junto a la Fototeca.",
       "descripcion_en": "The Fondo de Cultura Económica bookstore in the historic Portal de Miranda, next to the Photo Library.",
+      "descripcion_fr": "La librairie du Fondo de Cultura Económica dans l’historique Portal de Miranda, à côté de la Photothèque.",
       "dato_es": "En el Portal de Miranda",
       "dato_en": "In the Portal de Miranda",
+      "dato_fr": "Dans le Portal de Miranda",
       "direccion": "Callejón Portal de Miranda 9 esq. Gutiérrez Zamora",
       "horario_es": "Lunes a sábado 10:00–19:00",
       "horario_en": "Mon–Sat 10:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 10 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2542,11 +3280,14 @@
       "lng": -96.13528,
       "descripcion_es": "Librería independiente de literatura iberoamericana, narrativa veracruzana, arte, poesía y ensayo.",
       "descripcion_en": "Independent bookstore for Ibero-American literature, Veracruz fiction, art, poetry and essays.",
+      "descripcion_fr": "Librairie indépendante de littérature ibéro-américaine, romans de Veracruz, art, poésie et essais.",
       "dato_es": "Narrativa veracruzana",
       "dato_en": "Veracruz fiction",
+      "dato_fr": "Romans de Veracruz",
       "direccion": "Calle Esteban Morales 524",
       "horario_es": "Lunes a sábado 10:00–19:00",
       "horario_en": "Mon–Sat 10:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 10 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2562,11 +3303,14 @@
       "lng": -96.13582,
       "descripcion_es": "Librería tradicional del corredor librero de la calle Rayón, con amplio surtido literario y didáctico.",
       "descripcion_en": "A traditional bookstore on the Rayón street book row, with a wide literary and educational selection.",
+      "descripcion_fr": "Une librairie traditionnelle de la rue des libraires de Rayón, avec un large choix littéraire et scolaire.",
       "dato_es": "Corredor librero de Rayón",
       "dato_en": "Rayón book row",
+      "dato_fr": "Rue des libraires de Rayón",
       "direccion": "Calle Ignacio López Rayón 929",
       "horario_es": "Lunes a sábado 09:30–19:30",
       "horario_en": "Mon–Sat 9:30 am–7:30 pm",
+      "horario_fr": "Lun–sam 9 h 30–19 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2582,11 +3326,14 @@
       "lng": -96.13819,
       "descripcion_es": "Librería decana del centro especializada en textos escolares, universitarios y de formación técnica.",
       "descripcion_en": "A long-standing downtown bookstore for school, university and technical textbooks.",
+      "descripcion_fr": "Une librairie de longue date au centre pour les manuels scolaires, universitaires et techniques.",
       "dato_es": "Librería decana",
       "dato_en": "A downtown classic",
+      "dato_fr": "Un classique du centre",
       "direccion": "Calle Ignacio López Rayón 999 esq. Av. Miguel Hidalgo",
       "horario_es": "Lunes a sábado 09:00–19:00",
       "horario_en": "Mon–Sat 9:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 9 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2602,11 +3349,14 @@
       "lng": -96.13577,
       "descripcion_es": "Textos escolares, material didáctico y libros generales sobre la principal avenida comercial del centro.",
       "descripcion_en": "School books, teaching materials and general titles on downtown's main shopping avenue.",
+      "descripcion_fr": "Livres scolaires, matériel pédagogique et titres généraux sur la principale avenue commerçante du centre.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Av. Independencia 1691",
       "horario_es": "Lunes a sábado 09:00–19:30",
       "horario_en": "Mon–Sat 9:00 am–7:30 pm",
+      "horario_fr": "Lun–sam 9 h–19 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2622,11 +3372,14 @@
       "lng": -96.13587,
       "descripcion_es": "Catálogo educativo, infantil y de divulgación sobre la avenida Independencia.",
       "descripcion_en": "Educational, children's and popular-science books on Independencia Avenue.",
+      "descripcion_fr": "Livres éducatifs, pour enfants et de vulgarisation scientifique sur l’avenue Independencia.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Av. Independencia 1634",
       "horario_es": "Lunes a sábado 09:30–19:00",
       "horario_en": "Mon–Sat 9:30 am–7:00 pm",
+      "horario_fr": "Lun–sam 9 h 30–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2642,11 +3395,14 @@
       "lng": -96.1355,
       "descripcion_es": "Novedades literarias, revistas importadas y libros de arte.",
       "descripcion_en": "New releases, imported magazines and art books.",
+      "descripcion_fr": "Nouveautés, magazines importés et livres d’art.",
       "dato_es": "Abierta hasta las 23:00",
       "dato_en": "Open until 11:00 pm",
+      "dato_fr": "Ouvert jusqu’à 23 h",
       "direccion": "Av. Independencia 1069",
       "horario_es": "Todos los días 07:30–23:00",
       "horario_en": "Daily 7:30 am–11:00 pm",
+      "horario_fr": "Tous les jours 7 h 30–23 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2662,11 +3418,14 @@
       "lng": -96.13378,
       "descripcion_es": "Referencia en el estado para medicina, enfermería, ingeniería, arquitectura y leyes.",
       "descripcion_en": "The state's go-to store for medicine, nursing, engineering, architecture and law books.",
+      "descripcion_fr": "La référence de l’État pour les livres de médecine, soins infirmiers, ingénierie, architecture et droit.",
       "dato_es": "Libros técnicos y médicos",
       "dato_en": "Technical and medical books",
+      "dato_fr": "Livres techniques et médicaux",
       "direccion": "Av. 20 de Noviembre 795",
       "horario_es": "Lunes a sábado 09:00–19:00",
       "horario_en": "Mon–Sat 9:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 9 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2682,11 +3441,14 @@
       "lng": -96.1339,
       "descripcion_es": "Negocio familiar de libros escolares y papelería para el sector educativo.",
       "descripcion_en": "A family business selling school books and stationery.",
+      "descripcion_fr": "Une entreprise familiale de livres scolaires et de papeterie.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Av. 20 de Noviembre 913",
       "horario_es": "Lunes a sábado 09:00–19:00",
       "horario_en": "Mon–Sat 9:00 am–7:00 pm",
+      "horario_fr": "Lun–sam 9 h–19 h",
       "foto_url": null,
       "aliado": false,
       "verificar": true,
@@ -2702,11 +3464,14 @@
       "lng": -96.13695,
       "descripcion_es": "Librería clásica de catálogo general, consulta y obras literarias.",
       "descripcion_en": "A classic general bookstore with reference and literary titles.",
+      "descripcion_fr": "Une librairie générale classique avec des ouvrages de référence et de littérature.",
       "dato_es": null,
       "dato_en": null,
+      "dato_fr": null,
       "direccion": "Calle Esteban Morales 732",
       "horario_es": "Lunes a sábado 09:30–18:30",
       "horario_en": "Mon–Sat 9:30 am–6:30 pm",
+      "horario_fr": "Lun–sam 9 h 30–18 h 30",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2722,11 +3487,14 @@
       "lng": -96.13937,
       "descripcion_es": "Especializada en la enseñanza del inglés: certificaciones, diccionarios y material pedagógico.",
       "descripcion_en": "Specialized in English teaching: certifications, dictionaries and teaching materials.",
+      "descripcion_fr": "Spécialisée dans l’enseignement de l’anglais : certifications, dictionnaires et matériel pédagogique.",
       "dato_es": "Libros para aprender inglés",
       "dato_en": "English learning books",
+      "dato_fr": "Livres pour apprendre l’anglais",
       "direccion": "Calle Mario Molina 387 esq. 5 de Mayo y Madero",
       "horario_es": "Lunes a viernes 09:00–18:00, sábado 09:00–14:00",
       "horario_en": "Mon–Fri 9:00 am–6:00 pm, Sat 9:00 am–2:00 pm",
+      "horario_fr": "Lun–ven 9 h–18 h, sam 9 h–14 h",
       "foto_url": null,
       "aliado": false,
       "verificar": false,
@@ -2740,6 +3508,7 @@
       "comercio_slug": "comercio-cafe",
       "titulo_es": "Café lechero 2×1",
       "titulo_en": "Café lechero 2-for-1",
+      "titulo_fr": "Café lechero : 2 pour 1",
       "costo_tlacos": 80,
       "activa": true
     },
@@ -2748,6 +3517,7 @@
       "comercio_slug": "comercio-volovan",
       "titulo_es": "Picada de regalo",
       "titulo_en": "Free picada",
+      "titulo_fr": "Une picada offerte",
       "costo_tlacos": 60,
       "activa": true
     },
@@ -2756,6 +3526,7 @@
       "comercio_slug": "comercio-nieve",
       "titulo_es": "Nieve de regalo",
       "titulo_en": "Free sorbet",
+      "titulo_fr": "Un sorbet offert",
       "costo_tlacos": 40,
       "activa": true
     },
@@ -2764,6 +3535,7 @@
       "comercio_slug": "comercio-lancha",
       "titulo_es": "−20 % en artesanías",
       "titulo_en": "20% off crafts",
+      "titulo_fr": "20 % de réduction sur l’artisanat",
       "costo_tlacos": 300,
       "activa": true
     }
@@ -2773,6 +3545,7 @@
       "slug": "fototeca-piel-ciudad",
       "titulo_es": "Exposición «La piel de la ciudad»",
       "titulo_en": "\"La piel de la ciudad\" photo exhibition",
+      "titulo_fr": "Exposition photo « La piel de la ciudad »",
       "lugar": "Fototeca de Veracruz (Portal de Miranda 9)",
       "lat": 19.20026,
       "lng": -96.13752,
@@ -2785,6 +3558,7 @@
       "slug": "marimba-portales",
       "titulo_es": "Marimba en los Portales",
       "titulo_en": "Marimba under the Arcades",
+      "titulo_fr": "Marimba sous les arcades",
       "lugar": "Portales de la Plaza Mayor",
       "lat": 19.19964,
       "lng": -96.13857,
@@ -2797,6 +3571,7 @@
       "slug": "pasajes-umbral",
       "titulo_es": "Recorrido nocturno «Pasajes del Umbral»",
       "titulo_en": "\"Pasajes del Umbral\" night walk",
+      "titulo_fr": "Balade nocturne « Pasajes del Umbral »",
       "lugar": "Plazuela de la Lagunilla",
       "lat": 19.1983,
       "lng": -96.13794,
@@ -2809,6 +3584,7 @@
       "slug": "fandango-atarazanas",
       "titulo_es": "Fandango de son jarocho",
       "titulo_en": "Son jarocho fandango",
+      "titulo_fr": "Fandango de son jarocho",
       "lugar": "Centro Cultural Atarazanas",
       "lat": 19.19839,
       "lng": -96.13462,
@@ -2821,6 +3597,7 @@
       "slug": "danzon-zocalo",
       "titulo_es": "Danzón en el Zócalo",
       "titulo_en": "Danzón at the Zócalo",
+      "titulo_fr": "Danzón au Zócalo",
       "lugar": "Zócalo / Plaza de Armas",
       "lat": 19.20023,
       "lng": -96.13853,
@@ -2833,6 +3610,7 @@
       "slug": "concierto-museo-ciudad",
       "titulo_es": "Concierto en el patio del Museo de la Ciudad",
       "titulo_en": "Concert in the City Museum courtyard",
+      "titulo_fr": "Concert dans la cour du Musée de la Ville",
       "lugar": "Museo de la Ciudad (Zaragoza 397)",
       "lat": 19.1979,
       "lng": -96.13581,
@@ -2845,6 +3623,7 @@
       "slug": "pregon-mariscos-mercado",
       "titulo_es": "Pregón de mariscos en el Mercado Hidalgo",
       "titulo_en": "Seafood market day at Mercado Hidalgo",
+      "titulo_fr": "Journée des fruits de mer au marché Hidalgo",
       "lugar": "Mercado Hidalgo",
       "lat": 19.19347,
       "lng": -96.13705,
@@ -2857,6 +3636,7 @@
       "slug": "trova-parroquia",
       "titulo_es": "Tarde de trova en el Gran Café de la Parroquia",
       "titulo_en": "Trova afternoon at Gran Café de la Parroquia",
+      "titulo_fr": "Après-midi de trova au Gran Café de la Parroquia",
       "lugar": "Gran Café de la Parroquia",
       "lat": 19.20113,
       "lng": -96.13509,
@@ -2869,6 +3649,7 @@
       "slug": "visita-baluarte",
       "titulo_es": "Visita guiada al Baluarte de Santiago",
       "titulo_en": "Guided visit to the Santiago Bulwark",
+      "titulo_fr": "Visite guidée du bastion de Santiago",
       "lugar": "Baluarte de Santiago",
       "lat": 19.1981,
       "lng": -96.1332,
@@ -2881,6 +3662,7 @@
       "slug": "taller-palma",
       "titulo_es": "Taller de artesanía en palma",
       "titulo_en": "Palm-weaving craft workshop",
+      "titulo_fr": "Atelier de tressage de palme",
       "lugar": "Centro Cultural Atarazanas",
       "lat": 19.19839,
       "lng": -96.13461,
@@ -2893,6 +3675,7 @@
       "slug": "atardecer-faro",
       "titulo_es": "Atardecer en el Faro Carranza",
       "titulo_en": "Sunset at the Carranza Lighthouse",
+      "titulo_fr": "Coucher de soleil au phare Carranza",
       "lugar": "Faro Venustiano Carranza",
       "lat": 19.20191,
       "lng": -96.13351,
@@ -2905,6 +3688,7 @@
       "slug": "paseo-malecon",
       "titulo_es": "Paseo matutino por el Malecón",
       "titulo_en": "Morning walk along the Malecón",
+      "titulo_fr": "Promenade matinale sur le Malecón",
       "lugar": "Malecón",
       "lat": 19.20091,
       "lng": -96.13109,
@@ -2917,6 +3701,7 @@
       "slug": "leyendas-teatro",
       "titulo_es": "Teatro: Leyendas del puerto",
       "titulo_en": "Theater: Legends of the port",
+      "titulo_fr": "Théâtre : légendes du port",
       "lugar": "Teatro Francisco Javier Clavijero",
       "lat": 19.20126,
       "lng": -96.14026,
@@ -2929,6 +3714,7 @@
       "slug": "cata-cafe-lechero",
       "titulo_es": "Cata de café lechero bajo los portales",
       "titulo_en": "Café lechero tasting under the arcades",
+      "titulo_fr": "Dégustation de café lechero sous les arcades",
       "lugar": "Portales de la Plaza Mayor",
       "lat": 19.19964,
       "lng": -96.13857,
@@ -2941,6 +3727,7 @@
       "slug": "cine-museo-ciudad",
       "titulo_es": "Cine en el Museo de la Ciudad",
       "titulo_en": "Film night at the City Museum",
+      "titulo_fr": "Soirée cinéma au Musée de la Ville",
       "lugar": "Museo de la Ciudad",
       "lat": 19.1979,
       "lng": -96.13581,
@@ -2953,6 +3740,7 @@
       "slug": "tianguis-artesanias",
       "titulo_es": "Tianguis de artesanías",
       "titulo_en": "Handicrafts market",
+      "titulo_fr": "Marché d’artisanat",
       "lugar": "Mercado de Artesanías",
       "lat": 19.20112,
       "lng": -96.13681,
@@ -2965,6 +3753,7 @@
       "slug": "leyendas-tona",
       "titulo_es": "Noche de leyendas en el Callejón Toña la Negra",
       "titulo_en": "Night of legends at Callejón Toña la Negra",
+      "titulo_fr": "Nuit des légendes dans la ruelle Toña la Negra",
       "lugar": "Callejón Toña la Negra",
       "lat": 19.19517,
       "lng": -96.13228,
@@ -2977,6 +3766,7 @@
       "slug": "jarana-requinto-zocalo",
       "titulo_es": "Jarana y requinto en el Zócalo",
       "titulo_en": "Jarana and requinto at the Zócalo",
+      "titulo_fr": "Jarana et requinto au Zócalo",
       "lugar": "Zócalo / Plaza de Armas",
       "lat": 19.20023,
       "lng": -96.13853,
@@ -2989,6 +3779,7 @@
       "slug": "visita-museo-naval",
       "titulo_es": "Visita al Museo Naval México",
       "titulo_en": "Visit to the Mexican Naval Museum",
+      "titulo_fr": "Visite du Musée naval du Mexique",
       "lugar": "Museo Naval México",
       "lat": 19.19923,
       "lng": -96.13507,
@@ -3001,6 +3792,7 @@
       "slug": "nieves-yucatan",
       "titulo_es": "Degustación de nieves en la Gran Nevería Yucatán",
       "titulo_en": "Ice-cream tasting at Gran Nevería Yucatán",
+      "titulo_fr": "Dégustation de glaces à la Gran Nevería Yucatán",
       "lugar": "Gran Nevería Yucatán",
       "lat": 19.1946,
       "lng": -96.13566,

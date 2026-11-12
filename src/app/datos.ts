@@ -26,6 +26,7 @@ export interface PromoVista {
   slug: string
   titulo_es: string
   titulo_en: string
+  titulo_fr?: string | null
   costo_tlacos: number
   comercio: string
   lat?: number
@@ -36,6 +37,7 @@ const PROMOS_SEED: PromoVista[] = seed.promociones.map((p) => ({
   slug: p.slug,
   titulo_es: p.titulo_es,
   titulo_en: p.titulo_en,
+  titulo_fr: (p as { titulo_fr?: string | null }).titulo_fr ?? null,
   costo_tlacos: p.costo_tlacos,
   comercio: seed.comercios.find((c) => c.slug === p.comercio_slug)?.nombre ?? '',
   lat: seed.comercios.find((c) => c.slug === p.comercio_slug)?.lat,
@@ -54,6 +56,7 @@ export function usePromociones(): PromoVista[] {
             slug: p.slug,
             titulo_es: p.titulo_es,
             titulo_en: p.titulo_en,
+            titulo_fr: p.titulo_fr ?? null,
             costo_tlacos: p.costo_tlacos,
             comercio: cs.find((c) => c.id === p.comercio_id)?.nombre ?? '',
             lat: cs.find((c) => c.id === p.comercio_id)?.lat,

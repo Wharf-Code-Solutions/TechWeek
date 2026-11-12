@@ -1,7 +1,7 @@
 // Único punto de contacto con el backend. El navegador ya no habla con Supabase:
 // sesión, catálogo, llegada, retos y canjes pasan por FastAPI.
 
-import type { Comercio, Lugar, TipoComercio } from '../types/contratos'
+import type { Comercio, Idioma, Lugar, TipoComercio } from '../types/contratos'
 
 const BASE = import.meta.env.VITE_API_URL ?? ''
 
@@ -21,6 +21,7 @@ export interface PromocionFila {
   comercio_id: number
   titulo_es: string
   titulo_en: string
+  titulo_fr?: string | null
   costo_tlacos: number
 }
 export interface RutaIn {
@@ -175,7 +176,7 @@ export const api = {
     }
     return p
   },
-  completarReto: (slug: string, respuesta: string[], revelar = false, idioma: 'es' | 'en' = 'es') =>
+  completarReto: (slug: string, respuesta: string[], revelar = false, idioma: Idioma = 'es') =>
     privado<{
       correcto: boolean
       completado: boolean

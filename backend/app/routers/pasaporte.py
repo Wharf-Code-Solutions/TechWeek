@@ -30,6 +30,7 @@ async def pasaporte(perfil_id: str = Depends(perfil_id_actual)):
             "lugar_slug": l.get("slug"),
             "nombre_es": l.get("nombre_es"),
             "nombre_en": l.get("nombre_en"),
+            "nombre_fr": l.get("nombre_fr"),
             "categoria": l.get("categoria"),
             "ilustracion": l.get("ilustracion"),
             "acerto": v["reto_ok"],

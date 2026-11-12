@@ -13,13 +13,14 @@ import { useLugares } from '../app/datos'
 import JuegoPalabras from '../features/retos/JuegoPalabras'
 import JuegoOrden from '../features/retos/JuegoOrden'
 import JuegoOpciones from '../features/retos/JuegoOpciones'
-import { esRapido, opcionesRapido, respuestaInicial, type RetoPublico } from '../features/retos/logica'
+import { contenidoEn, esRapido, idiomaDelReto, opcionesRapido, respuestaInicial, type RetoPublico } from '../features/retos/logica'
+import { idiomaDe } from '../app/idioma'
 import '../features/retos/retos.css'
 
 
 export default function Reto() {
   const { t, i18n } = useTranslation()
-  const idioma = i18n.language === 'en' ? 'en' : 'es'
+  const idiomaApp = idiomaDe(i18n.language)
   const { slug = '' } = useParams()
   const navigate = useNavigate()
   const [reto, setReto] = useState<RetoPublico | null>(null)
@@ -40,10 +41,12 @@ export default function Reto() {
       .retoDeLugar(slug)
       .then((r) => {
         setReto(r as RetoPublico)
-        setValor(respuestaInicial(r as RetoPublico, idioma))
+        setValor(respuestaInicial(r as RetoPublico, idiomaDelReto(r as RetoPublico, idiomaApp)))
       })
       .catch(() => setError(true))
-  }, [slug, idioma])
+  }, [slug, idiomaApp])
+  // El contenido se juega en el idioma de la app; si el reto aún no está en francés, en inglés.
+  const idioma = reto ? idiomaDelReto(reto, idiomaApp) : idiomaApp
 
   // "Parada 2 de 5" si el lugar está en la ruta activa; sin ruta no se muestra.
   useEffect(() => {
@@ -147,9 +150,9 @@ export default function Reto() {
         </div>
 
         {reto.tipo === 'palabras' ? (
-          <JuegoPalabras contenido={reto[`contenido_${idioma}`]} valor={valor} onCambio={setValor} />
+          <JuegoPalabras contenido={contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma)} valor={valor} onCambio={setValor} />
         ) : reto.tipo === 'orden' ? (
-          <JuegoOrden contenido={reto[`contenido_${idioma}`]} valor={valor as string[]} onCambio={setValor} />
+          <JuegoOrden contenido={contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma)} valor={valor as string[]} onCambio={setValor} />
         ) : (
           <JuegoOpciones
             enunciado={opcionesRapido(reto, idioma)?.enunciado ?? ''}

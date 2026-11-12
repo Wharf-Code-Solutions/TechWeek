@@ -5,28 +5,37 @@ import type {
   ContenidoPalabras,
   ContenidoTrivia,
   ContenidoVerdaderoFalso,
+  Idioma,
   Reto,
 } from '../../types/contratos'
 
 /** Reto tal como lo entrega GET /api/lugares/{slug}/reto: sin respuestas correctas. */
-export type RetoPublico = Omit<Reto, 'contenido_es' | 'contenido_en'> &
+export type RetoPublico = Omit<Reto, 'contenido_es' | 'contenido_en' | 'contenido_fr'> &
   (
-    | { tipo: 'palabras'; contenido_es: Omit<ContenidoPalabras, 'respuestas'>; contenido_en: Omit<ContenidoPalabras, 'respuestas'> }
-    | { tipo: 'orden'; contenido_es: Omit<ContenidoOrden, 'orden_correcto'>; contenido_en: Omit<ContenidoOrden, 'orden_correcto'> }
-    | { tipo: 'trivia'; contenido_es: Omit<ContenidoTrivia, 'correcta'>; contenido_en: Omit<ContenidoTrivia, 'correcta'> }
-    | { tipo: 'intruso'; contenido_es: Omit<ContenidoIntruso, 'correcta'>; contenido_en: Omit<ContenidoIntruso, 'correcta'> }
-    | { tipo: 'verdadero_falso'; contenido_es: Omit<ContenidoVerdaderoFalso, 'correcta'>; contenido_en: Omit<ContenidoVerdaderoFalso, 'correcta'> }
+    | { tipo: 'palabras'; contenido_es: Omit<ContenidoPalabras, 'respuestas'>; contenido_en: Omit<ContenidoPalabras, 'respuestas'>; contenido_fr?: Omit<ContenidoPalabras, 'respuestas'> | null }
+    | { tipo: 'orden'; contenido_es: Omit<ContenidoOrden, 'orden_correcto'>; contenido_en: Omit<ContenidoOrden, 'orden_correcto'>; contenido_fr?: Omit<ContenidoOrden, 'orden_correcto'> | null }
+    | { tipo: 'trivia'; contenido_es: Omit<ContenidoTrivia, 'correcta'>; contenido_en: Omit<ContenidoTrivia, 'correcta'>; contenido_fr?: Omit<ContenidoTrivia, 'correcta'> | null }
+    | { tipo: 'intruso'; contenido_es: Omit<ContenidoIntruso, 'correcta'>; contenido_en: Omit<ContenidoIntruso, 'correcta'>; contenido_fr?: Omit<ContenidoIntruso, 'correcta'> | null }
+    | { tipo: 'verdadero_falso'; contenido_es: Omit<ContenidoVerdaderoFalso, 'correcta'>; contenido_en: Omit<ContenidoVerdaderoFalso, 'correcta'>; contenido_fr?: Omit<ContenidoVerdaderoFalso, 'correcta'> | null }
   )
+
+/** Contenido del reto en `idioma`; el francés que falte cae al inglés. */
+export const contenidoEn = <T,>(es: T, en: T, fr: T | null | undefined, idioma: Idioma): T =>
+  idioma === 'fr' ? (fr ?? en) : idioma === 'en' ? en : es
+
+/** Idioma del contenido del reto: el francés que aún no esté traducido se juega en inglés. */
+export const idiomaDelReto = (reto: Pick<RetoPublico, 'contenido_fr'>, idioma: Idioma): Idioma =>
+  idioma === 'fr' && !reto.contenido_fr ? 'en' : idioma
 
 /** Retos rápidos de un toque: trivia, verdadero/falso e intruso. */
 export const esRapido = (tipo: RetoPublico['tipo']) => tipo === 'trivia' || tipo === 'intruso' || tipo === 'verdadero_falso'
 
 /** Enunciado y opciones de un reto rápido. Verdadero/falso usa los ids que espera el servidor. */
-export function opcionesRapido(reto: RetoPublico, idioma: 'es' | 'en') {
+export function opcionesRapido(reto: RetoPublico, idioma: Idioma) {
   if (reto.tipo === 'verdadero_falso')
-    return { enunciado: reto[`contenido_${idioma}`].afirmacion, opciones: ['verdadero', 'falso'] }
+    return { enunciado: contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma).afirmacion, opciones: ['verdadero', 'falso'] }
   if (reto.tipo === 'trivia' || reto.tipo === 'intruso')
-    return { enunciado: reto[`contenido_${idioma}`].pregunta, opciones: reto[`contenido_${idioma}`].opciones }
+    return { enunciado: contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma).pregunta, opciones: contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma).opciones }
   return null
 }
 
@@ -74,8 +83,8 @@ export function barajar<T>(lista: T[], azar = Math.random): T[] {
 }
 
 /** Respuesta inicial: huecos vacíos o eventos barajados. */
-export function respuestaInicial(reto: RetoPublico, idioma: 'es' | 'en'): (string | null)[] {
-  if (reto.tipo === 'palabras') return Array(contarHuecos(reto[`contenido_${idioma}`].texto)).fill(null)
-  if (reto.tipo === 'orden') return barajar(reto[`contenido_${idioma}`].eventos.map((e) => e.id))
+export function respuestaInicial(reto: RetoPublico, idioma: Idioma): (string | null)[] {
+  if (reto.tipo === 'palabras') return Array(contarHuecos(contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma).texto)).fill(null)
+  if (reto.tipo === 'orden') return barajar(contenidoEn(reto.contenido_es, reto.contenido_en, reto.contenido_fr, idioma).eventos.map((e) => e.id))
   return [] // retos rápidos: la respuesta se manda al tocar una opción
 }

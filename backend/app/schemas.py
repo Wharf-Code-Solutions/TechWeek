@@ -13,7 +13,7 @@ class LlegadaIn(BaseModel):
 class RetoIn(BaseModel):
     respuesta: list[str] = []
     revelar: bool = False
-    idioma: Literal["es", "en"] = "es"
+    idioma: Literal["es", "en", "fr"] = "es"
 
 
 class RetoOut(BaseModel):

@@ -39,7 +39,8 @@ async def completar_reto(lugar_slug: str, datos: RetoIn, perfil_id: str = Depend
     if not reto:
         raise HTTPException(404, "Este lugar no tiene reto")
 
-    contenido = reto[f"contenido_{datos.idioma}"]
+    # El francés que aún no esté traducido se juega (y se valida) en inglés, igual que en la app.
+    contenido = reto.get(f"contenido_{datos.idioma}") or reto["contenido_en"]
     correcto = validar(reto["tipo"], contenido, datos.respuesta)
     if not correcto and not datos.revelar:
         return RetoOut(correcto=False, completado=False, tlacos_ganados=0, saldo=await db.saldo_de(perfil_id))

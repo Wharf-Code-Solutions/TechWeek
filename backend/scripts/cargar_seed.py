@@ -4,7 +4,7 @@ Uso (desde backend/, con el entorno virtual activo y backend/.env lleno):
     python -m scripts.cargar_seed
 
 Es idempotente: se puede correr las veces que haga falta. No borra filas que ya no estén en el seed.
-Usa la service_role de backend/.env. Solo Dev 1 debería correrlo contra la base compartida.
+Usa la service_role de backend/.env. Los campos _fr necesitan la migración 0006. Solo Dev 1 debería correrlo contra la base compartida.
 """
 import asyncio
 import json
@@ -44,27 +44,27 @@ async def main() -> None:
 
         print("Cargando seed en Supabase...")
         campos_lugar = ("slug", "nombre_es", "nombre_en", "categoria", "lat", "lng", "radio_m",
-                        "curiosidad_es", "curiosidad_en", "ilustracion", "orden_sugerido", "en_demo")
-        lugares = await upsert("lugares", [{k: l[k] for k in campos_lugar} for l in seed["lugares"]], "slug")
+                        "curiosidad_es", "curiosidad_en", "nombre_fr", "curiosidad_fr", "ilustracion", "orden_sugerido", "en_demo")
+        lugares = await upsert("lugares", [{k: l.get(k) for k in campos_lugar} for l in seed["lugares"]], "slug")
         id_lugar = {l["slug"]: l["id"] for l in lugares}
 
-        campos_reto = ("tipo", "contenido_es", "contenido_en", "tlacos", "tlacos_revelado", "intentos_max")
-        await upsert("retos", [{"lugar_id": id_lugar[r["lugar_slug"]], **{k: r[k] for k in campos_reto}}
+        campos_reto = ("tipo", "contenido_es", "contenido_en", "contenido_fr", "tlacos", "tlacos_revelado", "intentos_max")
+        await upsert("retos", [{"lugar_id": id_lugar[r["lugar_slug"]], **{k: r.get(k) for k in campos_reto}}
                                for r in seed["retos"]], "lugar_id")
 
-        await upsert("fotos_historicas", [{k: f[k] for k in ("slug", "url", "titulo_es", "titulo_en", "piezas")}
+        await upsert("fotos_historicas", [{k: f.get(k) for k in ("slug", "url", "titulo_es", "titulo_en", "titulo_fr", "piezas")}
                                           for f in seed["fotos_historicas"]], "slug")
 
         campos_comercio = ("slug", "nombre", "categoria", "tipo", "lat", "lng", "descripcion_es", "descripcion_en",
-                           "dato_es", "dato_en", "direccion", "horario_es", "horario_en", "foto_url", "aliado")
+                           "dato_es", "dato_en", "dato_fr", "descripcion_fr", "direccion", "horario_es", "horario_en", "horario_fr", "foto_url", "aliado")
         comercios = await upsert("comercios", [{k: c.get(k) for k in campos_comercio} for c in seed["comercios"]], "slug")
         id_comercio = {c["slug"]: c["id"] for c in comercios}
 
         await upsert("promociones", [{"slug": p["slug"], "comercio_id": id_comercio[p["comercio_slug"]],
-                                      **{k: p[k] for k in ("titulo_es", "titulo_en", "costo_tlacos", "activa")}}
+                                      **{k: p.get(k) for k in ("titulo_es", "titulo_en", "titulo_fr", "costo_tlacos", "activa")}}
                                      for p in seed["promociones"]], "slug")
 
-        await upsert("eventos", [{k: e[k] for k in ("slug", "titulo_es", "titulo_en", "lugar", "lat", "lng",
+        await upsert("eventos", [{k: e.get(k) for k in ("slug", "titulo_es", "titulo_en", "titulo_fr", "lugar", "lat", "lng",
                                                     "inicio", "fin", "categoria")}
                                  for e in seed["eventos"]], "slug")
         print("Listo.")

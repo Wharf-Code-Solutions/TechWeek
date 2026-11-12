@@ -2,12 +2,14 @@
 // Cuando el esquema esté en Supabase, `database.ts` se generará con `supabase gen types`.
 
 export type Categoria = 'historia' | 'leyendas' | 'musica' | 'comida' | 'mar' | 'artesania'
-export type Idioma = 'es' | 'en'
+export type Idioma = 'es' | 'en' | 'fr'
 
 export interface Lugar {
   slug: string
   nombre_es: string
   nombre_en: string
+  /** Francés: puede faltar; entonces se muestra el inglés (ver useCampo). */
+  nombre_fr?: string | null
   categoria: Categoria
   lat: number
   lng: number
@@ -15,6 +17,7 @@ export interface Lugar {
   radio_m: number
   curiosidad_es: string
   curiosidad_en: string
+  curiosidad_fr?: string | null
   ilustracion: string
   orden_sugerido: number
   en_demo: boolean
@@ -69,11 +72,11 @@ interface RetoBase {
 }
 
 export type Reto =
-  | (RetoBase & { tipo: 'palabras'; contenido_es: ContenidoPalabras; contenido_en: ContenidoPalabras })
-  | (RetoBase & { tipo: 'orden'; contenido_es: ContenidoOrden; contenido_en: ContenidoOrden })
-  | (RetoBase & { tipo: 'trivia'; contenido_es: ContenidoTrivia; contenido_en: ContenidoTrivia })
-  | (RetoBase & { tipo: 'verdadero_falso'; contenido_es: ContenidoVerdaderoFalso; contenido_en: ContenidoVerdaderoFalso })
-  | (RetoBase & { tipo: 'intruso'; contenido_es: ContenidoIntruso; contenido_en: ContenidoIntruso })
+  | (RetoBase & { tipo: 'palabras'; contenido_es: ContenidoPalabras; contenido_en: ContenidoPalabras; contenido_fr?: ContenidoPalabras | null })
+  | (RetoBase & { tipo: 'orden'; contenido_es: ContenidoOrden; contenido_en: ContenidoOrden; contenido_fr?: ContenidoOrden | null })
+  | (RetoBase & { tipo: 'trivia'; contenido_es: ContenidoTrivia; contenido_en: ContenidoTrivia; contenido_fr?: ContenidoTrivia | null })
+  | (RetoBase & { tipo: 'verdadero_falso'; contenido_es: ContenidoVerdaderoFalso; contenido_en: ContenidoVerdaderoFalso; contenido_fr?: ContenidoVerdaderoFalso | null })
+  | (RetoBase & { tipo: 'intruso'; contenido_es: ContenidoIntruso; contenido_en: ContenidoIntruso; contenido_fr?: ContenidoIntruso | null })
 
 export type TipoComercio =
   | 'cafeteria'
@@ -96,12 +99,15 @@ export interface Comercio {
   lng: number
   descripcion_es: string
   descripcion_en: string
+  descripcion_fr?: string | null
   /** Etiqueta destacada opcional ("Desde 1808"). */
   dato_es?: string | null
   dato_en?: string | null
+  dato_fr?: string | null
   direccion: string
   horario_es: string
   horario_en: string
+  horario_fr?: string | null
   /** Foto del negocio (public/comercios/...). Vacía: la tarjeta usa la ilustración de su tipo. */
   foto_url?: string | null
   /** Tiene promoción en JARANA. */
@@ -115,6 +121,7 @@ export interface Promocion {
   comercio_slug: string
   titulo_es: string
   titulo_en: string
+  titulo_fr?: string | null
   costo_tlacos: number
   activa: boolean
 }
@@ -123,6 +130,7 @@ export interface Evento {
   slug: string
   titulo_es: string
   titulo_en: string
+  titulo_fr?: string | null
   lugar: string
   lat: number
   lng: number
@@ -137,6 +145,7 @@ export interface FotoHistorica {
   url: string
   titulo_es: string
   titulo_en: string
+  titulo_fr?: string | null
   piezas: number
   /** Créditos (solo en el seed; ver public/fotos/CREDITOS.md) */
   autor?: string

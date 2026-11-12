@@ -30,8 +30,9 @@ async def reto_de_lugar(slug: str, res: Response):
     if not retos:
         raise HTTPException(404, "Este lugar no tiene reto")
     r = retos[0]
-    for idioma in ("es", "en"):
-        r[f"contenido_{idioma}"] = ocultar_respuestas(r["tipo"], r[f"contenido_{idioma}"])
+    for idioma in ("es", "en", "fr"):
+        if r.get(f"contenido_{idioma}"):  # el francés puede faltar
+            r[f"contenido_{idioma}"] = ocultar_respuestas(r["tipo"], r[f"contenido_{idioma}"])
     return r
 
 

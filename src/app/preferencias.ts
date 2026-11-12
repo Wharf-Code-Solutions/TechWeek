@@ -48,7 +48,7 @@ export const PREFERENCIAS_INICIALES: Preferencias = {
 export function normalizar(crudo: unknown): Preferencias {
   const p = (crudo ?? {}) as Partial<Preferencias>
   return {
-    idioma: p.idioma === 'en' ? 'en' : 'es',
+    idioma: p.idioma === 'en' || p.idioma === 'fr' ? p.idioma : 'es',
     tiempoMin:
       typeof p.tiempoMin === 'number' && Number.isFinite(p.tiempoMin)
         ? ajustarTiempo(p.tiempoMin)

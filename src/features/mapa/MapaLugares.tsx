@@ -15,6 +15,7 @@ import { moverManual } from '../geo/posicionManual'
 import { useGuia } from '../geo/useGuia'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
+import { useCampo } from '../../app/idioma'
 import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
 import PantallaCarga from '../../components/ui/PantallaCarga'
 import TarjetaComercio from '../vitrina/TarjetaComercio'
@@ -149,9 +150,9 @@ export default function MapaLugares({
   arriba,
   abajo,
 }: Props) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const campo = useCampo()
   const ligero = useModoLigero()
-  const en = i18n.language === 'en'
   const pos = usePosition()
   // Lejos del Centro (o sin GPS) el turista sale del Zócalo y se mueve tocando el mapa.
   const modoManual = useModoManual()
@@ -498,7 +499,7 @@ export default function MapaLugares({
         )}
         {lugares.map((l) => {
           const e = estado(l.slug)
-          const nombre = en ? l.nombre_en : l.nombre_es
+          const nombre = campo(l, 'nombre')
           const tocado = elegido?.slug === l.slug
           return (
             <Pin
@@ -517,7 +518,7 @@ export default function MapaLugares({
             <button
               type="button"
               className="marcador marcador--evento"
-              aria-label={t('mapa.eventoAhora', { titulo: en ? ev.titulo_en : ev.titulo_es })}
+              aria-label={t('mapa.eventoAhora', { titulo: campo(ev, 'titulo') })}
               onClick={onEvento}
             >
               <span className="marcador-circulo">
@@ -655,8 +656,8 @@ export default function MapaLugares({
             <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>
               <X size={20} weight="bold" />
             </Boton>
-            <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
-            <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
+            <h2>{campo(elegido, 'nombre')}</h2>
+            <p>{campo(elegido, 'curiosidad')}</p>
             {/* ¡Llegaste! registra la llegada (valida los 40 m) y desde ahí se juega el reto. */}
             <Boton
               ancho

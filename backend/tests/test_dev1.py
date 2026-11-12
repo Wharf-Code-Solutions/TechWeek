@@ -310,8 +310,11 @@ def test_seed_retos_bien_formados():
     lugares = {l["slug"] for l in SEED["lugares"]}
     assert {r["lugar_slug"] for r in SEED["retos"]} == lugares  # todos los lugares tienen reto
     for r in SEED["retos"]:
-        for idioma in ("es", "en"):
-            c = r[f"contenido_{idioma}"]
+        for idioma in ("es", "en", "fr"):
+            c = r.get(f"contenido_{idioma}")
+            if c is None and idioma == "fr":
+                continue  # el francés es opcional: sin traducir se juega en inglés
+            assert c is not None, (r["lugar_slug"], idioma)
             if r["tipo"] == "palabras":
                 assert validar("palabras", c, c["respuestas"]) and set(c["respuestas"]) <= set(c["opciones"])
             elif r["tipo"] == "orden":

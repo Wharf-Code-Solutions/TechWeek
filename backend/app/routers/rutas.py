@@ -21,7 +21,7 @@ CATEGORIAS = Literal["historia", "leyendas", "musica", "comida", "mar", "artesan
 class PerfilIn(BaseModel):
     apodo: str | None = Field(default=None, max_length=30)
     avatar: str | None = Field(default=None, max_length=40)
-    idioma: Literal["es", "en"] = "es"
+    idioma: Literal["es", "en", "fr"] = "es"
     preferencias: dict = {}
 
 

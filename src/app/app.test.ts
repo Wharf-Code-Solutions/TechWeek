@@ -18,8 +18,12 @@ describe('normalizar preferencias', () => {
   })
 
   it('descarta idioma, tiempo e intereses inválidos', () => {
-    const p = normalizar({ idioma: 'fr', tiempoMin: 'mucho', intereses: ['mar', 'pizza', 42] })
+    const p = normalizar({ idioma: 'de', tiempoMin: 'mucho', intereses: ['mar', 'pizza', 42] })
     expect(p).toEqual({ ...PREFERENCIAS_INICIALES, intereses: ['mar'] })
+  })
+
+  it('acepta el francés como idioma', () => {
+    expect(normalizar({ idioma: 'fr' }).idioma).toBe('fr')
   })
 
   it('conserva preferencias válidas', () => {

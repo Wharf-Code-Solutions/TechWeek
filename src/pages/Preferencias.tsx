@@ -117,7 +117,7 @@ export default function Preferencias() {
             <div className={estilos.encabezado}>
               <span className={estilos.marca}>JARANA</span>
               <div className={estilos.idiomas} role="group" aria-label={t('preferencias.idioma')}>
-                {(['es', 'en'] as Idioma[]).map((i) => (
+                {(['es', 'en', 'fr'] as Idioma[]).map((i) => (
                   <button key={i} type="button" aria-pressed={pref.idioma === i} onClick={() => cambiarIdioma(i)}>
                     {i.toUpperCase()}
                   </button>
