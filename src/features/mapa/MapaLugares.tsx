@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, Crosshair, TextAa, X } from '@phosphor-icons/react'
+import { Check, Crosshair, Storefront, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
 import { useRecorridoDemo } from '../geo/demoStore'
 import { distanciaM } from '../geo/distancia'
@@ -340,6 +340,16 @@ export default function MapaLugares({
         onClick={alternarNombres}
       >
         <TextAa size={22} weight="bold" aria-hidden="true" />
+      </button>
+
+      <button
+        type="button"
+        className="mapa-nombres mapa-vitrina"
+        aria-label={t('mapa.vitrina')}
+        title={t('mapa.vitrina')}
+        onClick={() => navegar('/vitrina')}
+      >
+        <Storefront size={22} weight="bold" aria-hidden="true" />
       </button>
 
       {pos && (

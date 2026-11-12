@@ -140,7 +140,8 @@
     "miUbicacion": "Go to my location",
     "lejos": "You're far from the Historic Center. Want to try the app with the virtual walk?",
     "lejos_activar": "Try the virtual walk",
-    "lejos_cerrar": "Not now"
+    "lejos_cerrar": "Not now",
+    "vitrina": "See the businesses of the Center"
   },
   "reto": {
     "cargando": "Loading challenge…",
@@ -242,5 +243,26 @@
     "faltan_one": "One piece to go…",
     "faltan_other": "{{count}} pieces to go…",
     "avatar_avatar-sombrero": "Jarocho"
+  },
+  "vitrina": {
+    "titulo": "Showcase",
+    "subtitulo": "Businesses of the Historic Center",
+    "volver": "Back to the map",
+    "filtrar": "Filter by type of business",
+    "todos": "All",
+    "aliado": "JARANA partner",
+    "ver_promos": "See promotions",
+    "resultados_one": "{{count}} business",
+    "resultados_other": "{{count}} businesses",
+    "tipos": {
+      "cafeteria": "Cafés",
+      "restaurante": "Restaurants",
+      "fonda": "Eateries",
+      "neveria": "Ice cream shops",
+      "mercado": "Markets",
+      "libreria": "Bookstores",
+      "artesanias": "Crafts",
+      "tienda": "Shops"
+    }
   }
 }

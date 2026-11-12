@@ -1,7 +1,7 @@
 // Único punto de contacto con el backend. El navegador ya no habla con Supabase:
 // sesión, catálogo, llegada, retos y canjes pasan por FastAPI.
 
-import type { Lugar } from '../types/contratos'
+import type { Comercio, Lugar, TipoComercio } from '../types/contratos'
 
 const BASE = import.meta.env.VITE_API_URL ?? ''
 
@@ -135,6 +135,8 @@ export const api = {
   lugares: () => http<Lugar[]>('/api/lugares'),
   retoDeLugar: (slug: string) => http<unknown>(`/api/lugares/${slug}/reto`),
   comercios: () => http<ComercioFila[]>('/api/comercios'),
+  /** Vitrina de negocios (con `tipo` filtra en el servidor; los aliados vienen primero). */
+  vitrina: (tipo?: TipoComercio) => http<Comercio[]>(`/api/comercios${tipo ? `?tipo=${tipo}` : ''}`),
   promociones: () => http<PromocionFila[]>('/api/promociones'),
   eventos: () => http<unknown[]>('/api/eventos'),
   fotos: () => http<unknown[]>('/api/fotos'),

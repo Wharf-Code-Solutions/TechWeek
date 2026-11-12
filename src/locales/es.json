@@ -140,7 +140,8 @@
     "miUbicacion": "Ir a mi ubicación",
     "lejos": "Estás lejos del Centro Histórico. ¿Quieres probar la app con el recorrido virtual?",
     "lejos_activar": "Probar recorrido virtual",
-    "lejos_cerrar": "Ahora no"
+    "lejos_cerrar": "Ahora no",
+    "vitrina": "Ver los negocios del Centro"
   },
   "reto": {
     "cargando": "Cargando reto…",
@@ -242,5 +243,26 @@
     "faltan_one": "Te falta una pieza…",
     "faltan_other": "Te faltan {{count}} piezas…",
     "avatar_avatar-sombrero": "Jarocho"
+  },
+  "vitrina": {
+    "titulo": "Vitrina",
+    "subtitulo": "Negocios del Centro Histórico",
+    "volver": "Volver al mapa",
+    "filtrar": "Filtrar por tipo de negocio",
+    "todos": "Todos",
+    "aliado": "Aliado JARANA",
+    "ver_promos": "Ver promociones",
+    "resultados_one": "{{count}} negocio",
+    "resultados_other": "{{count}} negocios",
+    "tipos": {
+      "cafeteria": "Cafeterías",
+      "restaurante": "Restaurantes",
+      "fonda": "Fondas",
+      "neveria": "Neverías",
+      "mercado": "Mercados",
+      "libreria": "Librerías",
+      "artesanias": "Artesanías",
+      "tienda": "Tiendas"
+    }
   }
 }

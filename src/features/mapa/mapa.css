@@ -176,7 +176,8 @@
   box-shadow: 0 3px 10px rgb(21 10 46 / 0.22);
   cursor: pointer;
 }
-.mapa-ubicacion { top: calc(128px + env(safe-area-inset-top)); }
+.mapa-vitrina { top: calc(128px + env(safe-area-inset-top)); }
+.mapa-ubicacion { top: calc(180px + env(safe-area-inset-top)); }
 .mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
 .mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 

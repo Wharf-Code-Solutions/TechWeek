@@ -13,6 +13,7 @@ const Reto = lazy(() => import('../pages/Reto'))
 const Recompensa = lazy(() => import('../pages/Recompensa'))
 const Cupon = lazy(() => import('../pages/Cupon'))
 const Fin = lazy(() => import('../pages/Fin'))
+const Vitrina = lazy(() => import('../pages/Vitrina'))
 
 /** Mientras baja la pantalla: un aviso sencillo con el color de JARANA. */
 function Cargando() {
@@ -36,6 +37,7 @@ export default function AppRoutes() {
         <Route path="/recompensa/:slug" element={<Recompensa />} />
         <Route path="/cupon/:id" element={<Cupon />} />
         <Route path="/fin" element={<Fin />} />
+        <Route path="/vitrina" element={<Vitrina />} />
       </Routes>
     </Suspense>
   )
