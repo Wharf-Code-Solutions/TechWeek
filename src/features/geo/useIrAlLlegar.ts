@@ -10,6 +10,8 @@ import { usePosition } from './usePosition'
 // así no se vuelve a abrir en bucle mientras el turista sigue dentro del radio.
 const avisados = new Set<string>()
 
+export const yaAvisado = (slug: string) => avisados.has(slug)
+
 export function useIrAlLlegar(lugares: Lugar[]) {
   const pos = usePosition()
   const { lugarActual } = useLlegada(lugares, pos)

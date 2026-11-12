@@ -139,5 +139,10 @@
     "tlacos": "{{n}} Tlacos",
     "nueva": "Armar otra ruta",
     "sinRuta": "No tienes una ruta activa."
+  },
+  "ruta": {
+    "siguiente": "Siguiente: {{nombre}}",
+    "saltar": "Saltar",
+    "error_saltar": "No pudimos saltar la parada."
   }
 }

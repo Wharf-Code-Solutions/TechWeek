@@ -1,0 +1,17 @@
+.caja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: var(--borde);
+  border-radius: var(--radio);
+  background: #fff;
+  box-shadow: var(--sombra-dura);
+}
+
+.texto {
+  flex: 1;
+  font-weight: 900;
+  font-size: 0.95rem;
+}

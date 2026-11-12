@@ -7,6 +7,7 @@ import { useLugares } from '../app/datos'
 import Boton from '../components/ui/Boton'
 import { MapaLugares, Panel } from '../features/mapa'
 import ControlRecorrido from '../features/geo/ControlRecorrido'
+import SaltarParada from '../features/geo/SaltarParada'
 import { useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { api } from '../lib/api'
 import type { Lugar } from '../types/contratos'
@@ -39,7 +40,12 @@ export default function Mapa() {
       <h1 className="solo-lectores">{t('pantallas.mapa')}</h1>
       <MapaLugares
         lugares={todos}
-        arriba={<ControlRecorrido />}
+        arriba={
+          <>
+            <ControlRecorrido />
+            <SaltarParada ruta={ruta} onCambio={setRuta} />
+          </>
+        }
         abajo={
           <div className="mapa-botones">
             <Panel />

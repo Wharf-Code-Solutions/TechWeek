@@ -139,5 +139,10 @@
     "tlacos": "{{n}} Tlacos",
     "nueva": "Build another route",
     "sinRuta": "You have no active route."
+  },
+  "ruta": {
+    "siguiente": "Next: {{nombre}}",
+    "saltar": "Skip",
+    "error_saltar": "We couldn't skip this stop."
   }
 }
