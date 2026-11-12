@@ -3,7 +3,8 @@
     "version": 1,
     "actualizado": "2026-11-11",
     "notas": "Coordenadas: monumentos de OpenStreetMap (Nominatim, nov 2026); Condesa de Malibrán = dirección Esteban Morales 123 en Mapbox Geocoding. Confirmar en campo antes de la expo (radio de llegada 40 m). Fuentes de contenido: sitios-turisticos-veracruz.csv e investigación del Centro Histórico.",
-    "notas_eventos": "Eventos de ejemplo para la demo (pendiente_confirmar: true). La exposición de la Fototeca y «Pasajes del Umbral» salen de la investigación (oct–nov 2026); fechas y horarios exactos por confirmar. Ajustar las fechas al día de la expo: la agenda oculta los eventos terminados."
+    "notas_eventos": "Eventos de ejemplo para la demo (pendiente_confirmar: true). La exposición de la Fototeca y «Pasajes del Umbral» salen de la investigación (oct–nov 2026); fechas y horarios exactos por confirmar. Ajustar las fechas al día de la expo: la agenda oculta los eventos terminados.",
+    "notas_comercios": "Comercios reales del Centro Histórico (sitios-turisticos-veracruz.csv). Las promociones son de demostración: pendientes de acuerdo con cada negocio (pendiente_confirmar: true)."
   },
   "lugares": [
     {
@@ -551,35 +552,39 @@
   "comercios": [
     {
       "slug": "comercio-cafe",
-      "nombre": "[Café de los portales]",
+      "nombre": "Gran Café del Portal",
       "categoria": "comida",
       "lat": 19.19964,
       "lng": -96.13857,
-      "pendiente_confirmar": true
+      "pendiente_confirmar": true,
+      "direccion": "Av. Independencia 1187"
     },
     {
       "slug": "comercio-volovan",
-      "nombre": "[Panadería de volovanes]",
+      "nombre": "Fondas del Mercado Hidalgo",
       "categoria": "comida",
-      "lat": 19.199,
-      "lng": -96.136,
-      "pendiente_confirmar": true
+      "lat": 19.19347,
+      "lng": -96.13705,
+      "pendiente_confirmar": true,
+      "direccion": "Av. Francisco I. Madero s/n"
     },
     {
       "slug": "comercio-nieve",
-      "nombre": "[Nevería del Parque Zamora]",
+      "nombre": "Gran Nevería Yucatán",
       "categoria": "comida",
-      "lat": 19.197,
-      "lng": -96.138,
-      "pendiente_confirmar": true
+      "lat": 19.19461,
+      "lng": -96.13567,
+      "pendiente_confirmar": true,
+      "direccion": "Parque Zamora"
     },
     {
       "slug": "comercio-lancha",
-      "nombre": "[Paseo en lancha del Malecón]",
-      "categoria": "mar",
-      "lat": 19.2005,
-      "lng": -96.1345,
-      "pendiente_confirmar": true
+      "nombre": "Mercado de Artesanías Miguel Alemán",
+      "categoria": "artesania",
+      "lat": 19.20112,
+      "lng": -96.13682,
+      "pendiente_confirmar": true,
+      "direccion": "Paseo del Malecón s/n"
     }
   ],
   "promociones": [
@@ -594,8 +599,8 @@
     {
       "slug": "volovan",
       "comercio_slug": "comercio-volovan",
-      "titulo_es": "Volován de regalo",
-      "titulo_en": "Free volován",
+      "titulo_es": "Picada de regalo",
+      "titulo_en": "Free picada",
       "costo_tlacos": 60,
       "activa": true
     },
@@ -610,8 +615,8 @@
     {
       "slug": "lancha-20",
       "comercio_slug": "comercio-lancha",
-      "titulo_es": "−20 % en paseo en lancha",
-      "titulo_en": "20% off boat ride",
+      "titulo_es": "−20 % en artesanías",
+      "titulo_en": "20% off crafts",
       "costo_tlacos": 300,
       "activa": true
     }

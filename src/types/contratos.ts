@@ -53,6 +53,7 @@ export interface Comercio {
   categoria: Categoria
   lat: number
   lng: number
+  direccion?: string
   pendiente_confirmar?: boolean
 }
 
