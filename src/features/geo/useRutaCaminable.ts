@@ -2,11 +2,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Punto } from './tipos'
 
-type Coord = [number, number]
-type ConSlug = Punto & { slug: string }
+import { TOKEN, pedirCalles, type Coord } from './calles'
 
-const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
-const MAX_PUNTOS = 25 // límite de Directions por petición
+type ConSlug = Punto & { slug: string }
 
 /** Clave estable de una ruta: los slugs en orden (y el origen, si lo hay, redondeado a ~10 m). */
 export const claveRuta = (paradas: { slug: string }[], origen?: Punto | null) =>
@@ -32,17 +30,6 @@ function guardarCache(clave: string, linea: Coord[]) {
   }
 }
 
-async function pedirCalles(paradas: Punto[], señal: AbortSignal): Promise<Coord[]> {
-  const coords = paradas.map((p) => `${p.lng},${p.lat}`).join(';')
-  const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${coords}?geometries=geojson&overview=full&access_token=${TOKEN}`
-  const r = await fetch(url, { signal: señal })
-  if (!r.ok) throw new Error(`Directions ${r.status}`)
-  const datos = (await r.json()) as { routes?: { geometry: { coordinates: Coord[] } }[] }
-  const linea = datos.routes?.[0]?.geometry.coordinates
-  if (!linea?.length) throw new Error('Directions sin ruta')
-  return linea
-}
-
 /** Devuelve la línea [lng, lat] de la ruta por calles; mientras llega (o si falla) es la línea recta. */
 export function useRutaCaminable(paradas: ConSlug[], origen: Punto | null = null): Coord[] {
   const clave = claveRuta(paradas, origen)
@@ -52,7 +39,7 @@ export function useRutaCaminable(paradas: ConSlug[], origen: Punto | null = null
   const [calles, setCalles] = useState<{ clave: string; linea: Coord[] } | null>(null)
 
   useEffect(() => {
-    if (puntos.length < 2 || puntos.length > MAX_PUNTOS || !TOKEN) return
+    if (puntos.length < 2 || !TOKEN) return
     const guardada = leerCache(clave)
     if (guardada) {
       setCalles({ clave, linea: guardada })

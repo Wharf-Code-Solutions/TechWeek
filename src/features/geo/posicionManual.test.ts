@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { ZOCALO } from './centro'
+import { SALIDA_MANUAL as ZOCALO, ZOCALO as CENTRO } from './centro'
 import { moverManual, obtenerManual, posicionEfectiva, reiniciarManual, salidaDeLaRuta, usaPosicionManual } from './posicionManual'
 import type { Posicion } from './tipos'
 
 const gps = (lat: number, lng: number): Posicion => ({ lat, lng, precision: 8, fuente: 'gps' })
-const CERCA = gps(ZOCALO.lat + 0.002, ZOCALO.lng)
+const CERCA = gps(CENTRO.lat + 0.002, CENTRO.lng)
 const LEJOS = gps(19.43, -99.13) // Ciudad de México
 
 describe('posición por toque (lejos del Centro)', () => {
