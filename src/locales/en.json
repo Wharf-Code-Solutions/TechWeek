@@ -60,6 +60,9 @@
     "ya_visitado": "You've already visited this place: you can see it again, but it no longer earns doubloons."
   },
   "recompensa": {
+    "ultimaParada": "You completed every stop on your route!",
+    "terminar": "Finish route",
+    "volverMapa": "Back to the map",
     "ganaste": "You earned {{n}} doubloons!",
     "completado": "Challenge completed!",
     "saldo": "Balance: {{n}} doubloons",

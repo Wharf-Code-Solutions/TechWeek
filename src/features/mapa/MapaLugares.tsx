@@ -37,10 +37,11 @@ const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
-/** Empieza en el Zócalo. */
-function vistaInicial(lugares: Lugar[]) {
+/** Empieza donde está el turista (al volver de un reto no debe saltar a otra parte); sin posición, en el Zócalo. */
+function vistaInicial(lugares: Lugar[], pos: { lat: number; lng: number } | null) {
   const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
-  return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM, pitch: 55 }
+  const centro = pos ?? zocalo
+  return { latitude: centro.lat, longitude: centro.lng, zoom: ZOOM, pitch: 55 }
 }
 
 type Estado = 'hecho' | 'siguiente' | 'ruta' | 'fuera'
@@ -304,7 +305,7 @@ export default function MapaLugares({
         ref={mapa}
         mapboxAccessToken={TOKEN}
         initialViewState={{
-          ...vistaInicial(lugares),
+          ...vistaInicial(lugares, pos),
           padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
         }}
         maxBounds={LIMITES}

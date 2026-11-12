@@ -50,6 +50,8 @@ export default function Recompensa() {
   const [saldo, setSaldo] = useState<number | null>(estado.saldo ?? null)
   const [pasaporte, setPasaporte] = useState<PasaporteDatos | null>(null)
   const [siguiente, setSiguiente] = useState<string | null>(null)
+  // true cuando este era el último lugar sin visitar de la ruta: toca terminarla.
+  const [ultima, setUltima] = useState(false)
 
   useEffect(() => {
     if (estado.saldo !== undefined) return
@@ -62,16 +64,24 @@ export default function Recompensa() {
   // Pieza n de N y siguiente parada: adornos; si fallan, la pantalla se ve igual con textos genéricos.
   useEffect(() => {
     let vivo = true
-    api
-      .pasaporte()
-      .then((p) => vivo && setPasaporte(p as PasaporteDatos))
-      .catch(() => {})
-    api
-      .rutaActual()
-      .then((r) => {
-        const i = r.lugares.findIndex((l) => l.slug === slug)
-        const sig = i >= 0 ? r.lugares[i + 1] : undefined
-        if (vivo && sig) setSiguiente(sig.slug)
+    Promise.all([api.pasaporte(), api.rutaActual().catch(() => null)])
+      .then(([p, r]) => {
+        if (!vivo) return
+        const datos = p as PasaporteDatos
+        setPasaporte(datos)
+        if (!r) return
+        // Lugares de la ruta que aún no tienen sello (este ya cuenta como hecho).
+        const hechos = new Set(datos.sellos.map((x) => x.lugar_slug))
+        hechos.add(slug ?? '')
+        const faltan = r.lugares.filter((l) => !hechos.has(l.slug))
+        const estaEnRuta = r.lugares.some((l) => l.slug === slug)
+        if (faltan.length > 0) {
+          // La siguiente es la primera que falta después de este lugar (o la primera que falte).
+          const i = r.lugares.findIndex((l) => l.slug === slug)
+          setSiguiente((faltan.find((l) => r.lugares.indexOf(l) > i) ?? faltan[0]).slug)
+        } else if (estaEnRuta) {
+          setUltima(true)
+        }
       })
       .catch(() => {})
     return () => {
@@ -152,9 +162,21 @@ export default function Recompensa() {
           </button>
         </div>
 
-        <Boton ancho onClick={() => navegar('/mapa')}>
-          {sigLugar ? t('recompensa.siguienteParada', { lugar: campo(sigLugar, 'nombre') }) : t('recompensa.seguir')}
-        </Boton>
+        {ultima ? (
+          <>
+            <p className={estilos.texto}>{t('recompensa.ultimaParada')}</p>
+            <Boton ancho onClick={() => navegar('/fin')}>
+              {t('recompensa.terminar')}
+            </Boton>
+            <Boton ancho variante="blanco" onClick={() => navegar('/mapa')}>
+              {t('recompensa.volverMapa')}
+            </Boton>
+          </>
+        ) : (
+          <Boton ancho onClick={() => navegar('/mapa')}>
+            {sigLugar ? t('recompensa.siguienteParada', { lugar: campo(sigLugar, 'nombre') }) : t('recompensa.seguir')}
+          </Boton>
+        )}
       </div>
     </main>
   )

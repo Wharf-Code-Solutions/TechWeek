@@ -60,6 +60,9 @@
     "ya_visitado": "Ya visitaste este lugar: puedes verlo otra vez, pero ya no da doblones."
   },
   "recompensa": {
+    "ultimaParada": "¡Completaste todas las paradas de tu ruta!",
+    "terminar": "Terminar ruta",
+    "volverMapa": "Volver al mapa",
     "ganaste": "¡Ganaste {{n}} doblones!",
     "completado": "¡Reto completado!",
     "saldo": "Saldo: {{n}} doblones",
