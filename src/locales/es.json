@@ -106,7 +106,6 @@
     "aviso": "Desliza <b>frente al mesero</b>: una vez canjeado no se puede deshacer."
   },
   "mapa": {
-    "pista_toque": "Estás lejos del Centro: toca el mapa para caminar.",
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",
     "cerrar": "Cerrar",

@@ -64,6 +64,8 @@ interface Props {
   onEvento?: () => void
   /** Alto (px) de lo que tapa la parte baja del mapa (panel): la cámara centra sobre lo que queda a la vista. */
   padAbajo?: number
+  /** Avisa si hay una vitrina de comercio abierta (la pantalla esconde el panel para dejarle sitio). */
+  onDetalle?: (abierto: boolean) => void
   /** Lugar que hay que mostrar (la lista de la ruta lo pide): el mapa vuela hasta él y abre su tarjeta. `n` cambia en cada toque. */
   enfocar?: { slug: string; n: number } | null
   /** Negocio de la vitrina que hay que mostrar en el mapa ("Ver en el mapa"): vuela hasta él y lo marca. */
@@ -119,7 +121,7 @@ const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, 
           {estado === 'hecho' ? (
             <Check size={24} weight="bold" color="#fff" aria-hidden="true" />
           ) : (
-            <Ilustracion nombre={lugar.ilustracion} tamano={estado === 'siguiente' ? 32 : 28} />
+            <Ilustracion nombre={lugar.ilustracion} tamano={estado === 'siguiente' ? 28 : 24} />
           )}
         </span>
         {etiqueta && <span className="marcador-etiqueta">{etiqueta}</span>}
@@ -139,6 +141,7 @@ export default function MapaLugares({
   eventos = [],
   onEvento,
   padAbajo = 0,
+  onDetalle,
   enfocar = null,
   llegando = null,
   comercioFocal = null,
@@ -165,8 +168,10 @@ export default function MapaLugares({
   const elegirComercio = (c: Comercio) => {
     setComercio(c)
     setElegido(null)
-    mapa.current?.flyTo({ center: [c.lng, c.lat], duration: 700 })
   }
+  useEffect(() => {
+    onDetalle?.(comercio !== null)
+  }, [comercio, onDetalle])
   const alternarComer = () => {
     setComer((v) => !v)
     setComercio(null)
@@ -279,8 +284,13 @@ export default function MapaLugares({
   }, [enfocar, lugares])
 
   useEffect(() => {
-    mapa.current?.easeTo({ padding: { top: 0, left: 0, right: 0, bottom: padAbajo }, duration: 250 })
-  }, [padAbajo])
+    // Con la vitrina abierta el pin del local se centra en la franja libre de arriba, no detrás de la tarjeta.
+    mapa.current?.easeTo({
+      padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
+      ...(comercio ? { center: [comercio.lng, comercio.lat] as [number, number] } : {}),
+      duration: comercio ? 600 : 250,
+    })
+  }, [padAbajo, comercio])
 
   // Si el turista se movió del mapa, este botón lo vuelve a centrar en su posición.
   const irAMiUbicacion = () => {
@@ -408,7 +418,7 @@ export default function MapaLugares({
               onClick={onEvento}
             >
               <span className="marcador-circulo">
-                <Ilustracion nombre={ev.categoria} tamano={30} />
+                <Ilustracion nombre={ev.categoria} tamano={26} />
               </span>
             </button>
           </Marker>
@@ -435,7 +445,7 @@ export default function MapaLugares({
                 onClick={() => elegirComercio(c)}
               >
                 <span className="marcador-circulo">
-                  <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={28} />
+                  <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={24} />
                 </span>
                 {activo && <span className="marcador-etiqueta">{c.nombre}</span>}
               </button>
@@ -450,11 +460,6 @@ export default function MapaLugares({
       </Map>
 
       {arriba && <div className="mapa-arriba">{arriba}</div>}
-      {modoManual && (
-        <p className="mapa-pista" role="status">
-          {t('mapa.pista_toque')}
-        </p>
-      )}
 
       <button
         type="button"
@@ -496,7 +501,7 @@ export default function MapaLugares({
             <button type="button" className="mapa-vitrina-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setComercio(null)}>
               <X size={20} weight="bold" aria-hidden="true" />
             </button>
-            <TarjetaComercio comercio={comercio} onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })} />
+            <TarjetaComercio compacta comercio={comercio} onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })} />
           </div>
         )}
         {elegido && (

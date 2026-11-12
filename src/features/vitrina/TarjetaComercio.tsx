@@ -15,21 +15,23 @@ interface Props {
   onMapa?: () => void
   /** Título como encabezado principal de la página (detalle) en vez de h2 (lista). */
   principal?: boolean
+  /** Versión baja para la hoja sobre el mapa: imagen chica y textos más cortos. */
+  compacta?: boolean
 }
 
-export default function TarjetaComercio({ comercio: c, onPromos, onMapa, principal = false }: Props) {
+export default function TarjetaComercio({ comercio: c, onPromos, onMapa, principal = false, compacta = false }: Props) {
   const { t } = useTranslation()
   const campo = useCampo()
   const dato = campo(c, 'dato')
   const Titulo = principal ? 'h1' : 'h2'
 
   return (
-    <article className={`${estilos.tarjeta}${c.aliado ? ` ${estilos.aliado}` : ''}`}>
+    <article className={`${estilos.tarjeta}${c.aliado ? ` ${estilos.aliado}` : ''}${compacta ? ` ${estilos.compacta}` : ''}`}>
       <div className={estilos.imagen}>
         {c.foto_url ? (
           <img className={estilos.foto} src={c.foto_url} alt={c.nombre} loading="lazy" />
         ) : (
-          <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={84} />
+          <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={compacta ? 52 : 84} />
         )}
         {c.aliado && (
           <span className={estilos.insignia}>

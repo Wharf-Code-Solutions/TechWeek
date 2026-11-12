@@ -106,7 +106,6 @@
     "aviso": "Swipe <b>in front of the waiter</b>: once redeemed it can't be undone."
   },
   "mapa": {
-    "pista_toque": "You're far from the Center: tap the map to walk.",
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
     "tuPosicion": "Your position",
     "cerrar": "Close",

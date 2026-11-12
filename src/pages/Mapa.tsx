@@ -44,6 +44,8 @@ export default function Mapa() {
   const comercioFocal = estadoRuta?.comercio ?? null
   const [pestana, setPestana] = useState<Pestana>(inicial ?? 'ruta')
   const [nivel, setNivel] = useState<Nivel>('medio')
+  // Vitrina de un local abierta sobre el mapa: el panel se esconde y la cámara deja libre esa franja.
+  const [detalle, setDetalle] = useState(false)
   // Lugar que el turista tocó en la lista de la ruta: el mapa vuela hasta él (n distingue toques repetidos).
   const [enfocar, setEnfocar] = useState<{ slug: string; n: number } | null>(null)
 
@@ -108,9 +110,11 @@ export default function Mapa() {
     window.addEventListener('resize', alCambiar)
     return () => window.removeEventListener('resize', alCambiar)
   }, [])
-  const altoPanel = altoNivel(nivel, altoVentana)
+  const altoPanel = detalle ? 0 : altoNivel(nivel, altoVentana)
   // En pantalla completa el mapa queda tapado: la cámara se queda como en el nivel medio.
-  const padAbajo = altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
+  const padAbajo = detalle
+    ? Math.round(altoVentana * 0.44) + 14
+    : altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
 
   const abrir = (p: Pestana) => {
     setPestana(p)
@@ -132,6 +136,7 @@ export default function Mapa() {
         origen={origen}
         comercioFocal={comercioFocal}
         padAbajo={padAbajo}
+        onDetalle={setDetalle}
         enfocar={enfocar}
         llegando={llegando?.slug ?? null}
         enRuta={enRuta}
@@ -157,22 +162,24 @@ export default function Mapa() {
         }
         abajo={<AvisoLlegada lugar={llegando} />}
       />
-      <Panel
-        activa={pestana}
-        onActiva={setPestana}
-        nivel={nivel}
-        onNivel={setNivel}
-        ruta={
-          <RutaLista
-            ruta={ruta}
-            hechos={hechos}
-            siguiente={siguiente}
-            pos={pos}
-            onCambio={setRuta}
-            onEnfocar={enfocarLugar}
-          />
-        }
-      />
+      {!detalle && (
+        <Panel
+          activa={pestana}
+          onActiva={setPestana}
+          nivel={nivel}
+          onNivel={setNivel}
+          ruta={
+            <RutaLista
+              ruta={ruta}
+              hechos={hechos}
+              siguiente={siguiente}
+              pos={pos}
+              onCambio={setRuta}
+              onEnfocar={enfocarLugar}
+            />
+          }
+        />
+      )}
     </main>
   )
 }

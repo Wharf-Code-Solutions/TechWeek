@@ -22,8 +22,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border: 3px solid var(--rosa);
   border-radius: 50%;
   background: #fff;
@@ -50,8 +50,8 @@
 .marcador--fuera .marcador-circulo { border-color: var(--tinta); }
 
 .marcador--siguiente .marcador-circulo {
-  width: 52px;
-  height: 52px;
+  width: 46px;
+  height: 46px;
   border-color: var(--amarillo);
   background: var(--morado);
 }
@@ -91,7 +91,7 @@
 .marcador--comida-activo .marcador-circulo { transform: scale(1.25); box-shadow: 0 0 0 6px rgb(255 212 0 / 0.45); }
 
 /* Vitrina desplegada sobre el mapa al tocar un lugar de comida */
-.mapa-vitrina-hoja { position: relative; max-height: 52dvh; overflow-y: auto; border-radius: 20px; background: #fff; box-shadow: 0 6px 24px rgb(21 10 46 / 0.35); }
+.mapa-vitrina-hoja { position: relative; max-height: 44dvh; overflow-y: auto; border-radius: 20px; background: #fff; box-shadow: 0 6px 24px rgb(21 10 46 / 0.35); }
 .mapa-vitrina-cerrar {
   position: absolute;
   top: 8px;
@@ -110,8 +110,8 @@
 .mapa-vitrina-cerrar:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 
 .marcador--evento .marcador-circulo {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-color: #fff;
   background: var(--naranja);
   box-shadow: 0 0 0 8px rgb(255 107 0 / 0.35), 0 0 0 20px rgb(255 107 0 / 0.2);
@@ -147,27 +147,12 @@
 
 /* ── Capas sobre el mapa ────────────────────────────────── */
 /* z-index: por encima de los marcadores de Mapbox */
-.mapa-arriba { position: absolute; top: 0; left: 0; right: 0; z-index: 2; }
-.mapa-pista {
-  position: absolute;
-  top: calc(88px + env(safe-area-inset-top));
-  left: 16px;
-  right: 72px;
-  z-index: 2;
-  margin: 0;
-  padding: 6px 12px;
-  border: 2px solid var(--tinta);
-  border-radius: 14px;
-  background: var(--amarillo);
-  color: var(--tinta);
-  font: 800 12px/1.3 var(--fuente-texto);
-  pointer-events: none;
-}
+.mapa-arriba { position: absolute; top: 0; left: 0; right: 0; z-index: 10; }
 .mapa-abajo {
   position: absolute;
   left: 16px;
   right: 16px;
-  z-index: 2;
+  z-index: 10;
   bottom: calc(var(--alto-panel, 0px) + 14px);
   transition: bottom 380ms var(--suave);
   display: grid;
@@ -191,13 +176,13 @@
 /* Botón para mostrar u ocultar los nombres de lugares y comercios del mapa */
 .mapa-nombres {
   position: absolute;
-  top: calc(76px + env(safe-area-inset-top));
-  right: 14px;
-  z-index: 2;
+  top: calc(70px + env(safe-area-inset-top));
+  right: 12px;
+  z-index: 10;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: 2px solid var(--tinta);
   border-radius: 14px;
@@ -206,17 +191,17 @@
   box-shadow: 0 3px 10px rgb(21 10 46 / 0.22);
   cursor: pointer;
 }
-.mapa-vitrina { top: calc(128px + env(safe-area-inset-top)); }
-.mapa-ubicacion { top: calc(180px + env(safe-area-inset-top)); }
+.mapa-vitrina { top: calc(120px + env(safe-area-inset-top)); }
+.mapa-ubicacion { top: calc(170px + env(safe-area-inset-top)); }
 .mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
 .mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 
 /* ── Cabecera ───────────────────────────────────────────── */
-.cabecera { display: flex; gap: 8px; align-items: center; padding: calc(12px + env(safe-area-inset-top)) 14px 0; }
+.cabecera { display: flex; gap: 8px; align-items: center; padding: calc(10px + env(safe-area-inset-top)) 12px 0; }
 .cabecera-avatar {
   flex-shrink: 0;
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   overflow: hidden;
   border: var(--borde);
@@ -229,7 +214,7 @@
 .cabecera-ruta {
   flex: 1;
   min-width: 0;
-  height: 50px;
+  height: 44px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -246,7 +231,7 @@
 .cabecera-barra { height: 8px; overflow: hidden; border-radius: 99px; background: #ede6f7; }
 .cabecera-barra > div { height: 100%; background: var(--rosa); transition: width 300ms; }
 .cabecera-saldo {
-  height: 50px;
+  height: 44px;
   display: flex;
   align-items: center;
   gap: 6px;

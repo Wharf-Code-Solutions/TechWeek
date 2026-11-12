@@ -135,3 +135,19 @@
   outline: 3px solid var(--cobalto);
   outline-offset: 3px;
 }
+
+/* Hoja sobre el mapa: más baja, para que el pin del lugar se vea arriba y no quede tapado. */
+.compacta .imagen { height: 76px; }
+.compacta .cuerpo { gap: 4px; padding: 10px 14px 12px; }
+.compacta .cuerpo h1,
+.compacta .cuerpo h2 { font-size: 1.1rem; }
+.compacta .descripcion {
+  font-size: 0.82rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.compacta .datos { gap: 4px; padding-top: 8px; font-size: 0.78rem; }
+.compacta .promos,
+.compacta .boton { min-height: 42px; }

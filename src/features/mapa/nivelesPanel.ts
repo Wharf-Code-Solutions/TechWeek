@@ -3,9 +3,9 @@ export const NIVELES = ['plegado', 'medio', 'completo'] as const
 export type Nivel = (typeof NIVELES)[number]
 
 /** Alto del panel plegado (solo la cabecera con las pestañas), en px. */
-export const ALTO_PLEGADO = 108
+export const ALTO_PLEGADO = 96
 /** El nivel medio ocupa esta fracción de la pantalla. */
-export const FRACCION_MEDIO = 0.48
+export const FRACCION_MEDIO = 0.42
 /** En pantalla completa queda un margen arriba para que se note que el panel se puede bajar. */
 export const MARGEN_COMPLETO = 8
 
