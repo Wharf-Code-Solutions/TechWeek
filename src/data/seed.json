@@ -423,6 +423,116 @@
           "e4"
         ]
       }
+    },
+    {
+      "lugar_slug": "palacio-municipal",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El Palacio Municipal fue sede del primer ",
+          "{0}",
+          " de la América continental. Su torre tiene un ",
+          "{1}",
+          " y sus arcos están hechos de piedra ",
+          "{2}",
+          ", un coral de los arrecifes."
+        ],
+        "respuestas": [
+          "cabildo",
+          "reloj",
+          "muca"
+        ],
+        "opciones": [
+          "reloj",
+          "mercado",
+          "muca",
+          "cabildo",
+          "cantera",
+          "campana"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "City Hall was home to the first town ",
+          "{0}",
+          " in mainland America. Its tower has a ",
+          "{1}",
+          " and its arches are made of ",
+          "{2}",
+          " stone, a coral from the reefs."
+        ],
+        "respuestas": [
+          "council",
+          "clock",
+          "muca"
+        ],
+        "opciones": [
+          "clock",
+          "market",
+          "muca",
+          "council",
+          "quarry",
+          "bell"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "faro-carranza",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El Faro lo inauguró ",
+          "{0}",
+          " Díaz a inicios del siglo XX. En ",
+          "{1}",
+          " fue sede del gobierno de Venustiano Carranza y hoy es comandancia de la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Porfirio",
+          "1914",
+          "Marina"
+        ],
+        "opciones": [
+          "1810",
+          "Marina",
+          "Benito",
+          "Porfirio",
+          "Aduana",
+          "1914"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The lighthouse was opened by ",
+          "{0}",
+          " Díaz in the early 20th century. In ",
+          "{1}",
+          " it was Venustiano Carranza's seat of government, and today it is a ",
+          "{2}",
+          " command."
+        ],
+        "respuestas": [
+          "Porfirio",
+          "1914",
+          "Navy"
+        ],
+        "opciones": [
+          "1810",
+          "Navy",
+          "Benito",
+          "Porfirio",
+          "Customs",
+          "1914"
+        ]
+      }
     }
   ],
   "fotos_historicas": [
