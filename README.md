@@ -72,16 +72,19 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 |---|---|
 | **React + Vite + TypeScript** | Desarrollo y compilación de la aplicación web SPA. |
 | **React Router** | Navegación entre preferencias, mapa, lugar, reto, recompensa, cupón y fin de ruta. |
-| **CSS Modules** | Estilos por componente con el sistema visual "Fiesta Jarocha". |
+| **CSS + CSS Modules** | Estilos por pantalla y por componente con el sistema visual "Fiesta Jarocha". |
 | **Framer Motion** | Animaciones, transiciones, panel deslizable del mapa y arrastrar y soltar en los minijuegos. |
 | **Phosphor Icons** | Íconos de la interfaz. |
+| **Web Share API** | Compartir la imagen de la ruta y el pasaporte desde el celular. |
+| **Vitest** | Pruebas automáticas del frontend. |
 
 ## 02. Mapa y geolocalización
 **Visualización cartográfica y llegada a los lugares**
 
 | Tecnología | Uso |
 |---|---|
-| **Mapbox GL + react-map-gl** | Mapa del Centro Histórico, pines de lugares y comercios, ruta animada por calles. |
+| **Mapbox GL + react-map-gl** | Mapa 3D (estilo Mapbox Standard) del Centro Histórico, pines de lugares, eventos y comercios, ruta animada por calles. |
+| **Mapbox Directions** | Trazo de la ruta a pie por las calles entre paradas. |
 | **Bounding Box** | Delimitación de la vista al Centro Histórico. |
 | **Geolocation API** | Posición del turista y detección de llegada en un radio de 40 m. |
 
@@ -91,6 +94,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 | Tecnología | Uso |
 |---|---|
 | **FastAPI (Python)** | API propia: sesión, catálogo, llegadas, retos, ruta, pasaporte, canjes y vitrina. |
+| **httpx** | Consultas del backend a Supabase (REST y Auth). |
 | **Algoritmo de ruta** | Selección por intereses y tiempo, orden por vecino más cercano y mejora 2-opt. |
 | **PyJWT** | Validación local del token de la sesión anónima (llaves públicas de Supabase). |
 | **pytest** | Pruebas automáticas del backend. |
