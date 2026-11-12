@@ -2,7 +2,7 @@
 // `arriba` y `abajo` son capas sobre el mapa (flechas del recorrido, botón del panel).
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Map, { Layer, Marker, type MapRef } from 'react-map-gl/mapbox'
+import Map, { Marker, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X } from '@phosphor-icons/react'
 import type { Lugar } from '../../types/contratos'
@@ -45,8 +45,6 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   const mapa = useRef<MapRef>(null)
-  // Primera capa de etiquetas: los edificios 3D van debajo para no tapar nombres de calles.
-  const [antesDe, setAntesDe] = useState<string | undefined>()
 
   // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
   const demo = pos?.fuente === 'demo'
@@ -64,27 +62,10 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
         initialViewState={vistaInicial(pos, lugares)}
         maxBounds={LIMITES}
         maxPitch={70}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
+        // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
+        mapStyle="mapbox://styles/mapbox/standard"
         style={{ width: '100%', height: '100%' }}
-        onLoad={(e) => setAntesDe(e.target.getStyle()?.layers?.find((c) => c.type === 'symbol')?.id)}
       >
-        {antesDe && (
-          <Layer
-            id="edificios-3d"
-            type="fill-extrusion"
-            source="composite"
-            source-layer="building"
-            filter={['==', 'extrude', 'true']}
-            minzoom={14}
-            beforeId={antesDe}
-            paint={{
-              'fill-extrusion-color': '#DCD6EC',
-              'fill-extrusion-height': ['get', 'height'],
-              'fill-extrusion-base': ['get', 'min_height'],
-              'fill-extrusion-opacity': 0.85,
-            }}
-          />
-        )}
         {lugares.map((l) => (
           <Marker key={l.slug} latitude={l.lat} longitude={l.lng} anchor="bottom">
             <button
