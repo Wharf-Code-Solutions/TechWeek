@@ -1,0 +1,19 @@
+.compartir { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+.compartir-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  border: 3px solid var(--tinta);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--tinta);
+  background: var(--turquesa);
+  color: var(--tinta);
+  font: 900 17px var(--fuente-texto);
+  cursor: pointer;
+}
+.compartir-boton:disabled { opacity: 0.6; cursor: wait; }
+.compartir-boton:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.compartir-nota { text-align: center; font-weight: 800; opacity: 0.9; }
+.compartir-mensaje { margin: 0; padding: 8px 12px; border-radius: 14px; background: var(--tinta); color: #fff; font-weight: 800; text-align: center; }

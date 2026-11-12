@@ -8,6 +8,7 @@ import { useCampo } from '../../app/idioma'
 import { cargarPreferencias } from '../../app/preferencias'
 import { api } from '../../lib/api'
 import type { Lugar } from '../../types/contratos'
+import { BotonCompartir } from '../compartir'
 import Rompecabezas from './Rompecabezas'
 import { nombreCorto, type PasaporteDatos } from './tipos'
 import './pasaporte.css'
@@ -133,6 +134,18 @@ export default function Pasaporte() {
         <p className="pasaporte-faltan">
           {piezas.completa ? t('pasaporte.completa') : t('pasaporte.faltan', { count: faltan })}
         </p>
+        {piezas.ganadas > 0 && (
+          <BotonCompartir
+            rutaId={datos.ruta_id}
+            terminada={datos.ruta_terminada}
+            datos={{
+              titulo: foto ? campo(foto, 'titulo') : 'JARANA',
+              paradas: piezas.ganadas,
+              piezas,
+              fotoUrl: url,
+            }}
+          />
+        )}
       </div>
     </section>
   )

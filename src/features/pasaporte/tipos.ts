@@ -18,6 +18,7 @@ export interface PasaporteDatos {
   piezas: { total: number; ganadas: number; indices: number[]; completa: boolean }
   foto: FotoHistorica | null
   ruta_terminada: boolean
+  ruta_id: number | null
 }
 
 /**

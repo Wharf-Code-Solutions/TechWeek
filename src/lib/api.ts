@@ -45,6 +45,7 @@ export interface RutaCreada extends Ruta {
   caminata_m: number
 }
 export interface ResumenRuta {
+  ruta_id: number
   bono: number
   saldo: number
   visitados: number
@@ -172,6 +173,9 @@ export const api = {
   /** Saltar o recortar: se manda la lista de slugs que quedan, en orden. */
   ajustarRuta: (lugares: string[]) =>
     privado<Ruta>('/api/rutas/actual', { method: 'PATCH', body: JSON.stringify({ lugares }) }),
+  /** +30 Tlacos una vez por ruta terminada; `tlacos` es 0 si ya se cobró. */
+  compartirRuta: (id: number) =>
+    privado<{ tlacos: number; saldo: number }>(`/api/rutas/${id}/compartir`, { method: 'POST' }),
   terminarRuta: () => privado<ResumenRuta>('/api/rutas/actual/terminar', { method: 'POST' }),
   /** Sellos y piezas del rompecabezas (tipo en features/pasaporte). */
   pasaporte: () => privado<unknown>('/api/pasaporte'),

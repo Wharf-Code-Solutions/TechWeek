@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import Banderines from '../components/ui/Banderines'
 import Ilustracion from '../components/ui/Ilustracion'
 import { useCampo } from '../app/idioma'
+import { BotonCompartir } from '../features/compartir'
 import { Rompecabezas } from '../features/pasaporte'
 import type { PasaporteDatos } from '../features/pasaporte/tipos'
 import { eventosVigentes } from '../features/agenda/eventos'
@@ -112,6 +113,21 @@ export default function Fin() {
                 <span>{t('fin.saldo', { n: resumen.saldo })}</span>
               </span>
             </button>
+
+            {pasaporte && (
+              <BotonCompartir
+                rutaId={resumen.ruta_id}
+                terminada
+                datos={{
+                  titulo: pasaporte.foto ? campo(pasaporte.foto, 'titulo') : 'JARANA',
+                  paradas: resumen.visitados,
+                  tlacos: resumen.saldo,
+                  metros: resumen.distancia_m,
+                  piezas: pasaporte.piezas,
+                  fotoUrl: pasaporte.foto?.url || null,
+                }}
+              />
+            )}
 
             <div className="fin-acciones">
               <button type="button" className="fin-boton" onClick={() => alMapa('pasaporte')}>

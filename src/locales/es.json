@@ -215,6 +215,21 @@
     "bonoCobrado": "El bono de fin ya lo ganaste en una ruta anterior.",
     "distancia": "Caminaste {{metros}} m entre paradas: +{{n}} Tlacos por distancia."
   },
+  "compartir": {
+    "boton": "Compartir mi ruta",
+    "preparando": "Preparando imagen…",
+    "premio": "Compártela y gana +30 Tlacos (una vez por ruta)",
+    "ganaste": "¡+{{n}} Tlacos por compartir!",
+    "yaCobrado": "Ya ganaste los Tlacos por compartir esta ruta.",
+    "descargada": "Imagen descargada y texto copiado: súbela a tus redes.",
+    "error": "No pudimos preparar la imagen. Inténtalo otra vez.",
+    "texto": "Completé una ruta por el Centro Histórico de Veracruz con JARANA: {{n}} lugares. Juega la tuya en {{url}}",
+    "pie": "Centro Histórico de Veracruz",
+    "lugares_one": "lugar",
+    "lugares_other": "lugares",
+    "tlacos": "Tlacos",
+    "caminados": "caminados"
+  },
   "ruta": {
     "error_saltar": "No pudimos saltar la parada.",
     "hecha": "Completada",

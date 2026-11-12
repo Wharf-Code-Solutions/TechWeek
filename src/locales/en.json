@@ -215,6 +215,21 @@
     "bonoCobrado": "You already earned the end bonus on an earlier route.",
     "distancia": "You walked {{metros}} m between stops: +{{n}} Tlacos for distance."
   },
+  "compartir": {
+    "boton": "Share my route",
+    "preparando": "Preparing image…",
+    "premio": "Share it and earn +30 Tlacos (once per route)",
+    "ganaste": "+{{n}} Tlacos for sharing!",
+    "yaCobrado": "You already earned the Tlacos for sharing this route.",
+    "descargada": "Image downloaded and text copied: post it on your socials.",
+    "error": "We couldn't prepare the image. Please try again.",
+    "texto": "I finished a route through Veracruz's Historic Center with JARANA: {{n}} places. Play yours at {{url}}",
+    "pie": "Veracruz Historic Center",
+    "lugares_one": "place",
+    "lugares_other": "places",
+    "tlacos": "Tlacos",
+    "caminados": "walked"
+  },
   "ruta": {
     "error_saltar": "We couldn't skip this stop.",
     "hecha": "Completed",
