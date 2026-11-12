@@ -49,6 +49,9 @@ export interface ResumenRuta {
   saldo: number
   visitados: number
   retos_completados: number
+  /** Metros entre las paradas completadas y Tlacos que dieron (1 por 100 m, tope 60). */
+  distancia_m: number
+  tlacos_distancia: number
   total_lugares: number
   foto_id: number | null
 }
@@ -158,7 +161,7 @@ export const api = {
     return p
   },
   completarReto: (slug: string, respuesta: string[], revelar = false, idioma: 'es' | 'en' = 'es') =>
-    privado<{ correcto: boolean; completado: boolean; tlacos_ganados: number; saldo: number }>(
+    privado<{ correcto: boolean; completado: boolean; tlacos_ganados: number; saldo: number; ya_visitado?: boolean }>(
       `/api/retos/${slug}/completar`,
       { method: 'POST', body: JSON.stringify({ respuesta, revelar, idioma }) },
     ),

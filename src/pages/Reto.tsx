@@ -28,6 +28,7 @@ export default function Reto() {
   const [fallos, setFallos] = useState(0)
   const [enviando, setEnviando] = useState(false)
   const [error, setError] = useState(false)
+  const [yaVisitado, setYaVisitado] = useState(false)
 
   useEffect(() => {
     api
@@ -54,7 +55,8 @@ export default function Reto() {
     setEnviando(true)
     try {
       const r = await api.completarReto(slug, valor.filter((v) => v !== null), revelar, idioma)
-      if (r.completado) navigate(`/recompensa/${slug}`, { state: r })
+      if (r.ya_visitado) setYaVisitado(true)
+      else if (r.completado) navigate(`/recompensa/${slug}`, { state: r })
       else setFallos((f) => f + 1)
     } catch {
       setError(true)
@@ -63,6 +65,15 @@ export default function Reto() {
     }
   }
 
+  if (yaVisitado)
+    return (
+      <main className="reto reto--palabras">
+        <div className="reto-cuerpo">
+          <p className="reto-aviso" role="status">{t('lugar.ya_visitado')}</p>
+          <Boton ancho onClick={() => navigate('/mapa')}>{t('reto.volver')}</Boton>
+        </div>
+      </main>
+    )
   if (error)
     return (
       <main className="reto reto--palabras">

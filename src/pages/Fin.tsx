@@ -88,6 +88,9 @@ export default function Fin() {
               </div>
             </dl>
             {/* Sin bono: o no hubo retos, o ya se cobró en una ruta anterior (se paga una vez por celular). */}
+            {resumen.tlacos_distancia > 0 && (
+              <p className="fin-nota">{t('fin.distancia', { metros: resumen.distancia_m, n: resumen.tlacos_distancia })}</p>
+            )}
             {resumen.bono === 0 && (
               <p className="fin-nota">{resumen.retos_completados === 0 ? t('fin.sinBono') : t('fin.bonoCobrado')}</p>
             )}

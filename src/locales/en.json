@@ -212,7 +212,8 @@
     "yAhora": "What now?",
     "gasta": "Spend your Tlacos",
     "verPasaporte": "See my passport",
-    "bonoCobrado": "You already earned the end bonus on an earlier route."
+    "bonoCobrado": "You already earned the end bonus on an earlier route.",
+    "distancia": "You walked {{metros}} m between stops: +{{n}} Tlacos for distance."
   },
   "ruta": {
     "error_saltar": "We couldn't skip this stop.",

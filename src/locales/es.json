@@ -212,7 +212,8 @@
     "yAhora": "¿Y ahora qué?",
     "gasta": "Gasta tus Tlacos",
     "verPasaporte": "Ver mi pasaporte",
-    "bonoCobrado": "El bono de fin ya lo ganaste en una ruta anterior."
+    "bonoCobrado": "El bono de fin ya lo ganaste en una ruta anterior.",
+    "distancia": "Caminaste {{metros}} m entre paradas: +{{n}} Tlacos por distancia."
   },
   "ruta": {
     "error_saltar": "No pudimos saltar la parada.",
