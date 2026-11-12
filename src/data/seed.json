@@ -351,6 +351,171 @@
       "ilustracion": "mar",
       "orden_sugerido": 23,
       "en_demo": false
+    },
+    {
+      "slug": "fototeca",
+      "nombre_es": "Fototeca de Veracruz Juan Malpica Mimendi",
+      "nombre_en": "Juan Malpica Mimendi Photo Library",
+      "categoria": "historia",
+      "lat": 19.20026,
+      "lng": -96.13752,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Recinto de la Secretaría de Cultura con salas de fotografía histórica, talleres y un laboratorio. Custodia el patrimonio visual del puerto.",
+      "curiosidad_en": "A state culture venue with historic photography galleries, workshops and a darkroom. It safeguards the port's visual heritage.",
+      "ilustracion": "historia",
+      "orden_sugerido": 24,
+      "en_demo": false
+    },
+    {
+      "slug": "ex-convento-betlemita",
+      "nombre_es": "Centro Cultural Ex-Convento Betlemita",
+      "nombre_en": "Former Bethlehemite Convent",
+      "categoria": "historia",
+      "lat": 19.19753,
+      "lng": -96.13513,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Antiguo convento y hospital de la orden betlemita (siglos XVII y XVIII), hoy sede de la Secretaría de Cultura. Bajo él hay una cripta abovedada del siglo XVIII.",
+      "curiosidad_en": "A former convent and hospital of the Bethlehemite order (17th–18th centuries), now home of the state Culture Ministry. Beneath it lies an 18th-century vaulted crypt.",
+      "ilustracion": "historia",
+      "orden_sugerido": 25,
+      "en_demo": false
+    },
+    {
+      "slug": "puerta-merced",
+      "nombre_es": "Antigua Puerta de la Merced",
+      "nombre_en": "Old Merced Gate",
+      "categoria": "leyendas",
+      "lat": 19.1959,
+      "lng": -96.1356,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Era la salida sur de la ciudad amurallada. De aquí partía el camino de 2.8 km hacia la hacienda de Malibrán, escenario de la leyenda de la Condesa.",
+      "curiosidad_en": "It was the south exit of the walled city. From here a 2.8 km road led to the Malibrán estate, setting of the Countess legend.",
+      "ilustracion": "linterna",
+      "orden_sugerido": 26,
+      "en_demo": false
+    },
+    {
+      "slug": "callejon-portal-miranda",
+      "nombre_es": "Callejón del Portal de Miranda",
+      "nombre_en": "Portal de Miranda Alley",
+      "categoria": "historia",
+      "lat": 19.20015,
+      "lng": -96.1377,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Pasaje colonial con arquería de piedra muca del siglo XVIII. Da paso a la Fototeca y a la librería del Fondo de Cultura Económica.",
+      "curiosidad_en": "A colonial passage with an 18th-century coral-stone arcade. It leads to the Photo Library and the Fondo de Cultura Económica bookstore.",
+      "ilustracion": "historia",
+      "orden_sugerido": 27,
+      "en_demo": false
+    },
+    {
+      "slug": "callejon-reforma",
+      "nombre_es": "Callejón Reforma",
+      "nombre_en": "Reforma Alley",
+      "categoria": "historia",
+      "lat": 19.19449,
+      "lng": -96.13781,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Callejón con edificios catalogados por el INAH que conserva la forma de las calles coloniales dentro de la antigua muralla.",
+      "curiosidad_en": "An alley with INAH-listed buildings that keeps the shape of colonial streets inside the old city wall.",
+      "ilustracion": "historia",
+      "orden_sugerido": 28,
+      "en_demo": false
+    },
+    {
+      "slug": "plaza-republica",
+      "nombre_es": "Plaza de la República",
+      "nombre_en": "Republic Square",
+      "categoria": "mar",
+      "lat": 19.20268,
+      "lng": -96.13858,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Antigua plaza portuaria rodeada por el Palacio de Correos y Telégrafos (1902) y la Antigua Aduana Marítima, hoy Tercera Región Naval.",
+      "curiosidad_en": "The old port square, framed by the Post and Telegraph Palace (1902) and the Old Maritime Customs House, now the Third Naval Region.",
+      "ilustracion": "escena-puerto",
+      "orden_sugerido": 29,
+      "en_demo": false
+    },
+    {
+      "slug": "iglesia-la-pastora",
+      "nombre_es": "Iglesia de La Pastora",
+      "nombre_en": "La Pastora Church",
+      "categoria": "historia",
+      "lat": 19.20175,
+      "lng": -96.14173,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Templo del siglo XVII catalogado por el INAH, de líneas austeras y levantado con piedra muca de los arrecifes.",
+      "curiosidad_en": "A 17th-century church listed by INAH, with plain lines and built from coral stone from the reefs.",
+      "ilustracion": "catedral",
+      "orden_sugerido": 30,
+      "en_demo": false
+    },
+    {
+      "slug": "teatro-reforma",
+      "nombre_es": "Teatro de la Reforma",
+      "nombre_en": "Reforma Theater",
+      "categoria": "musica",
+      "lat": 19.19546,
+      "lng": -96.13665,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Histórico teatro remodelado con tecnología moderna para obras de gran aforo, congresos y festivales artísticos.",
+      "curiosidad_en": "A historic theater remodeled with modern technology for large-audience plays, conventions and arts festivals.",
+      "ilustracion": "jarana",
+      "orden_sugerido": 31,
+      "en_demo": false
+    },
+    {
+      "slug": "casa-principal",
+      "nombre_es": "Centro Cultural Casa Principal",
+      "nombre_en": "Casa Principal Cultural Center",
+      "categoria": "artesania",
+      "lat": 19.19902,
+      "lng": -96.13904,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Galería pública de arte visual contemporáneo, diseño gráfico, grabado y fotografía, coordinada por la Secretaría de Cultura.",
+      "curiosidad_en": "A public gallery of contemporary visual art, graphic design, printmaking and photography, run by the state Culture Ministry.",
+      "ilustracion": "artesania",
+      "orden_sugerido": 32,
+      "en_demo": false
+    },
+    {
+      "slug": "casa-artes-mucara",
+      "nombre_es": "Casa de las Artes Múcara",
+      "nombre_en": "Múcara House of the Arts",
+      "categoria": "artesania",
+      "lat": 19.19677,
+      "lng": -96.13455,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Espacio cultural independiente que impulsa a artistas locales con talleres de plástica, escultura, fotografía y recitales íntimos.",
+      "curiosidad_en": "An independent cultural space that supports local artists with art, sculpture and photography workshops and intimate recitals.",
+      "ilustracion": "artesania",
+      "orden_sugerido": 33,
+      "en_demo": false
+    },
+    {
+      "slug": "cevart",
+      "nombre_es": "Centro Veracruzano de las Artes Hugo Argüelles (CEVART)",
+      "nombre_en": "Hugo Argüelles Veracruz Arts Center (CEVART)",
+      "categoria": "musica",
+      "lat": 19.20169,
+      "lng": -96.13996,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Escuela de alta especialización en artes escénicas, plásticas y música, en una elegante casona virreinal de la avenida Independencia.",
+      "curiosidad_en": "A specialized school for performing arts, visual arts and music in an elegant colonial mansion on Independencia Avenue.",
+      "ilustracion": "jarana",
+      "orden_sugerido": 34,
+      "en_demo": false
     }
   ],
   "retos": [
@@ -1652,6 +1817,611 @@
           "Voyage",
           "Atlantic",
           "soldiers"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "fototeca",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Fototeca guarda el patrimonio ",
+          "{0}",
+          " del puerto; tiene salas de exposición, talleres y un ",
+          "{1}",
+          " fotográfico en el Portal de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "visual",
+          "laboratorio",
+          "Miranda"
+        ],
+        "opciones": [
+          "Miranda",
+          "musical",
+          "Santiago",
+          "laboratorio",
+          "visual",
+          "acuario"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The Photo Library keeps the port's ",
+          "{0}",
+          " heritage; it has galleries, workshops and a photo ",
+          "{1}",
+          " in the Portal de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "visual",
+          "darkroom",
+          "Miranda"
+        ],
+        "opciones": [
+          "darkroom",
+          "visual",
+          "Miranda",
+          "Santiago",
+          "aquarium",
+          "musical"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "ex-convento-betlemita",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Fue convento y ",
+          "{0}",
+          " de la orden betlemita; debajo tiene una ",
+          "{1}",
+          " abovedada del siglo ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "hospital",
+          "cripta",
+          "XVIII"
+        ],
+        "opciones": [
+          "XX",
+          "cripta",
+          "piscina",
+          "XVIII",
+          "mercado",
+          "hospital"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "It was a convent and ",
+          "{0}",
+          " of the Bethlehemite order; beneath it is a vaulted ",
+          "{1}",
+          " from the ",
+          "{2}",
+          " century."
+        ],
+        "respuestas": [
+          "hospital",
+          "crypt",
+          "18th"
+        ],
+        "opciones": [
+          "20th",
+          "pool",
+          "crypt",
+          "18th",
+          "hospital",
+          "market"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "puerta-merced",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Por esta puerta se salía de la ciudad ",
+          "{0}",
+          "; de aquí partía el camino a la hacienda de ",
+          "{1}",
+          ", a unos ",
+          "{2}",
+          " km."
+        ],
+        "respuestas": [
+          "amurallada",
+          "Malibrán",
+          "2.8"
+        ],
+        "opciones": [
+          "Malibrán",
+          "moderna",
+          "Ulúa",
+          "40",
+          "amurallada",
+          "2.8"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Through this gate you left the ",
+          "{0}",
+          " city; from here the road led to the ",
+          "{1}",
+          " estate, about ",
+          "{2}",
+          " km away."
+        ],
+        "respuestas": [
+          "walled",
+          "Malibrán",
+          "2.8"
+        ],
+        "opciones": [
+          "modern",
+          "walled",
+          "2.8",
+          "40",
+          "Ulúa",
+          "Malibrán"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "callejon-portal-miranda",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El callejón tiene una ",
+          "{0}",
+          " de piedra muca del siglo ",
+          "{1}",
+          " y lleva a la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "arquería",
+          "XVIII",
+          "Fototeca"
+        ],
+        "opciones": [
+          "playa",
+          "XX",
+          "Fototeca",
+          "XVIII",
+          "arquería",
+          "fuente"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The alley has an ",
+          "{0}",
+          " of coral stone from the ",
+          "{1}",
+          " century and leads to the Photo ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "arcade",
+          "18th",
+          "Library"
+        ],
+        "opciones": [
+          "Beach",
+          "20th",
+          "fountain",
+          "arcade",
+          "18th",
+          "Library"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "callejon-reforma",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Sus edificios están catalogados por el ",
+          "{0}",
+          " y conserva el trazo ",
+          "{1}",
+          " de dentro de la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "INAH",
+          "colonial",
+          "muralla"
+        ],
+        "opciones": [
+          "muralla",
+          "IMSS",
+          "selva",
+          "INAH",
+          "moderno",
+          "colonial"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Its buildings are listed by ",
+          "{0}",
+          " and it keeps the ",
+          "{1}",
+          " layout from inside the city ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "INAH",
+          "colonial",
+          "wall"
+        ],
+        "opciones": [
+          "colonial",
+          "wall",
+          "modern",
+          "jungle",
+          "INAH",
+          "IMSS"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "plaza-republica",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "En esta plaza están el Palacio de ",
+          "{0}",
+          " (1902) y la antigua ",
+          "{1}",
+          " Marítima, hoy de la ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Correos",
+          "Aduana",
+          "Marina"
+        ],
+        "opciones": [
+          "Policía",
+          "Gobierno",
+          "Marina",
+          "Aduana",
+          "Correos",
+          "Escuela"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "This square has the ",
+          "{0}",
+          " Palace (1902) and the old Maritime ",
+          "{1}",
+          " House, now used by the ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Post",
+          "Customs",
+          "Navy"
+        ],
+        "opciones": [
+          "Police",
+          "Customs",
+          "Post",
+          "Government",
+          "Navy",
+          "School"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "iglesia-la-pastora",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Pastora es un templo del siglo ",
+          "{0}",
+          ", levantado con piedra ",
+          "{1}",
+          " sacada de los ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "XVII",
+          "muca",
+          "arrecifes"
+        ],
+        "opciones": [
+          "arrecifes",
+          "XX",
+          "cerros",
+          "volcánica",
+          "XVII",
+          "muca"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "La Pastora is a ",
+          "{0}",
+          "-century church built of ",
+          "{1}",
+          " stone taken from the ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "17th",
+          "coral",
+          "reefs"
+        ],
+        "opciones": [
+          "20th",
+          "17th",
+          "volcanic",
+          "hills",
+          "reefs",
+          "coral"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "teatro-reforma",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El Teatro de la ",
+          "{0}",
+          " fue remodelado para obras de gran ",
+          "{1}",
+          " y ",
+          "{2}",
+          " artísticos."
+        ],
+        "respuestas": [
+          "Reforma",
+          "aforo",
+          "festivales"
+        ],
+        "opciones": [
+          "partidos",
+          "aforo",
+          "Merced",
+          "Reforma",
+          "tamaño",
+          "festivales"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The ",
+          "{0}",
+          " Theater was remodeled for large-",
+          "{1}",
+          " plays and arts ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Reforma",
+          "audience",
+          "festivals"
+        ],
+        "opciones": [
+          "matches",
+          "audience",
+          "festivals",
+          "Reforma",
+          "size",
+          "Merced"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "casa-principal",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Casa Principal es una ",
+          "{0}",
+          " de arte contemporáneo con diseño gráfico, ",
+          "{1}",
+          " y ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "galería",
+          "grabado",
+          "fotografía"
+        ],
+        "opciones": [
+          "cocina",
+          "grabado",
+          "fotografía",
+          "natación",
+          "galería",
+          "boxeo"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Casa Principal is a contemporary art ",
+          "{0}",
+          " with graphic design, ",
+          "{1}",
+          " and ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "gallery",
+          "printmaking",
+          "photography"
+        ],
+        "opciones": [
+          "kitchen",
+          "boxing",
+          "gallery",
+          "photography",
+          "swimming",
+          "printmaking"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "casa-artes-mucara",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Múcara es un espacio ",
+          "{0}",
+          " que impulsa a artistas ",
+          "{1}",
+          " con talleres de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "independiente",
+          "locales",
+          "escultura"
+        ],
+        "opciones": [
+          "locales",
+          "deportivo",
+          "escultura",
+          "independiente",
+          "mecánica",
+          "extranjeros"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Múcara is an ",
+          "{0}",
+          " space that supports ",
+          "{1}",
+          " artists with ",
+          "{2}",
+          " workshops."
+        ],
+        "respuestas": [
+          "independent",
+          "local",
+          "sculpture"
+        ],
+        "opciones": [
+          "sculpture",
+          "independent",
+          "local",
+          "mechanics",
+          "sports",
+          "foreign"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "cevart",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El CEVART enseña artes ",
+          "{0}",
+          ", plásticas y ",
+          "{1}",
+          " en una casona ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "escénicas",
+          "música",
+          "virreinal"
+        ],
+        "opciones": [
+          "música",
+          "cocina",
+          "moderna",
+          "virreinal",
+          "escénicas",
+          "marciales"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "CEVART teaches ",
+          "{0}",
+          " arts, visual arts and ",
+          "{1}",
+          " in a ",
+          "{2}",
+          " mansion."
+        ],
+        "respuestas": [
+          "performing",
+          "music",
+          "colonial"
+        ],
+        "opciones": [
+          "colonial",
+          "music",
+          "modern",
+          "performing",
+          "cooking",
+          "martial"
         ]
       }
     }
