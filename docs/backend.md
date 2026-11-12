@@ -115,8 +115,8 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 
 ## Ruta inteligente (migración 0005, Dev 3)
 
-- **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior.
+- **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior; con `demo: true` siempre es la primera, para que el ensayo sea predecible.
 - **`POST /api/visitas`** guarda `visitas.ruta_id` (ruta activa). Si llega otra vez a un lugar sin haber jugado, la visita pasa a la ruta de ahora.
 - **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 Tlacos (antes 409).
-- **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (únicos por ruta) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.
-- **`POST /api/rutas/{id}/compartir`** → `{tlacos, saldo}`: +30 Tlacos (motivo `compartir`) una vez por ruta terminada; 404 si la ruta no es del celular, 409 si sigue activa, `tlacos: 0` si ya se cobró. No verifica que se compartió: premia el intento. `terminar` y `GET /api/pasaporte` devuelven `ruta_id`.
+- **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (`distancia` único por ruta, `compartir` único por celular) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.
+- **`POST /api/rutas/{id}/compartir`** → `{tlacos, saldo}`: +30 Tlacos (motivo `compartir`) **una sola vez por celular**, con una ruta terminada (no se repite creando rutas); 404 si la ruta no es del celular, 409 si sigue activa, `tlacos: 0` si ya se cobró. No verifica que se compartió: premia el intento. `terminar` y `GET /api/pasaporte` devuelven `ruta_id`.

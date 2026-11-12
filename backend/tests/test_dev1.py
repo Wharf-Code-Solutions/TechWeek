@@ -91,7 +91,8 @@ class BaseFalsa:
         ):
             raise HTTPException(409, "Ya existe")
         if tabla == "movimientos_tlacos" and fila["motivo"] in ("distancia", "compartir") and any(
-            m["perfil_id"] == fila["perfil_id"] and m["motivo"] == fila["motivo"] and m["ref_id"] == fila["ref_id"]
+            m["perfil_id"] == fila["perfil_id"] and m["motivo"] == fila["motivo"]
+            and (fila["motivo"] == "compartir" or m["ref_id"] == fila["ref_id"])
             for m in self.t[tabla]
         ):
             raise HTTPException(409, "Ya existe")
@@ -383,8 +384,14 @@ def test_la_visita_queda_ligada_a_la_ruta_activa(cliente):
 
 def test_ruta_nueva_cambia_de_foto(cliente):
     c, _ = cliente
-    fotos = [c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["foto_id"] for _ in range(8)]
+    fotos = [c.post("/api/rutas", json={"tiempo_min": 60, "intereses": ["historia"]}).json()["foto_id"] for _ in range(8)]
     assert all(a != b for a, b in zip(fotos, fotos[1:]))
+
+
+def test_la_demo_siempre_usa_la_misma_foto(cliente):
+    c, _ = cliente
+    fotos = {c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["foto_id"] for _ in range(6)}
+    assert fotos == {1}
 
 
 def test_puntos_por_distancia_una_vez_por_ruta(cliente):
@@ -419,7 +426,7 @@ def test_reto_ya_completado_no_es_error(monkeypatch):
     assert r.json() == {"correcto": True, "completado": True, "tlacos_ganados": 0, "saldo": 50, "ya_visitado": True}
 
 
-def test_compartir_paga_una_vez_por_ruta_terminada(cliente):
+def test_compartir_paga_una_vez_con_ruta_terminada(cliente):
     c, base = cliente
     ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
     assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 409  # sigue activa
@@ -431,13 +438,14 @@ def test_compartir_paga_una_vez_por_ruta_terminada(cliente):
     assert len([m for m in base.t["movimientos_tlacos"] if m["motivo"] == "compartir"]) == 1
 
 
-def test_compartir_otra_ruta_vuelve_a_pagar(cliente):
-    c, _ = cliente
+def test_compartir_no_se_repite_creando_rutas(cliente):
+    c, base = cliente
     ids = []
-    for _ in range(2):
+    for _ in range(3):
         ids.append(c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["id"])
         c.post("/api/rutas/actual/terminar")
-    assert [c.post(f"/api/rutas/{i}/compartir").json()["tlacos"] for i in ids] == [30, 30]
+    assert [c.post(f"/api/rutas/{i}/compartir").json()["tlacos"] for i in ids] == [30, 0, 0]
+    assert len([m for m in base.t["movimientos_tlacos"] if m["motivo"] == "compartir"]) == 1
 
 
 def test_compartir_ruta_ajena_o_inexistente(cliente):

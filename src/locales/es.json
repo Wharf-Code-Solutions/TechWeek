@@ -218,7 +218,7 @@
   "compartir": {
     "boton": "Compartir mi ruta",
     "preparando": "Preparando imagen…",
-    "premio": "Compártela y gana +30 Tlacos (una vez por ruta)",
+    "premio": "Compártela y gana +30 Tlacos (una sola vez)",
     "ganaste": "¡+{{n}} Tlacos por compartir!",
     "yaCobrado": "Ya ganaste los Tlacos por compartir esta ruta.",
     "descargada": "Imagen descargada y texto copiado: súbela a tus redes.",

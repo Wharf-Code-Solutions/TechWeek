@@ -13,7 +13,7 @@ from ..ruta import calcular_ruta, metros_entre_paradas, tlacos_por_distancia
 router = APIRouter(prefix="/api", tags=["rutas"])
 
 BONO_FIN = 100  # Tlacos al terminar la ruta (una sola vez por celular)
-BONO_COMPARTIR = 30  # Tlacos por compartir una ruta terminada (una vez por ruta)
+BONO_COMPARTIR = 30  # Tlacos por compartir una ruta terminada (una sola vez por celular)
 CATEGORIAS = Literal["historia", "leyendas", "musica", "comida", "mar", "artesania"]
 
 
@@ -64,11 +64,16 @@ async def _con_lugares(ruta: dict) -> dict:
     return {**ruta, "lugares": [por_id[i] for i in ids if i in por_id]}
 
 
-async def elegir_foto(ultima_id: int | None) -> int | None:
-    """Imagen del rompecabezas: al azar, distinta de la última ruta cuando hay más de una."""
+async def elegir_foto(ultima_id: int | None, demo: bool = False) -> int | None:
+    """Imagen del rompecabezas: al azar, distinta de la última ruta cuando hay más de una.
+
+    En la demo siempre es la primera (la foto histórica) para que el ensayo sea predecible.
+    """
     fotos = await db.seleccionar("fotos_historicas", order="id.asc")
     if not fotos:
         return None
+    if demo:
+        return fotos[0]["id"]
     otras = [f for f in fotos if f["id"] != ultima_id]
     return random.choice(otras or fotos)["id"]
 
@@ -88,7 +93,7 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     await db.asegurar_perfil(perfil_id)
     anterior = await db.seleccionar("rutas_usuario", perfil_id=f"eq.{perfil_id}", order="creado_en.desc", limit="1")
     await db.actualizar("rutas_usuario", {"estado": "abandonada"}, perfil_id=f"eq.{perfil_id}", estado="eq.activa")
-    foto_id = await elegir_foto(anterior[0].get("foto_id") if anterior else None)
+    foto_id = await elegir_foto(anterior[0].get("foto_id") if anterior else None, datos.demo)
     fila = (
         await db.insertar(
             "rutas_usuario",
@@ -193,7 +198,7 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
 
 @router.post("/rutas/{ruta_id}/compartir")
 async def compartir_ruta(ruta_id: int, perfil_id: str = Depends(perfil_id_actual)):
-    """+30 Tlacos una sola vez por ruta terminada. No se puede verificar que de verdad compartió: premia el intento."""
+    """+30 Tlacos una sola vez por celular (con una ruta terminada). No se puede verificar que de verdad compartió: premia el intento."""
     rutas = await db.seleccionar("rutas_usuario", id=f"eq.{ruta_id}", perfil_id=f"eq.{perfil_id}")
     if not rutas:
         raise HTTPException(404, "Ruta no encontrada")
@@ -206,7 +211,7 @@ async def compartir_ruta(ruta_id: int, perfil_id: str = Depends(perfil_id_actual
             {"perfil_id": perfil_id, "cantidad": BONO_COMPARTIR, "motivo": "compartir", "ref_id": ruta_id},
         )
         tlacos = BONO_COMPARTIR
-    except HTTPException as e:  # 409: esta ruta ya pagó su bono por compartir (índice único)
+    except HTTPException as e:  # 409: este celular ya cobró el bono por compartir (índice único)
         if e.status_code != 409:
             raise
     return {"tlacos": tlacos, "saldo": await db.saldo_de(perfil_id)}

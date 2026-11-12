@@ -14,10 +14,14 @@ alter table public.movimientos_tlacos
   add constraint movimientos_tlacos_motivo_check
   check (motivo in ('reto', 'reto_revelado', 'bono_fin', 'canje', 'distancia', 'compartir'));
 
--- Distancia y compartir se pagan una sola vez por ruta (ref_id = id de la ruta).
-create unique index movimientos_ruta_unico
-  on public.movimientos_tlacos (perfil_id, motivo, ref_id)
-  where motivo in ('distancia', 'compartir');
+-- La distancia se paga una vez por ruta (ref_id = id de la ruta); compartir, una sola vez por celular
+-- (así no se puede repetir creando rutas en bucle).
+create unique index movimientos_distancia_unico
+  on public.movimientos_tlacos (perfil_id, ref_id)
+  where motivo = 'distancia';
+create unique index movimientos_compartir_unico
+  on public.movimientos_tlacos (perfil_id)
+  where motivo = 'compartir';
 
 -- 3. Varias imágenes para el rompecabezas: cada ruta nueva elige una distinta de la anterior.
 --    Mientras no haya fotos históricas con permiso, 5 postales ilustradas propias (public/rompecabezas/).
