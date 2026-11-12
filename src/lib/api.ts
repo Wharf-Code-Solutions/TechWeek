@@ -23,6 +23,35 @@ export interface PromocionFila {
   titulo_en: string
   costo_tlacos: number
 }
+export interface RutaIn {
+  tiempo_min: number
+  intereses: string[]
+  /** Posición actual, si hay permiso de GPS. */
+  lat?: number
+  lng?: number
+  /** ?demo=1: las 5 paradas del guion. */
+  demo?: boolean
+}
+export interface Ruta {
+  id: number
+  lugares: Lugar[]
+  tiempo_min: number
+  intereses: string[]
+  foto_id: number | null
+  estado: 'activa' | 'terminada' | 'abandonada'
+}
+export interface RutaCreada extends Ruta {
+  estimado_min: number
+  caminata_m: number
+}
+export interface ResumenRuta {
+  bono: number
+  saldo: number
+  visitados: number
+  retos_completados: number
+  total_lugares: number
+  foto_id: number | null
+}
 export interface ComercioFila {
   id: number
   slug: string
@@ -129,6 +158,14 @@ export const api = {
       `/api/retos/${slug}/completar`,
       { method: 'POST', body: JSON.stringify({ respuesta, revelar, idioma }) },
     ),
+  // Ruta del turista (Dev 1 hizo los endpoints; el cliente vive aquí, en src/lib)
+  crearRuta: (datos: RutaIn) =>
+    privado<RutaCreada>('/api/rutas', { method: 'POST', body: JSON.stringify(datos) }),
+  rutaActual: () => privado<Ruta>('/api/rutas/actual'),
+  /** Saltar o recortar: se manda la lista de slugs que quedan, en orden. */
+  ajustarRuta: (lugares: string[]) =>
+    privado<Ruta>('/api/rutas/actual', { method: 'PATCH', body: JSON.stringify({ lugares }) }),
+  terminarRuta: () => privado<ResumenRuta>('/api/rutas/actual/terminar', { method: 'POST' }),
   canjear: (slug: string) =>
     privado<{ codigo: string; saldo: number }>(`/api/promociones/${slug}/canjear`, { method: 'POST' }),
 }
