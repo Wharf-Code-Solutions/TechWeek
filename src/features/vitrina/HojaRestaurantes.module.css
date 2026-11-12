@@ -69,6 +69,24 @@
   cursor: pointer;
 }
 
+.lista li {
+  animation: aparecer 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lista li {
+    animation: none;
+  }
+}
+
 .lista {
   display: grid;
   gap: 8px;

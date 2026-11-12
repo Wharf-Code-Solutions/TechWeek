@@ -1,3 +1,6 @@
+/* Curva suave: arranca rápido y frena despacio (panel, tarjetas y hojas se sienten fluidos). */
+:root { --suave: cubic-bezier(0.22, 1, 0.36, 1); }
+
 /* M4 Mapa y M7 Panel · medidas y colores del diseño 03 (Mapa + panel) */
 /* El mapa ocupa toda la pantalla y el panel flota encima: no cambia de tamaño, así nunca queda un hueco. */
 .mapa { position: relative; height: 100dvh; overflow: hidden; }
@@ -142,7 +145,7 @@
   right: 16px;
   z-index: 2;
   bottom: calc(var(--alto-panel, 0px) + 14px);
-  transition: bottom 200ms;
+  transition: bottom 380ms var(--suave);
   display: grid;
   gap: 12px;
 }
@@ -249,7 +252,7 @@
   border-radius: 24px 24px 0 0;
   box-shadow: 0 -6px 24px rgb(21 10 46 / 0.18);
   background: #fff;
-  transition: height 200ms;
+  transition: height 380ms var(--suave);
   z-index: 3;
 }
 .panel--arrastrando { transition: none; }

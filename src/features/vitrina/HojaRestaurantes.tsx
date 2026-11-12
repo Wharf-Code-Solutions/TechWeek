@@ -41,8 +41,8 @@ export default function HojaRestaurantes({ onCerrar }: { onCerrar: () => void })
           <p role="status">{t('vitrina.comer_vacio')}</p>
         ) : (
           <ul className={estilos.lista}>
-            {lista.map(({ comercio: c, metros }) => (
-              <li key={c.slug}>
+            {lista.map(({ comercio: c, metros }, i) => (
+              <li key={c.slug} style={{ ['--i' as string]: Math.min(i, 8) }}>
                 <button type="button" className={estilos.fila} onClick={() => navegar(`/vitrina/${c.slug}`)}>
                   <span className={estilos.icono}>
                     <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={40} />

@@ -1,9 +1,10 @@
 // Contrato 5 · Rutas de pantalla. ?demo=1 activa el recorrido virtual.
 // Solo Preferencias (la entrada) se carga de inmediato; las demás pantallas se descargan al abrirlas, así el mapa
 // (mapbox-gl pesa casi 2 MB) no retrasa la primera pantalla.
-import { lazy, Suspense } from 'react'
+import { motion } from 'framer-motion'
+import { lazy, Suspense, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Preferencias from '../pages/Preferencias'
 import estilos from './routes.module.css'
 
@@ -27,9 +28,20 @@ function Cargando() {
   )
 }
 
+/** Cada pantalla aparece con un fundido corto (solo opacidad: no rompe los elementos fijos como el panel). */
+function Pantalla({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation()
+  return (
+    <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
+      {children}
+    </motion.div>
+  )
+}
+
 export default function AppRoutes() {
   return (
     <Suspense fallback={<Cargando />}>
+      <Pantalla>
       <Routes>
         <Route path="/" element={<Preferencias />} />
         <Route path="/mapa" element={<Mapa />} />
@@ -41,6 +53,7 @@ export default function AppRoutes() {
         <Route path="/vitrina" element={<Vitrina />} />
         <Route path="/vitrina/:slug" element={<Comercio />} />
       </Routes>
+      </Pantalla>
     </Suspense>
   )
 }

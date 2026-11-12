@@ -81,6 +81,24 @@
   color: #fff;
 }
 
+.lista li {
+  animation: aparecer 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lista li {
+    animation: none;
+  }
+}
+
 .lista {
   display: grid;
   gap: 14px;

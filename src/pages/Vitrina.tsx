@@ -50,8 +50,8 @@ export default function Vitrina() {
       </p>
 
       <ul className={estilos.lista}>
-        {lista.map((c) => (
-          <li key={c.slug}>
+        {lista.map((c, i) => (
+          <li key={c.slug} style={{ ['--i' as string]: Math.min(i, 8) }}>
             <TarjetaComercio
               comercio={c}
               onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })}
