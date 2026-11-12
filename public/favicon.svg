@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- JARANA: la J es una jarochita; el trazo es su cuerpo y la colita de la J es su falda ondeando, alzada con un brazo -->
+  <rect x="5" y="5" width="40" height="40" rx="11" fill="#150A2E"/>
+  <rect x="2" y="2" width="40" height="40" rx="11" fill="#E4007C" stroke="#150A2E" stroke-width="3"/>
+  <circle cx="10" cy="10" r="3.4" fill="#FFD400" stroke="#150A2E" stroke-width="1.6"/>
+  <path d="M31 21 C31.5 31 27 37.5 19.5 37 C13.5 36.5 9.5 31.5 9 24.5 C11.5 27.5 14.5 29.5 18 29 C21.5 28.5 24 25.5 24.5 21 Z" fill="#FFFFFF" stroke="#150A2E" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M29.6 27 C28 33.5 23.5 35.6 19.5 35.2 C15.5 34.8 12.6 32 11 28.5" fill="none" stroke="#FFD400" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M24.5 12.5 h6 l0.5 9.5 h-7 z" fill="#FFFFFF" stroke="#150A2E" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- brazo con el codo doblado, la mano sostiene la punta de la falda -->
+  <path d="M24.8 15.5 L18 22 L10.5 23.6" fill="none" stroke="#150A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="10.5" cy="23.6" r="1.7" fill="#150A2E"/>
+  <circle cx="27.6" cy="8.2" r="3.6" fill="#150A2E"/>
+  <circle cx="30.8" cy="5.8" r="2" fill="#E5242B" stroke="#150A2E" stroke-width="1"/>
+</svg>
