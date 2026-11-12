@@ -1,4 +1,6 @@
 """Catálogo público de solo lectura. Reemplaza las lecturas directas a Supabase desde el navegador."""
+from typing import Literal
+
 from fastapi import APIRouter, HTTPException, Response
 
 from .. import db
@@ -33,10 +35,17 @@ async def reto_de_lugar(slug: str, res: Response):
     return r
 
 
+TipoComercio = Literal["cafeteria", "restaurante", "fonda", "neveria", "mercado", "libreria", "artesanias", "tienda"]
+
+
 @router.get("/comercios")
-async def comercios(res: Response):
+async def comercios(res: Response, tipo: TipoComercio | None = None):
+    """Vitrina de comercios. `?tipo=libreria` filtra; los aliados (con promoción) van primero."""
     _cache(res)
-    return await db.seleccionar("comercios")
+    filtros = {"order": "aliado.desc,nombre.asc"}
+    if tipo:
+        filtros["tipo"] = f"eq.{tipo}"
+    return await db.seleccionar("comercios", **filtros)
 
 
 @router.get("/promociones")

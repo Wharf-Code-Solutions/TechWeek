@@ -47,13 +47,38 @@ export type Reto =
   | (RetoBase & { tipo: 'palabras'; contenido_es: ContenidoPalabras; contenido_en: ContenidoPalabras })
   | (RetoBase & { tipo: 'orden'; contenido_es: ContenidoOrden; contenido_en: ContenidoOrden })
 
+export type TipoComercio =
+  | 'cafeteria'
+  | 'restaurante'
+  | 'fonda'
+  | 'neveria'
+  | 'mercado'
+  | 'libreria'
+  | 'artesanias'
+  | 'tienda'
+
+/** Comercio de la vitrina (GET /api/comercios?tipo=...). Sin precio ni enlaces externos. */
 export interface Comercio {
   slug: string
   nombre: string
+  /** Interés al que se asocia (para filtros por preferencias); `tipo` es la clasificación de la vitrina. */
   categoria: Categoria
+  tipo: TipoComercio
   lat: number
   lng: number
-  direccion?: string
+  descripcion_es: string
+  descripcion_en: string
+  /** Etiqueta destacada opcional ("Desde 1808"). */
+  dato_es?: string | null
+  dato_en?: string | null
+  direccion: string
+  horario_es: string
+  horario_en: string
+  /** Foto del negocio (public/comercios/...). Vacía: la tarjeta usa la ilustración de su tipo. */
+  foto_url?: string | null
+  /** Tiene promoción en JARANA. */
+  aliado: boolean
+  verificar?: boolean
   pendiente_confirmar?: boolean
 }
 

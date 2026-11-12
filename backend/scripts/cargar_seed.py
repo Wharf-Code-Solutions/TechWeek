@@ -55,8 +55,9 @@ async def main() -> None:
         await upsert("fotos_historicas", [{k: f[k] for k in ("slug", "url", "titulo_es", "titulo_en", "piezas")}
                                           for f in seed["fotos_historicas"]], "slug")
 
-        comercios = await upsert("comercios", [{k: c[k] for k in ("slug", "nombre", "categoria", "lat", "lng")}
-                                               for c in seed["comercios"]], "slug")
+        campos_comercio = ("slug", "nombre", "categoria", "tipo", "lat", "lng", "descripcion_es", "descripcion_en",
+                           "dato_es", "dato_en", "direccion", "horario_es", "horario_en", "foto_url", "aliado")
+        comercios = await upsert("comercios", [{k: c.get(k) for k in campos_comercio} for c in seed["comercios"]], "slug")
         id_comercio = {c["slug"]: c["id"] for c in comercios}
 
         await upsert("promociones", [{"slug": p["slug"], "comercio_id": id_comercio[p["comercio_slug"]],

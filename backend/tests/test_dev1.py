@@ -220,3 +220,33 @@ def test_pasaporte_sellos_y_piezas(cliente):
 
     c.post("/api/rutas/actual/terminar")
     assert c.get("/api/pasaporte").json()["piezas"]["ganadas"] == 3
+
+
+# ───────────── Vitrina de comercios ─────────────
+
+def test_comercios_filtra_por_tipo_y_ordena_aliados(monkeypatch):
+    pedidos = []
+
+    async def seleccionar(tabla, **filtros):
+        pedidos.append((tabla, filtros))
+        return []
+
+    monkeypatch.setattr(db, "seleccionar", seleccionar)
+    c = TestClient(app)
+    assert c.get("/api/comercios?tipo=libreria").status_code == 200
+    assert pedidos[-1] == ("comercios", {"order": "aliado.desc,nombre.asc", "tipo": "eq.libreria"})
+    assert c.get("/api/comercios").status_code == 200
+    assert "tipo" not in pedidos[-1][1]
+    assert c.get("/api/comercios?tipo=bar").status_code == 422
+
+
+def test_seed_comercios_validos():
+    tipos = {"cafeteria", "restaurante", "fonda", "neveria", "mercado", "libreria", "artesanias", "tienda"}
+    comercios = SEED["comercios"]
+    assert len({c["slug"] for c in comercios}) == len(comercios)
+    for c in comercios:
+        assert c["tipo"] in tipos, c["slug"]
+        assert c["descripcion_es"] and c["descripcion_en"] and c["horario_es"] and c["horario_en"], c["slug"]
+        assert 19.18 < c["lat"] < 19.21 and -96.15 < c["lng"] < -96.12, c["slug"]
+    slugs = {c["slug"] for c in comercios}
+    assert all(p["comercio_slug"] in slugs for p in SEED["promociones"])

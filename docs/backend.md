@@ -22,6 +22,7 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `GET /health` | Estado del servicio | — |
 | `POST /api/sesion` · `POST /api/sesion/renovar` | Abre o renueva la sesión anónima | Un usuario por celular |
 | `GET /api/lugares` · `/lugares/{slug}/reto` · `/comercios` · `/promociones` · `/eventos` · `/fotos` | Catálogo de solo lectura | El reto no incluye respuestas |
+| `GET /api/comercios?tipo=` | Vitrina: comercios con `tipo`, descripción y dato ES/EN, dirección, horario ES/EN, `foto_url`, `aliado` | `tipo` opcional: cafeteria, restaurante, fonda, neveria, mercado, libreria, artesanias, tienda (422 si no es válido). Aliados primero |
 | `GET /api/saldo` | Saldo de Tlacos del celular | Suma del libro |
 | `POST /api/visitas` | Registra la llegada `{lugar_slug, metodo, lat?, lng?}` | Una vez por lugar; con `gps` valida el radio (haversine) |
 | `POST /api/retos/{slug}/completar` | Valida `{respuesta, revelar, idioma}` y paga | Una sola vez; `revelar` paga menos y nunca bloquea |
@@ -104,3 +105,10 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 - ✅ **Atomicidad del saldo:** resuelta. El canje usa la función SQL `canjear` (migración 0002), que bloquea por perfil y revisa, descuenta y genera el código en una sola transacción.
 - ✅ **Tlacos:** columnas renombradas a `tlacos`, `tlacos_revelado`, `costo_tlacos` y `movimientos_tlacos`.
 - **Commits:** el módulo del backend usa el scope `db` (o proponer `api`).
+
+## Vitrina de comercios (Dev 1)
+
+- **Tabla `comercios`** (migración 0003): `tipo`, `descripcion_es/en`, `dato_es/en` (etiqueta destacada opcional, p. ej. "Desde 1808"), `direccion`, `horario_es/en`, `foto_url`, `aliado` (tiene promoción). Sin precio ni enlaces externos.
+- **Datos:** ~38 comercios del Centro Histórico tomados de `sitios-turisticos-veracruz.csv`, en `src/data/seed.json` → `comercios`. Se cargan con `python -m scripts.cargar_seed`.
+- **Fotos:** `foto_url` vacío. Para agregar una: guardar la imagen en `public/comercios/<slug>.jpg`, poner `"foto_url": "/comercios/<slug>.jpg"` en el seed y recargar. Solo fotos propias o con permiso del negocio. Sin foto, la tarjeta usa la ilustración de su tipo.
+- `verificar: true` marca coordenadas aproximadas (direcciones "s/n").
