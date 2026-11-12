@@ -19,9 +19,11 @@ interface Props {
   siguiente: Lugar | null
   pos: Posicion | null
   onCambio: (lugares: Lugar[]) => void
+  /** Tocar un lugar de la lista: el mapa lo muestra (el turista no sale del mapa). */
+  onEnfocar: (lugar: Lugar) => void
 }
 
-export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio }: Props) {
+export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEnfocar }: Props) {
   const { t } = useTranslation()
   const campo = useCampo()
   const navegar = useNavigate()
@@ -66,13 +68,15 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio }: Pr
           if (tlacos !== undefined) {
             return (
               <li key={l.slug} className="ruta-fila ruta-fila--hecha">
-                <span className="ruta-num">
-                  <Check size={18} weight="bold" color="#fff" aria-label={t('ruta.hecha')} />
-                </span>
-                <span className="ruta-texto">
-                  <strong>{nombre}</strong>
-                </span>
-                <span className="ruta-premio">+{tlacos}</span>
+                <button type="button" className="ruta-fila-boton" aria-label={t('ruta.verEnMapa', { nombre })} onClick={() => onEnfocar(l)}>
+                  <span className="ruta-num">
+                    <Check size={18} weight="bold" color="#fff" aria-label={t('ruta.hecha')} />
+                  </span>
+                  <span className="ruta-texto">
+                    <strong>{nombre}</strong>
+                  </span>
+                  <span className="ruta-premio">+{tlacos}</span>
+                </button>
               </li>
             )
           }
@@ -80,17 +84,19 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio }: Pr
           const esSiguiente = l.slug === siguiente?.slug
           return (
             <li key={l.slug} className={`ruta-fila${esSiguiente ? ' ruta-fila--siguiente' : ''}`}>
-              <span className="ruta-num">{i + 1}</span>
-              <span className="ruta-texto">
-                <strong>{nombre}</strong>
-                <span className="ruta-sub">
-                  {metros === null
-                    ? categoria(l)
-                    : esSiguiente
-                      ? t('ruta.subSiguiente', { categoria: categoria(l), dist: formatoDistancia(metros), min: minutosCaminando(metros) })
-                      : t('ruta.sub', { categoria: categoria(l), dist: formatoDistancia(metros) })}
+              <button type="button" className="ruta-fila-boton" aria-label={t('ruta.verEnMapa', { nombre })} onClick={() => onEnfocar(l)}>
+                <span className="ruta-num">{i + 1}</span>
+                <span className="ruta-texto">
+                  <strong>{nombre}</strong>
+                  <span className="ruta-sub">
+                    {metros === null
+                      ? categoria(l)
+                      : esSiguiente
+                        ? t('ruta.subSiguiente', { categoria: categoria(l), dist: formatoDistancia(metros), min: minutosCaminando(metros) })
+                        : t('ruta.sub', { categoria: categoria(l), dist: formatoDistancia(metros) })}
+                  </span>
                 </span>
-              </span>
+              </button>
               {esSiguiente && pendientes.length > 1 && (
                 <button
                   type="button"

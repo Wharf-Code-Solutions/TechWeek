@@ -213,7 +213,8 @@
     "siRecortar": "Yes, shorten",
     "cancelar": "Cancel",
     "sinRuta": "You have not built your route yet.",
-    "armar": "Build my route"
+    "armar": "Build my route",
+    "verEnMapa": "Show {{nombre}} on the map"
   },
   "pasaporte": {
     "titulo": "My passport",

@@ -50,6 +50,8 @@ interface Props {
   onEvento?: () => void
   /** Alto (px) de lo que tapa la parte baja del mapa (panel): la cámara centra sobre lo que queda a la vista. */
   padAbajo?: number
+  /** Lugar que hay que mostrar (la lista de la ruta lo pide): el mapa vuela hasta él y abre su tarjeta. `n` cambia en cada toque. */
+  enfocar?: { slug: string; n: number } | null
   arriba?: ReactNode
   abajo?: ReactNode
 }
@@ -83,6 +85,7 @@ export default function MapaLugares({
   eventos = [],
   onEvento,
   padAbajo = 0,
+  enfocar = null,
   arriba,
   abajo,
 }: Props) {
@@ -122,6 +125,17 @@ export default function MapaLugares({
   }, [demo, pos])
 
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
+  const ultimoEnfoque = useRef(0)
+  useEffect(() => {
+    if (!enfocar || enfocar.n === ultimoEnfoque.current) return
+    const l = lugares.find((x) => x.slug === enfocar.slug)
+    if (!l) return
+    ultimoEnfoque.current = enfocar.n
+    setElegido(l)
+    const m = mapa.current
+    m?.flyTo({ center: [l.lng, l.lat], zoom: Math.max(m.getZoom(), ZOOM + 0.5), duration: 900 })
+  }, [enfocar, lugares])
+
   useEffect(() => {
     mapa.current?.easeTo({ padding: { top: 0, left: 0, right: 0, bottom: padAbajo }, duration: 250 })
   }, [padAbajo])

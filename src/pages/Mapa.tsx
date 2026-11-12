@@ -9,6 +9,7 @@ import { MapaLugares, Panel } from '../features/mapa'
 import Cabecera from '../features/mapa/Cabecera'
 import RutaLista from '../features/mapa/RutaLista'
 import type { Pestana } from '../features/mapa/Panel'
+import { altoNivel, type Nivel } from '../features/mapa/nivelesPanel'
 import { formatoDistancia, progresoRuta } from '../features/mapa/progreso'
 import ControlRecorrido from '../features/geo/ControlRecorrido'
 import { esModoDemo } from '../features/geo/demoStore'
@@ -24,8 +25,6 @@ import type { Evento, Lugar } from '../types/contratos'
 const NINGUNO: Lugar[] = []
 
 
-const ALTO_PANEL = { abierto: '48dvh', plegado: '108px' }
-
 export default function Mapa() {
   const { t } = useTranslation()
   const todos = useLugares()
@@ -38,7 +37,9 @@ export default function Mapa() {
   // Otras pantallas pueden abrir el mapa en una pestaña: navigate('/mapa', { state: { pestana: 'pasaporte' } })
   const inicial = (useLocation().state as { pestana?: Pestana } | null)?.pestana
   const [pestana, setPestana] = useState<Pestana>(inicial ?? 'ruta')
-  const [plegado, setPlegado] = useState(false)
+  const [nivel, setNivel] = useState<Nivel>('medio')
+  // Lugar que el turista tocó en la lista de la ruta: el mapa vuela hasta él (n distingue toques repetidos).
+  const [enfocar, setEnfocar] = useState<{ slug: string; n: number } | null>(null)
 
   useEffect(() => {
     let vivo = true
@@ -82,27 +83,35 @@ export default function Mapa() {
 
   // El mapa ocupa toda la pantalla y el panel flota encima; la cámara deja libre esa franja.
   const demo = esModoDemo()
-  const altoPanel = demo ? '0px' : plegado ? ALTO_PANEL.plegado : ALTO_PANEL.abierto
   const [altoVentana, setAltoVentana] = useState(() => window.innerHeight)
   useEffect(() => {
     const alCambiar = () => setAltoVentana(window.innerHeight)
     window.addEventListener('resize', alCambiar)
     return () => window.removeEventListener('resize', alCambiar)
   }, [])
-  const padAbajo = demo ? 0 : plegado ? 108 : Math.round(altoVentana * 0.48)
+  const altoPanel = demo ? 0 : altoNivel(nivel, altoVentana)
+  // En pantalla completa el mapa queda tapado: la cámara se queda como en el nivel medio.
+  const padAbajo = demo ? 0 : altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
 
   const abrir = (p: Pestana) => {
     setPestana(p)
-    setPlegado(false)
+    setNivel((n) => (n === 'plegado' ? 'medio' : n))
+  }
+
+  // Tocar un lugar de la ruta lo muestra en el mapa (sin sacar al turista de él); el panel baja a la mitad.
+  const enfocarLugar = (l: Lugar) => {
+    setEnfocar((e) => ({ slug: l.slug, n: (e?.n ?? 0) + 1 }))
+    setNivel((n) => (n === 'completo' ? 'medio' : n))
   }
 
   return (
-    <main style={{ ['--alto-panel' as string]: altoPanel }}>
+    <main style={{ ['--alto-panel' as string]: `${altoPanel}px` }}>
       <h1 className="solo-lectores">{t('pantallas.mapa')}</h1>
       <MapaLugares
         lugares={todos}
         ruta={ruta ?? undefined}
         padAbajo={padAbajo}
+        enfocar={enfocar}
         enRuta={enRuta}
         hechos={slugsHechos}
         siguiente={siguiente?.slug ?? null}
@@ -131,9 +140,18 @@ export default function Mapa() {
         <Panel
           activa={pestana}
           onActiva={setPestana}
-          plegado={plegado}
-          onPlegado={setPlegado}
-          ruta={<RutaLista ruta={ruta} hechos={hechos} siguiente={siguiente} pos={pos} onCambio={setRuta} />}
+          nivel={nivel}
+          onNivel={setNivel}
+          ruta={
+            <RutaLista
+              ruta={ruta}
+              hechos={hechos}
+              siguiente={siguiente}
+              pos={pos}
+              onCambio={setRuta}
+              onEnfocar={enfocarLugar}
+            />
+          }
         />
       )}
     </main>

@@ -213,7 +213,8 @@
     "siRecortar": "Sí, recortar",
     "cancelar": "Cancelar",
     "sinRuta": "Aún no armas tu ruta.",
-    "armar": "Armar mi ruta"
+    "armar": "Armar mi ruta",
+    "verEnMapa": "Ver {{nombre}} en el mapa"
   },
   "pasaporte": {
     "titulo": "Mi pasaporte",
