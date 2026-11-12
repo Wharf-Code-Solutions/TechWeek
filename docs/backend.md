@@ -39,7 +39,7 @@ backend/
   app/db.py              Cliente PostgREST (service_role) y nombres de la moneda
   app/geo.py             Distancia en metros (radio de 40 m)
   app/retos.py           Validación de los dos minijuegos
-  app/routers/           sesion, catalogo, visitas, retos, canjes
+  app/routers/           sesion y catalogo (Dev 3); visitas, retos y canjes (Dev 1)
   tests/                 pytest
 src/lib/api.ts           Único cliente del frontend (sesión + token)
 ```
@@ -50,7 +50,7 @@ src/lib/api.ts           Único cliente del frontend (sesión + token)
 cd backend
 python -m venv .venv && .venv\Scripts\activate    # Windows
 pip install -r requirements-dev.txt
-cp .env.example .env                              # llenar SUPABASE_URL y SUPABASE_SERVICE_KEY
+cp .env.example .env                              # llenar SUPABASE_URL, SUPABASE_ANON_KEY y SUPABASE_SERVICE_KEY
 uvicorn app.main:app --reload --port 8000
 pytest
 ```
@@ -63,7 +63,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 2. ✅ Renombrar `clacos` → `tlacos` en SQL, `seed.json`, tipos y `backend/app/db.py`.
 3. Migración 0002: cerrar las tablas al rol `anon` (quitar políticas de lectura pública), restricciones de "una sola vez" y, si hace falta, función SQL atómica para el canje.
 4. Cargar el seed real (coordenadas verificadas, retos de las 5 paradas) y probar `retos` y `canjes` contra él.
-5. Endpoint de bono de fin de ruta, guardar ruta y perfil (`rutas_usuario`, `perfiles`) y el algoritmo de ruta (M3).
+5. Dueño de `routers/visitas.py` (llegada y radio GPS), `retos.py` y `canjes.py`. Endpoint de bono de fin de ruta, guardar ruta y perfil (`rutas_usuario`, `perfiles`) y el algoritmo de ruta (M3).
 6. Tests de lógica del backend con datos falsos de Supabase.
 
 ### Dev 2 · Luis — Mapa e interfaz
@@ -79,7 +79,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 3. Recorrido virtual (M6) con `?demo=1`, Turf y la ruta de la demo guardada como respaldo.
 4. Pantallas de preferencias, ¡Llegaste! y recompensa.
 5. Cartera y cupón deslizable (M10) con `api.saldo()` y `api.canjear()`.
-6. Despliegue: frontend y backend en Vercel (o servicio aparte), variables de entorno, pruebas con celular real.
+6. Despliegue: Vercel lo administra Dev 1; Dev 3 prepara la configuración del frontend y del backend, pide las variables de entorno a Dev 1 y hace las pruebas con celular real.
 
 ### Orden
 | Fase | Dev 1 | Dev 2 | Dev 3 |
