@@ -57,6 +57,10 @@ interface Props {
 const VACIO: ReadonlySet<string> = new Set()
 const SIN_RUTA: Lugar[] = []
 
+// Luz del estilo Standard: 'dawn' da tonos cálidos (cremas y durazno) que combinan con JARANA y dejan legibles
+// pines y ruta; 'dusk' resultó demasiado oscuro.
+const AMBIENTE = 'dawn'
+
 const CLAVE_NOMBRES = 'jarana.mapa.nombres'
 const leerNombres = () => {
   try {
@@ -98,6 +102,7 @@ export default function MapaLugares({
     m.setConfigProperty('basemap', 'showPointOfInterestLabels', activos)
     m.setConfigProperty('basemap', 'showPlaceLabels', activos)
     m.setConfigProperty('basemap', 'showRoadLabels', true)
+    m.setConfigProperty('basemap', 'lightPreset', AMBIENTE)
   }
   const alternarNombres = () => {
     const nuevo = !nombres
