@@ -1,0 +1,43 @@
+.pantalla {
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.titulo {
+  margin: 8px 0 0;
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--rosa);
+}
+
+.lugar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.nombre {
+  margin: 8px 0 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.subtitulo {
+  margin: 8px 0 0;
+  font-family: var(--fuente-nota);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--morado);
+}

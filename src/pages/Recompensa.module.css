@@ -1,0 +1,44 @@
+.pantalla {
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.titulo {
+  margin: 8px 0 0;
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--rosa);
+}
+
+.premios {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--amarillo);
+}
+
+.premio {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.premio p {
+  margin: 4px 0 0;
+}
+
+.saldo {
+  margin: 0;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
