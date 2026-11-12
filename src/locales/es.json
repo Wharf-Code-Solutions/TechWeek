@@ -9,16 +9,7 @@
     "fin": "Fin de ruta"
   },
   "carga": {
-    "ruta": [
-      "Buscando lugares para ti…",
-      "Eligiendo tu mejor ruta…",
-      "Afinando la jarana…"
-    ],
-    "mapa": [
-      "Cargando el mapa…",
-      "Colgando los banderines…",
-      "Ya casi llegamos…"
-    ]
+    "espera": "Espera <strong>solamente una vez</strong>"
   },
   "comun": {
     "cargando": "Cargando…",

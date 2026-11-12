@@ -9,16 +9,7 @@
     "fin": "End of route"
   },
   "carga": {
-    "ruta": [
-      "Finding places for you…",
-      "Picking your best route…",
-      "Tuning the jarana…"
-    ],
-    "mapa": [
-      "Loading the map…",
-      "Hanging the bunting…",
-      "Almost there…"
-    ]
+    "espera": "Wait <strong>solamente una vez</strong>"
   },
   "comun": {
     "cargando": "Loading…",

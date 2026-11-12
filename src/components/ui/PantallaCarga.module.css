@@ -61,7 +61,7 @@
 .mensaje {
   margin: 0;
   min-height: 1.4em;
-  font: 700 1.15rem/1.3 var(--fuente-titulo);
+  font: 500 1.2rem/1.3 var(--fuente-titulo);
   letter-spacing: -0.01em;
   text-align: center;
   animation: mensaje 360ms var(--suave);
@@ -85,3 +85,4 @@
   .hombre, .mujer, .falda, .abanico, .sombra, .nota, .barra::after, .mensaje, .fija { animation: none; }
   .nota { opacity: 0; }
 }
+.mensaje strong { font-weight: 800; }

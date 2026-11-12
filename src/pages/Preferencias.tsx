@@ -222,7 +222,7 @@ export default function Preferencias() {
           </>
         )}
 
-        {ruta === 'armando' && <PantallaCarga mensajes={t('carga.ruta', { returnObjects: true }) as string[]} />}
+        {ruta === 'armando' && <PantallaCarga />}
         {ruta === 'error' && (
           <>
             <p role="alert">{t('preferencias.error_ruta')}</p>

@@ -465,7 +465,7 @@ export default function MapaLugares({
       <AnimatePresence>
         {!listo && (
           <motion.div key="carga" exit={{ opacity: 0, transition: { duration: 0.25 } }}>
-            <PantallaCarga mensajes={t('carga.mapa', { returnObjects: true }) as string[]} />
+            <PantallaCarga />
           </motion.div>
         )}
       </AnimatePresence>

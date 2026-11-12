@@ -1,12 +1,10 @@
 // Pantalla de carga con dos jarochos bailando y mensajes que van cambiando. Se usa al armar la ruta y al abrir el mapa.
 import { MusicNote, MusicNotes } from '@phosphor-icons/react'
-import { useEffect, useState } from 'react'
+import { Trans } from 'react-i18next'
 import Banderines from './Banderines'
 import estilos from './PantallaCarga.module.css'
 
 interface Props {
-  /** Mensajes que se turnan cada par de segundos (el primero se ve de inmediato). */
-  mensajes: string[]
   /** Ocupa toda la pantalla por encima de lo demás (por defecto) o solo el espacio de su contenedor. */
   fija?: boolean
 }
@@ -25,7 +23,7 @@ function Bailarines() {
         <ellipse cx="15" cy="9.5" rx="8" ry="2.2" fill="#F6E2BE" />
         <path d="M10.5 9.5 q0 -5 4.5 -5 q4.5 0 4.5 5z" fill="#F6E2BE" />
         <path d="M10.6 8.6 h8.8" stroke="#E4007C" strokeWidth="1.4" />
-        <path d="M21 24 l8 -4" stroke="#8D5524" strokeWidth="3" strokeLinecap="round" />
+        <path d="M20 24 l8 -2.5" stroke="#8D5524" strokeWidth="3" strokeLinecap="round" />
       </g>
       <g className={estilos.mujer}>
         <g className={estilos.falda}>
@@ -38,23 +36,17 @@ function Bailarines() {
         <circle cx="39" cy="8.5" r="3.2" fill="#150A2E" />
         <circle cx="31.8" cy="9.4" r="2.2" fill="#FFD400" />
         <circle cx="31.8" cy="9.4" r=".9" fill="#E5242B" />
-        <path d="M29 20 l8 -1" stroke="#C68642" strokeWidth="3" strokeLinecap="round" />
+        <path d="M32.5 24 l-4.5 -2.5" stroke="#C68642" strokeWidth="3" strokeLinecap="round" />
         <g className={estilos.abanico}>
-          <path d="M39 23 l5 -8" stroke="#C68642" strokeWidth="2.6" strokeLinecap="round" />
-          <path d="M42.5 12.5 a7 7 0 0 1 6 1.5 l-5 4.5z" fill="#FFD400" />
+          <path d="M38 23 l5 -9" stroke="#C68642" strokeWidth="2.8" strokeLinecap="round" />
+          <path d="M43 11.5 a7 7 0 0 1 6 1.5 l-5.5 4.5z" fill="#FFD400" />
         </g>
       </g>
     </svg>
   )
 }
 
-export default function PantallaCarga({ mensajes, fija = true }: Props) {
-  const [i, setI] = useState(0)
-  useEffect(() => {
-    if (mensajes.length < 2) return
-    const id = window.setInterval(() => setI((n) => (n + 1) % mensajes.length), 2200)
-    return () => window.clearInterval(id)
-  }, [mensajes.length])
+export default function PantallaCarga({ fija = true }: Props) {
 
   return (
     <div className={`${estilos.pantalla}${fija ? ` ${estilos.fija}` : ''}`} role="status" aria-live="polite">
@@ -68,8 +60,9 @@ export default function PantallaCarga({ mensajes, fija = true }: Props) {
           <MusicNote className={`${estilos.nota} ${estilos.nota3}`} size={24} weight="fill" aria-hidden="true" />
           <Bailarines />
         </div>
-        <p key={i} className={estilos.mensaje}>
-          {mensajes[i] ?? ''}
+        {/* "Solamente una vez" es un guiño a la canción de Agustín Lara. */}
+        <p className={estilos.mensaje}>
+          <Trans i18nKey="carga.espera" />
         </p>
         <span className={estilos.barra} aria-hidden="true" />
       </div>

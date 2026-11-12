@@ -3,7 +3,6 @@
 // (mapbox-gl pesa casi 2 MB) no retrasa la primera pantalla.
 import { AnimatePresence, motion } from 'framer-motion'
 import { lazy, Suspense } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import PantallaCarga from '../components/ui/PantallaCarga'
 import Preferencias from '../pages/Preferencias'
@@ -17,12 +16,6 @@ const Fin = lazy(() => import('../pages/Fin'))
 const Vitrina = lazy(() => import('../pages/Vitrina'))
 const Comercio = lazy(() => import('../pages/Comercio'))
 
-/** Mientras baja la pantalla (sobre todo el mapa): los jarochos bailan y los mensajes se turnan. */
-function Cargando() {
-  const { t } = useTranslation()
-  return <PantallaCarga mensajes={t('carga.mapa', { returnObjects: true }) as string[]} />
-}
-
 /**
  * Cambio de pantalla: la anterior se desvanece y la nueva aparece (solo opacidad: no rompe los elementos fijos
  * como el panel del mapa). `mode="wait"` evita ver las dos a la vez.
@@ -30,7 +23,7 @@ function Cargando() {
 export default function AppRoutes() {
   const location = useLocation()
   return (
-    <Suspense fallback={<Cargando />}>
+    <Suspense fallback={<PantallaCarga />}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={location.pathname}
