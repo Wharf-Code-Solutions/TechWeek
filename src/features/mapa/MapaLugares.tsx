@@ -17,7 +17,7 @@ const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
 // del malecón a la avenida 5 de Mayo. Junto con ZOOM_MIN evita descargar el resto de la ciudad.
 // shortcut: perímetro aproximado; ajustarlo si Dev 1 o el cronista dan el límite oficial.
 const LIMITES: [[number, number], [number, number]] = [[-96.148, 19.188], [-96.126, 19.209]]
-const ZOOM_MIN = 15
+const ZOOM_MIN = 16.5
 const ZOOM_INICIAL = 17
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
@@ -57,7 +57,7 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
         initialViewState={vistaInicial(lugares)}
         maxBounds={LIMITES}
         minZoom={ZOOM_MIN}
-        maxPitch={70}
+        maxPitch={60}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
         style={{ width: '100%', height: '100%' }}
