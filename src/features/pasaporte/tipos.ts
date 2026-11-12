@@ -7,7 +7,7 @@ export interface Sello {
   nombre_en: string
   categoria: Categoria
   ilustracion: string
-  /** false: cerró el reto con "seguir con menos Tlacos". */
+  /** false: cerró el reto con "seguir con menos doblones". */
   acerto: boolean
   tlacos: number
   fecha: string

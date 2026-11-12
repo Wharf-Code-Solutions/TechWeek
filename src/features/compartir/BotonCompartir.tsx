@@ -1,5 +1,5 @@
 // Botón "Compartir mi ruta": genera la imagen, abre el menú del celular y, si la ruta ya terminó,
-// pide los +30 Tlacos (una vez por ruta; el servidor no puede verificar que se compartió).
+// pide los +30 doblones (una vez por ruta; el servidor no puede verificar que se compartió).
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShareNetwork } from '@phosphor-icons/react'
@@ -11,7 +11,7 @@ import './compartir.css'
 
 interface Props {
   datos: DatosCompartir
-  /** Id de la ruta terminada; sin él (o sin terminar) se comparte pero no hay Tlacos. */
+  /** Id de la ruta terminada; sin él (o sin terminar) se comparte pero no hay doblones. */
   rutaId: number | null
   terminada: boolean
   className?: string

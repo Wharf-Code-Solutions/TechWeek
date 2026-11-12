@@ -77,7 +77,7 @@ feat(db): canjear promociones de forma atómica
 ## 5. Arquitectura (no negociable sin acuerdo)
 
 - **El navegador nunca habla con Supabase.** Todo pasa por `src/lib/api.ts` → `/api/*` (FastAPI).
-- **Los Tlacos solo se suman o restan en el backend.** El frontend solo muestra el saldo que devuelve la API.
+- **Los doblones solo se suman o restan en el backend.** El frontend solo muestra el saldo que devuelve la API.
 - **Los retos llegan sin respuestas** y se validan en el servidor. No guardes las respuestas en el frontend.
 - **Los cambios a la base de datos solo se hacen con migraciones** en `supabase/migrations/NNNN_nombre.sql`, numeradas en orden. Nunca edites tablas a mano desde el panel. Una migración ya aplicada no se modifica: se crea otra.
 - **Los contratos** (`docs/contratos.md`) son el acuerdo entre módulos. Si necesitas cambiar uno (un campo, un endpoint, una ruta), avisa y actualiza el doc en el mismo commit.

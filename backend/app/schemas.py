@@ -21,7 +21,7 @@ class RetoOut(BaseModel):
     completado: bool
     tlacos_ganados: int
     saldo: int
-    ya_visitado: bool = False  # el lugar ya tenía sello: no da Tlacos, pero no es un error
+    ya_visitado: bool = False  # el lugar ya tenía sello: no da doblones, pero no es un error
 
 
 class CanjeOut(BaseModel):

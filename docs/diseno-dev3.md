@@ -17,7 +17,7 @@
 
 ## No copiar del diseño
 
-- El diseño dice **Clacos** y **Callejón del Diamante**: usamos **Tlacos**, **JARANA** y el **Solar de la Condesa de Malibrán**.
+- El diseño dice **Clacos** y **Callejón del Diamante**: usamos **doblones**, **JARANA** y el **Solar de la Condesa de Malibrán**.
 - Textos marcados entre corchetes (`[Café aliado]`, `[validar con cronista]`) son de relleno.
 
 ## Pantalla por pantalla
@@ -38,7 +38,7 @@ El diseño la muestra como **hoja blanca sobre el mapa** (fondo lila rayado arri
 - Ilustración de un **pin rosa con un castillo** sobre un círculo turquesa (170×150; está en el diseño, puedo pasártela como SVG).
 - Título "Te avisamos cuando llegues" (Shrikhand, centrado).
 - Texto: "Usamos tu ubicación para desbloquear la curiosidad y el minijuego de cada lugar al llegar. Solo mientras tengas la página abierta."
-- Botón rosa "Permitir ubicación" con ícono de mira; enlace morado subrayado "Ahora no: modo explorador"; nota chica "En modo explorador ves las curiosidades, pero no ganas Tlacos ni sellos."
+- Botón rosa "Permitir ubicación" con ícono de mira; enlace morado subrayado "Ahora no: modo explorador"; nota chica "En modo explorador ves las curiosidades, pero no ganas doblones ni sellos."
 
 ### 04 · ¡Llegaste! (`src/pages/Lugar.tsx`)
 **Hoja blanca desde y≈140** sobre el mapa centrado en el lugar.
@@ -47,7 +47,7 @@ El diseño la muestra como **hoja blanca sobre el mapa** (fondo lila rayado arri
 - Antetítulo morado 12px: "LEYENDA · PARADA 2 DE 5" (categoría y número de parada; la ruta está en `api.rutaActual()`).
 - Nombre del lugar en Shrikhand 28px.
 - Caja lila `#F4F1FA` con `<Ilustracion nombre="foco" />` de 40px, "¿Sabías que…?" en negritas y la curiosidad (14px, `#3A2F55`).
-- Botón rosa grande "Jugar el reto · +50 Tlacos" (usa `tlacos` del reto) y enlace morado "Ahora no, seguir caminando".
+- Botón rosa grande "Jugar el reto · +50 doblones" (usa `tlacos` del reto) y enlace morado "Ahora no, seguir caminando".
 
 ### 05 · Recorrido virtual (`src/features/geo/ControlRecorrido.tsx`)
 En el diseño los controles **reemplazan al panel** en la demo (barra abajo, no arriba del mapa):
@@ -59,7 +59,7 @@ En el diseño los controles **reemplazan al panel** en la demo (barra abajo, no 
 ### 08 · Recompensa (`src/pages/Recompensa.tsx`)
 **Fondo tinta `#150A2E`** a pantalla completa.
 - Arriba, una **ilustración grande de 480px**: la moneda con "+50 TLACOS" y el sello del lugar (en el diseño, del Diamante). Puedes armarla con `<Ilustracion nombre="moneda" />` grande y el sello.
-- Título "¡Leyenda desbloqueada!" en Shrikhand 30px **amarillo**; texto blanco 15px "Ganaste 50 Tlacos, el sello de <lugar> y una pieza de la foto oculta."
+- Título "¡Leyenda desbloqueada!" en Shrikhand 30px **amarillo**; texto blanco 15px "Ganaste 50 doblones, el sello de <lugar> y una pieza de la foto oculta."
 - Dos botones lado a lado de 170×54: **turquesa** "Pieza 2 de 6" (con `puzzle`) y **morado** "Sello nuevo"; llevan al pasaporte: `navigate('/mapa', { state: { pestana: 'pasaporte' } })`.
 - Botón rosa grande "Siguiente parada: <lugar>".
 
@@ -67,13 +67,13 @@ En el diseño los controles **reemplazan al panel** en la demo (barra abajo, no 
 - Tarjeta **amarilla** de 98px: moneda de 66px, "TUS TLACOS" 12px y la cifra en Shrikhand 40px.
 - Título "Gástalos en el puerto" (Shrikhand 22px) con "cerca de ti" en Caveat Brush rosa a la derecha.
 - Cada promoción es una fila de color (alternar `#DDF7FA`, `#FFF3B0`, `#E3F7E8`, `#F4F1FA`) con: cuadro blanco de 58px con la ilustración (lechero, volován, nieve, lancha), título 16px, "comercio · distancia" 13px `#4A3F66`, y a la derecha un **botón rosa de 64×50 con el costo arriba y "Canjear" abajo**.
-- Si no alcanza: sin botón, "Te faltan N Tlacos" y el costo en gris.
+- Si no alcanza: sin botón, "Te faltan N doblones" y el costo en gris.
 - Ilustraciones de volován, nieve y lancha: están en el diseño; si las quieres te las paso al set.
 
 ### 14 · Desliza para canjear (`src/pages/Cupon.tsx`)
 **Fondo turquesa** a pantalla completa.
 - Botón blanco redondo (volver) arriba a la izquierda; píldora tinta "MUESTRA AL MESERO" en amarillo a la derecha.
-- **Boleto blanco** de 354×400 con muescas turquesa a los lados: comercio en `#A0005A` 12px, la promoción en Shrikhand 32px rosa, detalle "Dos lecheros medianos en mesa · 80 Tlacos" y una ilustración grande de 176px.
+- **Boleto blanco** de 354×400 con muescas turquesa a los lados: comercio en `#A0005A` 12px, la promoción en Shrikhand 32px rosa, detalle "Dos lecheros medianos en mesa · 80 doblones" y una ilustración grande de 176px.
 - Texto: "Desliza **frente al mesero**: una vez canjeado no se puede deshacer."
 - Deslizador abajo: barra tinta de 354×72 con relleno rosa y la perilla amarilla de 57px con flecha; texto blanco "Desliza para canjear →".
 

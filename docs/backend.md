@@ -23,7 +23,7 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `POST /api/sesion` · `POST /api/sesion/renovar` | Abre o renueva la sesión anónima | Un usuario por celular |
 | `GET /api/lugares` · `/lugares/{slug}/reto` · `/comercios` · `/promociones` · `/eventos` · `/fotos` | Catálogo de solo lectura | El reto no incluye respuestas |
 | `GET /api/comercios?tipo=` | Vitrina: comercios con `tipo`, descripción y dato ES/EN, dirección, horario ES/EN, `foto_url`, `aliado` | `tipo` opcional: cafeteria, restaurante, fonda, neveria, mercado, libreria, artesanias, tienda (422 si no es válido). Aliados primero |
-| `GET /api/saldo` | Saldo de Tlacos del celular | Suma del libro |
+| `GET /api/saldo` | Saldo de doblones del celular | Suma del libro |
 | `POST /api/visitas` | Registra la llegada `{lugar_slug, metodo, lat?, lng?}` | Una vez por lugar; con `gps` valida el radio (haversine) |
 | `POST /api/retos/{slug}/completar` | Valida `{respuesta, revelar, idioma}` y paga | Una sola vez; `revelar` paga menos y nunca bloquea |
 | `POST /api/promociones/{slug}/canjear` | Descuenta y devuelve `{codigo, saldo}` | Atómico (función SQL); 402 si no alcanza |
@@ -31,7 +31,7 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `POST /api/rutas` | Arma y guarda la ruta `{tiempo_min, intereses, lat?, lng?, demo?}` → `{lugares[], estimado_min, caminata_m, …}` | Algoritmo M3; la ruta activa anterior queda `abandonada` |
 | `GET /api/rutas/actual` | Ruta activa con sus lugares en orden | 404 si no hay |
 | `PATCH /api/rutas/actual` | Saltar o recortar: `{lugares: [slugs en orden]}` | Al menos 1 lugar |
-| `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, distancia_m, tlacos_distancia, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 Tlacos una sola vez por celular, si completó al menos un reto; más 1 Tlaco por 100 m entre las paradas completadas (tope 60, una vez por ruta, motivo `distancia`) |
+| `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, distancia_m, tlacos_distancia, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 doblones una sola vez por celular, si completó al menos un reto; más 1 doblón por 100 m entre las paradas completadas (tope 60, una vez por ruta, motivo `distancia`) |
 | `GET /api/pasaporte` | `{sellos[], piezas: {total, ganadas, indices[], completa}, foto, ruta_terminada}` | Por ruta: 1 pieza por reto completado en la ruta actual; total = nº de paradas. Al crear otra ruta vuelve a cero y cambia de imagen (los sellos se quedan) |
 
 **Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición. Con `demo: true` devuelve las 5 paradas del guion en orden.
@@ -93,7 +93,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 ### Orden
 | Fase | Dev 1 | Dev 2 | Dev 3 |
 | --- | --- | --- | --- |
-| 1 Arranque (ahora) | Supabase real + Tlacos + 0002 | Tokens y componentes | Backend y `api.ts` subidos, despliegue |
+| 1 Arranque (ahora) | Supabase real + doblones + 0002 | Tokens y componentes | Backend y `api.ts` subidos, despliegue |
 | 2 Jugable | Seed real, retos probados | Mapa y minijuegos | GPS, llegada, recorrido virtual, pantallas |
 | 3 Colección | Canje atómico, saldo | Panel, pasaporte | Cartera y cupón |
 | 4 Completar | Retos faltantes, inglés, bono fin | Agenda, fin de ruta | Ajustar ruta, modo explorador |
@@ -103,7 +103,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 
 - **Dónde se despliega:** FastAPI en Vercel (funciones Python) o en un servicio aparte (Render/Railway). Se decide al conectar Supabase real; mientras tanto corre local.
 - ✅ **Atomicidad del saldo:** resuelta. El canje usa la función SQL `canjear` (migración 0002), que bloquea por perfil y revisa, descuenta y genera el código en una sola transacción.
-- ✅ **Tlacos:** columnas renombradas a `tlacos`, `tlacos_revelado`, `costo_tlacos` y `movimientos_tlacos`.
+- ✅ **doblones:** columnas renombradas a `tlacos`, `tlacos_revelado`, `costo_tlacos` y `movimientos_tlacos`.
 - **Commits:** el módulo del backend usa el scope `db` (o proponer `api`).
 
 ## Vitrina de comercios (Dev 1)
@@ -117,6 +117,6 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 
 - **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior; con `demo: true` siempre es la primera, para que el ensayo sea predecible.
 - **`POST /api/visitas`** guarda `visitas.ruta_id` (ruta activa). Si llega otra vez a un lugar sin haber jugado, la visita pasa a la ruta de ahora.
-- **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 Tlacos (antes 409).
+- **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 doblones (antes 409).
 - **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (`distancia` único por ruta, `compartir` único por celular) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.
-- **`POST /api/rutas/{id}/compartir`** → `{tlacos, saldo}`: +30 Tlacos (motivo `compartir`) **una sola vez por celular**, con una ruta terminada (no se repite creando rutas); 404 si la ruta no es del celular, 409 si sigue activa, `tlacos: 0` si ya se cobró. No verifica que se compartió: premia el intento. `terminar` y `GET /api/pasaporte` devuelven `ruta_id`.
+- **`POST /api/rutas/{id}/compartir`** → `{tlacos, saldo}`: +30 doblones (motivo `compartir`) **una sola vez por celular**, con una ruta terminada (no se repite creando rutas); 404 si la ruta no es del celular, 409 si sigue activa, `tlacos: 0` si ya se cobró. No verifica que se compartió: premia el intento. `terminar` y `GET /api/pasaporte` devuelven `ruta_id`.

@@ -7,7 +7,7 @@
 1. **Hay backend propio:** FastAPI en `backend/`. El navegador **ya no habla con Supabase**: todo pasa por `src/lib/api.ts` → `/api/*`.
 2. **Supabase** queda detrás del backend (base de datos y sesión anónima). Sus llaves solo van en `backend/.env`.
 3. **El reto llega sin respuestas**; se validan en el servidor al completarlo.
-4. **Moneda: Tlacos.** El proyecto se llama JARANA. **No hay QR**: se llega con un enlace.
+4. **Moneda: doblones.** El proyecto se llama JARANA. **No hay QR**: se llega con un enlace.
 5. Parada 2 de la demo: **Solar de la Condesa de Malibrán** (el Callejón del Diamante se descartó).
 
 ## Poner todo a correr
@@ -39,7 +39,7 @@ await api.registrarLlegada('catedral', 'gps', lat, lng)   // 'demo' con ?demo=1
 await api.completarReto('catedral', ['palabra1'], false, 'es')
 await api.canjear('cafe-2x1')
 ```
-Nunca sumes ni restes Tlacos en el navegador, ni guardes llaves en el repo.
+Nunca sumes ni restes doblones en el navegador, ni guardes llaves en el repo.
 
 ## Primeras tareas
 

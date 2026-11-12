@@ -1,4 +1,4 @@
-// M10 · Cartera: saldo de Tlacos y promociones para canjear. Es el contenido de la pestaña
+// M10 · Cartera: saldo de doblones y promociones para canjear. Es el contenido de la pestaña
 // "Cartera" del panel deslizable (M7, Dev 2). Diseño 13.
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

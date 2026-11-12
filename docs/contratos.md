@@ -62,7 +62,7 @@ El mapa, la detección de llegada y el recorrido virtual **solo** hablan con est
   "orden_correcto": ["e1", "e2"] }
 ```
 
-### Retos rápidos (un toque, más sencillos; dan 30 Tlacos, 10 si se revela)
+### Retos rápidos (un toque, más sencillos; dan 30 doblones, 10 si se revela)
 
 Solo en lugares fuera de la ruta demo. El backend **quita `correcta`** antes de enviar el reto.
 
@@ -100,7 +100,7 @@ Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuest
 | `POST /api/retos/{slug}/completar` | `respuesta, revelar, idioma` | `{ correcto, completado, tlacos_ganados, saldo }` | Paga una sola vez |
 | `POST /api/promociones/{slug}/canjear` | — | `{ codigo, saldo }` | Atómico (función SQL `canjear`); 402 si no alcanza |
 
-**Nunca se suman ni restan Tlacos desde el navegador.**
+**Nunca se suman ni restan doblones desde el navegador.**
 
 ## 5 · Componentes base y tokens (Dev 2)
 

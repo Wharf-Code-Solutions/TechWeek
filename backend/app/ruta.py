@@ -172,5 +172,5 @@ TOPE_DISTANCIA = 60
 
 
 def tlacos_por_distancia(metros: float) -> int:
-    """1 Tlaco por cada 100 m recorridos entre paradas, hasta 60."""
+    """1 doblón por cada 100 m recorridos entre paradas, hasta 60."""
     return min(TOPE_DISTANCIA, int(metros // 100) * TLACOS_POR_100M)

@@ -1,6 +1,6 @@
 """Acceso a Postgres vía PostgREST con la clave service_role (se salta el RLS).
 
-Los nombres de la moneda (Tlacos) viven aquí para cambiarlos en un solo lugar.
+Los nombres de la moneda (doblones) viven aquí para cambiarlos en un solo lugar.
 """
 import asyncio
 from typing import Any

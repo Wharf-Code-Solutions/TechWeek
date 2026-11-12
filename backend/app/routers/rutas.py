@@ -12,8 +12,8 @@ from ..ruta import calcular_ruta, metros_entre_paradas, tlacos_por_distancia
 
 router = APIRouter(prefix="/api", tags=["rutas"])
 
-BONO_FIN = 100  # Tlacos al terminar la ruta (una sola vez por celular)
-BONO_COMPARTIR = 30  # Tlacos por compartir una ruta terminada (una sola vez por celular)
+BONO_FIN = 100  # doblones al terminar la ruta (una sola vez por celular)
+BONO_COMPARTIR = 30  # doblones por compartir una ruta terminada (una sola vez por celular)
 CATEGORIAS = Literal["historia", "leyendas", "musica", "comida", "mar", "artesania"]
 
 
@@ -85,7 +85,7 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     if not lugares:
         raise HTTPException(503, "No hay lugares cargados")
     inicio = (datos.lat, datos.lng) if datos.lat is not None and datos.lng is not None else None
-    # Los lugares con sello (reto completado) no se vuelven a ofrecer: ya no dan Tlacos.
+    # Los lugares con sello (reto completado) no se vuelven a ofrecer: ya no dan doblones.
     visitas = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}")
     visitados = {v["lugar_id"] for v in visitas if v["reto_ok"] is not None}
     calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, datos.demo, visitados)
@@ -163,7 +163,7 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
                 if e.status_code != 409:
                     raise
 
-    # Puntos por distancia: 1 Tlaco por 100 m entre las paradas completadas (tope 60), una vez por ruta.
+    # Puntos por distancia: 1 doblón por 100 m entre las paradas completadas (tope 60), una vez por ruta.
     hechas = sorted(
         (v for v in en_ruta if v.get("ruta_id") == ruta["id"] and v["reto_ok"] is not None),
         key=lambda v: v["llegada_en"],
@@ -198,7 +198,7 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
 
 @router.post("/rutas/{ruta_id}/compartir")
 async def compartir_ruta(ruta_id: int, perfil_id: str = Depends(perfil_id_actual)):
-    """+30 Tlacos una sola vez por celular (con una ruta terminada). No se puede verificar que de verdad compartió: premia el intento."""
+    """+30 doblones una sola vez por celular (con una ruta terminada). No se puede verificar que de verdad compartió: premia el intento."""
     rutas = await db.seleccionar("rutas_usuario", id=f"eq.{ruta_id}", perfil_id=f"eq.{perfil_id}")
     if not rutas:
         raise HTTPException(404, "Ruta no encontrada")

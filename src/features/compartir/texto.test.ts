@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { cifras, distanciaLegible } from './texto'
 
-const et = { paradas: 'lugares', tlacos: 'Tlacos', distancia: 'caminados' }
+const et = { paradas: 'lugares', tlacos: 'doblones', distancia: 'caminados' }
 
 describe('distanciaLegible', () => {
   it('usa metros por debajo de 1 km y km después', () => {
@@ -15,7 +15,7 @@ describe('cifras', () => {
     expect(cifras({ paradas: 5 }, et)).toEqual([['lugares', '5']])
     expect(cifras({ paradas: 5, tlacos: 120, metros: 0 }, et)).toEqual([
       ['lugares', '5'],
-      ['Tlacos', '120'],
+      ['doblones', '120'],
     ])
   })
   it('agrega la distancia cuando hay', () => {
