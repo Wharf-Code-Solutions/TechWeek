@@ -1,5 +1,6 @@
 // Pantalla: Mapa · Responsable: Dev 2 (M4, M7). Diseño 03 · Mapa + panel (ruta).
 // Junta la ruta, los retos hechos (pasaporte), el saldo y los eventos en curso; el mapa y el panel solo pintan.
+import { AnimatePresence } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
@@ -156,24 +157,26 @@ export default function Mapa() {
         }
         abajo={<AvisoLlegada lugar={llegando} />}
       />
-      {!detalle && (
-        <Panel
-          activa={pestana}
-          onActiva={setPestana}
-          nivel={nivel}
-          onNivel={setNivel}
-          ruta={
-            <RutaLista
-              ruta={ruta}
-              hechos={hechos}
-              siguiente={siguiente}
-              pos={pos}
-              onCambio={setRuta}
-              onEnfocar={enfocarLugar}
-            />
-          }
-        />
-      )}
+      <AnimatePresence>
+        {!detalle && (
+          <Panel
+            activa={pestana}
+            onActiva={setPestana}
+            nivel={nivel}
+            onNivel={setNivel}
+            ruta={
+              <RutaLista
+                ruta={ruta}
+                hechos={hechos}
+                siguiente={siguiente}
+                pos={pos}
+                onCambio={setRuta}
+                onEnfocar={enfocarLugar}
+              />
+            }
+          />
+        )}
+      </AnimatePresence>
     </main>
   )
 }

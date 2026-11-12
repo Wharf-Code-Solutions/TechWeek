@@ -3,3 +3,22 @@ body { margin: 0; font-family: var(--fuente-texto); color: var(--tinta); backgro
 /* Títulos con la fuente de display: algo más juntos y con el tamaño óptico automático. */
 h1, h2, h3 { letter-spacing: -0.015em; font-optical-sizing: auto; }
 body { font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }
+
+/* Sin el recuadro azul del navegador al tocar o seleccionar botones e imágenes. */
+button, a, summary, label, [role='button'], [role='tab'] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button, img, svg, summary, [role='button'], [role='tab'] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+img, svg { -webkit-user-drag: none; }
+:focus:not(:focus-visible) { outline: none; }
+
+/* Respuesta al tocar: todos los botones se hunden un poco y vuelven con suavidad (propiedad `scale`, que no pisa
+   los transform de cada componente). Los botones con sombra dura ya se desplazan por su cuenta. */
+button { transition: scale 160ms var(--suave), background-color 200ms ease, opacity 200ms ease; }
+button:active:not(:disabled):not(.boton) { scale: 0.96; transition-duration: 70ms; }
+@media (prefers-reduced-motion: reduce) { button:active:not(:disabled):not(.boton) { scale: 1; } }

@@ -1,6 +1,7 @@
 // M4 Mapa Mapbox · Dev 2. Lugares del catálogo con su estado en la ruta (diseño 03), eventos en curso,
 // posición de usePosition() y tarjeta del lugar elegido.
 // `arriba` y `abajo` son capas sobre el mapa (cabecera, flechas del recorrido).
+import { AnimatePresence, motion } from 'framer-motion'
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -468,8 +469,17 @@ export default function MapaLugares({
       >
         {menu ? <X size={22} weight="bold" aria-hidden="true" /> : <List size={22} weight="bold" aria-hidden="true" />}
       </button>
-      {menu && (
-        <ul id="mapa-menu" className="mapa-menu" onKeyDown={(e) => e.key === 'Escape' && setMenu(false)}>
+      <AnimatePresence>
+        {menu && (
+        <motion.ul
+          id="mapa-menu"
+          className="mapa-menu"
+          style={{ transformOrigin: 'top right' }}
+          initial={{ opacity: 0, y: -8, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 420, damping: 30 } }}
+          exit={{ opacity: 0, y: -6, scale: 0.96, transition: { duration: 0.12 } }}
+          onKeyDown={(e) => e.key === 'Escape' && setMenu(false)}
+        >
           <li>
             <button type="button" aria-pressed={nombres} onClick={() => { alternarNombres(); setMenu(false) }}>
               <TextAa size={22} weight="bold" aria-hidden="true" />
@@ -490,19 +500,35 @@ export default function MapaLugares({
               </button>
             </li>
           )}
-        </ul>
-      )}
+        </motion.ul>
+        )}
+      </AnimatePresence>
 
       <div className="mapa-abajo">
-        {comercio && (
-          <div className="mapa-vitrina-hoja">
+        <AnimatePresence>
+          {comercio && (
+          <motion.div
+            key="vitrina"
+            className="mapa-vitrina-hoja"
+            initial={{ opacity: 0, y: 36 }}
+            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } }}
+            exit={{ opacity: 0, y: 36, transition: { duration: 0.16 } }}
+          >
             <button type="button" className="mapa-vitrina-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setComercio(null)}>
               <X size={20} weight="bold" aria-hidden="true" />
             </button>
             <TarjetaComercio compacta comercio={comercio} onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })} />
-          </div>
-        )}
-        {elegido && (
+          </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {elegido && (
+          <motion.div
+            key="pin"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0, transition: { type: 'spring', stiffness: 320, damping: 30 } }}
+            exit={{ opacity: 0, y: 28, transition: { duration: 0.14 } }}
+          >
           <Tarjeta className="mapa-tarjeta">
             <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>
               <X size={20} weight="bold" />
@@ -520,7 +546,9 @@ export default function MapaLugares({
               {t('mapa.irAlLugar')}
             </Boton>
           </Tarjeta>
-        )}
+          </motion.div>
+          )}
+        </AnimatePresence>
         {abajo}
       </div>
     </div>

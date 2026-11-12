@@ -36,7 +36,9 @@
 
 /* El SVG mide 390×64 como en el diseño; en pantallas anchas se centra sobre el fondo. */
 .banderines { display: flex; justify-content: center; overflow: hidden; }
-.banderines svg { display: block; flex-shrink: 0; }
+.banderines svg { display: block; flex-shrink: 0; transform-origin: 50% 0; animation: banderines-mecen 6s ease-in-out infinite alternate; }
+@keyframes banderines-mecen { from { transform: rotate(-0.7deg); } to { transform: rotate(0.7deg); } }
+@media (prefers-reduced-motion: reduce) { .banderines svg { animation: none; } }
 
 .ilustracion { display: inline-block; flex-shrink: 0; vertical-align: middle; }
 

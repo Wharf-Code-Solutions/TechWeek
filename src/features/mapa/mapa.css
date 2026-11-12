@@ -205,7 +205,6 @@
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 6px 20px rgb(21 10 46 / 0.3);
-  animation: mapa-menu-entra 160ms var(--suave);
 }
 .mapa-menu button {
   width: 100%;
@@ -224,8 +223,6 @@
 }
 .mapa-menu button[aria-pressed='true'] { background: var(--amarillo); }
 .mapa-menu button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: -2px; }
-@keyframes mapa-menu-entra { from { opacity: 0; transform: translateY(-6px) scale(0.97); } }
-@media (prefers-reduced-motion: reduce) { .mapa-menu { animation: none; } }
 .mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
 .mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 
@@ -332,13 +329,17 @@
   min-height: 48px;
   padding: 6px 0 8px;
   border: 0;
+  position: relative;
   border-bottom: 3px solid transparent;
   background: none;
   color: #6b5f87;
   font: 500 11px var(--fuente-texto);
   cursor: pointer;
 }
-.panel-pestana[aria-selected='true'] { border-bottom-color: var(--rosa); color: var(--tinta); font-weight: 700; }
+.panel-pestana { transition: color 200ms ease; }
+.panel-pestana[aria-selected='true'] { color: var(--tinta); font-weight: 700; }
+/* Raya rosa que se desliza de una pestaña a la otra */
+.panel-pestana-linea { position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; border-radius: 3px; background: var(--rosa); }
 .panel-pestana:focus-visible { outline: 3px solid var(--cobalto); outline-offset: -3px; }
 .panel-contenido { flex: 1; min-height: 0; padding-top: 6px; overflow-y: auto; }
 .panel--plegado .panel-contenido { display: none; }
