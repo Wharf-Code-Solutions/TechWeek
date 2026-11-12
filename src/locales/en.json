@@ -161,7 +161,9 @@
     "instrucciones_intruso": "Tap the option that doesn't belong.",
     "verdadero": "True",
     "falso": "False",
-    "descartada": "{{texto}}, already tried"
+    "descartada": "{{texto}}, already tried",
+    "respuestaEra": "The correct answer was:",
+    "seguirRecompensa": "Continue with {{n}} doubloons"
   },
   "panel": {
     "cartera": "Wallet",

@@ -428,7 +428,7 @@ def test_reto_ya_completado_no_es_error(monkeypatch):
     finally:
         app.dependency_overrides.clear()
     assert r.status_code == 200
-    assert r.json() == {"correcto": True, "completado": True, "tlacos_ganados": 0, "saldo": 50, "ya_visitado": True}
+    assert r.json() == {"correcto": True, "completado": True, "tlacos_ganados": 0, "saldo": 50, "ya_visitado": True, "respuesta_correcta": None}
 
 
 def test_compartir_paga_una_vez_con_ruta_terminada(cliente):
@@ -459,3 +459,19 @@ def test_compartir_ruta_ajena_o_inexistente(cliente):
     ruta = armar(c)
     base.t["rutas_usuario"][0]["perfil_id"] = "otro-celular"
     assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 404
+
+
+def test_respuesta_correcta_legible():
+    from app.retos import respuesta_correcta
+    assert respuesta_correcta("palabras", {"respuestas": ["a", "b"]}) == ["a", "b"]
+    orden = {"eventos": [{"id": "e2", "texto": "Después"}, {"id": "e1", "texto": "Antes"}], "orden_correcto": ["e1", "e2"]}
+    assert respuesta_correcta("orden", orden) == ["Antes", "Después"]
+    assert respuesta_correcta("verdadero_falso", {"correcta": False}) == ["falso"]
+    assert respuesta_correcta("trivia", {"correcta": "1808"}) == ["1808"]
+    assert respuesta_correcta("intruso", {"correcta": "Mariachi"}) == ["Mariachi"]
+
+
+def test_vidas_por_tipo():
+    vidas = {"verdadero_falso": 1, "trivia": 2, "intruso": 2, "palabras": 3, "orden": 3}
+    for r in SEED["retos"]:
+        assert r["intentos_max"] == vidas[r["tipo"]], r["lugar_slug"]

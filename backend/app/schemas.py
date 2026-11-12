@@ -22,6 +22,10 @@ class RetoOut(BaseModel):
     tlacos_ganados: int
     saldo: int
     ya_visitado: bool = False  # el lugar ya tenía sello: no da doblones, pero no es un error
+    # Solo cuando el reto se cierra (acertado o revelado): la respuesta correcta, para mostrarla.
+    # palabras: las palabras en orden · orden: los textos de los eventos en orden
+    # trivia/intruso: [opción correcta] · verdadero_falso: ["verdadero"] o ["falso"]
+    respuesta_correcta: list[str] | None = None
 
 
 class CanjeOut(BaseModel):

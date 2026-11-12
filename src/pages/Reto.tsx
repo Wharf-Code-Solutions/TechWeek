@@ -1,6 +1,6 @@
 // Pantalla: Reto · Responsable: Dev 2 (pantallas) · Dev 1 (validación). Diseño 06 (leyenda) y 07 (orden).
 // Al completarse navega a /recompensa/:slug con el resultado de completarReto() en location.state.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { X } from '@phosphor-icons/react'
@@ -31,6 +31,9 @@ export default function Reto() {
   const [error, setError] = useState(false)
   const [yaVisitado, setYaVisitado] = useState(false)
   const [descartadas, setDescartadas] = useState<string[]>([]) // opciones rápidas ya probadas y falladas
+  // Reto cerrado con "ver respuesta" (a mano o al agotar las vidas): se muestra la respuesta antes de seguir.
+  const [revelada, setRevelada] = useState<Awaited<ReturnType<typeof api.completarReto>> | null>(null)
+  const revelando = useRef(false)
 
   useEffect(() => {
     api
@@ -58,6 +61,7 @@ export default function Reto() {
     try {
       const r = await api.completarReto(slug, respuesta ?? valor.filter((v) => v !== null), revelar, idioma)
       if (r.ya_visitado) setYaVisitado(true)
+      else if (r.completado && !r.correcto) setRevelada(r)
       else if (r.completado) navigate(`/recompensa/${slug}`, { state: r })
       else {
         setFallos((f) => f + 1)
@@ -69,6 +73,14 @@ export default function Reto() {
       setEnviando(false)
     }
   }
+
+  // Al agotar las vidas se revela sola la respuesta (paga los doblones de "ver respuesta") y se muestra.
+  useEffect(() => {
+    if (!reto || fallos === 0 || fallos < reto.intentos_max || revelada || revelando.current) return
+    revelando.current = true
+    void enviar(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- solo debe dispararse al cambiar los fallos
+  }, [fallos, reto])
 
   if (yaVisitado)
     return (
@@ -98,6 +110,10 @@ export default function Reto() {
   const completo = valor.length > 0 && valor.every((v) => v !== null)
   const quedan = Math.max(reto.intentos_max - fallos, 0)
   const sinIntentos = quedan === 0
+  // Texto legible de la respuesta correcta (verdadero/falso se traduce).
+  const correcta = (revelada?.respuesta_correcta ?? []).map((r) =>
+    reto.tipo === 'verdadero_falso' ? t(`reto.${r}`) : r,
+  )
 
   return (
     <main className={`reto reto--${reto.tipo}`}>
@@ -150,6 +166,26 @@ export default function Reto() {
       </div>
 
       <div className="reto-pie">
+        {revelada ? (
+          <>
+            <div className="reto-respuesta" role="status">
+              <span className="reto-respuesta-titulo">{t('reto.respuestaEra')}</span>
+              {reto.tipo === 'orden' ? (
+                <ol>
+                  {correcta.map((c) => (
+                    <li key={c}>{c}</li>
+                  ))}
+                </ol>
+              ) : (
+                <strong>{correcta.join(' · ')}</strong>
+              )}
+            </div>
+            <Boton ancho onClick={() => navigate(`/recompensa/${slug}`, { state: revelada })}>
+              {t('reto.seguirRecompensa', { n: revelada.tlacos_ganados })}
+            </Boton>
+          </>
+        ) : (
+          <>
         <p className="reto-intentos" aria-label={t('reto.quedan', { count: quedan })}>
           <span aria-hidden="true">{t('reto.intentos')}</span>
           <span className="reto-corazones" aria-hidden="true">
@@ -171,6 +207,8 @@ export default function Reto() {
           <Boton ancho variante="blanco" disabled={enviando} onClick={() => enviar(true)}>
             {t('reto.revelar', { n: reto.tlacos_revelado })}
           </Boton>
+        )}
+          </>
         )}
       </div>
     </main>

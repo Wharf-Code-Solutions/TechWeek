@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from .. import db
 from ..auth import perfil_id_actual
-from ..retos import validar
+from ..retos import respuesta_correcta, validar
 from ..schemas import RetoIn, RetoOut
 
 router = APIRouter(prefix="/api", tags=["retos"])
@@ -64,5 +64,6 @@ async def completar_reto(lugar_slug: str, datos: RetoIn, perfil_id: str = Depend
             {"perfil_id": perfil_id, "cantidad": premio, "motivo": motivo, "ref_id": lugar_id},
         )
     return RetoOut(
-        correcto=correcto, completado=True, tlacos_ganados=premio, saldo=await db.saldo_de(perfil_id)
+        correcto=correcto, completado=True, tlacos_ganados=premio, saldo=await db.saldo_de(perfil_id),
+        respuesta_correcta=respuesta_correcta(reto["tipo"], contenido),
     )

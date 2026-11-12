@@ -161,7 +161,9 @@
     "instrucciones_intruso": "Toca la opción que no pertenece.",
     "verdadero": "Verdadero",
     "falso": "Falso",
-    "descartada": "{{texto}}, ya probada"
+    "descartada": "{{texto}}, ya probada",
+    "respuestaEra": "La respuesta correcta era:",
+    "seguirRecompensa": "Seguir con {{n}} doblones"
   },
   "panel": {
     "cartera": "Cartera",

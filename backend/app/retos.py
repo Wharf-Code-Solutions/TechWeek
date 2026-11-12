@@ -56,6 +56,20 @@ def ocultar_respuestas(tipo: str, contenido: dict) -> dict:
     return {k: v for k, v in contenido.items() if k != _OCULTAS.get(tipo)}
 
 
+def respuesta_correcta(tipo: str, contenido: dict) -> list[str]:
+    """La respuesta correcta en forma legible, para mostrarla cuando el reto ya se cerró."""
+    if tipo == "palabras":
+        return list(contenido["respuestas"])
+    if tipo == "orden":
+        texto = {e["id"]: e["texto"] for e in contenido["eventos"]}
+        return [texto.get(i, i) for i in contenido["orden_correcto"]]
+    if tipo == "verdadero_falso":
+        return ["verdadero" if contenido["correcta"] else "falso"]
+    if tipo in ("trivia", "intruso"):
+        return [contenido["correcta"]]
+    return []
+
+
 def validar(tipo: str, contenido: dict, respuesta: list[str]) -> bool:
     if tipo == "palabras":
         return validar_palabras(contenido, respuesta)

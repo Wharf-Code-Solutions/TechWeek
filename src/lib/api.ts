@@ -160,7 +160,15 @@ export const api = {
     return p
   },
   completarReto: (slug: string, respuesta: string[], revelar = false, idioma: 'es' | 'en' = 'es') =>
-    privado<{ correcto: boolean; completado: boolean; tlacos_ganados: number; saldo: number; ya_visitado?: boolean }>(
+    privado<{
+      correcto: boolean
+      completado: boolean
+      tlacos_ganados: number
+      saldo: number
+      ya_visitado?: boolean
+      /** Al cerrarse el reto (acertado o revelado): la respuesta correcta, para mostrarla. */
+      respuesta_correcta?: string[] | null
+    }>(
       `/api/retos/${slug}/completar`,
       { method: 'POST', body: JSON.stringify({ respuesta, revelar, idioma }) },
     ),
