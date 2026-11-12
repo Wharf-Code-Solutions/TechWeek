@@ -1,0 +1,26 @@
+.pasaporte-titulo { font: 400 1.6rem/1.2 var(--fuente-titulo); color: var(--rosa); margin: 8px 0 12px; }
+.pasaporte-subtitulo { font-size: 1.05rem; font-weight: 900; margin: 16px 0 6px; }
+.pasaporte-progreso { margin: 0 0 8px; font: 1.3rem var(--fuente-nota); color: var(--morado); }
+.pasaporte-completa { font-weight: 900; color: var(--verde); }
+
+.pasaporte-rompecabezas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border: var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-dura);
+  background: var(--tinta);
+}
+.pasaporte-pieza {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border-radius: 6px;
+}
+.pasaporte-pieza--falta { background: var(--lila); color: var(--tinta); }
+
+.pasaporte-sellos { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.pasaporte-sello { display: flex; align-items: center; gap: 12px; padding: 10px; }
+.pasaporte-detalle { margin: 2px 0 0; font-weight: 700; font-size: 0.9rem; }

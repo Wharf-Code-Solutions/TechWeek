@@ -1,15 +1,16 @@
-// M7 Panel deslizable · Dev 2. Pestañas: Cartera (M10, Dev 3) y Agenda (M11).
-// Cuando exista el Pasaporte (M9) se agrega a PESTANAS.
+// M7 Panel deslizable · Dev 2. Pestañas: Pasaporte (M9), Cartera (M10, Dev 3) y Agenda (M11).
 import { useState, type KeyboardEvent } from 'react'
 import { Drawer } from 'vaul'
 import { useTranslation } from 'react-i18next'
-import { CalendarBlank, Wallet } from '@phosphor-icons/react'
+import { CalendarBlank, BookBookmark, Wallet } from '@phosphor-icons/react'
 import Boton from '../../components/ui/Boton'
 import { Cartera } from '../cartera'
 import { Agenda } from '../agenda'
+import { Pasaporte } from '../pasaporte'
 import './mapa.css'
 
 const PESTANAS = [
+  { id: 'pasaporte', Icono: BookBookmark, Contenido: Pasaporte },
   { id: 'cartera', Icono: Wallet, Contenido: Cartera },
   { id: 'agenda', Icono: CalendarBlank, Contenido: Agenda },
 ] as const
@@ -32,7 +33,7 @@ export default function Panel() {
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Boton ancho variante="amarillo">
-          <Wallet size={24} weight="duotone" aria-hidden="true" />
+          <BookBookmark size={24} weight="duotone" aria-hidden="true" />
           {t('panel.abrir')}
         </Boton>
       </Drawer.Trigger>

@@ -117,9 +117,10 @@
   "panel": {
     "cartera": "Wallet",
     "titulo": "Panel",
-    "descripcion": "Your Tlacos balance, promotions and upcoming events.",
-    "abrir": "Wallet and events",
-    "agenda": "Events"
+    "descripcion": "Your stamps and puzzle, your Tlacos balance, promotions and upcoming events.",
+    "abrir": "My passport",
+    "agenda": "Events",
+    "pasaporte": "Passport"
   },
   "agenda": {
     "titulo": "Events",
@@ -144,5 +145,16 @@
     "siguiente": "Next: {{nombre}}",
     "saltar": "Skip",
     "error_saltar": "We couldn't skip this stop."
+  },
+  "pasaporte": {
+    "titulo": "My passport",
+    "rompecabezas": "Puzzle",
+    "piezas": "{{n}} of {{total}} pieces",
+    "completa": "You completed the photo!",
+    "sellos": "Stamps ({{n}})",
+    "sinSellos": "Complete a place challenge to earn your first stamp.",
+    "acerto": "Challenge solved",
+    "ayuda": "With help",
+    "tlacos": "{{n}} Tlacos"
   }
 }

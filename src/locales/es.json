@@ -117,9 +117,10 @@
   "panel": {
     "cartera": "Cartera",
     "titulo": "Panel",
-    "descripcion": "Tu saldo de Tlacos, las promociones y los eventos próximos.",
-    "abrir": "Cartera y agenda",
-    "agenda": "Agenda"
+    "descripcion": "Tus sellos y rompecabezas, tu saldo de Tlacos, las promociones y los eventos próximos.",
+    "abrir": "Mi pasaporte",
+    "agenda": "Agenda",
+    "pasaporte": "Pasaporte"
   },
   "agenda": {
     "titulo": "Agenda",
@@ -144,5 +145,16 @@
     "siguiente": "Siguiente: {{nombre}}",
     "saltar": "Saltar",
     "error_saltar": "No pudimos saltar la parada."
+  },
+  "pasaporte": {
+    "titulo": "Mi pasaporte",
+    "rompecabezas": "Rompecabezas",
+    "piezas": "{{n}} de {{total}} piezas",
+    "completa": "¡Completaste la foto!",
+    "sellos": "Sellos ({{n}})",
+    "sinSellos": "Completa el reto de un lugar para ganar tu primer sello.",
+    "acerto": "Reto acertado",
+    "ayuda": "Con ayuda",
+    "tlacos": "{{n}} Tlacos"
   }
 }

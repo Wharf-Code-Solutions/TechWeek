@@ -166,6 +166,8 @@ export const api = {
   ajustarRuta: (lugares: string[]) =>
     privado<Ruta>('/api/rutas/actual', { method: 'PATCH', body: JSON.stringify({ lugares }) }),
   terminarRuta: () => privado<ResumenRuta>('/api/rutas/actual/terminar', { method: 'POST' }),
+  /** Sellos y piezas del rompecabezas (tipo en features/pasaporte). */
+  pasaporte: () => privado<unknown>('/api/pasaporte'),
   canjear: (slug: string) =>
     privado<{ codigo: string; saldo: number }>(`/api/promociones/${slug}/canjear`, { method: 'POST' }),
 }
