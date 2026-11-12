@@ -835,13 +835,13 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "El Palacio Municipal tiene una torre con reloj.",
+        "afirmacion": "El Palacio Municipal fue sede del primer ayuntamiento de la América continental.",
         "correcta": true
       },
       "contenido_en": {
-        "afirmacion": "City Hall has a clock tower.",
+        "afirmacion": "City Hall was home to the first town council in mainland America.",
         "correcta": true
       }
     },
@@ -850,13 +850,13 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "El Faro Venustiano Carranza está en medio de la selva.",
+        "afirmacion": "El Faro Carranza lo inauguró Benito Juárez.",
         "correcta": false
       },
       "contenido_en": {
-        "afirmacion": "The Venustiano Carranza Lighthouse is in the middle of the jungle.",
+        "afirmacion": "The Carranza Lighthouse was opened by Benito Juárez.",
         "correcta": false
       }
     },
@@ -975,26 +975,26 @@
       "tipo": "intruso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Cuál NO se practica en Atarazanas?",
+        "pregunta": "¿Cuál de estas tradiciones NO se enseña en el Centro Cultural Atarazanas?",
         "opciones": [
           "Telar de cintura",
-          "Patinaje sobre hielo",
           "Fandango",
+          "Mariachi",
           "Son jarocho"
         ],
-        "correcta": "Patinaje sobre hielo"
+        "correcta": "Mariachi"
       },
       "contenido_en": {
-        "pregunta": "Which one is NOT done at Atarazanas?",
+        "pregunta": "Which of these traditions is NOT taught at the Atarazanas Cultural Center?",
         "opciones": [
           "Son jarocho",
-          "Ice skating",
+          "Mariachi",
           "Backstrap weaving",
           "Fandango"
         ],
-        "correcta": "Ice skating"
+        "correcta": "Mariachi"
       }
     },
     {
@@ -1057,24 +1057,24 @@
       "tipo": "trivia",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Qué se presenta en el Teatro Clavijero?",
+        "pregunta": "¿Qué forma tiene la sala del Teatro Clavijero, construido en el siglo XIX?",
         "opciones": [
-          "Carreras de autos",
-          "Partidos de fútbol",
-          "Ópera, conciertos y danza"
+          "Rectangular, como un cine",
+          "De herradura, al estilo italiano",
+          "Circular, como una arena"
         ],
-        "correcta": "Ópera, conciertos y danza"
+        "correcta": "De herradura, al estilo italiano"
       },
       "contenido_en": {
-        "pregunta": "What is staged at the Clavijero Theater?",
+        "pregunta": "What shape is the hall of the 19th-century Clavijero Theater?",
         "opciones": [
-          "Car races",
-          "Opera, concerts and dance",
-          "Soccer matches"
+          "Round, like an arena",
+          "Horseshoe, Italian style",
+          "Rectangular, like a cinema"
         ],
-        "correcta": "Opera, concerts and dance"
+        "correcta": "Horseshoe, Italian style"
       }
     },
     {
@@ -1192,14 +1192,14 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "Toña la Negra fue una cantante.",
-        "correcta": true
+        "afirmacion": "El barrio de La Huaca se fundó dentro de la muralla de la ciudad.",
+        "correcta": false
       },
       "contenido_en": {
-        "afirmacion": "Toña la Negra was a singer.",
-        "correcta": true
+        "afirmacion": "The La Huaca neighborhood was founded inside the city wall.",
+        "correcta": false
       }
     },
     {
@@ -1262,24 +1262,24 @@
       "tipo": "trivia",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Qué bebida es famosa en el Gran Café de la Parroquia?",
+        "pregunta": "¿En qué año abrió el Gran Café de la Parroquia, famoso por su café lechero?",
         "opciones": [
-          "Agua mineral",
-          "Malteada de fresa",
-          "Café lechero"
+          "1932",
+          "1808",
+          "1965"
         ],
-        "correcta": "Café lechero"
+        "correcta": "1808"
       },
       "contenido_en": {
-        "pregunta": "What drink is Gran Café de la Parroquia famous for?",
+        "pregunta": "In what year did Gran Café de la Parroquia, famous for its café lechero, open?",
         "opciones": [
-          "Sparkling water",
-          "Strawberry milkshake",
-          "Café lechero"
+          "1965",
+          "1808",
+          "1932"
         ],
-        "correcta": "Café lechero"
+        "correcta": "1808"
       }
     },
     {
@@ -1287,24 +1287,24 @@
       "tipo": "trivia",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Qué se vende en la Gran Nevería Yucatán?",
+        "pregunta": "¿Dónde está la Gran Nevería Yucatán, que sirve nieves desde 1932?",
         "opciones": [
-          "Zapatos",
-          "Llantas",
-          "Nieves y helados"
+          "Frente al malecón",
+          "En medio del Parque Zamora",
+          "Junto al Faro Carranza"
         ],
-        "correcta": "Nieves y helados"
+        "correcta": "En medio del Parque Zamora"
       },
       "contenido_en": {
-        "pregunta": "What does Gran Nevería Yucatán sell?",
+        "pregunta": "Where is Gran Nevería Yucatán, serving sorbets since 1932?",
         "opciones": [
-          "Shoes",
-          "Tires",
-          "Sorbets and ice cream"
+          "Next to the Carranza Lighthouse",
+          "On the boardwalk",
+          "In the middle of Zamora Park"
         ],
-        "correcta": "Sorbets and ice cream"
+        "correcta": "In the middle of Zamora Park"
       }
     },
     {
@@ -1312,26 +1312,26 @@
       "tipo": "intruso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Cuál NO es comida típica del mercado?",
+        "pregunta": "¿Cuál NO es un antojito típico de las fondas jarochas del Mercado Hidalgo?",
         "opciones": [
-          "Picadas",
-          "Tornillos",
-          "Gorditas",
-          "Empanadas"
+          "Empanadas",
+          "Gorditas negras",
+          "Cochinita pibil",
+          "Picadas"
         ],
-        "correcta": "Tornillos"
+        "correcta": "Cochinita pibil"
       },
       "contenido_en": {
-        "pregunta": "Which one is NOT typical market food?",
+        "pregunta": "Which one is NOT a typical jarocho snack at the Hidalgo Market food stalls?",
         "opciones": [
-          "Gorditas",
+          "Black gorditas",
           "Picadas",
           "Empanadas",
-          "Screws"
+          "Cochinita pibil"
         ],
-        "correcta": "Screws"
+        "correcta": "Cochinita pibil"
       }
     },
     {
@@ -1339,24 +1339,24 @@
       "tipo": "trivia",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿De qué trata el Museo Naval?",
+        "pregunta": "¿Qué edificio ocupa hoy el Museo Naval México?",
         "opciones": [
-          "De los aviones espaciales",
-          "De los dinosaurios",
-          "Del mar y la Marina"
+          "Un antiguo convento",
+          "La antigua Escuela Naval Militar",
+          "Una antigua estación de tren"
         ],
-        "correcta": "Del mar y la Marina"
+        "correcta": "La antigua Escuela Naval Militar"
       },
       "contenido_en": {
-        "pregunta": "What is the Naval Museum about?",
+        "pregunta": "Which building houses the Mexico Naval Museum today?",
         "opciones": [
-          "Dinosaurs",
-          "Spaceships",
-          "The sea and the Navy"
+          "An old convent",
+          "An old train station",
+          "The old Military Naval School"
         ],
-        "correcta": "The sea and the Navy"
+        "correcta": "The old Military Naval School"
       }
     },
     {
@@ -1364,13 +1364,13 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "Desde el malecón se pueden ver barcos.",
+        "afirmacion": "En el malecón hay nadadores que se lanzan al mar a buscar monedas.",
         "correcta": true
       },
       "contenido_en": {
-        "afirmacion": "You can see ships from the boardwalk.",
+        "afirmacion": "On the boardwalk, swimmers dive into the sea to catch coins.",
         "correcta": true
       }
     },
@@ -1379,26 +1379,26 @@
       "tipo": "intruso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Cuál NO es un recuerdo del mercado de artesanías?",
+        "pregunta": "¿Cuál NO es un recuerdo típico del mercado de artesanías del malecón?",
         "opciones": [
-          "Llavero",
+          "Guayabera",
+          "Sarape de Saltillo",
           "Sombrero jarocho",
-          "Conchas de mar",
-          "Llanta de coche"
+          "Artesanía de conchas"
         ],
-        "correcta": "Llanta de coche"
+        "correcta": "Sarape de Saltillo"
       },
       "contenido_en": {
-        "pregunta": "Which one is NOT a souvenir from the crafts market?",
+        "pregunta": "Which one is NOT a typical souvenir at the boardwalk crafts market?",
         "opciones": [
-          "Key chain",
-          "Seashells",
-          "Jarocho hat",
-          "Car tire"
+          "Seashell crafts",
+          "Guayabera shirt",
+          "Saltillo serape",
+          "Jarocho hat"
         ],
-        "correcta": "Car tire"
+        "correcta": "Saltillo serape"
       }
     },
     {
@@ -1461,24 +1461,24 @@
       "tipo": "trivia",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Qué guarda la Fototeca de Veracruz?",
+        "pregunta": "¿En qué pasaje colonial está la Fototeca de Veracruz?",
         "opciones": [
-          "Plantas tropicales",
-          "Coches antiguos",
-          "Fotografías históricas"
+          "El Callejón de la Lagunilla",
+          "El Callejón Holtzinger",
+          "El Portal de Miranda"
         ],
-        "correcta": "Fotografías históricas"
+        "correcta": "El Portal de Miranda"
       },
       "contenido_en": {
-        "pregunta": "What does the Veracruz Photo Library keep?",
+        "pregunta": "In which colonial passage is the Veracruz Photo Library?",
         "opciones": [
-          "Tropical plants",
-          "Historic photographs",
-          "Vintage cars"
+          "La Lagunilla Alley",
+          "Portal de Miranda",
+          "Holtzinger Alley"
         ],
-        "correcta": "Historic photographs"
+        "correcta": "Portal de Miranda"
       }
     },
     {
@@ -1706,13 +1706,13 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "En la Plaza de la República está el Palacio de Correos.",
+        "afirmacion": "El Palacio de Correos de la Plaza de la República se inauguró en 1902.",
         "correcta": true
       },
       "contenido_en": {
-        "afirmacion": "The Post Office Palace is on Republic Square.",
+        "afirmacion": "The Post Office Palace on Republic Square opened in 1902.",
         "correcta": true
       }
     },
@@ -1721,13 +1721,13 @@
       "tipo": "verdadero_falso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 2,
+      "intentos_max": 1,
       "contenido_es": {
-        "afirmacion": "La Iglesia de La Pastora es de vidrio y metal.",
+        "afirmacion": "La Iglesia de La Pastora se construyó con piedra volcánica traída de la sierra.",
         "correcta": false
       },
       "contenido_en": {
-        "afirmacion": "La Pastora Church is made of glass and metal.",
+        "afirmacion": "La Pastora Church was built with volcanic stone brought from the mountains.",
         "correcta": false
       }
     },
@@ -1901,26 +1901,26 @@
       "tipo": "intruso",
       "tlacos": 30,
       "tlacos_revelado": 10,
-      "intentos_max": 3,
+      "intentos_max": 2,
       "contenido_es": {
-        "pregunta": "¿Cuál NO es un arte que se enseña en el CEVART?",
+        "pregunta": "El CEVART forma artistas en tres áreas. ¿Cuál NO es una de ellas?",
         "opciones": [
-          "Teatro",
           "Música",
-          "Danza",
-          "Mecánica de autos"
+          "Arquitectura",
+          "Artes plásticas",
+          "Artes escénicas"
         ],
-        "correcta": "Mecánica de autos"
+        "correcta": "Arquitectura"
       },
       "contenido_en": {
-        "pregunta": "Which one is NOT an art taught at CEVART?",
+        "pregunta": "CEVART trains artists in three areas. Which one is NOT among them?",
         "opciones": [
-          "Dance",
-          "Theater",
+          "Performing arts",
           "Music",
-          "Car mechanics"
+          "Visual arts",
+          "Architecture"
         ],
-        "correcta": "Car mechanics"
+        "correcta": "Architecture"
       }
     }
   ],
