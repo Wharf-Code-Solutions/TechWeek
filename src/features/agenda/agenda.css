@@ -1,0 +1,14 @@
+.agenda-titulo { font: 400 1.6rem/1.2 var(--fuente-titulo); color: var(--rosa); margin: 8px 0 16px; }
+.agenda-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.agenda-evento { display: grid; gap: 6px; }
+.agenda-dato { display: flex; align-items: center; gap: 6px; font-weight: 700; }
+.agenda-ahora {
+  justify-self: start;
+  padding: 2px 10px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--verde);
+  color: var(--tinta);
+  font-weight: 900;
+  font-size: 0.85rem;
+}

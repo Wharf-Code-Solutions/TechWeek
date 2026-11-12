@@ -50,3 +50,20 @@
 }
 .panel-asa { width: 56px; height: 6px; margin: 10px auto; border-radius: 3px; background: var(--tinta); }
 .panel-contenido { overflow-y: auto; padding: 0 16px 24px; }
+.panel-pestanas { display: flex; gap: 8px; padding: 0 16px 12px; }
+.panel-pestana {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--tactil-min);
+  border: var(--borde);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--tinta);
+  font: 900 1rem var(--fuente-texto);
+  cursor: pointer;
+}
+.panel-pestana[aria-selected='true'] { background: var(--tinta); color: #fff; }
+.panel-pestana:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }

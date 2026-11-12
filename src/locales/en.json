@@ -113,6 +113,13 @@
   "panel": {
     "cartera": "Wallet",
     "titulo": "Panel",
-    "descripcion": "Your Tlacos balance and promotions to redeem."
+    "descripcion": "Your Tlacos balance, promotions and upcoming events.",
+    "abrir": "Wallet and events",
+    "agenda": "Events"
+  },
+  "agenda": {
+    "titulo": "Events",
+    "vacia": "No upcoming events right now.",
+    "ahora": "Now"
   }
 }

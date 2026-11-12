@@ -1,20 +1,39 @@
-// M7 Panel deslizable · Dev 2. Hoy solo tiene la Cartera (M10, Dev 3).
-// Cuando existan Pasaporte (M9) y Agenda (M11) se agregan aquí como pestañas.
+// M7 Panel deslizable · Dev 2. Pestañas: Cartera (M10, Dev 3) y Agenda (M11).
+// Cuando exista el Pasaporte (M9) se agrega a PESTANAS.
+import { useState, type KeyboardEvent } from 'react'
 import { Drawer } from 'vaul'
 import { useTranslation } from 'react-i18next'
-import { Wallet } from '@phosphor-icons/react'
+import { CalendarBlank, Wallet } from '@phosphor-icons/react'
 import Boton from '../../components/ui/Boton'
 import { Cartera } from '../cartera'
+import { Agenda } from '../agenda'
 import './mapa.css'
+
+const PESTANAS = [
+  { id: 'cartera', Icono: Wallet, Contenido: Cartera },
+  { id: 'agenda', Icono: CalendarBlank, Contenido: Agenda },
+] as const
 
 export default function Panel() {
   const { t } = useTranslation()
+  const [activa, setActiva] = useState(0)
+  const { Contenido } = PESTANAS[activa]
+
+  // Flechas izquierda/derecha cambian de pestaña (patrón ARIA de tabs)
+  function teclas(e: KeyboardEvent) {
+    const delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+    if (!delta) return
+    const nueva = (activa + delta + PESTANAS.length) % PESTANAS.length
+    setActiva(nueva)
+    document.getElementById(`pestana-${PESTANAS[nueva].id}`)?.focus()
+  }
+
   return (
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Boton ancho variante="amarillo">
           <Wallet size={24} weight="duotone" aria-hidden="true" />
-          {t('panel.cartera')}
+          {t('panel.abrir')}
         </Boton>
       </Drawer.Trigger>
       <Drawer.Portal>
@@ -23,8 +42,31 @@ export default function Panel() {
           <div className="panel-asa" aria-hidden="true" />
           <Drawer.Title className="solo-lectores">{t('panel.titulo')}</Drawer.Title>
           <Drawer.Description className="solo-lectores">{t('panel.descripcion')}</Drawer.Description>
-          <div className="panel-contenido">
-            <Cartera />
+          <div className="panel-pestanas" role="tablist" aria-label={t('panel.titulo')} onKeyDown={teclas}>
+            {PESTANAS.map(({ id, Icono }, i) => (
+              <button
+                key={id}
+                id={`pestana-${id}`}
+                type="button"
+                role="tab"
+                className="panel-pestana"
+                aria-selected={i === activa}
+                aria-controls="panel-contenido"
+                tabIndex={i === activa ? 0 : -1}
+                onClick={() => setActiva(i)}
+              >
+                <Icono size={22} weight="duotone" aria-hidden="true" />
+                {t(`panel.${id}`)}
+              </button>
+            ))}
+          </div>
+          <div
+            id="panel-contenido"
+            className="panel-contenido"
+            role="tabpanel"
+            aria-labelledby={`pestana-${PESTANAS[activa].id}`}
+          >
+            <Contenido />
           </div>
         </Drawer.Content>
       </Drawer.Portal>
