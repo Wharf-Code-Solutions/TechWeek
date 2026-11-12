@@ -52,7 +52,8 @@
     "buscando": "Buscando tu ubicación…",
     "registrando": "Registrando tu llegada…",
     "fuera": "Aún no estás en este lugar. Acércate un poco más.",
-    "no_encontrado": "No encontramos este lugar."
+    "no_encontrado": "No encontramos este lugar.",
+    "activar_ubicacion": "Activar ubicación"
   },
   "recompensa": {
     "ganaste": "¡Ganaste {{n}} Tlacos!",

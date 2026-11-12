@@ -52,7 +52,8 @@
     "buscando": "Finding your location…",
     "registrando": "Registering your arrival…",
     "fuera": "You're not at this place yet. Get a little closer.",
-    "no_encontrado": "We couldn't find this place."
+    "no_encontrado": "We couldn't find this place.",
+    "activar_ubicacion": "Turn on location"
   },
   "recompensa": {
     "ganaste": "You earned {{n}} Tlacos!",

@@ -8,6 +8,7 @@ import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
 import Tarjeta from '../components/ui/Tarjeta'
+import { activarExplorador } from '../features/geo/explorador'
 import { usePosition, useEstadoUbicacion } from '../features/geo/usePosition'
 import { ApiError, api } from '../lib/api'
 import estilos from './Lugar.module.css'
@@ -28,6 +29,8 @@ export default function Lugar() {
   const posRef = useRef(pos)
   posRef.current = pos
   const [registro, setRegistro] = useState<Registro>('pendiente')
+  // Solo fuerza un render tras salir del modo explorador (la bandera vive en sessionStorage).
+  const [, setReintento] = useState(0)
 
   // La llegada se registra en el servidor una sola vez; con gps él valida el radio de 40 m.
   useEffect(() => {
@@ -83,6 +86,19 @@ export default function Lugar() {
         </Tarjeta>
 
         {mensaje && <p role="status">{mensaje}</p>}
+
+        {explorador && (
+          <Boton
+            ancho
+            variante="amarillo"
+            onClick={() => {
+              activarExplorador(false) // vuelve a pedir la ubicación; si la niega, sigue como explorador
+              setReintento((n) => n + 1)
+            }}
+          >
+            {t('lugar.activar_ubicacion')}
+          </Boton>
+        )}
 
         {!explorador && (
           <Boton ancho disabled={registro !== 'ok'} onClick={() => navegar(`/reto/${lugar.slug}`)}>

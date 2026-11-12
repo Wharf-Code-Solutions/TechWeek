@@ -53,7 +53,13 @@ export default function PermisoUbicacion({ onListo }: Props) {
         <Solicitando onListo={onListo} />
       ) : (
         <>
-          <Boton ancho onClick={() => setPidiendo(true)}>
+          <Boton
+            ancho
+            onClick={() => {
+              activarExplorador(false) // si antes eligió explorar, hay que volver a escuchar el GPS
+              setPidiendo(true)
+            }}
+          >
             {t('permiso.permitir')}
           </Boton>
           <Boton
