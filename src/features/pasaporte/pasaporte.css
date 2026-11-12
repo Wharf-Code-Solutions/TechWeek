@@ -103,6 +103,11 @@
   background: var(--tinta);
 }
 .pasaporte-pieza { display: grid; place-items: center; min-height: 44px; border-radius: 4px; }
+.pasaporte-pieza--nueva {
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 0 0 3px var(--amarillo), 0 0 18px 6px rgb(255 212 0 / 0.75);
+}
 .pasaporte-pieza--falta { background: var(--lila); color: var(--tinta); }
 .pasaporte-progreso { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
 .pasaporte-progreso span { font: 400 20px var(--fuente-titulo); color: #fff; text-shadow: 2px 2px 0 var(--tinta); }
