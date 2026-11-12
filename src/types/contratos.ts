@@ -35,8 +35,8 @@ export interface ContenidoOrden {
 
 interface RetoBase {
   lugar_slug: string
-  clacos: number
-  clacos_revelado: number
+  tlacos: number
+  tlacos_revelado: number
   intentos_max: number
 }
 
@@ -58,7 +58,7 @@ export interface Promocion {
   comercio_slug: string
   titulo_es: string
   titulo_en: string
-  costo_clacos: number
+  costo_tlacos: number
   activa: boolean
 }
 

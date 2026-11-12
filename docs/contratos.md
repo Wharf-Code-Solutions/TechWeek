@@ -1,4 +1,4 @@
-# Clacos · Contratos entre módulos
+# JARANA · Contratos entre módulos
 
 > Propuesta de Dev 1 · 11 nov 2026 · **Pendiente de validar por los 3 devs.**
 > Con estos contratos cada quien programa contra datos de prueba y luego se conecta sin reescribir nada.
@@ -6,21 +6,19 @@
 
 ## Backend
 
-No hay servidor propio. **Supabase es el backend**:
-- **Postgres:** las tablas de abajo.
-- **Sesión anónima:** sin cuenta; cada celular tiene su propio `auth.uid()`.
-- **RLS:** controla quién lee y escribe cada fila.
-- **Funciones RPC:** contienen todo lo que mueve Clacos.
-
-**Actualización de Dev 3:** el navegador ya no usa `supabase-js` ni habla con Supabase. Todo pasa por el backend FastAPI (`backend/`, ver `docs/backend.md`) mediante `src/lib/api.ts`. Las funciones RPC de la migración 0002 ya no se necesitan.
+```
+Celular (React) ──/api/*──▶ FastAPI (backend/) ──service_role──▶ Supabase (Postgres + sesión anónima)
+```
+- El navegador **no** habla con Supabase: todo pasa por `src/lib/api.ts` (ver `docs/backend.md`).
+- **Supabase** guarda los datos y crea la sesión anónima (cada celular tiene su `auth.uid()`).
+- Las tablas están **cerradas** a los roles `anon` y `authenticated` (migración 0002): solo el backend, con `service_role`, lee y escribe.
+- La lógica que necesita ser atómica (el canje) vive en una función SQL que solo el backend puede ejecutar.
 
 ## 1 · Esquema de datos y `seed.json`
 
-- **Catálogo (todos leen, nadie escribe desde el navegador):** `lugares`, `retos`, `fotos_historicas`, `comercios`, `promociones`, `eventos`.
-- **Progreso del celular:**
-  - `perfiles` y `rutas_usuario`: el dueño lee y edita sus filas.
-  - `visitas`, `movimientos_clacos` y `canjes`: el dueño solo lee; escriben las funciones RPC.
-- **Vista `saldo`:** `{ perfil_id, clacos }`, la suma de `movimientos_clacos`.
+- **Catálogo:** `lugares`, `retos`, `fotos_historicas`, `comercios`, `promociones`, `eventos`. El backend los sirve en `GET /api/...` (los retos sin respuestas).
+- **Progreso del celular:** `perfiles`, `rutas_usuario`, `visitas`, `movimientos_tlacos` y `canjes`. Solo los escribe el backend, filtrando siempre por el `perfil_id` de la sesión.
+- **Vista `saldo`:** `{ perfil_id, tlacos }`, la suma de `movimientos_tlacos`.
 - **SQL completo:** `supabase/migrations/0001_esquema.sql`.
 - **Tipos TS:** `src/types/contratos.ts`. Cuando el esquema se aplique, se generará `src/types/database.ts` con `supabase gen types`.
 
@@ -64,17 +62,17 @@ El mapa, la detección de llegada y el recorrido virtual **solo** hablan con est
   "orden_correcto": ["e1", "e2"] }
 ```
 
-Cada reto incluye `clacos` (si acierta), `clacos_revelado` (si usa "ver respuesta y seguir") e `intentos_max`. Nunca se bloquea al turista.
+Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuesta y seguir") e `intentos_max`. Nunca se bloquea al turista.
 
-## 4 · Funciones RPC (las prepara Dev 1, migración 0002)
+## 4 · API del backend (lista completa en `docs/backend.md`)
 
-| Función | Entrada | Devuelve | Regla |
+| Endpoint | Entrada | Devuelve | Regla |
 | --- | --- | --- | --- |
-| `registrar_llegada` | `lugar_id, metodo ('gps'\|'demo')` | la visita | Una sola vez por celular y lugar |
-| `completar_reto` | `lugar_id, acerto (bool)` | `{ clacos_ganados, saldo }` | Paga una sola vez |
-| `canjear` | `promocion_id` | `{ codigo, saldo }` | Revisa el saldo y descuenta |
+| `POST /api/visitas` | `lugar_slug, metodo ('gps'\|'demo'), lat?, lng?` | la visita | Una sola vez por celular y lugar; con `gps` valida el radio |
+| `POST /api/retos/{slug}/completar` | `respuesta, revelar, idioma` | `{ correcto, completado, tlacos_ganados, saldo }` | Paga una sola vez |
+| `POST /api/promociones/{slug}/canjear` | — | `{ codigo, saldo }` | Atómico (función SQL `canjear`); 402 si no alcanza |
 
-**Nunca se suman ni restan Clacos desde el navegador.**
+**Nunca se suman ni restan Tlacos desde el navegador.**
 
 ## 5 · Componentes base y tokens (Dev 2)
 

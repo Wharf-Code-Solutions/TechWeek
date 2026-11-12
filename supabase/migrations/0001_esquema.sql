@@ -1,6 +1,6 @@
--- Clacos · 0001 Esquema base (catálogo + progreso por celular) con RLS.
--- Todavía NO está aplicada en Supabase: se aplica cuando el equipo valide docs/contratos.md.
--- Las funciones del servidor (registrar_llegada, completar_reto, canjear) van en 0002.
+-- JARANA · 0001 Esquema base (catálogo + progreso por celular) con RLS.
+-- Aplicada en Supabase (proyecto techweek) el 11 nov 2026.
+-- La 0002 cierra estas tablas al navegador: desde entonces solo el backend (service_role) las usa.
 
 -- ───────────── Catálogo (solo lectura para todos) ─────────────
 
@@ -26,8 +26,8 @@ create table public.retos (
   tipo             text not null check (tipo in ('palabras','orden')),
   contenido_es     jsonb not null,
   contenido_en     jsonb not null,
-  clacos           integer not null check (clacos >= 0),
-  clacos_revelado  integer not null check (clacos_revelado >= 0),
+  tlacos           integer not null check (tlacos >= 0),
+  tlacos_revelado  integer not null check (tlacos_revelado >= 0),
   intentos_max     integer not null default 3
 );
 
@@ -55,7 +55,7 @@ create table public.promociones (
   comercio_id   bigint not null references public.comercios(id) on delete cascade,
   titulo_es     text not null,
   titulo_en     text not null,
-  costo_clacos  integer not null check (costo_clacos > 0),
+  costo_tlacos  integer not null check (costo_tlacos > 0),
   activa        boolean not null default true
 );
 
@@ -102,11 +102,11 @@ create table public.visitas (
   llegada_en  timestamptz not null default now(),
   metodo      text not null check (metodo in ('gps','demo')),
   reto_ok     boolean,
-  clacos      integer not null default 0,
+  tlacos      integer not null default 0,
   unique (perfil_id, lugar_id)
 );
 
-create table public.movimientos_clacos (
+create table public.movimientos_tlacos (
   id          bigint generated always as identity primary key,
   perfil_id   uuid not null references public.perfiles(id) on delete cascade,
   cantidad    integer not null check (cantidad <> 0),
@@ -123,13 +123,13 @@ create table public.canjes (
   canjeado_en    timestamptz not null default now()
 );
 
-create index on public.movimientos_clacos (perfil_id);
+create index on public.movimientos_tlacos (perfil_id);
 create index on public.rutas_usuario (perfil_id);
 
--- Saldo = suma del libro de Clacos. security_invoker respeta el RLS de quien consulta.
+-- Saldo = suma del libro de Tlacos. security_invoker respeta el RLS de quien consulta.
 create view public.saldo with (security_invoker = true) as
-  select perfil_id, coalesce(sum(cantidad), 0)::integer as clacos
-  from public.movimientos_clacos
+  select perfil_id, coalesce(sum(cantidad), 0)::integer as tlacos
+  from public.movimientos_tlacos
   group by perfil_id;
 
 -- ───────────── RLS ─────────────
@@ -143,7 +143,7 @@ alter table public.eventos            enable row level security;
 alter table public.perfiles           enable row level security;
 alter table public.rutas_usuario      enable row level security;
 alter table public.visitas            enable row level security;
-alter table public.movimientos_clacos enable row level security;
+alter table public.movimientos_tlacos enable row level security;
 alter table public.canjes             enable row level security;
 
 -- Catálogo: lectura pública, sin escritura desde el navegador.
@@ -163,7 +163,7 @@ create policy "ruta propia" on public.rutas_usuario
 -- Visitas, movimientos y canjes: el dueño solo LEE. Escriben las funciones (security definer).
 create policy "visitas propias lectura" on public.visitas
   for select using (perfil_id = (select auth.uid()));
-create policy "movimientos propios lectura" on public.movimientos_clacos
+create policy "movimientos propios lectura" on public.movimientos_tlacos
   for select using (perfil_id = (select auth.uid()));
 create policy "canjes propios lectura" on public.canjes
   for select using (perfil_id = (select auth.uid()));

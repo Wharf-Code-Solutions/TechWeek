@@ -115,8 +115,8 @@
     {
       "lugar_slug": "condesa-malibran",
       "tipo": "palabras",
-      "clacos": 50,
-      "clacos_revelado": 20,
+      "tlacos": 50,
+      "tlacos_revelado": 20,
       "intentos_max": 3,
       "contenido_es": {
         "texto": [
@@ -148,8 +148,8 @@
     {
       "lugar_slug": "baluarte-santiago",
       "tipo": "orden",
-      "clacos": 60,
-      "clacos_revelado": 20,
+      "tlacos": 60,
+      "tlacos_revelado": 20,
       "intentos_max": 3,
       "contenido_es": {
         "eventos": [
@@ -215,10 +215,10 @@
     }
   ],
   "promociones": [
-    { "slug": "cafe-2x1", "comercio_slug": "comercio-cafe", "titulo_es": "Café lechero 2×1", "titulo_en": "Café lechero 2-for-1", "costo_clacos": 80, "activa": true },
-    { "slug": "volovan", "comercio_slug": "comercio-volovan", "titulo_es": "Volován de regalo", "titulo_en": "Free volován", "costo_clacos": 60, "activa": true },
-    { "slug": "nieve", "comercio_slug": "comercio-nieve", "titulo_es": "Nieve de regalo", "titulo_en": "Free sorbet", "costo_clacos": 40, "activa": true },
-    { "slug": "lancha-20", "comercio_slug": "comercio-lancha", "titulo_es": "−20 % en paseo en lancha", "titulo_en": "20% off boat ride", "costo_clacos": 300, "activa": true }
+    { "slug": "cafe-2x1", "comercio_slug": "comercio-cafe", "titulo_es": "Café lechero 2×1", "titulo_en": "Café lechero 2-for-1", "costo_tlacos": 80, "activa": true },
+    { "slug": "volovan", "comercio_slug": "comercio-volovan", "titulo_es": "Volován de regalo", "titulo_en": "Free volován", "costo_tlacos": 60, "activa": true },
+    { "slug": "nieve", "comercio_slug": "comercio-nieve", "titulo_es": "Nieve de regalo", "titulo_en": "Free sorbet", "costo_tlacos": 40, "activa": true },
+    { "slug": "lancha-20", "comercio_slug": "comercio-lancha", "titulo_es": "−20 % en paseo en lancha", "titulo_en": "20% off boat ride", "costo_tlacos": 300, "activa": true }
   ],
   "eventos": [
     {
