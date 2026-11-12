@@ -13,24 +13,19 @@ import Boton from '../../components/ui/Boton'
 import './mapa.css'
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
-// Cámara limitada al Centro Histórico del puerto (regla de contratos §1). Con margen:
-// inclinada en 3D la vista alcanza más lejos y un límite justo empuja el centro a un lado.
-const LIMITES: [[number, number], [number, number]] = [[-96.16, 19.18], [-96.115, 19.22]]
+// Todo el Centro Histórico del puerto (contratos §1), del Parque Zamora al norte del Faro y
+// del malecón a la avenida 5 de Mayo. Junto con ZOOM_MIN evita descargar el resto de la ciudad.
+// shortcut: perímetro aproximado; ajustarlo si Dev 1 o el cronista dan el límite oficial.
+const LIMITES: [[number, number], [number, number]] = [[-96.148, 19.188], [-96.126, 19.209]]
+const ZOOM_MIN = 15
+const ZOOM_INICIAL = 17
+// El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
+const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
-/** Vista inicial: sobre el turista si hay posición; si no, encuadrando todos los lugares. */
-function vistaInicial(pos: { lat: number; lng: number } | null, lugares: Lugar[]) {
-  const comun = { pitch: 55, fitBoundsOptions: { padding: 60 } }
-  if (pos) return { ...comun, latitude: pos.lat, longitude: pos.lng, zoom: 16.5 }
-  if (!lugares.length) return { ...comun, latitude: 19.1995, longitude: -96.138, zoom: 16 }
-  const lats = lugares.map((l) => l.lat)
-  const lngs = lugares.map((l) => l.lng)
-  return {
-    ...comun,
-    bounds: [
-      [Math.min(...lngs), Math.min(...lats)],
-      [Math.max(...lngs), Math.max(...lats)],
-    ] as [[number, number], [number, number]],
-  }
+/** Siempre empieza en el Zócalo; en el recorrido demo la cámara luego sigue al turista. */
+function vistaInicial(lugares: Lugar[]) {
+  const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
+  return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM_INICIAL, pitch: 55 }
 }
 
 interface Props {
@@ -59,8 +54,9 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
       <Map
         ref={mapa}
         mapboxAccessToken={TOKEN}
-        initialViewState={vistaInicial(pos, lugares)}
+        initialViewState={vistaInicial(lugares)}
         maxBounds={LIMITES}
+        minZoom={ZOOM_MIN}
         maxPitch={70}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
