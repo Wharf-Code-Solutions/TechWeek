@@ -9,7 +9,6 @@
   color: var(--tinta);
   font-weight: 700;
   box-shadow: var(--sombra-dura);
-  animation: entrar 0.3s ease-out;
 }
 
 @keyframes entrar {

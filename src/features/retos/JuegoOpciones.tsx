@@ -37,7 +37,7 @@ export default function JuegoOpciones({ enunciado, opciones, descartadas, deshab
               key={o.id}
               initial={reducido ? false : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: reducido ? 0 : i * 0.06, type: 'spring', stiffness: 260, damping: 22 }}
+              transition={{ delay: reducido ? 0 : i * 0.04, type: 'spring', stiffness: 380, damping: 26 }}
             >
               <button
                 type="button"

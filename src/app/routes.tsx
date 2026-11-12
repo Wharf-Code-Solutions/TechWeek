@@ -1,8 +1,8 @@
 // Contrato 5 · Rutas de pantalla.
 // Solo Preferencias (la entrada) se carga de inmediato; las demás pantallas se descargan al abrirlas, así el mapa
 // (mapbox-gl pesa casi 2 MB) no retrasa la primera pantalla.
-import { motion } from 'framer-motion'
-import { lazy, Suspense, type ReactNode } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Preferencias from '../pages/Preferencias'
@@ -28,32 +28,34 @@ function Cargando() {
   )
 }
 
-/** Cada pantalla aparece con un fundido corto (solo opacidad: no rompe los elementos fijos como el panel). */
-function Pantalla({ children }: { children: ReactNode }) {
-  const { pathname } = useLocation()
-  return (
-    <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
-      {children}
-    </motion.div>
-  )
-}
-
+/**
+ * Cambio de pantalla: la anterior se desvanece y la nueva aparece (solo opacidad: no rompe los elementos fijos
+ * como el panel del mapa). `mode="wait"` evita ver las dos a la vez.
+ */
 export default function AppRoutes() {
+  const location = useLocation()
   return (
     <Suspense fallback={<Cargando />}>
-      <Pantalla>
-      <Routes>
-        <Route path="/" element={<Preferencias />} />
-        <Route path="/mapa" element={<Mapa />} />
-        <Route path="/lugar/:slug" element={<Lugar />} />
-        <Route path="/reto/:slug" element={<Reto />} />
-        <Route path="/recompensa/:slug" element={<Recompensa />} />
-        <Route path="/cupon/:id" element={<Cupon />} />
-        <Route path="/fin" element={<Fin />} />
-        <Route path="/vitrina" element={<Vitrina />} />
-        <Route path="/vitrina/:slug" element={<Comercio />} />
-      </Routes>
-      </Pantalla>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
+          exit={{ opacity: 0, transition: { duration: 0.09, ease: 'easeIn' } }}
+        >
+          <Routes location={location}>
+            <Route path="/" element={<Preferencias />} />
+            <Route path="/mapa" element={<Mapa />} />
+            <Route path="/lugar/:slug" element={<Lugar />} />
+            <Route path="/reto/:slug" element={<Reto />} />
+            <Route path="/recompensa/:slug" element={<Recompensa />} />
+            <Route path="/cupon/:id" element={<Cupon />} />
+            <Route path="/fin" element={<Fin />} />
+            <Route path="/vitrina" element={<Vitrina />} />
+            <Route path="/vitrina/:slug" element={<Comercio />} />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
     </Suspense>
   )
 }

@@ -1,7 +1,7 @@
 // M7 Panel fijo · Dev 2 (diseño 03). Pestañas: Ruta, Agenda (M11), Pasaporte (M9) y Cartera (M10, Dev 3).
 // Tres niveles: plegado (solo pestañas), medio (mitad de la pantalla) y completo (pantalla entera, para leer a gusto
 // el pasaporte, la cartera o la agenda). Se desliza con el dedo desde la cabecera y también responde al toque.
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CalendarBlank, IdentificationCard, MapTrifold, Wallet } from '@phosphor-icons/react'
@@ -33,6 +33,10 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
   // Mientras se arrastra, el panel sigue al dedo; al soltar salta al nivel más cercano en esa dirección.
   const [arrastre, setArrastre] = useState<number | null>(null)
   const deslizando = useRef(false)
+  // Hacia dónde se mueve el contenido al cambiar de pestaña (según el orden de las pestañas).
+  const anterior = useRef(activa)
+  const direccion = PESTANAS.indexOf(activa) >= PESTANAS.indexOf(anterior.current) ? 1 : -1
+  anterior.current = activa
   const alto =
     arrastre === null
       ? undefined
@@ -48,10 +52,13 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
   }
 
   return (
-    <section
+    <motion.section
       className={`panel panel--${nivel}${arrastre !== null ? ' panel--arrastrando' : ''}`}
       style={alto === undefined ? undefined : { height: alto }}
       aria-label={t('panel.titulo')}
+      initial={{ y: 80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { type: 'spring', stiffness: 420, damping: 34 } }}
+      exit={{ y: 120, opacity: 0, transition: { duration: 0.14, ease: 'easeIn' } }}
     >
       <motion.div
         className="panel-cabeza"
@@ -95,15 +102,32 @@ export default function Panel({ activa, onActiva, nivel, onNivel, ruta }: Props)
               >
                 <Icono size={22} weight="duotone" aria-hidden="true" />
                 {t(`panel.${id}`)}
+                {id === activa && (
+                  <motion.span
+                    layoutId="panel-pestana-linea"
+                    className="panel-pestana-linea"
+                    transition={{ type: 'spring', stiffness: 560, damping: 42 }}
+                  />
+                )}
               </button>
             )
           })}
         </div>
       </motion.div>
       <div id="panel-contenido" className="panel-contenido" role="tabpanel" aria-labelledby={`pestana-${activa}`}>
-        {activa === 'ruta' ? ruta : activa === 'agenda' ? <Agenda /> : activa === 'pasaporte' ? <Pasaporte /> : <Cartera />}
+        <AnimatePresence mode="wait" initial={false} custom={direccion}>
+          <motion.div
+            key={activa}
+            custom={direccion}
+            initial={{ opacity: 0, x: 12 * direccion }}
+            animate={{ opacity: 1, x: 0, transition: { duration: 0.16, ease: [0.22, 1, 0.36, 1] } }}
+            exit={{ opacity: 0, x: -12 * direccion, transition: { duration: 0.07, ease: 'easeIn' } }}
+          >
+            {activa === 'ruta' ? ruta : activa === 'agenda' ? <Agenda /> : activa === 'pasaporte' ? <Pasaporte /> : <Cartera />}
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

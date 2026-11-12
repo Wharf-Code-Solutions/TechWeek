@@ -15,9 +15,9 @@
   color: var(--tinta);
   background: #fff;
   cursor: pointer;
-  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.boton:active:not(:disabled) { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--tinta); transition-duration: 60ms; }
+.boton:active:not(:disabled) { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--tinta); transition-duration: 40ms; }
 .boton:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 3px; }
 .boton:disabled { opacity: 0.5; cursor: not-allowed; }
 .boton--ancho { width: 100%; }
@@ -36,7 +36,9 @@
 
 /* El SVG mide 390×64 como en el diseño; en pantallas anchas se centra sobre el fondo. */
 .banderines { display: flex; justify-content: center; overflow: hidden; }
-.banderines svg { display: block; flex-shrink: 0; }
+.banderines svg { display: block; flex-shrink: 0; transform-origin: 50% 0; animation: banderines-mecen 6s ease-in-out infinite alternate; }
+@keyframes banderines-mecen { from { transform: rotate(-0.7deg); } to { transform: rotate(0.7deg); } }
+@media (prefers-reduced-motion: reduce) { .banderines svg { animation: none; } }
 
 .ilustracion { display: inline-block; flex-shrink: 0; vertical-align: middle; }
 
