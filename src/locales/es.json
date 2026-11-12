@@ -135,7 +135,8 @@
     "siguienteA": "Siguiente · {{dist}}",
     "estado_hecho": "{{nombre}}, completado",
     "estado_siguiente": "{{nombre}}, siguiente parada",
-    "eventoAhora": "{{titulo}} ahora"
+    "eventoAhora": "{{titulo}} ahora",
+    "nombres": "Mostrar u ocultar nombres de lugares"
   },
   "reto": {
     "cargando": "Cargando reto…",

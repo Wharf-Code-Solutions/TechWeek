@@ -101,6 +101,7 @@ export default function Mapa() {
       <h1 className="solo-lectores">{t('pantallas.mapa')}</h1>
       <MapaLugares
         lugares={todos}
+        ruta={ruta ?? undefined}
         padAbajo={padAbajo}
         enRuta={enRuta}
         hechos={slugsHechos}

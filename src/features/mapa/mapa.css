@@ -101,6 +101,27 @@
 .mapa-tarjeta p { margin: 0; font-weight: 700; }
 .mapa-cerrar { position: absolute; top: 10px; right: 10px; padding: 0; }
 
+/* Botón para mostrar u ocultar los nombres de lugares y comercios del mapa */
+.mapa-nombres {
+  position: absolute;
+  top: calc(76px + env(safe-area-inset-top));
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--tinta);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--tinta);
+  box-shadow: 0 3px 10px rgb(21 10 46 / 0.22);
+  cursor: pointer;
+}
+.mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
+.mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+
 /* ── Cabecera ───────────────────────────────────────────── */
 .cabecera { display: flex; gap: 8px; align-items: center; padding: calc(12px + env(safe-area-inset-top)) 14px 0; }
 .cabecera-avatar {

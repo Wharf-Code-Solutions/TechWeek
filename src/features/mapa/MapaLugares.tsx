@@ -3,11 +3,12 @@
 // `arriba` y `abajo` son capas sobre el mapa (cabecera, flechas del recorrido).
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Map, { Marker, type MapRef } from 'react-map-gl/mapbox'
+import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, X } from '@phosphor-icons/react'
+import { Check, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
 import { usePosition } from '../geo/usePosition'
+import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
@@ -34,6 +35,8 @@ type Estado = 'hecho' | 'siguiente' | 'ruta' | 'fuera'
 
 interface Props {
   lugares: Lugar[]
+  /** Paradas de la ruta activa, en orden: se unen con una línea azul por las calles. */
+  ruta?: Lugar[]
   /** Slugs de la ruta activa; vacío = sin ruta (todos se ven igual). */
   enRuta?: ReadonlySet<string>
   /** Slugs con reto completado. */
@@ -51,9 +54,23 @@ interface Props {
 }
 
 const VACIO: ReadonlySet<string> = new Set()
+const SIN_RUTA: Lugar[] = []
+
+const CLAVE_NOMBRES = 'jarana.mapa.nombres'
+const leerNombres = () => {
+  try {
+    return sessionStorage.getItem(CLAVE_NOMBRES) === '1'
+  } catch {
+    return false
+  }
+}
+
+// Azul de la ruta; el contorno blanco la separa de calles y edificios.
+const AZUL_RUTA = '#1446C8'
 
 export default function MapaLugares({
   lugares,
+  ruta = SIN_RUTA,
   enRuta = VACIO,
   hechos = VACIO,
   siguiente = null,
@@ -69,6 +86,27 @@ export default function MapaLugares({
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   const mapa = useRef<MapRef>(null)
+  const linea = useRutaCaminable(ruta)
+  // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
+  // Los nombres de las calles siempre se ven.
+  const [nombres, setNombres] = useState(leerNombres)
+  const aplicarNombres = (activos: boolean) => {
+    const m = mapa.current?.getMap()
+    if (!m) return
+    m.setConfigProperty('basemap', 'showPointOfInterestLabels', activos)
+    m.setConfigProperty('basemap', 'showPlaceLabels', activos)
+    m.setConfigProperty('basemap', 'showRoadLabels', true)
+  }
+  const alternarNombres = () => {
+    const nuevo = !nombres
+    setNombres(nuevo)
+    aplicarNombres(nuevo)
+    try {
+      sessionStorage.setItem(CLAVE_NOMBRES, nuevo ? '1' : '0')
+    } catch {
+      /* sin almacenamiento: vale solo mientras la pantalla esté abierta */
+    }
+  }
 
   // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
   const demo = pos?.fuente === 'demo'
@@ -97,8 +135,32 @@ export default function MapaLugares({
         maxPitch={60}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
+        onLoad={() => aplicarNombres(nombres)}
         style={{ width: '100%', height: '100%' }}
       >
+        {linea.length > 1 && (
+          <Source
+            id="ruta"
+            type="geojson"
+            data={{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: linea } }}
+          >
+            {/* slot "middle": sobre calles y edificios, bajo los textos del estilo Standard */}
+            <Layer
+              id="ruta-contorno"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-emissive-strength': 1 }}
+            />
+            <Layer
+              id="ruta-linea"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-emissive-strength': 1 }}
+            />
+          </Source>
+        )}
         {lugares.map((l) => {
           const e = estado(l.slug)
           const nombre = en ? l.nombre_en : l.nombre_es
@@ -118,18 +180,24 @@ export default function MapaLugares({
                     <Ilustracion nombre={l.ilustracion} tamano={e === 'siguiente' ? 32 : 28} />
                   )}
                 </span>
-                <span className="marcador-etiqueta">{e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre}</span>
+                {(e === 'siguiente' || elegido?.slug === l.slug) && (
+                  <span className="marcador-etiqueta">{e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre}</span>
+                )}
               </button>
             </Marker>
           )
         })}
         {eventos.map((ev) => (
           <Marker key={ev.slug} latitude={ev.lat} longitude={ev.lng} anchor="bottom">
-            <button type="button" className="marcador marcador--evento" onClick={onEvento}>
+            <button
+              type="button"
+              className="marcador marcador--evento"
+              aria-label={t('mapa.eventoAhora', { titulo: en ? ev.titulo_en : ev.titulo_es })}
+              onClick={onEvento}
+            >
               <span className="marcador-circulo">
                 <Ilustracion nombre={ev.categoria} tamano={30} />
               </span>
-              <span className="marcador-etiqueta">{t('mapa.eventoAhora', { titulo: en ? ev.titulo_en : ev.titulo_es })}</span>
             </button>
           </Marker>
         ))}
@@ -141,6 +209,17 @@ export default function MapaLugares({
       </Map>
 
       {arriba && <div className="mapa-arriba">{arriba}</div>}
+
+      <button
+        type="button"
+        className="mapa-nombres"
+        aria-pressed={nombres}
+        aria-label={t('mapa.nombres')}
+        title={t('mapa.nombres')}
+        onClick={alternarNombres}
+      >
+        <TextAa size={22} weight="bold" aria-hidden="true" />
+      </button>
 
       <div className="mapa-abajo">
         {elegido && (
