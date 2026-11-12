@@ -1,7 +1,7 @@
 // Pantalla: Mapa · Responsable: Dev 2 (M4, M7). Diseño 03 · Mapa + panel (ruta).
 // Junta la ruta, los retos hechos (pasaporte), el saldo y los eventos en curso; el mapa y el panel solo pintan.
 import { AnimatePresence } from 'framer-motion'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { useLugares } from '../app/datos'
@@ -18,11 +18,13 @@ import { leerOrigen } from '../features/geo/origen'
 import { haLlegado, useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
 import type { PasaporteDatos } from '../features/pasaporte/tipos'
-import { api } from '../lib/api'
+import { api, rutaReciente } from '../lib/api'
 import seed from '../data/seed.json'
 import type { Evento, Lugar } from '../types/contratos'
 
 const NINGUNO: Lugar[] = []
+/** Cuánto se ve el mapa (ms) antes de abrir automáticamente el lugar al que ya se llegó. */
+const PAUSA_VER_MAPA_MS = 1800
 /** Alto aproximado del panel del recorrido virtual (px): espacio que la cámara deja libre abajo. */
 
 
@@ -31,7 +33,7 @@ export default function Mapa() {
   const todos = useLugares()
   const pos = usePosition()
   // undefined: cargando · null: sin ruta activa (entró directo o falló la red) · Lugar[]: la ruta
-  const [ruta, setRuta] = useState<Lugar[] | null | undefined>(undefined)
+  const [ruta, setRuta] = useState<Lugar[] | null | undefined>(() => rutaReciente()?.lugares)
   const [hechos, setHechos] = useState<ReadonlyMap<string, number>>(new Map())
   // Hasta saber qué lugares ya se visitaron no se vigila ninguna llegada (si no, se reabriría uno ya jugado).
   const [hechosListos, setHechosListos] = useState(false)
@@ -75,9 +77,19 @@ export default function Mapa() {
 
   // Se vigilan solo los lugares de la ruta que todavía no se han jugado: los visitados se siguen mostrando
   // (marcados como hechos) pero ya no abren ¡Llegaste! ni dan puntos. Mientras carga, no se vigila nada.
+  // Tampoco se vigila hasta que el mapa lleva un momento a la vista: así el turista ve el mapa y la cámara
+  // acercarse al lugar antes de que suban las olas, en vez de pasar de la pantalla de carga a la del lugar.
+  const [vigilar, setVigilar] = useState(false)
+  const [mapaVisible, setMapaVisible] = useState(false)
+  useEffect(() => {
+    if (!mapaVisible) return
+    const id = window.setTimeout(() => setVigilar(true), PAUSA_VER_MAPA_MS)
+    return () => window.clearTimeout(id)
+  }, [mapaVisible])
+  const alListoMapa = useCallback(() => setMapaVisible(true), [])
   const aVigilar = useMemo(
-    () => (ruta === undefined || !hechosListos ? NINGUNO : (ruta ?? todos).filter((l) => !hechos.has(l.slug))),
-    [ruta, hechosListos, todos, hechos],
+    () => (ruta === undefined || !hechosListos || !vigilar ? NINGUNO : (ruta ?? todos).filter((l) => !hechos.has(l.slug))),
+    [ruta, hechosListos, vigilar, todos, hechos],
   )
   const { llegando } = useIrAlLlegar(aVigilar)
 
@@ -92,6 +104,7 @@ export default function Mapa() {
   )
   // Punto de partida guardado al armar la ruta (se lee una sola vez para que la línea no se redibuje).
   const origen = useMemo(() => leerOrigen(), [])
+  const eventosActivos = useMemo(() => eventos.filter((e) => enCurso(e)), [eventos])
   const { intereses, personaje } = cargarPreferencias()
   const interes = intereses[0]
   const nombreRuta =
@@ -137,12 +150,13 @@ export default function Mapa() {
         comercioFocal={comercioFocal}
         padAbajo={padAbajo}
         onDetalle={setDetalle}
+        onListo={alListoMapa}
         enfocar={enfocar}
         llegando={llegando?.slug ?? null}
         enRuta={enRuta}
         hechos={slugsHechos}
         siguiente={siguiente?.slug ?? null}
-        eventos={eventos.filter((e) => enCurso(e))}
+        eventos={eventosActivos}
         onEvento={() => abrir('agenda')}
         arriba={
           <Cabecera

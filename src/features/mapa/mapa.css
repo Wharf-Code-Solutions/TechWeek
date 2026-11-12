@@ -417,3 +417,8 @@
 .ruta-saltar:focus-visible,
 .ruta-accion:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 .ruta-aviso { margin: 0; font-weight: 700; }
+
+/* Modo ligero: pines planos y sin animaciones para que el celular no se esfuerce de más */
+.mapa--ligero .marcador-circulo { box-shadow: none; }
+.mapa--ligero .marcador--llegando .marcador-circulo::after { animation: none; }
+.mapa--ligero .marcador-comida-activo .marcador-circulo { box-shadow: none; }

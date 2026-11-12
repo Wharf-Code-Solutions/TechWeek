@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, Crosshair, ForkKnife, List, Storefront, TextAa, X } from '@phosphor-icons/react'
+import { Check, Crosshair, ForkKnife, Lightning, List, Storefront, TextAa, X } from '@phosphor-icons/react'
 import type { Comercio, Evento, Lugar } from '../../types/contratos'
 import type { Punto } from '../geo/tipos'
-import { moverManual } from '../geo/posicionManual'
 import { useModoManual, usePosition } from '../geo/usePosition'
-import { tramoRestante } from '../geo/tramo'
+import { caminarHasta } from '../geo/caminata'
+import { useTramoCalles } from '../geo/useTramoCalles'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
@@ -22,6 +22,7 @@ import { comidaCercana, ilustracionDeTipo } from '../vitrina/vitrina'
 import { useVitrina } from '../vitrina/useVitrina'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
+import { FPS_MINIMOS, INCLINACION, INCLINACION_LIGERA, activarLigeroAuto, esLigero, fijarLigero, fpsPromedio, useModoLigero } from './modoLigero'
 import './mapa.css'
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
@@ -38,10 +39,10 @@ const PULSO_MS = 1600
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
 /** Empieza donde está el turista (al volver de un reto no debe saltar a otra parte); sin posición, en el Zócalo. */
-function vistaInicial(lugares: Lugar[], pos: { lat: number; lng: number } | null) {
+function vistaInicial(lugares: Lugar[], pos: { lat: number; lng: number } | null, pitch: number) {
   const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
   const centro = pos ?? zocalo
-  return { latitude: centro.lat, longitude: centro.lng, zoom: ZOOM, pitch: 55 }
+  return { latitude: centro.lat, longitude: centro.lng, zoom: ZOOM, pitch }
 }
 
 type Estado = 'hecho' | 'siguiente' | 'ruta' | 'fuera'
@@ -65,6 +66,8 @@ interface Props {
   padAbajo?: number
   /** Avisa si hay una vitrina de comercio abierta (la pantalla esconde el panel para dejarle sitio). */
   onDetalle?: (abierto: boolean) => void
+  /** Avisa una vez que el mapa ya se descubrió (terminó la pantalla de carga). */
+  onListo?: () => void
   /** Lugar que hay que mostrar (la lista de la ruta lo pide): el mapa vuela hasta él y abre su tarjeta. `n` cambia en cada toque. */
   enfocar?: { slug: string; n: number } | null
   /** Negocio de la vitrina que hay que mostrar en el mapa ("Ver en el mapa"): vuela hasta él y lo marca. */
@@ -138,6 +141,7 @@ export default function MapaLugares({
   onEvento,
   padAbajo = 0,
   onDetalle,
+  onListo,
   enfocar = null,
   llegando = null,
   comercioFocal = null,
@@ -145,6 +149,7 @@ export default function MapaLugares({
   abajo,
 }: Props) {
   const { t, i18n } = useTranslation()
+  const ligero = useModoLigero()
   const en = i18n.language === 'en'
   const pos = usePosition()
   // Lejos del Centro (o sin GPS) el turista sale del Zócalo y se mueve tocando el mapa.
@@ -153,11 +158,21 @@ export default function MapaLugares({
   // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
   const [menu, setMenu] = useState(false)
+  // La personita va caminando hacia un lugar (posición por toque): la cámara la sigue.
+  const [caminando, setCaminando] = useState(false)
   // Pantalla de carga hasta que el mapa termina de pintarse (o pasan 9 s: sin red no debe quedarse ahí).
   const [listo, setListo] = useState(false)
   useEffect(() => {
     const id = window.setTimeout(() => setListo(true), 9000)
     return () => window.clearTimeout(id)
+  }, [])
+  const revelando = useRef(false)
+  const alPintar = useCallback((e: { target: { isStyleLoaded: () => boolean } }) => {
+    // Basta con el estilo cargado y un cuadro pintado: no se espera a que lleguen todas las teselas y modelos 3D
+    // (eso es `idle` y en un celular tarda mucho); llegan solos bajo el desvanecido de la pantalla de carga.
+    if (revelando.current || !e.target.isStyleLoaded()) return
+    revelando.current = true
+    setListo(true)
   }, [])
   const [comercio, setComercio] = useState<Comercio | null>(null)
   const { comercios } = useVitrina()
@@ -172,6 +187,10 @@ export default function MapaLugares({
     setComercio(c)
     setElegido(null)
   }
+  // Avisa a la pantalla cuando el mapa ya se ve: la llegada automática a un lugar espera a este momento.
+  useEffect(() => {
+    if (listo) onListo?.()
+  }, [listo, onListo])
   useEffect(() => {
     onDetalle?.(comercio !== null)
   }, [comercio, onDetalle])
@@ -191,7 +210,51 @@ export default function MapaLugares({
     m.setConfigProperty('basemap', 'showPlaceLabels', activos)
     m.setConfigProperty('basemap', 'showRoadLabels', true)
     m.setConfigProperty('basemap', 'lightPreset', AMBIENTE)
+    // Modo ligero: sin edificios 3D ni modelos de monumentos (lo que más pesa en la GPU).
+    m.setConfigProperty('basemap', 'show3dObjects', !ligero)
   }
+  // Al entrar o salir del modo ligero se actualiza el estilo y se baja o se sube la inclinación.
+  const primerLigero = useRef(true)
+  useEffect(() => {
+    if (primerLigero.current) {
+      primerLigero.current = false
+      return
+    }
+    const m = mapa.current?.getMap()
+    if (!m?.isStyleLoaded()) return
+    m.setConfigProperty('basemap', 'show3dObjects', !ligero)
+    mapa.current?.easeTo({ pitch: ligero ? INCLINACION_LIGERA : INCLINACION, duration: 500 })
+  }, [ligero])
+
+  // Mide los cuadros por segundo tras abrir el mapa y mientras se mueve: si van lentos, pasa solo al modo ligero.
+  const medicion = useRef<{ id: number; deltas: number[]; ultimo: number } | null>(null)
+  const terminarMedicion = useCallback(() => {
+    const m = medicion.current
+    if (!m) return
+    medicion.current = null
+    cancelAnimationFrame(m.id)
+    const fps = m.deltas.length >= 20 ? fpsPromedio(m.deltas) : null
+    if (fps !== null && fps < FPS_MINIMOS) activarLigeroAuto()
+  }, [])
+  const empezarMedicion = useCallback(() => {
+    if (medicion.current || esLigero() || document.hidden) return
+    const m = { id: 0, deltas: [] as number[], ultimo: 0 }
+    const cuadro = (t: number) => {
+      // Los saltos largos son pestaña oculta o carga de red, no la fluidez del mapa.
+      if (m.ultimo && t - m.ultimo < 500) m.deltas.push(t - m.ultimo)
+      m.ultimo = t
+      m.id = requestAnimationFrame(cuadro)
+    }
+    m.id = requestAnimationFrame(cuadro)
+    medicion.current = m
+  }, [])
+  useEffect(() => {
+    if (!listo) return
+    empezarMedicion()
+    const id = window.setTimeout(terminarMedicion, 3500)
+    return () => window.clearTimeout(id)
+  }, [listo, empezarMedicion, terminarMedicion])
+  useEffect(() => terminarMedicion, [terminarMedicion])
   const alternarNombres = () => {
     const nuevo = !nombres
     setNombres(nuevo)
@@ -202,6 +265,10 @@ export default function MapaLugares({
       /* sin almacenamiento: vale solo mientras la pantalla esté abierta */
     }
   }
+
+  useEffect(() => {
+    if (caminando && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 120, easing: (x) => x })
+  }, [caminando, pos])
 
   // "Ver en el mapa" desde la vitrina: la cámara vuela hasta el negocio.
   useEffect(() => {
@@ -227,23 +294,24 @@ export default function MapaLugares({
   // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
   // Sale de tu posición a la siguiente parada siguiendo la línea azul.
   const destino = useMemo(() => lugares.find((l) => l.slug === siguiente) ?? null, [lugares, siguiente])
-  const datosGuia = useMemo(() => {
-    let coordinates: [number, number][] = []
-    if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
-    return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
-  }, [pos, destino, linea])
+  // Por las calles desde donde estás hasta la siguiente parada (se pide de nuevo al cambiar de parada).
+  const tramo = useTramoCalles(pos, destino)
+  const datosGuia = useMemo(
+    () => ({ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: tramo } }),
+    [tramo],
+  )
   const hayGuia = datosGuia.geometry.coordinates.length > 1
 
   // Pulso: un halo amarillo que se expande y se desvanece sobre el tramo que falta, para ubicar de un vistazo hacia
   // dónde seguir. Se anima a ~20 cuadros por segundo y se apaga con "reducir movimiento".
   useEffect(() => {
-    if (!hayGuia || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    if (!hayGuia || ligero || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
     let cuadro = 0
     let ultimo = 0
     const animar = (t: number) => {
       cuadro = requestAnimationFrame(animar)
       const m = mapa.current?.getMap()
-      if (!m || t - ultimo < 50 || !m.getLayer('guia-pulso')) return
+      if (!m || document.hidden || t - ultimo < 70 || !m.getLayer('guia-pulso')) return
       ultimo = t
       const f = (t % PULSO_MS) / PULSO_MS
       m.setPaintProperty('guia-pulso', 'line-width', 12 + 24 * f)
@@ -251,7 +319,7 @@ export default function MapaLugares({
     }
     cuadro = requestAnimationFrame(animar)
     return () => cancelAnimationFrame(cuadro)
-  }, [hayGuia])
+  }, [hayGuia, ligero])
 
   // Brillo que viaja por la ruta (y por el tramo que falta) para que no se vea como una línea azul fija.
   // Se apaga con "reducir movimiento" (la línea queda azul). El mapa se pide en cada cuadro: al montar la pantalla
@@ -259,6 +327,14 @@ export default function MapaLugares({
   const hayRuta = linea.length > 1
   useEffect(() => {
     if (!hayRuta || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    if (ligero) {
+      // Sin brillo viajero: la línea queda azul fija.
+      const m = mapa.current?.getMap()
+      for (const id of ['ruta-linea', 'guia-linea']) {
+        if (m?.getLayer(id)) m.setPaintProperty(id, 'line-gradient', degradadoBrillo(-1, AZUL_RUTA, BRILLO_COLOR))
+      }
+      return
+    }
     // Un temporizador (y no requestAnimationFrame): el mapa se vuelve a dibujar solo al cambiar la capa, y así la
     // animación no depende de que el navegador reparta cuadros a una pestaña que no está en primer plano.
     const animar = () => {
@@ -272,7 +348,7 @@ export default function MapaLugares({
     }
     const temporizador = window.setInterval(animar, BRILLO_PASO_MS)
     return () => window.clearInterval(temporizador)
-  }, [hayRuta, hayGuia])
+  }, [hayRuta, hayGuia, ligero])
 
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
   const ultimoEnfoque = useRef(0)
@@ -313,33 +389,36 @@ export default function MapaLugares({
   if (!TOKEN) return <p className="mapa-aviso">{t('mapa.sinToken')}</p>
 
   return (
-    <div className="mapa">
+    <div className={`mapa${ligero ? ' mapa--ligero' : ''}`}>
       <Map
         ref={mapa}
         mapboxAccessToken={TOKEN}
         initialViewState={{
-          ...vistaInicial(lugares, pos),
+          ...vistaInicial(lugares, pos, ligero ? INCLINACION_LIGERA : INCLINACION),
           padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
         }}
         maxBounds={LIMITES}
         // Rendimiento: sin suavizado de bordes ni copias del mundo, y una caché de teselas acotada.
         antialias={false}
         renderWorldCopies={false}
-        maxTileCacheSize={60}
+        maxTileCacheSize={ligero ? 30 : 60}
         fadeDuration={120}
         onClick={(e) => {
           setMenu(false)
           // Un toque en el mapa mueve al turista; los toques en pines y en su propio marcador no.
           if (!modoManual || (e.originalEvent.target as HTMLElement).closest('.marcador, .mapa-yo')) return
-          moverManual({ lat: e.lngLat.lat, lng: e.lngLat.lng })
+          void caminarHasta({ lat: e.lngLat.lat, lng: e.lngLat.lng })
         }}
+        onMoveStart={empezarMedicion}
+        onMoveEnd={terminarMedicion}
         onZoomEnd={(e) => setZoom(e.viewState.zoom)}
         minZoom={ZOOM_MIN}
         maxPitch={60}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
         onLoad={() => aplicarNombres(nombres)}
-        onIdle={() => setListo(true)}
+        // El primer cuadro ya pintado basta para quitar la carga; esperar `idle` obligaba a bajar todo el 3D antes.
+        onRender={alPintar}
         style={{ width: '100%', height: '100%' }}
       >
         {linea.length > 1 && (
@@ -478,7 +557,7 @@ export default function MapaLugares({
         className="mapa-nombres mapa-hamburguesa"
         aria-expanded={menu}
         aria-controls="mapa-menu"
-        aria-pressed={comer || nombres}
+        aria-pressed={comer || nombres || ligero}
         aria-label={t('mapa.menu')}
         title={t('mapa.menu')}
         onClick={() => setMenu((v) => !v)}
@@ -506,6 +585,12 @@ export default function MapaLugares({
             <button type="button" aria-pressed={comer} onClick={() => { alternarComer(); setMenu(false) }}>
               <ForkKnife size={22} weight="bold" aria-hidden="true" />
               {t('mapa.menu_comer')}
+            </button>
+          </li>
+          <li>
+            <button type="button" aria-pressed={ligero} onClick={() => { fijarLigero(!ligero); setMenu(false) }}>
+              <Lightning size={22} weight="bold" aria-hidden="true" />
+              {t('mapa.menu_ligero')}
             </button>
           </li>
           {pos && (
@@ -554,12 +639,18 @@ export default function MapaLugares({
             {/* ¡Llegaste! registra la llegada (valida los 40 m) y desde ahí se juega el reto. */}
             <Boton
               ancho
+              disabled={caminando}
               onClick={() => {
-                if (modoManual) moverManual(elegido) // lejos del Centro, "ir" es caminar hasta el lugar
-                navegar(`/lugar/${elegido.slug}`)
+                if (!modoManual) return navegar(`/lugar/${elegido.slug}`)
+                // Lejos del Centro, "ir" es caminar por las calles hasta el lugar y, al llegar, abrirlo.
+                setCaminando(true)
+                void caminarHasta(elegido).then((llego) => {
+                  setCaminando(false)
+                  if (llego && window.location.pathname === '/mapa') navegar(`/lugar/${elegido.slug}`)
+                })
               }}
             >
-              {t('mapa.irAlLugar')}
+              {caminando ? t('mapa.caminando') : t('mapa.irAlLugar')}
             </Boton>
           </Tarjeta>
           </motion.div>

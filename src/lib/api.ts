@@ -132,6 +132,12 @@ const llegadas = new Map<string, Promise<unknown>>()
 
 const privado = async <T>(ruta: string, init?: RequestInit) => http<T>(ruta, init, await asegurarSesion())
 
+let recienCreada: { ruta: Ruta; en: number } | null = null
+/** Ruta que se acaba de crear (menos de 30 s): el mapa nace con ella sin esperar otra petición. */
+export function rutaReciente(): Ruta | null {
+  return recienCreada && Date.now() - recienCreada.en < 30_000 ? recienCreada.ruta : null
+}
+
 export const api = {
   // Catálogo (público)
   lugares: () => http<Lugar[]>('/api/lugares'),
@@ -174,7 +180,10 @@ export const api = {
     ),
   // Ruta del turista (Dev 1 hizo los endpoints; el cliente vive aquí, en src/lib)
   crearRuta: (datos: RutaIn) =>
-    privado<RutaCreada>('/api/rutas', { method: 'POST', body: JSON.stringify(datos) }),
+    privado<RutaCreada>('/api/rutas', { method: 'POST', body: JSON.stringify(datos) }).then((r) => {
+      recienCreada = { ruta: r, en: Date.now() }
+      return r
+    }),
   rutaActual: () => privado<Ruta>('/api/rutas/actual'),
   /** Saltar o recortar: se manda la lista de slugs que quedan, en orden. */
   ajustarRuta: (lugares: string[]) =>

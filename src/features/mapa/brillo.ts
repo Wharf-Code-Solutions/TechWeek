@@ -1,10 +1,10 @@
 // Brillo que recorre la ruta: una franja clara que viaja por la línea azul de principio a fin y vuelve a empezar.
-// Se hace con `line-gradient` (la fuente necesita `lineMetrics`) y se redibuja ~25 veces por segundo.
+// Se hace con `line-gradient` (la fuente necesita `lineMetrics`) y se redibuja ~16 veces por segundo.
 import type { ExpressionSpecification } from 'mapbox-gl'
 
 export const BRILLO_CICLO_MS = 2800
-/** Cada cuántos ms se redibuja la franja (~25 veces por segundo). */
-export const BRILLO_PASO_MS = 40
+/** Cada cuántos ms se redibuja la franja (~16 veces por segundo). */
+export const BRILLO_PASO_MS = 60
 export const BRILLO_ANCHO = 0.14
 export const BRILLO_COLOR = '#9FE8FF'
 

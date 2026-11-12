@@ -1,6 +1,7 @@
 // Capa de olas que cubre la pantalla entre el mapa y ¡Llegaste! (ver olas.ts). Tres olas de colores suben una tras
 // otra; al descubrir, siguen de largo hacia arriba. Con "reducir movimiento" solo se atenúa la pantalla.
 import { motion, useReducedMotion } from 'framer-motion'
+import { useModoLigero } from '../mapa/modoLigero'
 import { DURACION_OLAS_MS, useEstadoOlas } from './olas'
 import estilos from './TransicionOlas.module.css'
 
@@ -16,7 +17,10 @@ const ONDA = 'M0 40 Q 50 0 100 40 T 200 40 T 300 40 T 400 40 V 120 H 0 Z'
 
 export default function TransicionOlas() {
   const estado = useEstadoOlas()
-  const reducido = useReducedMotion()
+  // Con reducir movimiento o en el modo ligero (celulares modestos) solo se atenúa la pantalla.
+  const movimientoReducido = useReducedMotion()
+  const ligero = useModoLigero()
+  const reducido = movimientoReducido || ligero
   const seg = DURACION_OLAS_MS / 1000
 
   // Posición vertical según el estado: abajo (oculto), cubriendo (0) o ya de largo hacia arriba.
