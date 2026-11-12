@@ -13,6 +13,7 @@ import { distanciaM } from '../geo/distancia'
 import { RECORRIDO_DEMO } from '../geo/rutaDemo'
 import type { Punto } from '../geo/tipos'
 import { usePosition } from '../geo/usePosition'
+import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import Tarjeta from '../../components/ui/Tarjeta'
@@ -27,6 +28,8 @@ const LIMITES: [[number, number], [number, number]] = [[-96.148, 19.188], [-96.1
 // Abre en ZOOM y solo deja alejar un poco (hasta ZOOM_MIN); acercar no tiene límite.
 const ZOOM = 17
 const ZOOM_MIN = 16.6
+/** Duración de un pulso de la línea de la ruta (ms). */
+const PULSO_MS = 1600
 // Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
 const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
@@ -183,18 +186,36 @@ export default function MapaLugares({
   }, [demo, pos, rec.rumbo])
 
   // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
+  // En la demo sale del recorrido virtual; con GPS, de tu posición a la siguiente parada siguiendo la línea azul.
   const siguienteParada = Math.min(rec.parada + 1, rec.paradas.length - 1)
-  const datosGuia = useMemo(
-    () => ({
-      type: 'Feature' as const,
-      properties: {},
-      geometry: {
-        type: 'LineString' as const,
-        coordinates: demo ? RECORRIDO_DEMO.camino(rec.metros, RECORRIDO_DEMO.metrosDeParada(siguienteParada)) : [],
-      },
-    }),
-    [demo, rec.metros, siguienteParada],
-  )
+  const destino = useMemo(() => lugares.find((l) => l.slug === siguiente) ?? null, [lugares, siguiente])
+  const datosGuia = useMemo(() => {
+    let coordinates: [number, number][] = []
+    if (demo) coordinates = RECORRIDO_DEMO.camino(rec.metros, RECORRIDO_DEMO.metrosDeParada(siguienteParada))
+    else if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
+    return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
+  }, [demo, rec.metros, siguienteParada, pos, destino, linea])
+  const hayGuia = datosGuia.geometry.coordinates.length > 1
+
+  // Pulso: un halo amarillo que se expande y se desvanece sobre el tramo que falta, para ubicar de un vistazo hacia
+  // dónde seguir. Se anima a ~20 cuadros por segundo y se apaga con "reducir movimiento".
+  useEffect(() => {
+    if (!hayGuia || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const m = mapa.current?.getMap()
+    if (!m) return
+    let cuadro = 0
+    let ultimo = 0
+    const animar = (t: number) => {
+      cuadro = requestAnimationFrame(animar)
+      if (t - ultimo < 50 || !m.getLayer('guia-pulso')) return
+      ultimo = t
+      const f = (t % PULSO_MS) / PULSO_MS
+      m.setPaintProperty('guia-pulso', 'line-width', 12 + 24 * f)
+      m.setPaintProperty('guia-pulso', 'line-opacity', 0.7 * (1 - f))
+    }
+    cuadro = requestAnimationFrame(animar)
+    return () => cancelAnimationFrame(cuadro)
+  }, [hayGuia])
 
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
   const ultimoEnfoque = useRef(0)
@@ -264,19 +285,26 @@ export default function MapaLugares({
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-opacity': demo ? 0.5 : 1, 'line-emissive-strength': 1 }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-opacity': hayGuia ? 0.5 : 1, 'line-emissive-strength': 1 }}
             />
             <Layer
               id="ruta-linea"
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-opacity': demo ? 0.45 : 1, 'line-emissive-strength': 1 }}
+              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-opacity': hayGuia ? 0.45 : 1, 'line-emissive-strength': 1 }}
             />
           </Source>
         )}
-        {demo && datosGuia.geometry.coordinates.length > 1 && (
+        {hayGuia && (
           <Source id="guia" type="geojson" data={datosGuia}>
+            <Layer
+              id="guia-pulso"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': '#FFD400', 'line-width': 16, 'line-opacity': 0.45, 'line-emissive-strength': 1 }}
+            />
             <Layer
               id="guia-contorno"
               type="line"

@@ -4,6 +4,7 @@ import { crearRecorrido } from './recorridoVirtual'
 import { RECORRIDO_DEMO, PARADAS_DEMO } from './rutaDemo'
 import { lugarCercano } from './useLlegada'
 import { claveRuta, lineaRecta } from './useRutaCaminable'
+import { tramoRestante } from './tramo'
 import { RADIO_CENTRO_M, ZOCALO, distanciaAlCentro, estaLejosDelCentro } from './centro'
 import { anguloRelativo, rumboHacia } from './recorridoVirtual'
 import type { Lugar } from '../../types/contratos'
@@ -156,3 +157,27 @@ describe('tramo del camino', () => {
     expect(RECORRIDO_DEMO.camino(50, 50)).toHaveLength(1)
   })
 })
+
+describe('tramo restante de la línea', () => {
+  // Una línea de oeste a este con 5 vértices separados ~100 m.
+  const linea: [number, number][] = [0, 1, 2, 3, 4].map((i) => [-96.14 + i * 0.001, 19.2])
+  const en = (i: number) => ({ lat: 19.2, lng: -96.14 + i * 0.001 })
+
+  it('va de la posición a la parada siguiendo la línea', () => {
+    const t = tramoRestante(linea, { lat: 19.2001, lng: -96.1389 }, en(3))
+    expect(t[0]).toEqual([-96.1389, 19.2001])
+    expect(t[t.length - 1]).toEqual([en(3).lng, en(3).lat])
+    expect(t.length).toBeGreaterThanOrEqual(3)
+  })
+
+  it('si la parada quedó atrás, devuelve el segmento recto', () => {
+    const t = tramoRestante(linea, en(3), en(1))
+    expect(t).toHaveLength(2)
+  })
+
+  it('con una línea vacía o de un punto también devuelve el segmento recto', () => {
+    expect(tramoRestante([], en(0), en(2))).toHaveLength(2)
+    expect(tramoRestante([[-96.14, 19.2]], en(0), en(2))).toHaveLength(2)
+  })
+})
+
