@@ -12,6 +12,7 @@ import RutaLista from '../features/mapa/RutaLista'
 import type { Pestana } from '../features/mapa/Panel'
 import { formatoDistancia, progresoRuta } from '../features/mapa/progreso'
 import ControlRecorrido from '../features/geo/ControlRecorrido'
+import { esModoDemo } from '../features/geo/demoStore'
 import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import { useIrAlLlegar } from '../features/geo/useIrAlLlegar'
@@ -115,13 +116,16 @@ export default function Mapa() {
         }
         abajo={<ControlRecorrido />}
       />
-      <Panel
-        activa={pestana}
-        onActiva={setPestana}
-        plegado={plegado}
-        onPlegado={setPlegado}
-        ruta={<RutaLista ruta={ruta} hechos={hechos} siguiente={siguiente} pos={pos} onCambio={setRuta} />}
-      />
+      {/* En la demo el recorrido virtual ocupa la parte baja: el panel se oculta para no encimarse. */}
+      {!esModoDemo() && (
+        <Panel
+          activa={pestana}
+          onActiva={setPestana}
+          plegado={plegado}
+          onPlegado={setPlegado}
+          ruta={<RutaLista ruta={ruta} hechos={hechos} siguiente={siguiente} pos={pos} onCambio={setRuta} />}
+        />
+      )}
     </main>
   )
 }
