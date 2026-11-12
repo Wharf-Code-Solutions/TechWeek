@@ -136,7 +136,8 @@
     "estado_hecho": "{{nombre}}, completado",
     "estado_siguiente": "{{nombre}}, siguiente parada",
     "eventoAhora": "{{titulo}} ahora",
-    "nombres": "Mostrar u ocultar nombres de lugares"
+    "nombres": "Mostrar u ocultar nombres de lugares",
+    "irAlLugar": "Ir al lugar y jugar"
   },
   "reto": {
     "cargando": "Cargando reto…",

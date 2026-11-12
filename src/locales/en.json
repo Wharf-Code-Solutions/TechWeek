@@ -136,7 +136,8 @@
     "estado_hecho": "{{nombre}}, completed",
     "estado_siguiente": "{{nombre}}, next stop",
     "eventoAhora": "{{titulo}} now",
-    "nombres": "Show or hide place names"
+    "nombres": "Show or hide place names",
+    "irAlLugar": "Go to the place and play"
   },
   "reto": {
     "cargando": "Loading challenge…",

@@ -3,6 +3,7 @@
 // `arriba` y `abajo` son capas sobre el mapa (cabecera, flechas del recorrido).
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Check, TextAa, X } from '@phosphor-icons/react'
@@ -86,6 +87,7 @@ export default function MapaLugares({
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   const mapa = useRef<MapRef>(null)
+  const navegar = useNavigate()
   const linea = useRutaCaminable(ruta)
   // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
   // Los nombres de las calles siempre se ven.
@@ -229,6 +231,10 @@ export default function MapaLugares({
             </Boton>
             <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
             <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
+            {/* ¡Llegaste! registra la llegada (con GPS valida los 40 m; en la demo vale) y desde ahí se juega el reto. */}
+            <Boton ancho onClick={() => navegar(`/lugar/${elegido.slug}`)}>
+              {t('mapa.irAlLugar')}
+            </Boton>
           </Tarjeta>
         )}
         {abajo}
