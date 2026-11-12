@@ -147,23 +147,36 @@
     "ocultar": "Hide panel"
   },
   "agenda": {
-    "titulo": "Events",
-    "vacia": "No upcoming events right now.",
-    "ahora": "Now"
+    "titulo": "Live events",
+    "vacia": "No events this day.",
+    "ahora": "Live",
+    "enMapa": "also on the map",
+    "dia": "Day",
+    "hoy": "Today",
+    "a": "{{dist}} away"
   },
   "fin": {
     "confirmar": "End your route? You get the end bonus if you completed at least one challenge.",
     "si": "Yes, end the route",
     "seguir": "Keep exploring",
-    "bono": "End bonus: +{{n}} Tlacos!",
     "sinBono": "Complete at least one challenge on your next route to earn the bonus.",
-    "visitados": "Places visited",
-    "deTotal": "{{n}} of {{total}}",
-    "retos": "Challenges completed",
-    "saldo": "Final balance",
-    "tlacos": "{{n}} Tlacos",
+    "saldo": "You have {{n}} Tlacos",
     "nueva": "Build another route",
-    "sinRuta": "You have no active route."
+    "sinRuta": "You have no active route.",
+    "logrado": "You did it!",
+    "completada": "Route completed",
+    "confirmarTitulo": "Finish here?",
+    "fotoCompleta": "{{titulo}} · saved in your passport",
+    "fotoParcial": "{{n}} of {{total}} pieces · complete it on your next route",
+    "lugares_one": "place",
+    "lugares_other": "places",
+    "bonoFin": "bonus Tlacos",
+    "sellos_one": "stamp",
+    "sellos_other": "stamps",
+    "yAhora": "What now?",
+    "gasta": "Spend your Tlacos",
+    "verPasaporte": "See my passport",
+    "bonoCobrado": "You already earned the end bonus on an earlier route."
   },
   "ruta": {
     "siguiente": "Next: {{nombre}}",
@@ -185,10 +198,17 @@
     "rompecabezas": "Puzzle",
     "piezas": "{{n}} of {{total}} pieces",
     "completa": "You completed the photo!",
-    "sellos": "Stamps ({{n}})",
-    "sinSellos": "Complete a place challenge to earn your first stamp.",
-    "acerto": "Challenge solved",
-    "ayuda": "With help",
-    "tlacos": "{{n}} Tlacos"
+    "tlacos": "{{n}} Tlacos",
+    "antetitulo": "Jarocho passport",
+    "avatar_avatar-flor": "Jarochita",
+    "guardado": "Saved on this phone · no account",
+    "sellosRuta": "Stamps · {{ruta}} route",
+    "sellosTitulo": "My stamps",
+    "album": "Stamp album",
+    "sello": "{{nombre}} stamp",
+    "selloPendiente": "{{nombre}}, stamp pending",
+    "fotoOculta": "Hidden photo",
+    "faltan_one": "One piece to go…",
+    "faltan_other": "{{count}} pieces to go…"
   }
 }

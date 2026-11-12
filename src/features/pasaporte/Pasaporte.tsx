@@ -1,21 +1,26 @@
-// M9 Pasaporte · Dev 2. Sellos de los retos completados y el rompecabezas de la foto histórica.
+// M9 Pasaporte · Dev 2. Diseño 12 (Panel: Pasaporte) y 09 (Rompecabezas fotográfico).
+// Tarjeta del viajero, álbum de sellos de la ruta y la foto oculta que se revela pieza a pieza.
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { LockSimple } from '@phosphor-icons/react'
+import { DeviceMobile } from '@phosphor-icons/react'
 import Ilustracion from '../../components/ui/Ilustracion'
-import Tarjeta from '../../components/ui/Tarjeta'
 import { useCampo } from '../../app/idioma'
+import { cargarPreferencias } from '../../app/preferencias'
 import { api } from '../../lib/api'
-import { posicionPieza, type PasaporteDatos } from './tipos'
+import type { Lugar } from '../../types/contratos'
+import Rompecabezas from './Rompecabezas'
+import { AVATAR, nombreCorto, type PasaporteDatos } from './tipos'
 import './pasaporte.css'
 
-// Sin foto todavía, cada pieza ganada se pinta con un color de la paleta.
-const COLORES = ['var(--rosa)', 'var(--amarillo)', 'var(--turquesa)', 'var(--naranja)', 'var(--morado)', 'var(--verde)']
+// Color de cada sello del álbum (borde y texto)
+const TINTAS = ['var(--rosa)', 'var(--morado)', '#0097a8', 'var(--naranja)', 'var(--verde)']
 
 export default function Pasaporte() {
   const { t } = useTranslation()
   const campo = useCampo()
   const [datos, setDatos] = useState<PasaporteDatos | null>(null)
+  const [saldo, setSaldo] = useState<number | null>(null)
+  const [ruta, setRuta] = useState<Lugar[] | null>(null)
   const [fallo, setFallo] = useState(false)
 
   useEffect(() => {
@@ -24,6 +29,14 @@ export default function Pasaporte() {
       .pasaporte()
       .then((d) => vivo && setDatos(d as PasaporteDatos))
       .catch(() => vivo && setFallo(true))
+    api
+      .saldo()
+      .then((s) => vivo && setSaldo(s.saldo))
+      .catch(() => {})
+    api
+      .rutaActual()
+      .then((r) => vivo && setRuta(r.lugares))
+      .catch(() => {})
     return () => {
       vivo = false
     }
@@ -34,65 +47,90 @@ export default function Pasaporte() {
 
   const { sellos, piezas, foto } = datos
   const url = foto?.url || null
-  const filas = Math.ceil(piezas.total / 3)
+  const porSlug = new Map(sellos.map((s) => [s.lugar_slug, s]))
+  // Álbum: las paradas de la ruta (hechas o pendientes); sin ruta, solo los sellos ganados.
+  const album = ruta
+    ? ruta.map((l) => ({ slug: l.slug, nombre: campo(l, 'nombre'), ilustracion: l.ilustracion, hecho: porSlug.has(l.slug) }))
+    : sellos.map((s) => ({ slug: s.lugar_slug, nombre: campo(s, 'nombre'), ilustracion: s.ilustracion, hecho: true }))
+  const hechos = album.filter((a) => a.hecho).length
+  const interes = cargarPreferencias().intereses[0]
+  const faltan = piezas.total - piezas.ganadas
 
   return (
-    <section aria-labelledby="titulo-pasaporte">
-      <h2 id="titulo-pasaporte" className="pasaporte-titulo">{t('pasaporte.titulo')}</h2>
-
-      <h3 className="pasaporte-subtitulo">{foto ? campo(foto, 'titulo') : t('pasaporte.rompecabezas')}</h3>
-      <p className="pasaporte-progreso">{t('pasaporte.piezas', { n: piezas.ganadas, total: piezas.total })}</p>
-      <div
-        className="pasaporte-rompecabezas"
-        style={{ aspectRatio: `3 / ${filas}` }}
-        role="img"
-        aria-label={t('pasaporte.piezas', { n: piezas.ganadas, total: piezas.total })}
-      >
-        {Array.from({ length: piezas.total }, (_, i) => {
-          const ganada = piezas.indices.includes(i)
-          return (
-            <span
-              key={i}
-              className={`pasaporte-pieza${ganada ? '' : ' pasaporte-pieza--falta'}`}
-              style={
-                ganada
-                  ? url
-                    ? {
-                        backgroundImage: `url(${url})`,
-                        backgroundSize: `300% ${filas * 100}%`,
-                        backgroundPosition: posicionPieza(i, piezas.total),
-                      }
-                    : { background: COLORES[i % COLORES.length] }
-                  : undefined
-              }
-            >
-              {!ganada && <LockSimple size={22} weight="duotone" aria-hidden="true" />}
-            </span>
-          )
-        })}
+    <section className="pasaporte" aria-labelledby="titulo-pasaporte">
+      <div className="pasaporte-tarjeta">
+        <Ilustracion nombre={AVATAR} tamano={72} />
+        <div>
+          <span className="pasaporte-antetitulo">{t('pasaporte.antetitulo')}</span>
+          <h2 id="titulo-pasaporte">{t(`pasaporte.avatar_${AVATAR}`)}</h2>
+          <p className="pasaporte-saldo">
+            <Ilustracion nombre="moneda" tamano={22} />
+            {t('pasaporte.tlacos', { n: saldo ?? 0 })}
+          </p>
+        </div>
       </div>
-      {piezas.completa && <p className="pasaporte-completa">{t('pasaporte.completa')}</p>}
+      <p className="pasaporte-nota">
+        <DeviceMobile size={16} weight="duotone" aria-hidden="true" />
+        {t('pasaporte.guardado')}
+      </p>
 
-      <h3 className="pasaporte-subtitulo">{t('pasaporte.sellos', { n: sellos.length })}</h3>
-      {sellos.length === 0 ? (
-        <p>{t('pasaporte.sinSellos')}</p>
-      ) : (
-        <ul className="pasaporte-sellos">
-          {sellos.map((s) => (
-            <li key={s.lugar_slug}>
-              <Tarjeta className="pasaporte-sello">
-                <Ilustracion nombre={s.ilustracion} tamano={56} />
-                <div>
-                  <strong>{campo(s, 'nombre')}</strong>
-                  <p className="pasaporte-detalle">
-                    {s.acerto ? t('pasaporte.acerto') : t('pasaporte.ayuda')} · {t('pasaporte.tlacos', { n: s.tlacos })}
-                  </p>
-                </div>
-              </Tarjeta>
+      <div className="pasaporte-encabezado">
+        <h3>{interes ? t('pasaporte.sellosRuta', { ruta: t(`preferencias.categorias.${interes}`) }) : t('pasaporte.sellosTitulo')}</h3>
+        <span>
+          {hechos} / {album.length}
+        </span>
+      </div>
+      <ul className="pasaporte-album" aria-label={t('pasaporte.album')}>
+        {album.map((a, i) =>
+          a.hecho ? (
+            <li key={a.slug}>
+              <span
+                className="pasaporte-sello"
+                style={{ ['--tinta-sello' as string]: TINTAS[i % TINTAS.length], rotate: `${i % 2 ? 6 : -8}deg` }}
+                role="img"
+                aria-label={t('pasaporte.sello', { nombre: a.nombre })}
+              >
+                <Ilustracion nombre={a.ilustracion} tamano={36} />
+                <span>{nombreCorto(a.nombre)}</span>
+              </span>
             </li>
-          ))}
-        </ul>
-      )}
+          ) : (
+            <li key={a.slug} aria-label={t('pasaporte.selloPendiente', { nombre: a.nombre })}>
+              <span className="pasaporte-hueco" aria-hidden="true">
+                ?
+              </span>
+              <span className="pasaporte-hueco-nombre">{nombreCorto(a.nombre)}</span>
+            </li>
+          ),
+        )}
+        <li>
+          <a className="pasaporte-foto-oculta" href="#rompecabezas">
+            <Ilustracion nombre="puzzle" tamano={32} />
+            {t('pasaporte.fotoOculta')}
+            <br />
+            {piezas.ganadas} / {piezas.total}
+          </a>
+        </li>
+      </ul>
+
+      <div id="rompecabezas" className="pasaporte-rompe">
+        <span className="pasaporte-antetitulo">{t('pasaporte.rompecabezas')}</span>
+        <h3>{foto ? campo(foto, 'titulo') : t('pasaporte.fotoOculta')}</h3>
+        <div className="pasaporte-marco">
+          <Rompecabezas piezas={piezas} url={url} />
+        </div>
+        <div className="pasaporte-progreso">
+          <div className="pasaporte-barra" aria-hidden="true">
+            <div style={{ width: `${(piezas.ganadas / piezas.total) * 100}%` }} />
+          </div>
+          <span>
+            {piezas.ganadas}/{piezas.total}
+          </span>
+        </div>
+        <p className="pasaporte-faltan">
+          {piezas.completa ? t('pasaporte.completa') : t('pasaporte.faltan', { count: faltan })}
+        </p>
+      </div>
     </section>
   )
 }

@@ -6,8 +6,8 @@ import './mapa.css'
 interface Props {
   /** Nombre de la ilustración del avatar (avatar-flor, avatar-sombrero…). */
   avatar: string
-  /** Texto de la ruta ("Ruta de Leyendas"); null si no hay ruta activa. */
-  nombreRuta: string | null
+  /** Texto de la ruta ("Ruta de Leyendas"); null si no hay ruta activa; undefined mientras carga. */
+  nombreRuta: string | null | undefined
   completados: number
   total: number
   saldo: number | null
@@ -39,7 +39,7 @@ export default function Cabecera({ avatar, nombreRuta, completados, total, saldo
             </div>
           </>
         ) : (
-          <span>{t('mapa.explora')}</span>
+          <span>{nombreRuta === undefined ? t('comun.cargando') : t('mapa.explora')}</span>
         )}
       </div>
       <button

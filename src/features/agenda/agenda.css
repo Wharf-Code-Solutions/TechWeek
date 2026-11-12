@@ -1,14 +1,42 @@
-.agenda-titulo { font: 400 1.6rem/1.2 var(--fuente-titulo); color: var(--rosa); margin: 8px 0 16px; }
-.agenda-lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-.agenda-evento { display: grid; gap: 6px; }
-.agenda-dato { display: flex; align-items: center; gap: 6px; font-weight: 700; }
-.agenda-ahora {
-  justify-self: start;
-  padding: 2px 10px;
-  border: 2px solid var(--tinta);
-  border-radius: 999px;
-  background: var(--verde);
+/* M11 Agenda · diseño 11 */
+.agenda { display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; }
+.agenda-encabezado { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.agenda-encabezado h2 { margin: 0; font: 400 26px var(--fuente-titulo); }
+.agenda-encabezado span { font: 17px var(--fuente-nota); color: var(--rosa); }
+
+.agenda-dias { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.agenda-dias button {
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d9d2ea;
+  border-radius: 14px;
+  background: #f4f1fa;
   color: var(--tinta);
-  font-weight: 900;
-  font-size: 0.85rem;
+  font-family: var(--fuente-texto);
+  cursor: pointer;
 }
+.agenda-dias span { font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.agenda-dias strong { font-size: 19px; font-weight: 900; }
+.agenda-dias button[aria-pressed='true'] { border: 2.5px solid var(--tinta); box-shadow: 3px 3px 0 var(--tinta); background: var(--amarillo); }
+.agenda-dias button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+
+.agenda-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.agenda-evento { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 18px; color: var(--tinta); }
+.agenda-icono { flex-shrink: 0; width: 56px; height: 56px; display: grid; place-items: center; border-radius: 14px; background: #fff; }
+.agenda-evento h3 { margin: 2px 0 0; font-size: 16px; font-weight: 900; }
+.agenda-evento p { margin: 0; font-size: 13px; font-weight: 800; }
+.agenda-evento .agenda-lugar { font-weight: 700; }
+.agenda-vivo {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 99px;
+  background: var(--tinta);
+  color: var(--amarillo);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.agenda-vacia { margin: 0; font-weight: 800; }

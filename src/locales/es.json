@@ -147,23 +147,36 @@
     "ocultar": "Ocultar panel"
   },
   "agenda": {
-    "titulo": "Agenda",
-    "vacia": "No hay eventos próximos por ahora.",
-    "ahora": "Ahora"
+    "titulo": "Agenda viva",
+    "vacia": "No hay eventos este día.",
+    "ahora": "En vivo",
+    "enMapa": "también en el mapa",
+    "dia": "Día",
+    "hoy": "Hoy",
+    "a": "a {{dist}}"
   },
   "fin": {
     "confirmar": "¿Terminar tu ruta? Recibirás el bono de fin si completaste al menos un reto.",
     "si": "Sí, terminar la ruta",
     "seguir": "Seguir explorando",
-    "bono": "¡Bono de fin: +{{n}} Tlacos!",
     "sinBono": "Completa al menos un reto en tu próxima ruta para ganar el bono.",
-    "visitados": "Lugares visitados",
-    "deTotal": "{{n}} de {{total}}",
-    "retos": "Retos completados",
-    "saldo": "Saldo final",
-    "tlacos": "{{n}} Tlacos",
+    "saldo": "Tienes {{n}} Tlacos",
     "nueva": "Armar otra ruta",
-    "sinRuta": "No tienes una ruta activa."
+    "sinRuta": "No tienes una ruta activa.",
+    "logrado": "¡Lo lograste!",
+    "completada": "Ruta completada",
+    "confirmarTitulo": "¿Terminas aquí?",
+    "fotoCompleta": "{{titulo}} · guardada en tu pasaporte",
+    "fotoParcial": "{{n}} de {{total}} piezas · complétala en tu próxima ruta",
+    "lugares_one": "lugar",
+    "lugares_other": "lugares",
+    "bonoFin": "Tlacos de bono",
+    "sellos_one": "sello",
+    "sellos_other": "sellos",
+    "yAhora": "¿Y ahora qué?",
+    "gasta": "Gasta tus Tlacos",
+    "verPasaporte": "Ver mi pasaporte",
+    "bonoCobrado": "El bono de fin ya lo ganaste en una ruta anterior."
   },
   "ruta": {
     "siguiente": "Siguiente: {{nombre}}",
@@ -185,10 +198,17 @@
     "rompecabezas": "Rompecabezas",
     "piezas": "{{n}} de {{total}} piezas",
     "completa": "¡Completaste la foto!",
-    "sellos": "Sellos ({{n}})",
-    "sinSellos": "Completa el reto de un lugar para ganar tu primer sello.",
-    "acerto": "Reto acertado",
-    "ayuda": "Con ayuda",
-    "tlacos": "{{n}} Tlacos"
+    "tlacos": "{{n}} Tlacos",
+    "antetitulo": "Pasaporte jarocho",
+    "avatar_avatar-flor": "Jarochita",
+    "guardado": "Guardado en este celular · sin cuenta",
+    "sellosRuta": "Sellos · Ruta de {{ruta}}",
+    "sellosTitulo": "Mis sellos",
+    "album": "Álbum de sellos",
+    "sello": "Sello de {{nombre}}",
+    "selloPendiente": "{{nombre}}, sello pendiente",
+    "fotoOculta": "Foto oculta",
+    "faltan_one": "Te falta una pieza…",
+    "faltan_other": "Te faltan {{count}} piezas…"
   }
 }

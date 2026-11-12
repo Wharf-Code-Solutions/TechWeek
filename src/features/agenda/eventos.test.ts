@@ -20,3 +20,15 @@ describe('agenda', () => {
     expect(enCurso(lista[0], AHORA)).toBe(false)
   })
 })
+
+describe('días en Veracruz', () => {
+  it('usa la hora de Veracruz, no la del celular', async () => {
+    const { diaVeracruz } = await import('./eventos')
+    // 01:00 UTC del 21 = 19:00 del 20 en Veracruz
+    expect(diaVeracruz('2026-11-21T01:00:00+00:00')).toBe('2026-11-20')
+  })
+  it('lista 5 días seguidos desde hoy', async () => {
+    const { proximosDias } = await import('./eventos')
+    expect(proximosDias(5, AHORA)).toEqual(['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24'])
+  })
+})

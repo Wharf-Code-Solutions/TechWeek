@@ -2,6 +2,7 @@
 // Junta la ruta, los retos hechos (pasaporte), el saldo y los eventos en curso; el mapa y el panel solo pintan.
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 import { useLugares } from '../app/datos'
 import { cargarPreferencias } from '../app/preferencias'
 import Banderines from '../components/ui/Banderines'
@@ -15,14 +16,14 @@ import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import { useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
-import type { PasaporteDatos } from '../features/pasaporte/tipos'
+import { AVATAR, type PasaporteDatos } from '../features/pasaporte/tipos'
 import { api } from '../lib/api'
 import seed from '../data/seed.json'
 import type { Evento, Lugar } from '../types/contratos'
 
 const NINGUNO: Lugar[] = []
-// shortcut: avatar fijo; usar el personaje elegido cuando Preferencias (Dev 3) lo guarde.
-const AVATAR = 'avatar-flor'
+
+
 const ALTO_PANEL = { abierto: '48dvh', plegado: '108px' }
 
 export default function Mapa() {
@@ -34,7 +35,9 @@ export default function Mapa() {
   const [hechos, setHechos] = useState<ReadonlyMap<string, number>>(new Map())
   const [saldo, setSaldo] = useState<number | null>(null)
   const [eventos, setEventos] = useState<Evento[]>(seed.eventos as Evento[])
-  const [pestana, setPestana] = useState<Pestana>('ruta')
+  // Otras pantallas pueden abrir el mapa en una pestaña: navigate('/mapa', { state: { pestana: 'pasaporte' } })
+  const inicial = (useLocation().state as { pestana?: Pestana } | null)?.pestana
+  const [pestana, setPestana] = useState<Pestana>(inicial ?? 'ruta')
   const [plegado, setPlegado] = useState(false)
 
   useEffect(() => {
@@ -67,11 +70,14 @@ export default function Mapa() {
   const enRuta = useMemo(() => new Set((ruta ?? []).map((l) => l.slug)), [ruta])
   const { siguiente, completados, total } = progresoRuta(ruta ?? [], slugsHechos)
   const interes = cargarPreferencias().intereses[0]
-  const nombreRuta = ruta
-    ? interes
-      ? t('mapa.rutaDe', { categoria: t(`preferencias.categorias.${interes}`) })
-      : t('mapa.tuRuta')
-    : null
+  const nombreRuta =
+    ruta === undefined
+      ? undefined
+      : ruta
+        ? interes
+          ? t('mapa.rutaDe', { categoria: t(`preferencias.categorias.${interes}`) })
+          : t('mapa.tuRuta')
+        : null
 
   const abrir = (p: Pestana) => {
     setPestana(p)
