@@ -14,7 +14,7 @@ import './mapa.css'
 
 interface Props {
   ruta: Lugar[] | null | undefined
-  /** Slug → Tlacos ganados en el reto. */
+  /** Slug → doblones ganados en el reto. */
   hechos: ReadonlyMap<string, number>
   siguiente: Lugar | null
   pos: Posicion | null

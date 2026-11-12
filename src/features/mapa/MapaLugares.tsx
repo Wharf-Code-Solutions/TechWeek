@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Check, Crosshair, ForkKnife, Storefront, TextAa, X } from '@phosphor-icons/react'
-import type { Evento, Lugar } from '../../types/contratos'
+import type { Comercio, Evento, Lugar } from '../../types/contratos'
 import { useRecorridoDemo } from '../geo/demoStore'
 import { distanciaM } from '../geo/distancia'
 import { RECORRIDO_DEMO } from '../geo/rutaDemo'
@@ -16,7 +16,9 @@ import { usePosition } from '../geo/usePosition'
 import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
-import HojaRestaurantes from '../vitrina/HojaRestaurantes'
+import TarjetaComercio from '../vitrina/TarjetaComercio'
+import { comidaCercana, ilustracionDeTipo } from '../vitrina/vitrina'
+import { useVitrina } from '../vitrina/useVitrina'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
 import './mapa.css'
@@ -31,6 +33,15 @@ const ZOOM = 17
 const ZOOM_MIN = 16.6
 /** Duración de un pulso de la línea de la ruta (ms). */
 const PULSO_MS = 1600
+/**
+ * Flujo de la ruta: rayas blancas que avanzan por la línea azul en el sentido del recorrido. Mapbox no anima
+ * `line-dasharray` solo: se recorre esta secuencia de patrones desplazados (cada paso mueve el patrón medio cuadro).
+ */
+const FLUJO_PASOS: number[][] = [
+  [0, 4, 3], [0.5, 4, 2.5], [1, 4, 2], [1.5, 4, 1.5], [2, 4, 1], [2.5, 4, 0.5], [3, 4, 0],
+  [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5],
+]
+const FLUJO_PASO_MS = 70
 // Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
 const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
@@ -147,10 +158,26 @@ export default function MapaLugares({
   const en = i18n.language === 'en'
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
+  // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
+  const [comercio, setComercio] = useState<Comercio | null>(null)
+  const { comercios } = useVitrina()
+  const comida = useMemo(() => (comer ? comidaCercana(comercios, pos).map((x) => x.comercio) : []), [comer, comercios, pos])
   const mapa = useRef<MapRef>(null)
   const [zoom, setZoom] = useState(ZOOM)
-  const elegir = useCallback((l: Lugar) => setElegido(l), [])
+  const elegir = useCallback((l: Lugar) => {
+    setElegido(l)
+    setComercio(null)
+  }, [])
+  const elegirComercio = (c: Comercio) => {
+    setComercio(c)
+    setElegido(null)
+    mapa.current?.flyTo({ center: [c.lng, c.lat], duration: 700 })
+  }
+  const alternarComer = () => {
+    setComer((v) => !v)
+    setComercio(null)
+  }
   const navegar = useNavigate()
   const linea = useRutaCaminable(ruta, origen)
   // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
@@ -243,6 +270,27 @@ export default function MapaLugares({
     return () => cancelAnimationFrame(cuadro)
   }, [hayGuia])
 
+  // Flujo: rayas blancas que corren por la ruta para que no se vea como una línea azul fija.
+  // Se apaga con "reducir movimiento" (las rayas quedan quietas).
+  const hayRuta = linea.length > 1
+  useEffect(() => {
+    if (!hayRuta || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const m = mapa.current?.getMap()
+    if (!m) return
+    let cuadro = 0
+    let paso = -1
+    const animar = (t: number) => {
+      cuadro = requestAnimationFrame(animar)
+      const nuevo = Math.floor(t / FLUJO_PASO_MS) % FLUJO_PASOS.length
+      if (nuevo === paso) return
+      paso = nuevo
+      // La guía (tramo que falta) tapa la ruta: sus rayas van en su propia capa.
+      for (const id of ['ruta-flujo', 'guia-flujo']) if (m.getLayer(id)) m.setPaintProperty(id, 'line-dasharray', FLUJO_PASOS[nuevo])
+    }
+    cuadro = requestAnimationFrame(animar)
+    return () => cancelAnimationFrame(cuadro)
+  }, [hayRuta, hayGuia])
+
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
   const ultimoEnfoque = useRef(0)
   useEffect(() => {
@@ -320,6 +368,19 @@ export default function MapaLugares({
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
               paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-opacity': hayGuia ? 0.45 : 1, 'line-emissive-strength': 1 }}
             />
+            <Layer
+              id="ruta-flujo"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'butt', 'line-join': 'round' }}
+              paint={{
+                'line-color': '#ffffff',
+                'line-width': 3.5,
+                'line-opacity': hayGuia ? 0.4 : 0.9,
+                'line-dasharray': FLUJO_PASOS[0],
+                'line-emissive-strength': 1,
+              }}
+            />
           </Source>
         )}
         {hayGuia && (
@@ -344,6 +405,13 @@ export default function MapaLugares({
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
               paint={{ 'line-color': AZUL_RUTA, 'line-width': 8, 'line-emissive-strength': 1 }}
+            />
+            <Layer
+              id="guia-flujo"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'butt', 'line-join': 'round' }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 4.5, 'line-opacity': 0.9, 'line-dasharray': FLUJO_PASOS[0], 'line-emissive-strength': 1 }}
             />
           </Source>
         )}
@@ -389,6 +457,25 @@ export default function MapaLugares({
             </span>
           </Marker>
         )}
+        {comida.map((c) => {
+          const activo = comercio?.slug === c.slug
+          return (
+            <Marker key={c.slug} latitude={c.lat} longitude={c.lng} anchor="bottom" style={{ zIndex: activo ? 4 : 2 }}>
+              <button
+                type="button"
+                className={`marcador marcador--comida${activo ? ' marcador--comida-activo' : ''}`}
+                aria-label={c.nombre}
+                aria-pressed={activo}
+                onClick={() => elegirComercio(c)}
+              >
+                <span className="marcador-circulo">
+                  <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={28} />
+                </span>
+                {activo && <span className="marcador-etiqueta">{c.nombre}</span>}
+              </button>
+            </Marker>
+          )
+        })}
         {pos && (
           <Marker latitude={pos.lat} longitude={pos.lng} style={{ zIndex: 3 }}>
             <span className={`mapa-yo${demo ? ' mapa-yo--demo' : ''}`} role="img" aria-label={t('mapa.tuPosicion')} />
@@ -414,11 +501,11 @@ export default function MapaLugares({
         className="mapa-nombres mapa-vitrina"
         aria-label={t('mapa.restaurantes')}
         title={t('mapa.restaurantes')}
-        onClick={() => setComer(true)}
+        aria-pressed={comer}
+        onClick={alternarComer}
       >
         <ForkKnife size={22} weight="bold" aria-hidden="true" />
       </button>
-      {comer && <HojaRestaurantes onCerrar={() => setComer(false)} />}
 
       {pos && (
         <button
@@ -433,6 +520,14 @@ export default function MapaLugares({
       )}
 
       <div className="mapa-abajo">
+        {comercio && (
+          <div className="mapa-vitrina-hoja">
+            <button type="button" className="mapa-vitrina-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setComercio(null)}>
+              <X size={20} weight="bold" aria-hidden="true" />
+            </button>
+            <TarjetaComercio comercio={comercio} onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })} />
+          </div>
+        )}
         {elegido && (
           <Tarjeta className="mapa-tarjeta">
             <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>
