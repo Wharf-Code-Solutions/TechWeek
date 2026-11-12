@@ -14,6 +14,7 @@ import { useModoManual, usePosition } from '../geo/usePosition'
 import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
+import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
 import TarjetaComercio from '../vitrina/TarjetaComercio'
 import { comidaCercana, ilustracionDeTipo } from '../vitrina/vitrina'
 import { useVitrina } from '../vitrina/useVitrina'
@@ -31,15 +32,6 @@ const ZOOM = 17
 const ZOOM_MIN = 16.6
 /** Duración de un pulso de la línea de la ruta (ms). */
 const PULSO_MS = 1600
-/**
- * Flujo de la ruta: rayas blancas que avanzan por la línea azul en el sentido del recorrido. Mapbox no anima
- * `line-dasharray` solo: se recorre esta secuencia de patrones desplazados (cada paso mueve el patrón medio cuadro).
- */
-const FLUJO_PASOS: number[][] = [
-  [0, 4, 3], [0.5, 4, 2.5], [1, 4, 2], [1.5, 4, 1.5], [2, 4, 1], [2.5, 4, 0.5], [3, 4, 0],
-  [0, 0.5, 3, 3.5], [0, 1, 3, 3], [0, 1.5, 3, 2.5], [0, 2, 3, 2], [0, 2.5, 3, 1.5], [0, 3, 3, 1], [0, 3.5, 3, 0.5],
-]
-const FLUJO_PASO_MS = 170
 // Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
 const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
@@ -99,6 +91,7 @@ const leerNombres = () => {
 
 // Azul de la ruta; el contorno blanco la separa de calles y edificios.
 const AZUL_RUTA = '#1446C8'
+
 
 interface PinProps {
   lugar: Lugar
@@ -236,13 +229,12 @@ export default function MapaLugares({
   // dónde seguir. Se anima a ~20 cuadros por segundo y se apaga con "reducir movimiento".
   useEffect(() => {
     if (!hayGuia || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
-    const m = mapa.current?.getMap()
-    if (!m) return
     let cuadro = 0
     let ultimo = 0
     const animar = (t: number) => {
       cuadro = requestAnimationFrame(animar)
-      if (t - ultimo < 50 || !m.getLayer('guia-pulso')) return
+      const m = mapa.current?.getMap()
+      if (!m || t - ultimo < 50 || !m.getLayer('guia-pulso')) return
       ultimo = t
       const f = (t % PULSO_MS) / PULSO_MS
       m.setPaintProperty('guia-pulso', 'line-width', 12 + 24 * f)
@@ -252,25 +244,25 @@ export default function MapaLugares({
     return () => cancelAnimationFrame(cuadro)
   }, [hayGuia])
 
-  // Flujo: rayas blancas que corren por la ruta para que no se vea como una línea azul fija.
-  // Se apaga con "reducir movimiento" (las rayas quedan quietas).
+  // Brillo que viaja por la ruta (y por el tramo que falta) para que no se vea como una línea azul fija.
+  // Se apaga con "reducir movimiento" (la línea queda azul). El mapa se pide en cada cuadro: al montar la pantalla
+  // todavía no existe y el efecto no se vuelve a ejecutar solo.
   const hayRuta = linea.length > 1
   useEffect(() => {
     if (!hayRuta || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
-    const m = mapa.current?.getMap()
-    if (!m) return
-    let cuadro = 0
-    let paso = -1
-    const animar = (t: number) => {
-      cuadro = requestAnimationFrame(animar)
-      const nuevo = Math.floor(t / FLUJO_PASO_MS) % FLUJO_PASOS.length
-      if (nuevo === paso) return
-      paso = nuevo
-      // La guía (tramo que falta) tapa la ruta: sus rayas van en su propia capa.
-      for (const id of ['ruta-flujo', 'guia-flujo']) if (m.getLayer(id)) m.setPaintProperty(id, 'line-dasharray', FLUJO_PASOS[nuevo])
+    // Un temporizador (y no requestAnimationFrame): el mapa se vuelve a dibujar solo al cambiar la capa, y así la
+    // animación no depende de que el navegador reparta cuadros a una pestaña que no está en primer plano.
+    const animar = () => {
+      const m = mapa.current?.getMap()
+      if (!m || document.hidden) return
+      // p va de -ancho a 1+ancho: la franja entra por el inicio, cruza toda la línea y sale por el final.
+      const p = ((performance.now() % BRILLO_CICLO_MS) / BRILLO_CICLO_MS) * (1 + 2 * BRILLO_ANCHO) - BRILLO_ANCHO
+      for (const id of ['ruta-linea', 'guia-linea']) {
+        if (m.getLayer(id)) m.setPaintProperty(id, 'line-gradient', degradadoBrillo(p, AZUL_RUTA, BRILLO_COLOR))
+      }
     }
-    cuadro = requestAnimationFrame(animar)
-    return () => cancelAnimationFrame(cuadro)
+    const temporizador = window.setInterval(animar, BRILLO_PASO_MS)
+    return () => window.clearInterval(temporizador)
   }, [hayRuta, hayGuia])
 
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
@@ -338,6 +330,7 @@ export default function MapaLugares({
           <Source
             id="ruta"
             type="geojson"
+            lineMetrics
             data={datosRuta}
           >
             {/* slot "middle": sobre calles y edificios, bajo los textos del estilo Standard */}
@@ -353,25 +346,17 @@ export default function MapaLugares({
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-opacity': hayGuia ? 0.45 : 1, 'line-emissive-strength': 1 }}
-            />
-            <Layer
-              id="ruta-flujo"
-              type="line"
-              slot="middle"
-              layout={{ 'line-cap': 'butt', 'line-join': 'round' }}
               paint={{
-                'line-color': '#ffffff',
-                'line-width': 3.5,
-                'line-opacity': hayGuia ? 0.4 : 0.9,
-                'line-dasharray': FLUJO_PASOS[0],
+                'line-gradient': degradadoBrillo(-1, AZUL_RUTA, BRILLO_COLOR),
+                'line-width': 6,
+                'line-opacity': hayGuia ? 0.45 : 1,
                 'line-emissive-strength': 1,
               }}
             />
           </Source>
         )}
         {hayGuia && (
-          <Source id="guia" type="geojson" data={datosGuia}>
+          <Source id="guia" type="geojson" lineMetrics data={datosGuia}>
             <Layer
               id="guia-pulso"
               type="line"
@@ -391,14 +376,7 @@ export default function MapaLugares({
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': AZUL_RUTA, 'line-width': 8, 'line-emissive-strength': 1 }}
-            />
-            <Layer
-              id="guia-flujo"
-              type="line"
-              slot="middle"
-              layout={{ 'line-cap': 'butt', 'line-join': 'round' }}
-              paint={{ 'line-color': '#ffffff', 'line-width': 4.5, 'line-opacity': 0.9, 'line-dasharray': FLUJO_PASOS[0], 'line-emissive-strength': 1 }}
+              paint={{ 'line-gradient': degradadoBrillo(-1, AZUL_RUTA, BRILLO_COLOR), 'line-width': 8, 'line-emissive-strength': 1 }}
             />
           </Source>
         )}
