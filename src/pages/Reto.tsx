@@ -1,15 +1,19 @@
-// Pantalla: Reto · Responsable: Dev 2 (pantallas) · Dev 1 (validación)
+// Pantalla: Reto · Responsable: Dev 2 (pantallas) · Dev 1 (validación). Diseño 06 (leyenda) y 07 (orden).
 // Al completarse navega a /recompensa/:slug con el resultado de completarReto() en location.state.
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { X } from '@phosphor-icons/react'
 import { api } from '../lib/api'
-import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
+import Ilustracion from '../components/ui/Ilustracion'
+import { urlIlustracion } from '../components/ui/ilustraciones'
 import JuegoPalabras from '../features/retos/JuegoPalabras'
 import JuegoOrden from '../features/retos/JuegoOrden'
 import { respuestaInicial, type RetoPublico } from '../features/retos/logica'
 import '../features/retos/retos.css'
+
+const ESCENA = { palabras: 'escena-leyenda', orden: 'escena-puerto' } as const
 
 export default function Reto() {
   const { t, i18n } = useTranslation()
@@ -18,6 +22,7 @@ export default function Reto() {
   const navigate = useNavigate()
   const [reto, setReto] = useState<RetoPublico | null>(null)
   const [valor, setValor] = useState<(string | null)[]>([])
+  const [parada, setParada] = useState<{ n: number; total: number } | null>(null)
   const [fallos, setFallos] = useState(0)
   const [enviando, setEnviando] = useState(false)
   const [error, setError] = useState(false)
@@ -31,6 +36,17 @@ export default function Reto() {
       })
       .catch(() => setError(true))
   }, [slug, idioma])
+
+  // "Parada 2 de 5" si el lugar está en la ruta activa; sin ruta no se muestra.
+  useEffect(() => {
+    api
+      .rutaActual()
+      .then((r) => {
+        const i = r.lugares.findIndex((l) => l.slug === slug)
+        if (i >= 0) setParada({ n: i + 1, total: r.lugares.length })
+      })
+      .catch(() => {})
+  }, [slug])
 
   async function enviar(revelar: boolean) {
     setEnviando(true)
@@ -47,49 +63,86 @@ export default function Reto() {
 
   if (error)
     return (
-      <main className="reto">
-        <p className="reto-aviso" role="alert">{t('reto.error')}</p>
-        <Boton ancho onClick={() => navigate('/mapa')}>{t('reto.volver')}</Boton>
+      <main className="reto reto--palabras">
+        <div className="reto-cuerpo">
+          <p className="reto-aviso" role="alert">{t('reto.error')}</p>
+          <Boton ancho onClick={() => navigate('/mapa')}>{t('reto.volver')}</Boton>
+        </div>
       </main>
     )
-  if (!reto) return <main className="reto"><p role="status">{t('reto.cargando')}</p></main>
+  if (!reto)
+    return (
+      <main className="reto reto--palabras">
+        <p className="reto-cuerpo" role="status">{t('reto.cargando')}</p>
+      </main>
+    )
 
   const completo = valor.length > 0 && valor.every((v) => v !== null)
-  const sinIntentos = fallos >= reto.intentos_max
+  const quedan = Math.max(reto.intentos_max - fallos, 0)
+  const sinIntentos = quedan === 0
 
   return (
-    <>
-      <Banderines cuerda />
-      <main className="reto">
-        <h1>{t('pantallas.reto')}</h1>
-        <p className="reto-premio">{t('reto.premio', { n: reto.tlacos })}</p>
-        <p className="reto-instrucciones">{t(`reto.instrucciones_${reto.tipo}`)}</p>
+    <main className={`reto reto--${reto.tipo}`}>
+      <div className="reto-escena" style={{ backgroundImage: `url("${urlIlustracion(ESCENA[reto.tipo])}")` }}>
+        <div className="reto-barra">
+          <Link to="/mapa" className="reto-salir" aria-label={t('reto.salir')}>
+            <X size={20} weight="bold" aria-hidden="true" />
+          </Link>
+          <span className="reto-pastilla">
+            {reto.tipo === 'orden' && parada ? (
+              t('reto.paradaPremio', { n: parada.n, total: parada.total, tlacos: reto.tlacos })
+            ) : (
+              <>
+                <Ilustracion nombre="moneda" tamano={20} />
+                {t('reto.mas', { n: reto.tlacos })}
+              </>
+            )}
+          </span>
+        </div>
+      </div>
+
+      <div className="reto-cuerpo">
+        <div>
+          {reto.tipo === 'palabras' && (
+            <span className="reto-antetitulo">
+              {parada ? t('reto.minijuegoParada', { n: parada.n, total: parada.total }) : t('reto.minijuego')}
+            </span>
+          )}
+          <h1>{t(`reto.titulo_${reto.tipo}`)}</h1>
+          <p className="reto-instrucciones">{t(`reto.instrucciones_${reto.tipo}`)}</p>
+        </div>
 
         {reto.tipo === 'palabras' ? (
           <JuegoPalabras contenido={reto[`contenido_${idioma}`]} valor={valor} onCambio={setValor} />
         ) : (
           <JuegoOrden contenido={reto[`contenido_${idioma}`]} valor={valor as string[]} onCambio={setValor} />
         )}
+      </div>
 
+      <div className="reto-pie">
+        <p className="reto-intentos" aria-label={t('reto.quedan', { count: quedan })}>
+          <span aria-hidden="true">{t('reto.intentos')}</span>
+          <span className="reto-corazones" aria-hidden="true">
+            {'♥'.repeat(quedan)}
+            <span className="reto-corazones-perdidos">{'♥'.repeat(reto.intentos_max - quedan)}</span>
+          </span>
+        </p>
         {fallos > 0 && (
           <p className="reto-aviso" role="status">
-            {sinIntentos ? t('reto.sinIntentos') : t('reto.incorrecto', { count: reto.intentos_max - fallos })}
+            {sinIntentos ? t('reto.sinIntentos') : t('reto.incorrecto', { count: quedan })}
           </p>
         )}
-
-        <div className="reto-acciones">
-          {!sinIntentos && (
-            <Boton ancho disabled={!completo || enviando} onClick={() => enviar(false)}>
-              {t('reto.comprobar')}
-            </Boton>
-          )}
-          {fallos > 0 && (
-            <Boton ancho variante="blanco" disabled={enviando} onClick={() => enviar(true)}>
-              {t('reto.revelar', { n: reto.tlacos_revelado })}
-            </Boton>
-          )}
-        </div>
-      </main>
-    </>
+        {!sinIntentos && (
+          <button type="button" className="reto-comprobar" disabled={!completo || enviando} onClick={() => enviar(false)}>
+            {t(`reto.comprobar_${reto.tipo}`)}
+          </button>
+        )}
+        {fallos > 0 && (
+          <Boton ancho variante="blanco" disabled={enviando} onClick={() => enviar(true)}>
+            {t('reto.revelar', { n: reto.tlacos_revelado })}
+          </Boton>
+        )}
+      </div>
+    </main>
   )
 }
