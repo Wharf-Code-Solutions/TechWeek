@@ -132,7 +132,6 @@
     "estado_siguiente": "{{nombre}}, siguiente parada",
     "eventoAhora": "{{titulo}} ahora",
     "nombres": "Mostrar u ocultar nombres de lugares",
-    "caminando": "Caminando…",
     "irAlLugar": "Ir al lugar y jugar",
     "miUbicacion": "Ir a mi ubicación",
     "vitrina": "Ver los negocios del Centro",

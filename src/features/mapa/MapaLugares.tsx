@@ -11,8 +11,8 @@ import { Check, Crosshair, ForkKnife, Lightning, List, Storefront, TextAa, X } f
 import type { Comercio, Evento, Lugar } from '../../types/contratos'
 import type { Punto } from '../geo/tipos'
 import { useModoManual, usePosition } from '../geo/usePosition'
-import { caminarHasta } from '../geo/caminata'
-import { useTramoCalles } from '../geo/useTramoCalles'
+import { moverManual } from '../geo/posicionManual'
+import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
 import { BRILLO_ANCHO, BRILLO_CICLO_MS, BRILLO_COLOR, BRILLO_PASO_MS, degradadoBrillo } from './brillo'
@@ -158,8 +158,6 @@ export default function MapaLugares({
   // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
   const [menu, setMenu] = useState(false)
-  // La personita va caminando hacia un lugar (posición por toque): la cámara la sigue.
-  const [caminando, setCaminando] = useState(false)
   // Pantalla de carga hasta que el mapa termina de pintarse (o pasan 9 s: sin red no debe quedarse ahí).
   const [listo, setListo] = useState(false)
   useEffect(() => {
@@ -266,10 +264,6 @@ export default function MapaLugares({
     }
   }
 
-  useEffect(() => {
-    if (caminando && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 120, easing: (x) => x })
-  }, [caminando, pos])
-
   // "Ver en el mapa" desde la vitrina: la cámara vuela hasta el negocio.
   useEffect(() => {
     if (!comercioFocal) return
@@ -294,12 +288,11 @@ export default function MapaLugares({
   // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
   // Sale de tu posición a la siguiente parada siguiendo la línea azul.
   const destino = useMemo(() => lugares.find((l) => l.slug === siguiente) ?? null, [lugares, siguiente])
-  // Por las calles desde donde estás hasta la siguiente parada (se pide de nuevo al cambiar de parada).
-  const tramo = useTramoCalles(pos, destino)
-  const datosGuia = useMemo(
-    () => ({ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: tramo } }),
-    [tramo],
-  )
+  const datosGuia = useMemo(() => {
+    let coordinates: [number, number][] = []
+    if (pos && destino && linea.length > 1) coordinates = tramoRestante(linea, pos, destino)
+    return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
+  }, [pos, destino, linea])
   const hayGuia = datosGuia.geometry.coordinates.length > 1
 
   // Pulso: un halo amarillo que se expande y se desvanece sobre el tramo que falta, para ubicar de un vistazo hacia
@@ -407,7 +400,7 @@ export default function MapaLugares({
           setMenu(false)
           // Un toque en el mapa mueve al turista; los toques en pines y en su propio marcador no.
           if (!modoManual || (e.originalEvent.target as HTMLElement).closest('.marcador, .mapa-yo')) return
-          void caminarHasta({ lat: e.lngLat.lat, lng: e.lngLat.lng })
+          moverManual({ lat: e.lngLat.lat, lng: e.lngLat.lng })
         }}
         onMoveStart={empezarMedicion}
         onMoveEnd={terminarMedicion}
@@ -639,18 +632,12 @@ export default function MapaLugares({
             {/* ¡Llegaste! registra la llegada (valida los 40 m) y desde ahí se juega el reto. */}
             <Boton
               ancho
-              disabled={caminando}
               onClick={() => {
-                if (!modoManual) return navegar(`/lugar/${elegido.slug}`)
-                // Lejos del Centro, "ir" es caminar por las calles hasta el lugar y, al llegar, abrirlo.
-                setCaminando(true)
-                void caminarHasta(elegido).then((llego) => {
-                  setCaminando(false)
-                  if (llego && window.location.pathname === '/mapa') navegar(`/lugar/${elegido.slug}`)
-                })
+                if (modoManual) moverManual(elegido) // lejos del Centro, "ir" es caminar hasta el lugar
+                navegar(`/lugar/${elegido.slug}`)
               }}
             >
-              {caminando ? t('mapa.caminando') : t('mapa.irAlLugar')}
+              {t('mapa.irAlLugar')}
             </Boton>
           </Tarjeta>
           </motion.div>
