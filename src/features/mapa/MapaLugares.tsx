@@ -2,7 +2,7 @@
 // `arriba` y `abajo` son capas sobre el mapa (flechas del recorrido, botón del panel).
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Map, { Marker, type MapRef } from 'react-map-gl/mapbox'
+import Map, { Layer, Marker, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X } from '@phosphor-icons/react'
 import type { Lugar } from '../../types/contratos'
@@ -13,8 +13,25 @@ import Boton from '../../components/ui/Boton'
 import './mapa.css'
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
-// Cámara limitada al Centro Histórico del puerto (regla de contratos §1)
-const LIMITES: [[number, number], [number, number]] = [[-96.145, 19.19], [-96.127, 19.207]]
+// Cámara limitada al Centro Histórico del puerto (regla de contratos §1). Con margen:
+// inclinada en 3D la vista alcanza más lejos y un límite justo empuja el centro a un lado.
+const LIMITES: [[number, number], [number, number]] = [[-96.16, 19.18], [-96.115, 19.22]]
+
+/** Vista inicial: sobre el turista si hay posición; si no, encuadrando todos los lugares. */
+function vistaInicial(pos: { lat: number; lng: number } | null, lugares: Lugar[]) {
+  const comun = { pitch: 55, fitBoundsOptions: { padding: 60 } }
+  if (pos) return { ...comun, latitude: pos.lat, longitude: pos.lng, zoom: 16.5 }
+  if (!lugares.length) return { ...comun, latitude: 19.1995, longitude: -96.138, zoom: 16 }
+  const lats = lugares.map((l) => l.lat)
+  const lngs = lugares.map((l) => l.lng)
+  return {
+    ...comun,
+    bounds: [
+      [Math.min(...lngs), Math.min(...lats)],
+      [Math.max(...lngs), Math.max(...lats)],
+    ] as [[number, number], [number, number]],
+  }
+}
 
 interface Props {
   lugares: Lugar[]
@@ -28,6 +45,8 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
   const mapa = useRef<MapRef>(null)
+  // Primera capa de etiquetas: los edificios 3D van debajo para no tapar nombres de calles.
+  const [antesDe, setAntesDe] = useState<string | undefined>()
 
   // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
   const demo = pos?.fuente === 'demo'
@@ -42,11 +61,30 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
       <Map
         ref={mapa}
         mapboxAccessToken={TOKEN}
-        initialViewState={{ latitude: pos?.lat ?? 19.1985, longitude: pos?.lng ?? -96.1365, zoom: 16 }}
+        initialViewState={vistaInicial(pos, lugares)}
         maxBounds={LIMITES}
+        maxPitch={70}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         style={{ width: '100%', height: '100%' }}
+        onLoad={(e) => setAntesDe(e.target.getStyle()?.layers?.find((c) => c.type === 'symbol')?.id)}
       >
+        {antesDe && (
+          <Layer
+            id="edificios-3d"
+            type="fill-extrusion"
+            source="composite"
+            source-layer="building"
+            filter={['==', 'extrude', 'true']}
+            minzoom={14}
+            beforeId={antesDe}
+            paint={{
+              'fill-extrusion-color': '#DCD6EC',
+              'fill-extrusion-height': ['get', 'height'],
+              'fill-extrusion-base': ['get', 'min_height'],
+              'fill-extrusion-opacity': 0.85,
+            }}
+          />
+        )}
         {lugares.map((l) => (
           <Marker key={l.slug} latitude={l.lat} longitude={l.lng} anchor="bottom">
             <button
