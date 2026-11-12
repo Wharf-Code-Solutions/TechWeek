@@ -94,7 +94,8 @@
   "mapa": {
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
     "tuPosicion": "Your position",
-    "cerrar": "Close"
+    "cerrar": "Close",
+    "terminar": "End route"
   },
   "reto": {
     "cargando": "Loading challenge…",
@@ -124,5 +125,19 @@
     "titulo": "Events",
     "vacia": "No upcoming events right now.",
     "ahora": "Now"
+  },
+  "fin": {
+    "confirmar": "End your route? You get the end bonus if you completed at least one challenge.",
+    "si": "Yes, end the route",
+    "seguir": "Keep exploring",
+    "bono": "End bonus: +{{n}} Tlacos!",
+    "sinBono": "Complete at least one challenge on your next route to earn the bonus.",
+    "visitados": "Places visited",
+    "deTotal": "{{n}} of {{total}}",
+    "retos": "Challenges completed",
+    "saldo": "Final balance",
+    "tlacos": "{{n}} Tlacos",
+    "nueva": "Build another route",
+    "sinRuta": "You have no active route."
   }
 }

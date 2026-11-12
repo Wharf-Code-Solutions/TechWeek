@@ -94,7 +94,8 @@
   "mapa": {
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",
-    "cerrar": "Cerrar"
+    "cerrar": "Cerrar",
+    "terminar": "Terminar ruta"
   },
   "reto": {
     "cargando": "Cargando reto…",
@@ -124,5 +125,19 @@
     "titulo": "Agenda",
     "vacia": "No hay eventos próximos por ahora.",
     "ahora": "Ahora"
+  },
+  "fin": {
+    "confirmar": "¿Terminar tu ruta? Recibirás el bono de fin si completaste al menos un reto.",
+    "si": "Sí, terminar la ruta",
+    "seguir": "Seguir explorando",
+    "bono": "¡Bono de fin: +{{n}} Tlacos!",
+    "sinBono": "Completa al menos un reto en tu próxima ruta para ganar el bono.",
+    "visitados": "Lugares visitados",
+    "deTotal": "{{n}} de {{total}}",
+    "retos": "Retos completados",
+    "saldo": "Saldo final",
+    "tlacos": "{{n}} Tlacos",
+    "nueva": "Armar otra ruta",
+    "sinRuta": "No tienes una ruta activa."
   }
 }

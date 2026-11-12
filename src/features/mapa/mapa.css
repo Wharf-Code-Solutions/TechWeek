@@ -67,3 +67,6 @@
 }
 .panel-pestana[aria-selected='true'] { background: var(--tinta); color: #fff; }
 .panel-pestana:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+
+.mapa-botones { display: flex; gap: 8px; }
+.mapa-botones > .boton { flex: 1; }
