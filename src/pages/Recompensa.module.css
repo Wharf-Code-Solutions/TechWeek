@@ -1,44 +1,99 @@
+/* Diseño 08: fondo tinta, moneda grande y accesos al pasaporte. */
 .pantalla {
   min-height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
-  background: #fff;
+  background: var(--tinta);
+  color: #fff;
 }
 
 .contenido {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   padding: 16px;
+  text-align: center;
+}
+
+.moneda {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 16px 0 4px;
+}
+
+.monto {
+  margin-top: -8px;
+  padding: 6px 18px;
+  border: var(--borde);
+  border-radius: 999px;
+  background: var(--amarillo);
+  color: var(--tinta);
+  font: 900 1.1rem var(--fuente-texto);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
 }
 
 .titulo {
   margin: 8px 0 0;
   font-family: var(--fuente-titulo);
-  font-size: 2rem;
+  font-size: 1.9rem;
   font-weight: 400;
-  color: var(--rosa);
+  line-height: 1.15;
+  color: var(--amarillo);
 }
 
-.premios {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: var(--amarillo);
-}
-
-.premio {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.premio p {
-  margin: 4px 0 0;
+.texto {
+  margin: 0;
+  font-size: 0.95rem;
 }
 
 .saldo {
   margin: 0;
   font-weight: 900;
-  font-size: 1.1rem;
+}
+
+.accesos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.acceso {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 54px;
+  padding: 0 10px;
+  border: 3px solid #fff;
+  border-radius: 16px;
+  color: #fff;
+  font: 900 0.95rem var(--fuente-texto);
+  cursor: pointer;
+}
+
+.acceso img {
+  flex: none;
+  box-sizing: content-box;
+  padding: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.pieza {
+  background: var(--turquesa);
+  color: var(--tinta);
+  border-color: var(--tinta);
+}
+
+.sello {
+  background: var(--morado);
+  border-color: var(--tinta);
+}
+
+.acceso:focus-visible {
+  outline: 3px solid var(--amarillo);
+  outline-offset: 3px;
 }

@@ -69,7 +69,15 @@
     "saldo": "Saldo: {{n}} Tlacos",
     "sello": "Nuevo sello",
     "pieza": "Pieza del rompecabezas",
-    "seguir": "Seguir la ruta"
+    "seguir": "Seguir la ruta",
+    "monto": "+{{n}} Tlacos",
+    "leyenda": "¡Leyenda desbloqueada!",
+    "desbloqueado": "¡Lugar desbloqueado!",
+    "detalle": "Ganaste {{n}} Tlacos, el sello de {{lugar}} y una pieza de la foto oculta.",
+    "detalleSinTlacos": "Ganaste el sello de {{lugar}} y una pieza de la foto oculta.",
+    "piezaDe": "Pieza {{n}} de {{total}}",
+    "selloNuevo": "Sello nuevo",
+    "siguienteParada": "Siguiente parada: {{lugar}}"
   },
   "cartera": {
     "titulo": "Mi cartera",

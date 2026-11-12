@@ -69,7 +69,15 @@
     "saldo": "Balance: {{n}} Tlacos",
     "sello": "New stamp",
     "pieza": "Puzzle piece",
-    "seguir": "Continue the route"
+    "seguir": "Continue the route",
+    "monto": "+{{n}} Tlacos",
+    "leyenda": "Legend unlocked!",
+    "desbloqueado": "Place unlocked!",
+    "detalle": "You earned {{n}} Tlacos, the {{lugar}} stamp and a piece of the hidden photo.",
+    "detalleSinTlacos": "You earned the {{lugar}} stamp and a piece of the hidden photo.",
+    "piezaDe": "Piece {{n}} of {{total}}",
+    "selloNuevo": "New stamp",
+    "siguienteParada": "Next stop: {{lugar}}"
   },
   "cartera": {
     "titulo": "My wallet",
