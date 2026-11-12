@@ -297,7 +297,8 @@
   box-shadow: 0 -6px 24px rgb(21 10 46 / 0.18);
   background: #fff;
   transition: height 380ms var(--suave);
-  z-index: 3;
+  /* Por encima de la cabecera, el botón hamburguesa y su menú (z-index 10): al subir el panel los cubre. */
+  z-index: 11;
 }
 .panel--arrastrando { transition: none; }
 /* La cabecera responde al deslizamiento: el navegador no debe interpretarlo como desplazamiento de la página. */
