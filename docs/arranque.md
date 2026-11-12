@@ -23,7 +23,7 @@ python -m venv .venv
 pip install -r requirements-dev.txt
 cp .env.example .env                # SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY (pídelas a Dev 1)
 uvicorn app.main:app --reload --port 8000
-pytest                              # 8 pruebas deben pasar
+pytest                              # las pruebas del backend deben pasar
 ```
 
 En otra terminal, en la raíz: `npm run dev`. Vite redirige `/api` al puerto 8000. Documentación interactiva de la API: `http://localhost:8000/docs`.
@@ -55,7 +55,7 @@ Nunca sumes ni restes Tlacos en el navegador, ni guardes llaves en el repo.
   - Tipos: `feat`, `fix`, `chore`, `refactor`, `style`, `docs`.
   - Módulos: `db`, `map`, `geo`, `game`, `ui`, `core`.
 - Un commit por tarea terminada y solo si el proyecto corre sin errores.
-- Antes de subir: `git pull --rebase`, `npm run build`, `npm run lint` y `pytest`.
+- Antes de subir: `git pull --rebase`, `npm run build`, `npm run lint`, `npm test` (Vitest, frontend) y `pytest` (backend).
 - Trabajen en archivos de su carpeta (ver estructura en `docs/contratos.md`) para evitar conflictos. Si necesitas cambiar un contrato, avisa y actualiza el doc en el mismo commit.
 - Todo texto visible pasa por i18n (ES/EN). Áreas táctiles ≥ 44 px, contraste ≥ 4.5:1, `aria-label` en botones solo con ícono.
 
