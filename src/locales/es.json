@@ -46,7 +46,12 @@
     "explorar": "Ahora no: modo explorador",
     "buscando": "Buscando tu ubicación…",
     "denegado": "No pudimos usar tu ubicación. Puedes activarla en los ajustes del navegador o seguir como explorador.",
-    "aviso_explorador": "En modo explorador ves las curiosidades, pero no ganas doblones ni sellos."
+    "aviso_explorador": "En modo explorador ves las curiosidades, pero no ganas doblones ni sellos.",
+    "acepto": "Acepto los términos de uso y el <aviso>aviso de privacidad</aviso>.",
+    "falta_aceptar": "Marca la casilla para activar tu ubicación.",
+    "aviso_titulo": "Aviso de privacidad simplificado",
+    "aviso_texto": "El equipo JARANA usa tu ubicación solo mientras la página está abierta, para armar tu ruta y saber cuándo llegas a cada lugar. No pedimos nombre, correo ni teléfono: tu progreso se guarda con una sesión anónima en este celular. No vendemos ni compartimos tus datos. Puedes negarte o retirar el permiso cuando quieras desde tu navegador, o usar el modo explorador (LFPDPPP).",
+    "terminos_texto": "JARANA es un juego turístico gratuito: los doblones no tienen valor monetario y las promociones dependen de cada comercio."
   },
   "lugar": {
     "curiosidad": "¿Sabías que…?",

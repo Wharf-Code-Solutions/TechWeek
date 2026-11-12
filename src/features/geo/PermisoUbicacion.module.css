@@ -49,3 +49,89 @@
   outline-offset: 3px;
 }
 
+
+/* Aceptación del aviso de privacidad: casilla con el borde grueso y la sombra dura del sistema "Fiesta Jarocha". */
+.acepto {
+  width: 100%;
+  text-align: left;
+}
+
+.casilla {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: var(--tactil-min);
+  font-size: 0.9rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+/* La casilla real queda invisible (pero accesible); se dibuja la caja de al lado. */
+.casilla input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.caja {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: var(--borde);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 2px 2px 0 var(--tinta);
+  color: transparent;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+
+.casilla input:checked + .caja {
+  background: var(--rosa);
+  color: #fff;
+}
+
+.casilla input:focus-visible + .caja {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 3px;
+}
+
+.casilla:active .caja {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--tinta);
+}
+
+.enlaceAviso {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--morado);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.aviso_privacidad {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 12px;
+  border: 2px solid var(--tinta);
+  border-radius: 12px;
+  background: #faf7ff;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #4a3f66;
+}
+
+.aviso_privacidad strong {
+  color: var(--tinta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caja { transition: none; }
+}

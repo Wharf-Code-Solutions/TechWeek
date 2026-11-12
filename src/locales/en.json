@@ -46,7 +46,12 @@
     "explorar": "Not now: explorer mode",
     "buscando": "Finding your location…",
     "denegado": "We couldn't use your location. You can turn it on in your browser settings or continue as an explorer.",
-    "aviso_explorador": "In explorer mode you see the fun facts, but you don't earn doubloons or stamps."
+    "aviso_explorador": "In explorer mode you see the fun facts, but you don't earn doubloons or stamps.",
+    "acepto": "I accept the terms of use and the <aviso>privacy notice</aviso>.",
+    "falta_aceptar": "Check the box to turn on your location.",
+    "aviso_titulo": "Short privacy notice",
+    "aviso_texto": "The JARANA team uses your location only while the page is open, to build your route and know when you arrive at each place. We do not ask for your name, email or phone: your progress is saved with an anonymous session on this phone. We do not sell or share your data. You can refuse or withdraw permission at any time from your browser, or use explorer mode (Mexican Federal Personal Data Protection Law, LFPDPPP).",
+    "terminos_texto": "JARANA is a free tourism game: doubloons have no monetary value and promotions depend on each business."
   },
   "lugar": {
     "curiosidad": "Did you know…?",

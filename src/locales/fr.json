@@ -46,7 +46,12 @@
     "explorar": "Pas maintenant : mode explorateur",
     "buscando": "Recherche de ta position…",
     "denegado": "Nous n’avons pas pu utiliser ta position. Tu peux l’activer dans les réglages du navigateur ou continuer en explorateur.",
-    "aviso_explorador": "En mode explorateur, tu vois les anecdotes, mais tu ne gagnes ni doublons ni tampons."
+    "aviso_explorador": "En mode explorateur, tu vois les anecdotes, mais tu ne gagnes ni doublons ni tampons.",
+    "acepto": "J’accepte les conditions d’utilisation et l’<aviso>avis de confidentialité</aviso>.",
+    "falta_aceptar": "Coche la case pour activer ta position.",
+    "aviso_titulo": "Avis de confidentialité simplifié",
+    "aviso_texto": "L’équipe JARANA utilise ta position seulement tant que la page est ouverte, pour créer ton parcours et savoir quand tu arrives à chaque lieu. Nous ne demandons ni nom, ni e-mail, ni téléphone : ta progression est enregistrée avec une session anonyme sur ce téléphone. Nous ne vendons ni ne partageons tes données. Tu peux refuser ou retirer l’autorisation à tout moment depuis ton navigateur, ou utiliser le mode explorateur (loi mexicaine LFPDPPP).",
+    "terminos_texto": "JARANA est un jeu touristique gratuit : les doublons n’ont aucune valeur monétaire et les promotions dépendent de chaque commerce."
   },
   "lugar": {
     "curiosidad": "Le savais-tu… ?",
