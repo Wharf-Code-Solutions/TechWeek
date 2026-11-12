@@ -13,7 +13,7 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 - **Supabase** queda como base de datos y servicio de sesión anónima, detrás del backend. Sus llaves viven en `backend/.env`; la `service_role` nunca sale del servidor.
 - **Sesión:** `POST /api/sesion` crea el usuario anónimo y `POST /api/sesion/renovar` lo renueva. El token se guarda en `localStorage` y viaja como `Authorization: Bearer`. FastAPI lo valida contra `/auth/v1/user` para obtener el `perfil_id`.
 - **Catálogo:** se sirve desde `GET /api/...`. El reto se entrega **sin las respuestas correctas**; se validan en el servidor.
-- **Reemplaza** las funciones RPC de la migración 0002 y las políticas RLS de lectura pública (Dev 1 puede quitarlas y dejar las tablas cerradas al rol `anon`).
+- **Reemplaza** las funciones RPC planeadas y la lectura pública por RLS. ✅ Hecho en la migración 0002: las tablas están cerradas a `anon` y `authenticated`; solo entra `service_role`.
 
 ## Endpoints (v0.1)
 
@@ -60,7 +60,7 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 
 ### Dev 1 · Carlos Daniel — Datos y API de negocio
 1. Aplicar `0001_esquema.sql` en Supabase, activar la sesión anónima y entregar a los demás `SUPABASE_URL`, la anon key y la service key (por canal privado).
-2. Renombrar `clacos` → `tlacos` en SQL, `seed.json`, tipos y `backend/app/db.py`.
+2. ✅ Renombrar `clacos` → `tlacos` en SQL, `seed.json`, tipos y `backend/app/db.py`.
 3. Migración 0002: cerrar las tablas al rol `anon` (quitar políticas de lectura pública), restricciones de "una sola vez" y, si hace falta, función SQL atómica para el canje.
 4. Cargar el seed real (coordenadas verificadas, retos de las 5 paradas) y probar `retos` y `canjes` contra él.
 5. Endpoint de bono de fin de ruta, guardar ruta y perfil (`rutas_usuario`, `perfiles`) y el algoritmo de ruta (M3).
@@ -93,6 +93,6 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 ## Decisiones abiertas
 
 - **Dónde se despliega:** FastAPI en Vercel (funciones Python) o en un servicio aparte (Render/Railway). Se decide al conectar Supabase real; mientras tanto corre local.
-- **Atomicidad del saldo:** el canje revisa saldo y luego descuenta en dos llamadas; con un solo usuario por celular el riesgo es bajo, pero si hace falta se mueve a una función SQL.
-- **Tlacos vs `clacos`:** los nombres de columnas están centralizados en `backend/app/db.py` para renombrarlos en un solo lugar.
+- ✅ **Atomicidad del saldo:** resuelta. El canje usa la función SQL `canjear` (migración 0002), que bloquea por perfil y revisa, descuenta y genera el código en una sola transacción.
+- ✅ **Tlacos:** columnas renombradas a `tlacos`, `tlacos_revelado`, `costo_tlacos` y `movimientos_tlacos`.
 - **Commits:** el módulo del backend usa el scope `db` (o proponer `api`).

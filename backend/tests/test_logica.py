@@ -47,3 +47,30 @@ def test_validar_orden():
     c = {"orden_correcto": ["e1", "e2", "e3"]}
     assert validar("orden", c, ["e1", "e2", "e3"])
     assert not validar("orden", c, ["e2", "e1", "e3"])
+
+
+def _cliente_con_sesion(monkeypatch, respuesta_rpc):
+    from app import db
+    from app.auth import perfil_id_actual
+
+    async def rpc_falso(funcion, **args):
+        assert funcion == "canjear" and args["p_promocion_slug"] == "cafe-2x1"
+        return respuesta_rpc
+
+    monkeypatch.setattr(db, "rpc", rpc_falso)
+    app.dependency_overrides[perfil_id_actual] = lambda: "perfil-prueba"
+    return TestClient(app)
+
+
+def test_canje_ok(monkeypatch):
+    c = _cliente_con_sesion(monkeypatch, {"ok": True, "codigo": "A1B2C3", "saldo": 20})
+    r = c.post("/api/promociones/cafe-2x1/canjear")
+    app.dependency_overrides.clear()
+    assert r.status_code == 201 and r.json() == {"codigo": "A1B2C3", "saldo": 20}
+
+
+def test_canje_saldo_insuficiente(monkeypatch):
+    c = _cliente_con_sesion(monkeypatch, {"ok": False, "error": "saldo_insuficiente", "saldo": 10})
+    r = c.post("/api/promociones/cafe-2x1/canjear")
+    app.dependency_overrides.clear()
+    assert r.status_code == 402

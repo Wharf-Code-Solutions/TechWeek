@@ -1,7 +1,6 @@
 """Acceso a Postgres vía PostgREST con la clave service_role (se salta el RLS).
 
-Los nombres de la moneda viven aquí para renombrarlos en un solo lugar:
-el esquema de Dev 1 aún usa `clacos`, pero el equipo acordó Tlacos.
+Los nombres de la moneda (Tlacos) viven aquí para cambiarlos en un solo lugar.
 """
 from typing import Any
 
@@ -10,10 +9,10 @@ from fastapi import HTTPException
 
 from .config import get_settings
 
-COL_PREMIO = "clacos"
-COL_PREMIO_REVELADO = "clacos_revelado"
-COL_COSTO = "costo_clacos"
-TABLA_MOVIMIENTOS = "movimientos_clacos"
+COL_PREMIO = "tlacos"
+COL_PREMIO_REVELADO = "tlacos_revelado"
+COL_COSTO = "costo_tlacos"
+TABLA_MOVIMIENTOS = "movimientos_tlacos"
 VISTA_SALDO = "saldo"
 
 
@@ -58,6 +57,11 @@ async def insertar(tabla: str, fila: dict, *, ignorar_duplicado: bool = False) -
 
 async def actualizar(tabla: str, cambios: dict, **filtros: str) -> list[dict]:
     return await _pedir("PATCH", tabla, params=filtros, json=cambios, prefer="return=representation")
+
+
+async def rpc(funcion: str, **args: Any) -> Any:
+    """Ejecuta una función SQL de Supabase (solo service_role tiene permiso)."""
+    return await _pedir("POST", f"rpc/{funcion}", json=args)
 
 
 async def asegurar_perfil(perfil_id: str) -> None:
