@@ -6,8 +6,8 @@ export type Nivel = (typeof NIVELES)[number]
 export const ALTO_PLEGADO = 96
 /** El nivel medio ocupa esta fracción de la pantalla. */
 export const FRACCION_MEDIO = 0.42
-/** En pantalla completa queda un margen arriba para que se note que el panel se puede bajar. */
-export const MARGEN_COMPLETO = 8
+/** En pantalla completa el panel se detiene debajo de la cabecera del mapa (avatar, ruta y monedas) para no taparla. */
+export const MARGEN_COMPLETO = 66
 
 /** Alto en px de un nivel para una pantalla de `alto` px. */
 export function altoNivel(nivel: Nivel, alto: number): number {

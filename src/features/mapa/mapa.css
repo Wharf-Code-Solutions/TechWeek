@@ -287,6 +287,8 @@
   right: 0;
   bottom: 0;
   height: var(--alto-panel);
+  /* Nunca sube sobre la cabecera del mapa (también en celulares con muesca). */
+  max-height: calc(100dvh - 66px - env(safe-area-inset-top));
   display: flex;
   flex-direction: column;
   gap: 8px;

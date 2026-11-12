@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ALTO_PLEGADO, altoNivel, bajarNivel, subirNivel } from './nivelesPanel'
+import { ALTO_PLEGADO, MARGEN_COMPLETO, altoNivel, bajarNivel, subirNivel } from './nivelesPanel'
 
 describe('niveles del panel', () => {
   it('sube y baja de un nivel en un nivel y se detiene en los extremos', () => {
@@ -18,9 +18,9 @@ describe('niveles del panel', () => {
     expect(altoNivel('completo', pantalla)).toBeGreaterThan(altoNivel('medio', pantalla))
   })
 
-  it('el panel completo casi llena la pantalla pero deja un margen', () => {
-    expect(altoNivel('completo', 800)).toBeLessThan(800)
-    expect(altoNivel('completo', 800)).toBeGreaterThan(780)
+  it('el panel completo deja libre la franja de la cabecera del mapa', () => {
+    expect(altoNivel('completo', 800)).toBe(800 - MARGEN_COMPLETO)
+    expect(MARGEN_COMPLETO).toBeGreaterThanOrEqual(60)
   })
 
   it('en pantallas muy bajas nunca es menor que el plegado', () => {
