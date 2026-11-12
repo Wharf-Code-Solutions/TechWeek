@@ -142,7 +142,9 @@
     "lejos": "You're far from the Historic Center. Want to try the app with the virtual walk?",
     "lejos_activar": "Try the virtual walk",
     "lejos_cerrar": "Not now",
-    "vitrina": "See the businesses of the Center"
+    "vitrina": "See the businesses of the Center",
+    "restaurantes": "Where to eat? See available restaurants",
+    "comercio": "Business"
   },
   "reto": {
     "cargando": "Loading challenge…",
@@ -264,6 +266,14 @@
       "libreria": "Bookstores",
       "artesanias": "Crafts",
       "tienda": "Shops"
-    }
+    },
+    "ver_en_mapa": "Show on the map",
+    "comer_titulo": "Where to eat?",
+    "comer_subtitulo": "Near you, partners first",
+    "comer_vacio": "We couldn't find places to eat.",
+    "ver_todos": "See all businesses",
+    "cerrar": "Close",
+    "no_encontrado": "We couldn't find this business.",
+    "a_metros": "{{dist}} away"
   }
 }

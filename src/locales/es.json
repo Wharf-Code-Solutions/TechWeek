@@ -142,7 +142,9 @@
     "lejos": "Estás lejos del Centro Histórico. ¿Quieres probar la app con el recorrido virtual?",
     "lejos_activar": "Probar recorrido virtual",
     "lejos_cerrar": "Ahora no",
-    "vitrina": "Ver los negocios del Centro"
+    "vitrina": "Ver los negocios del Centro",
+    "restaurantes": "¿Dónde comer? Ver restaurantes disponibles",
+    "comercio": "Negocio"
   },
   "reto": {
     "cargando": "Cargando reto…",
@@ -264,6 +266,14 @@
       "libreria": "Librerías",
       "artesanias": "Artesanías",
       "tienda": "Tiendas"
-    }
+    },
+    "ver_en_mapa": "Ver en el mapa",
+    "comer_titulo": "¿Dónde comer?",
+    "comer_subtitulo": "Cerca de ti, con los aliados primero",
+    "comer_vacio": "No encontramos lugares para comer.",
+    "ver_todos": "Ver todos los negocios",
+    "cerrar": "Cerrar",
+    "no_encontrado": "No encontramos este negocio.",
+    "a_metros": "a {{dist}}"
   }
 }

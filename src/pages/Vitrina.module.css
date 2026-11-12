@@ -89,125 +89,21 @@
   list-style: none;
 }
 
-.tarjeta {
-  overflow: hidden;
-  border: var(--borde);
-  border-radius: 20px;
-  background: #fff;
-  box-shadow: var(--sombra-dura);
-}
-
-.aliado {
-  box-shadow: 4px 4px 0 var(--rosa);
-}
-
-.imagen {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 140px;
-  background: #fff3b0;
-}
-
-.foto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.insignia {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border: 2px solid var(--tinta);
-  border-radius: 999px;
-  background: var(--amarillo);
-  color: var(--tinta);
-  font: 900 0.75rem var(--fuente-texto);
-}
-
-.cuerpo {
-  display: grid;
-  gap: 6px;
-  padding: 14px;
-}
-
-.tipo {
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--morado);
-}
-
-.cuerpo h2 {
-  margin: 0;
-  font: 400 1.3rem/1.15 var(--fuente-titulo);
-  color: var(--tinta);
-}
-
-.dato {
-  justify-self: start;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: #ffe0ef;
-  color: #a0005a;
-  font-size: 0.78rem;
-  font-weight: 900;
-}
-
-.descripcion {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #3a2f55;
-}
-
-.datos {
-  display: grid;
-  gap: 6px;
-  margin: 4px 0 0;
-  padding: 10px 0 0;
-  border-top: 2px dashed #e1daf0;
-  list-style: none;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #4a3f66;
-}
-
-.datos li {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.datos svg {
-  flex: none;
-  margin-top: 1px;
-  color: var(--morado);
-}
-
-.promos {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: var(--tactil-min);
-  margin-top: 6px;
-  border: 0;
-  border-radius: 14px;
-  background: var(--rosa);
-  color: #fff;
-  font: 900 0.95rem var(--fuente-texto);
-  cursor: pointer;
-}
-
 .volver:focus-visible,
-.filtros button:focus-visible,
-.promos:focus-visible {
+.filtros button:focus-visible {
   outline: 3px solid var(--cobalto);
   outline-offset: 3px;
 }
+
+.todos {
+  display: block;
+  min-height: var(--tactil-min);
+  margin: 14px auto 0;
+  border: 0;
+  background: transparent;
+  color: var(--morado);
+  font: 800 0.95rem var(--fuente-texto);
+  text-decoration: underline;
+  cursor: pointer;
+}
+

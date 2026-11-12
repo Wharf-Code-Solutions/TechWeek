@@ -1,19 +1,17 @@
 // Pantalla: Vitrina de comercios · Dev 1 entregó GET /api/comercios; la pantalla es de Dev 2 + Dev 3.
 // Negocios del Centro Histórico con filtros por tipo; los aliados (con promoción en JARANA) salen primero.
-import { CaretLeft, Clock, MapPin, Star, Tag } from '@phosphor-icons/react'
+import { CaretLeft } from '@phosphor-icons/react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { useCampo } from '../app/idioma'
-import Ilustracion from '../components/ui/Ilustracion'
-import { TIPOS, contarPorTipo, filtrarComercios, ilustracionDeTipo } from '../features/vitrina/vitrina'
+import TarjetaComercio from '../features/vitrina/TarjetaComercio'
+import { TIPOS, contarPorTipo, filtrarComercios } from '../features/vitrina/vitrina'
 import { useVitrina } from '../features/vitrina/useVitrina'
 import type { TipoComercio } from '../types/contratos'
 import estilos from './Vitrina.module.css'
 
 export default function Vitrina() {
   const { t } = useTranslation()
-  const campo = useCampo()
   const navegar = useNavigate()
   const { comercios, cargando } = useVitrina()
   const [tipo, setTipo] = useState<TipoComercio | null>(null)
@@ -52,57 +50,15 @@ export default function Vitrina() {
       </p>
 
       <ul className={estilos.lista}>
-        {lista.map((c) => {
-          const dato = campo(c, 'dato')
-          return (
-            <li key={c.slug}>
-              <article className={`${estilos.tarjeta}${c.aliado ? ` ${estilos.aliado}` : ''}`}>
-                <div className={estilos.imagen}>
-                  {c.foto_url ? (
-                    <img className={estilos.foto} src={c.foto_url} alt={c.nombre} loading="lazy" />
-                  ) : (
-                    <Ilustracion nombre={ilustracionDeTipo(c.tipo)} tamano={84} />
-                  )}
-                  {c.aliado && (
-                    <span className={estilos.insignia}>
-                      <Star size={16} weight="fill" aria-hidden="true" />
-                      {t('vitrina.aliado')}
-                    </span>
-                  )}
-                </div>
-
-                <div className={estilos.cuerpo}>
-                  <span className={estilos.tipo}>{t(`vitrina.tipos.${c.tipo}`)}</span>
-                  <h2>{c.nombre}</h2>
-                  {dato && <span className={estilos.dato}>{dato}</span>}
-                  <p className={estilos.descripcion}>{campo(c, 'descripcion')}</p>
-
-                  <ul className={estilos.datos}>
-                    <li>
-                      <MapPin size={18} weight="duotone" aria-hidden="true" />
-                      <span>{c.direccion}</span>
-                    </li>
-                    <li>
-                      <Clock size={18} weight="duotone" aria-hidden="true" />
-                      <span>{campo(c, 'horario')}</span>
-                    </li>
-                  </ul>
-
-                  {c.aliado && (
-                    <button
-                      type="button"
-                      className={estilos.promos}
-                      onClick={() => navegar('/mapa', { state: { pestana: 'cartera' } })}
-                    >
-                      <Tag size={18} weight="duotone" aria-hidden="true" />
-                      {t('vitrina.ver_promos')}
-                    </button>
-                  )}
-                </div>
-              </article>
-            </li>
-          )
-        })}
+        {lista.map((c) => (
+          <li key={c.slug}>
+            <TarjetaComercio
+              comercio={c}
+              onPromos={() => navegar('/mapa', { state: { pestana: 'cartera' } })}
+              onMapa={() => navegar('/mapa', { state: { comercio: { lat: c.lat, lng: c.lng, nombre: c.nombre } } })}
+            />
+          </li>
+        ))}
       </ul>
     </main>
   )

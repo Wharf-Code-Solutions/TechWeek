@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, Crosshair, Storefront, TextAa, X } from '@phosphor-icons/react'
+import { Check, Crosshair, ForkKnife, Storefront, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
 import { useRecorridoDemo } from '../geo/demoStore'
 import { distanciaM } from '../geo/distancia'
@@ -16,6 +16,7 @@ import { usePosition } from '../geo/usePosition'
 import { tramoRestante } from '../geo/tramo'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
+import HojaRestaurantes from '../vitrina/HojaRestaurantes'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
 import './mapa.css'
@@ -64,6 +65,8 @@ interface Props {
   padAbajo?: number
   /** Lugar que hay que mostrar (la lista de la ruta lo pide): el mapa vuela hasta él y abre su tarjeta. `n` cambia en cada toque. */
   enfocar?: { slug: string; n: number } | null
+  /** Negocio de la vitrina que hay que mostrar en el mapa ("Ver en el mapa"): vuela hasta él y lo marca. */
+  comercioFocal?: { lat: number; lng: number; nombre: string } | null
   /** Slug de la parada a la que el turista acaba de llegar: su pin hace un pulso mientras sale el aviso. */
   llegando?: string | null
   arriba?: ReactNode
@@ -136,6 +139,7 @@ export default function MapaLugares({
   padAbajo = 0,
   enfocar = null,
   llegando = null,
+  comercioFocal = null,
   arriba,
   abajo,
 }: Props) {
@@ -143,6 +147,7 @@ export default function MapaLugares({
   const en = i18n.language === 'en'
   const pos = usePosition()
   const [elegido, setElegido] = useState<Lugar | null>(null)
+  const [comer, setComer] = useState(false)
   const mapa = useRef<MapRef>(null)
   const [zoom, setZoom] = useState(ZOOM)
   const elegir = useCallback((l: Lugar) => setElegido(l), [])
@@ -169,6 +174,12 @@ export default function MapaLugares({
       /* sin almacenamiento: vale solo mientras la pantalla esté abierta */
     }
   }
+
+  // "Ver en el mapa" desde la vitrina: la cámara vuela hasta el negocio.
+  useEffect(() => {
+    if (!comercioFocal) return
+    mapa.current?.flyTo({ center: [comercioFocal.lng, comercioFocal.lat], zoom: ZOOM + 1, duration: 1000 })
+  }, [comercioFocal])
 
   // Al llegar a una parada la cámara se acerca y gira un poco hacia ella, mientras sale el aviso y suben las olas.
   useEffect(() => {
@@ -368,6 +379,16 @@ export default function MapaLugares({
             </button>
           </Marker>
         ))}
+        {comercioFocal && (
+          <Marker latitude={comercioFocal.lat} longitude={comercioFocal.lng} anchor="bottom" style={{ zIndex: 3 }}>
+            <span className="marcador marcador--comercio">
+              <span className="marcador-circulo">
+                <Storefront size={24} weight="duotone" aria-hidden="true" />
+              </span>
+              <span className="marcador-etiqueta">{comercioFocal.nombre}</span>
+            </span>
+          </Marker>
+        )}
         {pos && (
           <Marker latitude={pos.lat} longitude={pos.lng} style={{ zIndex: 3 }}>
             <span className={`mapa-yo${demo ? ' mapa-yo--demo' : ''}`} role="img" aria-label={t('mapa.tuPosicion')} />
@@ -391,12 +412,13 @@ export default function MapaLugares({
       <button
         type="button"
         className="mapa-nombres mapa-vitrina"
-        aria-label={t('mapa.vitrina')}
-        title={t('mapa.vitrina')}
-        onClick={() => navegar('/vitrina')}
+        aria-label={t('mapa.restaurantes')}
+        title={t('mapa.restaurantes')}
+        onClick={() => setComer(true)}
       >
-        <Storefront size={22} weight="bold" aria-hidden="true" />
+        <ForkKnife size={22} weight="bold" aria-hidden="true" />
       </button>
+      {comer && <HojaRestaurantes onCerrar={() => setComer(false)} />}
 
       {pos && (
         <button

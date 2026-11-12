@@ -42,7 +42,10 @@ export default function Mapa() {
   const [saldo, setSaldo] = useState<number | null>(null)
   const [eventos, setEventos] = useState<Evento[]>(seed.eventos as Evento[])
   // Otras pantallas pueden abrir el mapa en una pestaña: navigate('/mapa', { state: { pestana: 'pasaporte' } })
-  const inicial = (useLocation().state as { pestana?: Pestana } | null)?.pestana
+  const estadoRuta = useLocation().state as { pestana?: Pestana; comercio?: { lat: number; lng: number; nombre: string } } | null
+  const inicial = estadoRuta?.pestana
+  // Desde la vitrina: navigate('/mapa', { state: { comercio: { lat, lng, nombre } } }) muestra ese negocio en el mapa.
+  const comercioFocal = estadoRuta?.comercio ?? null
   const [pestana, setPestana] = useState<Pestana>(inicial ?? 'ruta')
   const [nivel, setNivel] = useState<Nivel>('medio')
   // Lugar que el turista tocó en la lista de la ruta: el mapa vuela hasta él (n distingue toques repetidos).
@@ -133,6 +136,7 @@ export default function Mapa() {
         lugares={todos}
         ruta={ruta ?? undefined}
         origen={origen}
+        comercioFocal={comercioFocal}
         padAbajo={padAbajo}
         enfocar={enfocar}
         llegando={llegando?.slug ?? null}
