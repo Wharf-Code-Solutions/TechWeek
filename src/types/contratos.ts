@@ -84,4 +84,9 @@ export interface FotoHistorica {
   titulo_es: string
   titulo_en: string
   piezas: number
+  /** Créditos (solo en el seed; ver public/fotos/CREDITOS.md) */
+  autor?: string
+  fecha?: string
+  licencia?: string
+  fuente?: string
 }

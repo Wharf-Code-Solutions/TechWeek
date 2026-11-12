@@ -427,10 +427,14 @@
   "fotos_historicas": [
     {
       "slug": "puerto-antiguo",
-      "url": "",
-      "titulo_es": "Puerto de Veracruz (pendiente: foto de dominio público)",
-      "titulo_en": "Port of Veracruz (pending: public domain photo)",
-      "piezas": 6
+      "url": "/fotos/palacio-municipal-1880.jpg",
+      "titulo_es": "Palacio Municipal y el puerto de Veracruz (1880–1900)",
+      "titulo_en": "City Hall and the port of Veracruz (1880–1900)",
+      "piezas": 6,
+      "autor": "Abel Briquet",
+      "fecha": "1880–1900",
+      "licencia": "Dominio público",
+      "fuente": "https://commons.wikimedia.org/wiki/File:Palacio_Veracruz_1880-1900.tif"
     }
   ],
   "comercios": [
