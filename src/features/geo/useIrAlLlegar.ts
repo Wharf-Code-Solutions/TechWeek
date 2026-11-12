@@ -3,11 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Lugar } from '../../types/contratos'
+import { cubrirConOlas } from './olas'
 import { useLlegada } from './useLlegada'
 import { usePosition } from './usePosition'
 
-/** Pausa entre el aviso "¡Llegaste a …!" y la pantalla del lugar: el cambio no debe sentirse como un salto. */
-export const PAUSA_LLEGADA_MS = 1400
+/**
+ * Tiempo entre llegar y empezar la transición: durante él sale el aviso "¡Llegaste a …!", el pin pulsa y la cámara
+ * se acerca y gira. Luego suben las olas (olas.ts) y recién entonces se abre la pantalla del lugar.
+ */
+export const PAUSA_LLEGADA_MS = 900
 
 // A nivel de módulo: sobrevive a que el mapa se desmonte al abrir la pantalla del lugar,
 // así no se vuelve a abrir en bucle mientras el turista sigue dentro del radio.
@@ -28,7 +32,9 @@ export function useIrAlLlegar(lugares: Lugar[]) {
     avisados.add(lugarActual.slug)
     setLlegando(lugarActual)
     // Sin cancelar al volver a dibujar: aunque el turista se aleje un paso, la pantalla del lugar se abre.
-    temporizador.current = window.setTimeout(() => navegar(`/lugar/${lugarActual.slug}`), PAUSA_LLEGADA_MS)
+    temporizador.current = window.setTimeout(() => {
+      void cubrirConOlas().then(() => navegar(`/lugar/${lugarActual.slug}`))
+    }, PAUSA_LLEGADA_MS)
   }, [lugarActual, navegar])
 
   // Solo se cancela si el mapa se cierra antes (por ejemplo, el turista abre otra pantalla).

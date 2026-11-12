@@ -170,6 +170,21 @@ export default function MapaLugares({
     }
   }
 
+  // Al llegar a una parada la cámara se acerca y gira un poco hacia ella, mientras sale el aviso y suben las olas.
+  useEffect(() => {
+    if (!llegando) return
+    const l = lugares.find((x) => x.slug === llegando)
+    const m = mapa.current
+    if (!l || !m) return
+    m.easeTo({
+      center: [l.lng, l.lat],
+      zoom: m.getZoom() + 1,
+      bearing: m.getBearing() + 35,
+      duration: 800,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+    })
+  }, [llegando, lugares])
+
   // En el recorrido virtual la cámara sigue al turista y gira hacia donde camina; con GPS se deja mover libre.
   const demo = pos?.fuente === 'demo'
   const rec = useRecorridoDemo()

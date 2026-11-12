@@ -1,0 +1,52 @@
+/* Las olas tapan todo mientras se mueven y no dejan pasar toques; ocultas no estorban a nada. */
+.capa {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.capa[data-activa='true'] {
+  pointer-events: auto;
+}
+
+.ola {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* Borde ondulado: ancho doble para poder desplazarlo de lado y que la ola "respire". */
+.borde {
+  position: absolute;
+  top: -39px;
+  left: 0;
+  width: 200%;
+  height: 120px;
+  overflow: visible;
+}
+
+.cuerpo {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* Reducir movimiento: sin olas, solo un velo que aparece y desaparece. */
+.simple {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #1446c8;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.simple[data-visible='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}

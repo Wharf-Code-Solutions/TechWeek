@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import AppRoutes from './app/routes'
+import TransicionOlas from './features/geo/TransicionOlas'
 import { asegurarSesion } from './lib/api'
 
 export default function App() {
@@ -7,5 +8,11 @@ export default function App() {
     asegurarSesion().catch(console.error)
   }, [])
 
-  return <AppRoutes />
+  return (
+    <>
+      <AppRoutes />
+      {/* Transición de olas entre el mapa y la pantalla de un lugar */}
+      <TransicionOlas />
+    </>
+  )
 }

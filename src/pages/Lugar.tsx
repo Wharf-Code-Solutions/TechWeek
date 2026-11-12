@@ -10,6 +10,7 @@ import Ilustracion from '../components/ui/Ilustracion'
 import { escenaDe } from '../components/ui/escenas'
 import { urlIlustracion } from '../components/ui/ilustraciones'
 import { activarExplorador } from '../features/geo/explorador'
+import { descubrirOlas } from '../features/geo/olas'
 import { usePosition, useEstadoUbicacion } from '../features/geo/usePosition'
 import type { PasaporteDatos } from '../features/pasaporte/tipos'
 import { ApiError, api } from '../lib/api'
@@ -31,6 +32,10 @@ export default function Lugar() {
   const posRef = useRef(pos)
   posRef.current = pos
   const [registro, setRegistro] = useState<Registro>('pendiente')
+  // Si se llegó con la transición de olas, ahora que la pantalla está lista las olas se retiran.
+  useEffect(() => {
+    descubrirOlas()
+  }, [])
   // Solo fuerza un render tras salir del modo explorador (la bandera vive en sessionStorage).
   const [, setReintento] = useState(0)
   const [parada, setParada] = useState<{ n: number; total: number } | null>(null)
