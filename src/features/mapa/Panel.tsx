@@ -1,6 +1,7 @@
 // M7 Panel fijo · Dev 2 (diseño 03). Pestañas: Ruta, Agenda (M11), Pasaporte (M9) y Cartera (M10, Dev 3).
 // Siempre visible en la mitad inferior; el asa lo pliega para ver más mapa.
-import type { KeyboardEvent, ReactNode } from 'react'
+import { motion } from 'framer-motion'
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CalendarBlank, IdentificationCard, MapTrifold, Wallet } from '@phosphor-icons/react'
 import { Cartera } from '../cartera'
@@ -22,8 +23,18 @@ interface Props {
   ruta: ReactNode
 }
 
+const ALTO_PLEGADO = 108 // px; debe coincidir con ALTO_PANEL.plegado de Mapa.tsx
+const FRACCION_ABIERTO = 0.48 // del alto de la pantalla (ALTO_PANEL.abierto = 48dvh)
+const UMBRAL_PX = 40
+const UMBRAL_VELOCIDAD = 400 // px/s
+
 export default function Panel({ activa, onActiva, plegado, onPlegado, ruta }: Props) {
   const { t } = useTranslation()
+  // Deslizar la cabecera (asa y pestañas) arriba o abajo abre o pliega el panel; mientras se arrastra, sigue al dedo.
+  const [arrastre, setArrastre] = useState<number | null>(null)
+  const deslizando = useRef(false)
+  const base = plegado ? ALTO_PLEGADO : Math.round(window.innerHeight * FRACCION_ABIERTO)
+  const alto = arrastre === null ? undefined : Math.min(Math.max(base - arrastre, ALTO_PLEGADO), window.innerHeight * 0.85)
 
   // Flechas izquierda/derecha cambian de pestaña (patrón ARIA de tabs)
   function teclas(e: KeyboardEvent) {
@@ -35,7 +46,24 @@ export default function Panel({ activa, onActiva, plegado, onPlegado, ruta }: Pr
   }
 
   return (
-    <section className={`panel${plegado ? ' panel--plegado' : ''}`} aria-label={t('panel.titulo')}>
+    <section
+      className={`panel${plegado ? ' panel--plegado' : ''}${arrastre !== null ? ' panel--arrastrando' : ''}`}
+      style={alto === undefined ? undefined : { height: alto }}
+      aria-label={t('panel.titulo')}
+    >
+      <motion.div
+        className="panel-cabeza"
+        onPanStart={() => {
+          deslizando.current = true
+        }}
+        onPan={(_, info) => deslizando.current && setArrastre(info.offset.y)}
+        onPanEnd={(_, info) => {
+          deslizando.current = false
+          setArrastre(null)
+          if (info.offset.y > UMBRAL_PX || info.velocity.y > UMBRAL_VELOCIDAD) onPlegado(true)
+          else if (info.offset.y < -UMBRAL_PX || info.velocity.y < -UMBRAL_VELOCIDAD) onPlegado(false)
+        }}
+      >
       <button
         type="button"
         className="panel-asa"
@@ -68,6 +96,7 @@ export default function Panel({ activa, onActiva, plegado, onPlegado, ruta }: Pr
           )
         })}
       </div>
+      </motion.div>
       <div id="panel-contenido" className="panel-contenido" role="tabpanel" aria-labelledby={`pestana-${activa}`}>
         {activa === 'ruta' ? ruta : activa === 'agenda' ? <Agenda /> : activa === 'pasaporte' ? <Pasaporte /> : <Cartera />}
       </div>
