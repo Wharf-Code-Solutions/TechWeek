@@ -137,8 +137,7 @@
     "estado_siguiente": "{{nombre}}, next stop",
     "eventoAhora": "{{titulo}} now",
     "nombres": "Show or hide place names",
-    "irAlLugar": "Go to the place and play",
-    "fachadas": "Colored facades"
+    "irAlLugar": "Go to the place and play"
   },
   "reto": {
     "cargando": "Loading challenge…",

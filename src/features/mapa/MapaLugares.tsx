@@ -6,11 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Buildings, Check, TextAa, X } from '@phosphor-icons/react'
+import { Check, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
 import { usePosition } from '../geo/usePosition'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
-import { SOBREALTURA_M, expresionFachadas } from './ambiente'
 import Ilustracion from '../../components/ui/Ilustracion'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
@@ -63,22 +62,13 @@ const SIN_RUTA: Lugar[] = []
 const AMBIENTE = 'dawn'
 
 const CLAVE_NOMBRES = 'jarana.mapa.nombres'
-const CLAVE_FACHADAS = 'jarana.mapa.fachadas'
-const leerBandera = (clave: string) => {
+const leerNombres = () => {
   try {
-    return sessionStorage.getItem(clave) === '1'
+    return sessionStorage.getItem(CLAVE_NOMBRES) === '1'
   } catch {
     return false
   }
 }
-const guardarBandera = (clave: string, activa: boolean) => {
-  try {
-    sessionStorage.setItem(clave, activa ? '1' : '0')
-  } catch {
-    /* sin almacenamiento: vale solo mientras la pantalla esté abierta */
-  }
-}
-const COLOR_FACHADAS = expresionFachadas() as unknown as string
 
 // Azul de la ruta; el contorno blanco la separa de calles y edificios.
 const AZUL_RUTA = '#1446C8'
@@ -105,7 +95,7 @@ export default function MapaLugares({
   const linea = useRutaCaminable(ruta)
   // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
   // Los nombres de las calles siempre se ven.
-  const [nombres, setNombres] = useState(() => leerBandera(CLAVE_NOMBRES))
+  const [nombres, setNombres] = useState(leerNombres)
   const aplicarNombres = (activos: boolean) => {
     const m = mapa.current?.getMap()
     if (!m) return
@@ -118,14 +108,11 @@ export default function MapaLugares({
     const nuevo = !nombres
     setNombres(nuevo)
     aplicarNombres(nuevo)
-    guardarBandera(CLAVE_NOMBRES, nuevo)
-  }
-  // Fachadas de colores: apagadas por defecto; se dibujan sobre los edificios del estilo base.
-  const [fachadas, setFachadas] = useState(() => leerBandera(CLAVE_FACHADAS))
-  const alternarFachadas = () => {
-    const nuevo = !fachadas
-    setFachadas(nuevo)
-    guardarBandera(CLAVE_FACHADAS, nuevo)
+    try {
+      sessionStorage.setItem(CLAVE_NOMBRES, nuevo ? '1' : '0')
+    } catch {
+      /* sin almacenamiento: vale solo mientras la pantalla esté abierta */
+    }
   }
 
   // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
@@ -158,25 +145,6 @@ export default function MapaLugares({
         onLoad={() => aplicarNombres(nombres)}
         style={{ width: '100%', height: '100%' }}
       >
-        {fachadas && (
-          <Source id="edificios" type="vector" url="mapbox://mapbox.mapbox-streets-v8">
-            <Layer
-              id="edificios-color"
-              type="fill-extrusion"
-              source-layer="building"
-              slot="middle"
-              minzoom={15}
-              paint={{
-                'fill-extrusion-color': COLOR_FACHADAS,
-                'fill-extrusion-height': ['+', ['to-number', ['get', 'height'], 6], SOBREALTURA_M],
-                'fill-extrusion-base': ['to-number', ['get', 'min_height'], 0],
-                'fill-extrusion-opacity': 1,
-                'fill-extrusion-vertical-gradient': true,
-                'fill-extrusion-emissive-strength': 0.55,
-              }}
-            />
-          </Source>
-        )}
         {linea.length > 1 && (
           <Source
             id="ruta"
@@ -258,16 +226,6 @@ export default function MapaLugares({
         onClick={alternarNombres}
       >
         <TextAa size={22} weight="bold" aria-hidden="true" />
-      </button>
-      <button
-        type="button"
-        className="mapa-nombres mapa-fachadas"
-        aria-pressed={fachadas}
-        aria-label={t('mapa.fachadas')}
-        title={t('mapa.fachadas')}
-        onClick={alternarFachadas}
-      >
-        <Buildings size={22} weight="bold" aria-hidden="true" />
       </button>
 
       <div className="mapa-abajo">
