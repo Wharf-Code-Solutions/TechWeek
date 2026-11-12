@@ -1,0 +1,11 @@
+{
+  "pantallas": {
+    "preferencias": "Arma tu ruta",
+    "mapa": "Mapa",
+    "lugar": "¡Llegaste!",
+    "reto": "Reto",
+    "recompensa": "¡Ganaste Clacos!",
+    "cupon": "Desliza para canjear",
+    "fin": "Fin de ruta"
+  }
+}

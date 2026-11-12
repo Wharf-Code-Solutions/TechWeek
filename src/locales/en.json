@@ -1,0 +1,11 @@
+{
+  "pantallas": {
+    "preferencias": "Build your route",
+    "mapa": "Map",
+    "lugar": "You made it!",
+    "reto": "Challenge",
+    "recompensa": "You earned Clacos!",
+    "cupon": "Swipe to redeem",
+    "fin": "End of route"
+  }
+}

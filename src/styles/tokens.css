@@ -1,0 +1,22 @@
+/* Contrato 4 · Tokens "Fiesta Jarocha". Responsable: Dev 2. */
+:root {
+  --rosa: #E4007C;
+  --rojo: #E5242B;
+  --amarillo: #FFD400;
+  --turquesa: #00B5C8;
+  --cobalto: #1446C8;
+  --morado: #7B2FBE;
+  --naranja: #FF6B00;
+  --verde: #22B24C;
+  --tinta: #150A2E;
+  --lila: #DCD6EC;
+
+  --fuente-titulo: 'Shrikhand', cursive;
+  --fuente-texto: 'Nunito', sans-serif;
+  --fuente-nota: 'Caveat Brush', cursive;
+
+  --borde: 3px solid var(--tinta);
+  --radio: 16px;
+  --sombra-dura: 4px 4px 0 var(--tinta);
+  --tactil-min: 44px;
+}
