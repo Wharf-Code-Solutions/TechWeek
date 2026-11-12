@@ -26,6 +26,20 @@
   color: var(--tinta);
 }
 
+.emblema {
+  position: absolute;
+  right: 16px;
+  bottom: 38px;
+  display: grid;
+  place-items: center;
+  width: 90px;
+  height: 90px;
+  border: var(--borde);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--sombra-dura);
+}
+
 .cerrar {
   position: absolute;
   top: 12px;

@@ -7,13 +7,14 @@ import { X } from '@phosphor-icons/react'
 import { api } from '../lib/api'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
+import { escenaDe } from '../components/ui/escenas'
 import { urlIlustracion } from '../components/ui/ilustraciones'
+import { useLugares } from '../app/datos'
 import JuegoPalabras from '../features/retos/JuegoPalabras'
 import JuegoOrden from '../features/retos/JuegoOrden'
 import { respuestaInicial, type RetoPublico } from '../features/retos/logica'
 import '../features/retos/retos.css'
 
-const ESCENA = { palabras: 'escena-leyenda', orden: 'escena-puerto' } as const
 
 export default function Reto() {
   const { t, i18n } = useTranslation()
@@ -21,6 +22,7 @@ export default function Reto() {
   const { slug = '' } = useParams()
   const navigate = useNavigate()
   const [reto, setReto] = useState<RetoPublico | null>(null)
+  const lugar = useLugares().find((l) => l.slug === slug)
   const [valor, setValor] = useState<(string | null)[]>([])
   const [parada, setParada] = useState<{ n: number; total: number } | null>(null)
   const [fallos, setFallos] = useState(0)
@@ -83,7 +85,7 @@ export default function Reto() {
 
   return (
     <main className={`reto reto--${reto.tipo}`}>
-      <div className="reto-escena" style={{ backgroundImage: `url("${urlIlustracion(ESCENA[reto.tipo])}")` }}>
+      <div className="reto-escena" style={{ backgroundImage: `url("${urlIlustracion(escenaDe(lugar?.categoria))}")` }}>
         <div className="reto-barra">
           <Link to="/mapa" className="reto-salir" aria-label={t('reto.salir')}>
             <X size={20} weight="bold" aria-hidden="true" />

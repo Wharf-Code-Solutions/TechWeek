@@ -7,6 +7,7 @@ import { useLugares } from '../app/datos'
 import { useCampo } from '../app/idioma'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
+import { escenaDe } from '../components/ui/escenas'
 import { urlIlustracion } from '../components/ui/ilustraciones'
 import { activarExplorador } from '../features/geo/explorador'
 import { usePosition, useEstadoUbicacion } from '../features/geo/usePosition'
@@ -103,13 +104,17 @@ export default function Lugar() {
             : t('lugar.buscando')
           : null
 
-  const escena = lugar.categoria === 'leyendas' ? 'escena-leyenda' : 'escena-puerto'
+  const escena = escenaDe(lugar.categoria)
   const categoria = t(`preferencias.categorias.${lugar.categoria}`)
 
   return (
     <main className={estilos.pantalla}>
       <div className={estilos.escena} style={{ backgroundImage: `url("${urlIlustracion(escena)}")` }}>
         <span className={estilos.pildora}>{t('pantallas.lugar')}</span>
+        {/* La ilustración propia del lugar se suma a la escena de su categoría */}
+        <span className={estilos.emblema}>
+          <Ilustracion nombre={lugar.ilustracion} tamano={70} />
+        </span>
         <button type="button" className={estilos.cerrar} aria-label={t('mapa.cerrar')} onClick={() => navegar('/mapa')}>
           <X size={22} weight="bold" aria-hidden="true" />
         </button>
