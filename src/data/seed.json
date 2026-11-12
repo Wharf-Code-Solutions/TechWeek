@@ -137,14 +137,14 @@
           "revistas"
         ],
         "opciones": [
-          "XVII",
-          "este",
-          "reales",
-          "revistas",
-          "XIX",
-          "oeste",
           "papales",
-          "flores"
+          "flores",
+          "revistas",
+          "XVII",
+          "oeste",
+          "XIX",
+          "reales",
+          "este"
         ]
       },
       "contenido_en": {
@@ -166,12 +166,12 @@
           "magazine"
         ],
         "opciones": [
+          "west",
+          "royal",
           "17th",
           "east",
-          "royal",
           "magazine",
           "19th",
-          "west",
           "papal",
           "flower"
         ]
@@ -199,12 +199,12 @@
           "Real"
         ],
         "opciones": [
-          "brujería",
-          "Malibrán",
-          "Real",
-          "medicina",
           "Ulúa",
-          "Castillo"
+          "medicina",
+          "Malibrán",
+          "Castillo",
+          "Real",
+          "brujería"
         ]
       },
       "contenido_en": {
@@ -223,11 +223,11 @@
           "Real"
         ],
         "opciones": [
-          "witchcraft",
+          "Ulúa",
           "Malibrán",
+          "witchcraft",
           "Real",
           "medicine",
-          "Ulúa",
           "Castillo"
         ]
       }
@@ -321,12 +321,12 @@
           "marimba"
         ],
         "opciones": [
+          "campana",
           "cuchara",
           "1808",
-          "marimba",
-          "campana",
           "1932",
-          "guitarra"
+          "guitarra",
+          "marimba"
         ]
       },
       "contenido_en": {
@@ -345,11 +345,11 @@
           "marimba"
         ],
         "opciones": [
-          "spoon",
-          "1808",
-          "marimba",
           "bell",
+          "1808",
           "1932",
+          "spoon",
+          "marimba",
           "guitar"
         ]
       }
