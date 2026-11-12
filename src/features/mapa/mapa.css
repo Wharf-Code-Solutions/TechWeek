@@ -1,0 +1,34 @@
+.mapa { position: relative; height: 100dvh; }
+
+.mapa-aviso { padding: 16px; font-weight: 800; }
+
+.mapa-marcador {
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.mapa-marcador:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+.mapa-marcador[aria-pressed='true'] .ilustracion { background: var(--amarillo); }
+
+.mapa-yo {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--cobalto);
+  box-shadow: 0 0 0 3px var(--tinta);
+}
+
+.mapa-tarjeta {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding-right: 64px;
+}
+.mapa-tarjeta h2 { margin: 0 0 8px; font: 400 1.4rem/1.2 var(--fuente-titulo); }
+.mapa-tarjeta p { margin: 0; font-weight: 700; }
+.mapa-cerrar { position: absolute; top: 10px; right: 10px; padding: 0; }

@@ -1,2 +1,2 @@
 // M4 Mapa Mapbox · Dev 2
-export {}
+export { default as MapaLugares } from './MapaLugares'

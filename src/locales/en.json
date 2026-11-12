@@ -7,5 +7,10 @@
     "recompensa": "You earned Tlacos!",
     "cupon": "Swipe to redeem",
     "fin": "End of route"
+  },
+  "mapa": {
+    "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
+    "tuPosicion": "Your position",
+    "cerrar": "Close"
   }
 }

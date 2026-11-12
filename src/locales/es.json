@@ -7,5 +7,10 @@
     "recompensa": "¡Ganaste Tlacos!",
     "cupon": "Desliza para canjear",
     "fin": "Fin de ruta"
+  },
+  "mapa": {
+    "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
+    "tuPosicion": "Tu posición",
+    "cerrar": "Cerrar"
   }
 }
