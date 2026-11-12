@@ -4,6 +4,7 @@ import {
   PREFERENCIAS_INICIALES,
   TIEMPO_MAX,
   TIEMPO_MIN,
+  TIEMPO_PASO,
   ajustarTiempo,
   formatoTiempo,
   normalizar,
@@ -53,24 +54,28 @@ describe('cupón guardado', () => {
 })
 
 describe('tiempo disponible', () => {
-  it('redondea a pasos de 15 min y limita al rango', () => {
-    expect(ajustarTiempo(52)).toBe(45)
-    expect(ajustarTiempo(53)).toBe(60)
-    expect(ajustarTiempo(97)).toBe(90)
-    expect(ajustarTiempo(98)).toBe(105)
-    expect(ajustarTiempo(5)).toBe(TIEMPO_MIN)
-    expect(ajustarTiempo(9999)).toBe(TIEMPO_MAX)
+  it('va de 30 en 30 minutos hasta un máximo de 5 horas', () => {
+    expect(TIEMPO_MIN).toBe(30)
+    expect(TIEMPO_PASO).toBe(30)
+    expect(TIEMPO_MAX).toBe(300)
   })
-  it('normalizar acepta cualquier tiempo válido y corrige el resto', () => {
-    expect(normalizar({ tiempoMin: 135 }).tiempoMin).toBe(135)
-    expect(normalizar({ tiempoMin: 7 }).tiempoMin).toBe(TIEMPO_MIN)
+  it('redondea a pasos de 30 min y limita al rango', () => {
+    expect(ajustarTiempo(44)).toBe(30)
+    expect(ajustarTiempo(46)).toBe(60)
+    expect(ajustarTiempo(100)).toBe(90)
+    expect(ajustarTiempo(5)).toBe(TIEMPO_MIN)
+    expect(ajustarTiempo(480)).toBe(TIEMPO_MAX)
+  })
+  it('normalizar corrige tiempos viejos y inválidos', () => {
+    expect(normalizar({ tiempoMin: 150 }).tiempoMin).toBe(150)
+    expect(normalizar({ tiempoMin: 480 }).tiempoMin).toBe(TIEMPO_MAX)
     expect(normalizar({ tiempoMin: Number.NaN }).tiempoMin).toBe(PREFERENCIAS_INICIALES.tiempoMin)
   })
   it('formatea horas y minutos', () => {
     expect(formatoTiempo(30)).toBe('30 min')
     expect(formatoTiempo(120)).toBe('2 h')
-    expect(formatoTiempo(135)).toBe('2 h 15 min')
-    expect(formatoTiempo(480)).toBe('8 h')
+    expect(formatoTiempo(150)).toBe('2 h 30 min')
+    expect(formatoTiempo(300)).toBe('5 h')
   })
 })
 

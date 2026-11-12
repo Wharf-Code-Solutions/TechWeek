@@ -1,14 +1,14 @@
 // Preferencias del turista (pantalla 01). Viven en el celular; Dev 1 las usará para armar la ruta (M3).
 import type { Categoria, Idioma } from '../types/contratos'
 
-/** Tiempo disponible: de 30 min a 8 h, en pasos de 15 min (el servidor acepta de 15 a 480). */
+/** Tiempo disponible: de 30 min a 5 h, en pasos de 30 min (el servidor acepta de 15 a 480). */
 export const TIEMPO_MIN = 30
-export const TIEMPO_MAX = 480
-export const TIEMPO_PASO = 15
+export const TIEMPO_MAX = 300
+export const TIEMPO_PASO = 30
 /** Atajos rápidos del deslizador (minutos). */
-export const TIEMPOS_ATAJO = [60, 120, 240] as const
+export const TIEMPOS_ATAJO = [60, 120, 180] as const
 
-/** Redondea al paso de 15 min y limita al rango permitido. */
+/** Redondea al paso de 30 min y limita al rango permitido. */
 export const ajustarTiempo = (min: number) =>
   Math.min(TIEMPO_MAX, Math.max(TIEMPO_MIN, Math.round(min / TIEMPO_PASO) * TIEMPO_PASO))
 
