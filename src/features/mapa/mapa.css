@@ -424,3 +424,11 @@
 .mapa--ligero .marcador-circulo { box-shadow: none; }
 .mapa--ligero .marcador--llegando .marcador-circulo::after { animation: none; }
 .mapa--ligero .marcador-comida-activo .marcador-circulo { box-shadow: none; }
+
+/* Afluencia: etiqueta de cada parada y aviso cuando la siguiente está llena. */
+.ruta-nivel { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.ruta-nivel--tranquilo { background: #dff3e6; color: #17603a; }
+.ruta-nivel--concurrido { background: #fdeccb; color: #7a4a00; }
+.ruta-nivel--lleno { background: #fadcdc; color: #8a1c1c; }
+.ruta-lleno { display: flex; flex-direction: column; gap: 8px; padding: 12px; margin-bottom: 8px; border-radius: 14px; background: #fdf0ef; }
+.ruta-lleno p { margin: 0; font-size: 14px; font-weight: 500; }

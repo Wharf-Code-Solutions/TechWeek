@@ -246,7 +246,15 @@
     "cancelar": "Cancel",
     "sinRuta": "You have not built your route yet.",
     "armar": "Build my route",
-    "verEnMapa": "Show {{nombre}} on the map"
+    "verEnMapa": "Show {{nombre}} on the map",
+    "nivel": {
+      "tranquilo": "Quiet",
+      "concurrido": "Busy",
+      "lleno": "Packed"
+    },
+    "llenoAlternativa": "{{nombre}} is packed right now. {{alternativa}} is quiet, {{min}} min away.",
+    "llenoSinAlternativa": "{{nombre}} is packed right now. You can skip it or wait a little.",
+    "irA": "Go to {{nombre}}"
   },
   "pasaporte": {
     "titulo": "My passport",

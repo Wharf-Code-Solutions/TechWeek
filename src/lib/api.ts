@@ -54,6 +54,15 @@ export interface ResumenRuta {
   total_lugares: number
   foto_id: number | null
 }
+export type NivelAfluencia = 'tranquilo' | 'concurrido' | 'lleno'
+/** Qué tan lleno está un lugar: llegadas de la última hora contra su capacidad. */
+export interface Afluencia {
+  slug: string
+  llegadas: number
+  capacidad: number
+  ocupacion: number
+  nivel: NivelAfluencia
+}
 export interface ComercioFila {
   id: number
   slug: string
@@ -149,6 +158,7 @@ export const api = {
   eventos: () => http<unknown[]>('/api/eventos'),
   fotos: () => http<unknown[]>('/api/fotos'),
   // Progreso del celular (con sesión)
+  afluencia: () => privado<Afluencia[]>('/api/afluencia'),
   saldo: () => privado<{ saldo: number }>('/api/saldo'),
   /** Idempotente: una sola petición por lugar y sesión; un 409 ("ya existe") cuenta como éxito. */
   registrarLlegada: (lugar_slug: string, metodo: 'gps', lat?: number, lng?: number) => {

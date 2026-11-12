@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Check, FlagCheckered, Scissors, SkipForward } from '@phosphor-icons/react'
+import { useLugares } from '../../app/datos'
 import { useCampo } from '../../app/idioma'
 import { api } from '../../lib/api'
 import type { Lugar } from '../../types/contratos'
 import { distanciaM } from '../geo/distancia'
 import type { Posicion } from '../geo/usePosition'
+import { alternativaA, nivelDe, useAfluencia } from './afluencia'
 import { formatoDistancia, minutosCaminando, recortarRuta } from './progreso'
 import './mapa.css'
 
@@ -33,6 +35,8 @@ export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente,
   const [ocupado, setOcupado] = useState(false)
   const [error, setError] = useState(false)
   const [confirmarRecorte, setConfirmarRecorte] = useState(false)
+  const afluencia = useAfluencia()
+  const lugares = useLugares()
 
   if (ruta === undefined) return <p role="status">{t('comun.cargando')}</p>
   if (!ruta) {
@@ -49,6 +53,10 @@ export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente,
   const pendientes = ruta.filter((l) => !hechos.has(l.slug) && !saltadas.has(l.slug))
   const categoria = (l: Lugar) => t(`preferencias.categorias.${l.categoria}`)
 
+  // Si la próxima parada se llenó, se ofrece un lugar tranquilo cerca en su lugar.
+  const lleno = siguiente && nivelDe(afluencia, siguiente.slug) === 'lleno' ? siguiente : null
+  const alternativa = lleno ? alternativaA(lleno, ruta, lugares, afluencia) : null
+
   async function ajustar(slugs: string[]) {
     setOcupado(true)
     setError(false)
@@ -64,6 +72,29 @@ export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente,
 
   return (
     <div className="ruta">
+      {lleno && (
+        <div className="ruta-lleno" role="status">
+          <p>
+            {alternativa
+              ? t('ruta.llenoAlternativa', {
+                  nombre: campo(lleno, 'nombre'),
+                  alternativa: campo(alternativa, 'nombre'),
+                  min: minutosCaminando(pos ? distanciaM(pos, alternativa) : distanciaM(lleno, alternativa)),
+                })
+              : t('ruta.llenoSinAlternativa', { nombre: campo(lleno, 'nombre') })}
+          </p>
+          {alternativa && (
+            <button
+              type="button"
+              className="ruta-accion"
+              disabled={ocupado}
+              onClick={() => void ajustar(ruta.map((x) => (x.slug === lleno.slug ? alternativa.slug : x.slug)))}
+            >
+              {t('ruta.irA', { nombre: campo(alternativa, 'nombre') })}
+            </button>
+          )}
+        </div>
+      )}
       <ol className="ruta-lista">
         {ruta.map((l, i) => {
           const tlacos = hechos.get(l.slug)
@@ -112,6 +143,10 @@ export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente,
                       : esSiguiente
                         ? t('ruta.subSiguiente', { categoria: categoria(l), dist: formatoDistancia(metros), min: minutosCaminando(metros) })
                         : t('ruta.sub', { categoria: categoria(l), dist: formatoDistancia(metros) })}
+                    {' '}
+                    <span className={`ruta-nivel ruta-nivel--${nivelDe(afluencia, l.slug)}`}>
+                      {t(`ruta.nivel.${nivelDe(afluencia, l.slug)}`)}
+                    </span>
                   </span>
                 </span>
               </button>

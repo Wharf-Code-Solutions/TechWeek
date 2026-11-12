@@ -246,7 +246,15 @@
     "cancelar": "Cancelar",
     "sinRuta": "Aún no armas tu ruta.",
     "armar": "Armar mi ruta",
-    "verEnMapa": "Ver {{nombre}} en el mapa"
+    "verEnMapa": "Ver {{nombre}} en el mapa",
+    "nivel": {
+      "tranquilo": "Tranquilo",
+      "concurrido": "Concurrido",
+      "lleno": "Lleno"
+    },
+    "llenoAlternativa": "{{nombre}} está muy lleno ahora. {{alternativa}} está tranquilo, a {{min}} min.",
+    "llenoSinAlternativa": "{{nombre}} está muy lleno ahora. Puedes saltarlo o esperar un rato.",
+    "irA": "Ir a {{nombre}}"
   },
   "pasaporte": {
     "titulo": "Mi pasaporte",
