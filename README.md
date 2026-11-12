@@ -83,7 +83,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 
 | Tecnología | Uso |
 |---|---|
-| **Mapbox GL + react-map-gl** | Mapa 3D (estilo Mapbox Standard) del Centro Histórico, pines de lugares, eventos y comercios, ruta animada por calles. |
+| **Mapbox GL + react-map-gl** | Mapa 3D del Centro Histórico, pines de lugares, eventos y comercios, ruta animada por calles. |
 | **Mapbox Directions** | Trazo de la ruta a pie por las calles entre paradas. |
 | **Bounding Box** | Delimitación de la vista al Centro Histórico. |
 | **Geolocation API** | Posición del turista y detección de llegada en un radio de 40 m. |
@@ -159,12 +159,7 @@ El equipo usó inteligencia artificial como apoyo durante el hackathon; todo lo 
 | Frontend y mapa | Asistente de IA | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
 | Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación. | Revisado por el equipo; ningún dato sin fuente. |
 
-Reglas que seguimos: ninguna llave en el repositorio, la IA no figura como coautora de los commits y los datos personales no se comparten con servicios externos.
 
 # Datos
 - Grajeda Rosado, R. M., Diaz Olaldez, M., Prieto Alonso, E. T., y Mondragón Olán, M. (2025). Informe: Opinión pública del Centro de Veracruz. La voz de los veracruzanos: Percepción y desafíos en el Centro de Veracruz. Observatorio Universitario Metropolitano de Veracruz; Universidad Veracruzana. https://www.uv.mx/veracruz/omv/files/2025/09/2025-Encuesta-Informe.pdf
-- **Inventario de sitios turísticos del Centro Histórico de Veracruz** (`sitios-turisticos-veracruz.csv`, elaborado por el equipo): 104 sitios con dirección, horario, descripción y fuente; se usaron solo los 83 del Centro Histórico. Fuentes citadas en el inventario: Sistema de Información Cultural (SIC), Secretaría de Cultura de Veracruz (SECVER), Centro INAH Veracruz, H. Ayuntamiento de Veracruz y prensa local.
-- **Investigación del patrimonio, comercio y leyendas del Centro Histórico** (documento del equipo): perímetros del Decreto de Zona de Monumentos Históricos (INAH, 2004), leyendas verificadas y rutas temáticas.
-- **Coordenadas:** OpenStreetMap (Nominatim y Overpass, © colaboradores de OpenStreetMap, ODbL) y Mapbox Geocoding.
-- **Foto histórica del rompecabezas:** Abel Briquet, *Palacio Municipal y el puerto de Veracruz* (1880–1900), dominio público, vía [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Palacio_Veracruz_1880-1900.tif). Las postales de `public/rompecabezas/` son ilustraciones propias.
 - Las promociones de los comercios son de **demostración** y no implican un acuerdo con los negocios.
