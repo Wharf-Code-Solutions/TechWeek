@@ -20,13 +20,26 @@ export interface Recorrido {
   paradaActual: (metros: number) => number
 }
 
-export function crearRecorrido(puntos: Punto[]): Recorrido {
+/**
+ * `puntos` son las paradas. Con `tramos` (un trazado [lng, lat] entre cada par de paradas, p. ej. por calles)
+ * el recorrido sigue ese trazado en vez de la línea recta; pasa siempre por las paradas.
+ */
+export function crearRecorrido(puntos: Punto[], tramos?: [number, number][][]): Recorrido {
   if (puntos.length < 2) throw new Error('El recorrido necesita al menos 2 puntos')
-  const linea = lineString(puntos.map((p) => [p.lng, p.lat]))
-  const acumulado = [0]
+  const camino: Punto[] = [puntos[0]]
+  const idxParada = [0]
   for (let i = 1; i < puntos.length; i++) {
-    acumulado.push(acumulado[i - 1] + distanciaM(puntos[i - 1], puntos[i]))
+    const tramo = tramos?.[i - 1] ?? []
+    for (const [lng, lat] of tramo) camino.push({ lat, lng })
+    camino.push(puntos[i])
+    idxParada.push(camino.length - 1)
   }
+  const linea = lineString(camino.map((p) => [p.lng, p.lat]))
+  const metrosCamino = [0]
+  for (let i = 1; i < camino.length; i++) {
+    metrosCamino.push(metrosCamino[i - 1] + distanciaM(camino[i - 1], camino[i]))
+  }
+  const acumulado = idxParada.map((i) => metrosCamino[i])
   const totalM = acumulado[acumulado.length - 1]
   const limitar = (m: number) => Math.min(Math.max(m, 0), totalM)
 
