@@ -56,6 +56,8 @@ export interface ComercioFila {
   id: number
   slug: string
   nombre: string
+  lat: number
+  lng: number
 }
 const CLAVE = 'jarana.sesion'
 

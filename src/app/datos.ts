@@ -28,6 +28,8 @@ export interface PromoVista {
   titulo_en: string
   costo_tlacos: number
   comercio: string
+  lat?: number
+  lng?: number
 }
 
 const PROMOS_SEED: PromoVista[] = seed.promociones.map((p) => ({
@@ -36,6 +38,8 @@ const PROMOS_SEED: PromoVista[] = seed.promociones.map((p) => ({
   titulo_en: p.titulo_en,
   costo_tlacos: p.costo_tlacos,
   comercio: seed.comercios.find((c) => c.slug === p.comercio_slug)?.nombre ?? '',
+  lat: seed.comercios.find((c) => c.slug === p.comercio_slug)?.lat,
+  lng: seed.comercios.find((c) => c.slug === p.comercio_slug)?.lng,
 }))
 
 export function usePromociones(): PromoVista[] {
@@ -52,6 +56,8 @@ export function usePromociones(): PromoVista[] {
             titulo_en: p.titulo_en,
             costo_tlacos: p.costo_tlacos,
             comercio: cs.find((c) => c.id === p.comercio_id)?.nombre ?? '',
+            lat: cs.find((c) => c.id === p.comercio_id)?.lat,
+            lng: cs.find((c) => c.id === p.comercio_id)?.lng,
           })),
         )
       })

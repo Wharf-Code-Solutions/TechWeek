@@ -86,7 +86,10 @@
     "costo": "{{n}} Tlacos",
     "canjear": "Redeem",
     "faltan": "You need {{n}} more Tlacos",
-    "sin_saldo": "We couldn't load your balance."
+    "sin_saldo": "We couldn't load your balance.",
+    "tusTlacos": "Your Tlacos",
+    "gastalos": "Spend them in the port",
+    "cercaDeTi": "near you"
   },
   "cupon": {
     "deslizar": "Swipe to redeem",

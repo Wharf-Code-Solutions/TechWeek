@@ -4,37 +4,61 @@
   gap: 12px;
 }
 
-.titulo {
-  margin: 0;
-  font-family: var(--fuente-titulo);
-  font-size: 1.6rem;
-  font-weight: 400;
-  color: var(--rosa);
-}
-
-.subtitulo {
-  margin: 8px 0 0;
-  font-size: 1.1rem;
-  font-weight: 900;
-}
-
 .saldo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 98px;
+  padding: 0 18px;
+  border-radius: 20px;
   background: var(--amarillo);
-  text-align: center;
 }
 
 .saldo p {
   margin: 0;
 }
 
+.etiqueta {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .cifra {
-  font-size: 1.8rem;
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.encabezado {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.subtitulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.nota {
+  font-family: var(--fuente-nota);
+  font-size: 1.1rem;
+  color: var(--rosa);
 }
 
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -43,11 +67,84 @@
 .promo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
+  padding: 10px;
+  border-radius: 18px;
+}
+
+.icono {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.texto strong {
+  font-size: 1rem;
 }
 
 .detalle {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: #4a3f66;
+}
+
+.faltan {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #a0005a;
+}
+
+.canjear {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: var(--rosa);
+  color: #fff;
+  cursor: pointer;
+}
+
+.canjear b {
+  font-size: 1.15rem;
+  line-height: 1.1;
+}
+
+.canjear span {
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.costo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 64px;
+  height: 50px;
+  border: 2px dashed #6b5f87;
+  border-radius: 14px;
+  color: #4a3f66;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.canjear:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 3px;
 }

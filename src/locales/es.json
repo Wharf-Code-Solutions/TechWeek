@@ -86,7 +86,10 @@
     "costo": "{{n}} Tlacos",
     "canjear": "Canjear",
     "faltan": "Te faltan {{n}} Tlacos",
-    "sin_saldo": "No pudimos cargar tu saldo."
+    "sin_saldo": "No pudimos cargar tu saldo.",
+    "tusTlacos": "Tus Tlacos",
+    "gastalos": "Gástalos en el puerto",
+    "cercaDeTi": "cerca de ti"
   },
   "cupon": {
     "deslizar": "Desliza para canjear",
