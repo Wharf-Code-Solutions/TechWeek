@@ -1,5 +1,6 @@
 // Pantalla 02 · Permiso de ubicación / modo explorador.
 // El permiso del navegador solo se pide cuando el turista toca "Permitir ubicación".
+import { Crosshair, MapPin } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Boton from '../../components/ui/Boton'
@@ -47,6 +48,10 @@ export default function PermisoUbicacion({ onListo }: Props) {
 
   return (
     <Tarjeta className={estilos.tarjeta}>
+      {/* Mientras no llegue la ilustración del pin con castillo del diseño, un pin rosa sobre círculo turquesa. */}
+      <span className={estilos.pin} aria-hidden="true">
+        <MapPin size={64} weight="fill" />
+      </span>
       <h2 className={estilos.titulo}>{t('permiso.titulo')}</h2>
       <p>{t('permiso.texto')}</p>
       {pidiendo ? (
@@ -60,18 +65,19 @@ export default function PermisoUbicacion({ onListo }: Props) {
               setPidiendo(true)
             }}
           >
+            <Crosshair size={22} weight="bold" aria-hidden="true" />
             {t('permiso.permitir')}
           </Boton>
-          <Boton
-            ancho
-            variante="blanco"
+          <button
+            type="button"
+            className={estilos.enlace}
             onClick={() => {
               activarExplorador()
               onListo()
             }}
           >
             {t('permiso.explorar')}
-          </Boton>
+          </button>
           <p className={estilos.aviso}>{t('permiso.aviso_explorador')}</p>
         </>
       )}

@@ -1,19 +1,51 @@
 .tarjeta {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 14px;
+  text-align: center;
+}
+
+.pin {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--turquesa);
+  color: var(--rosa);
 }
 
 .titulo {
   margin: 0;
   font-family: var(--fuente-titulo);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  color: var(--rosa);
+  text-shadow: none;
+  color: var(--tinta);
+}
+
+.tarjeta p {
+  margin: 0;
 }
 
 .aviso {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--tinta);
+  font-size: 0.85rem;
+  color: #4a3f66;
 }
+
+.enlace {
+  min-height: var(--tactil-min);
+  border: 0;
+  background: transparent;
+  color: var(--morado);
+  font: 800 0.95rem var(--fuente-texto);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.enlace:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 3px;
+}
+
