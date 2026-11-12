@@ -28,10 +28,12 @@ async def registrar_llegada(datos: LlegadaIn, perfil_id: str = Depends(perfil_id
             raise HTTPException(403, "Estás fuera del radio del lugar")
 
     await db.asegurar_perfil(perfil_id)
-    existente = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}", lugar_id=f"eq.{lugar['id']}")
-    if existente:
-        return existente[0]
+    # Inserta directo; si ya existía (unique perfil_id+lugar_id) no se duplica y se lee la existente.
     filas = await db.insertar(
-        "visitas", {"perfil_id": perfil_id, "lugar_id": lugar["id"], "metodo": datos.metodo}
+        "visitas", {"perfil_id": perfil_id, "lugar_id": lugar["id"], "metodo": datos.metodo},
+        ignorar_duplicado=True, conflicto="perfil_id,lugar_id",
     )
-    return filas[0]
+    if filas:
+        return filas[0]
+    existente = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}", lugar_id=f"eq.{lugar['id']}")
+    return existente[0]

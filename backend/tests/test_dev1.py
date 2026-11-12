@@ -77,13 +77,19 @@ class BaseFalsa:
     async def seleccionar(self, tabla, **f):
         return [dict(x) for x in self.t[tabla] if self._cumple(x, f)]
 
-    async def insertar(self, tabla, fila, *, ignorar_duplicado=False):
+    async def insertar(self, tabla, fila, *, ignorar_duplicado=False, conflicto=None):
         if tabla == "movimientos_tlacos" and fila["motivo"] == "bono_fin" and any(
             m["perfil_id"] == fila["perfil_id"] and m["motivo"] == "bono_fin" for m in self.t[tabla]
         ):
             raise HTTPException(409, "Ya existe")
         if tabla == "perfiles" and any(p["id"] == fila["id"] for p in self.t[tabla]):
             return []
+        if tabla == "visitas" and any(  # unique (perfil_id, lugar_id)
+            v["perfil_id"] == fila["perfil_id"] and v["lugar_id"] == fila["lugar_id"] for v in self.t[tabla]
+        ):
+            if ignorar_duplicado:
+                return []
+            raise HTTPException(409, "Ya existe")
         self.n += 1
         nueva = {"id": self.n, "reto_ok": None, "estado": "activa", "creado_en": str(self.n),
                  "llegada_en": str(self.n), "tlacos": 0, **fila}

@@ -14,21 +14,27 @@ async def completar_reto(lugar_slug: str, datos: RetoIn, perfil_id: str = Depend
 
     Nunca bloquea al turista: con `revelar` se cierra el reto con el premio reducido.
     """
-    lugares = await db.seleccionar("lugares", slug=f"eq.{lugar_slug}")
+    # Una sola consulta: el lugar con su reto y la visita de este celular (embebidos por PostgREST).
+    lugares = await db.seleccionar(
+        "lugares",
+        slug=f"eq.{lugar_slug}",
+        select="id,retos(*),visitas(id,reto_ok)",
+        **{"visitas.perfil_id": f"eq.{perfil_id}"},
+    )
     if not lugares:
         raise HTTPException(404, "Lugar no encontrado")
     lugar_id = lugares[0]["id"]
 
-    visitas = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}", lugar_id=f"eq.{lugar_id}")
+    visitas = lugares[0].get("visitas") or []
     if not visitas:
         raise HTTPException(409, "Primero registra la llegada al lugar")
     if visitas[0]["reto_ok"] is not None:
         raise HTTPException(409, "El reto ya fue completado")
 
-    retos = await db.seleccionar("retos", lugar_id=f"eq.{lugar_id}")
-    if not retos:
+    retos = lugares[0].get("retos")
+    reto = (retos[0] if retos else None) if isinstance(retos, list) else retos
+    if not reto:
         raise HTTPException(404, "Este lugar no tiene reto")
-    reto = retos[0]
 
     contenido = reto[f"contenido_{datos.idioma}"]
     correcto = validar(reto["tipo"], contenido, datos.respuesta)

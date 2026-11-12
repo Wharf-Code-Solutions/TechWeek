@@ -2,6 +2,7 @@
 
 Los nombres de la moneda (Tlacos) viven aquí para cambiarlos en un solo lugar.
 """
+import asyncio
 from typing import Any
 
 import httpx
@@ -26,15 +27,32 @@ def _headers(extra: dict[str, str] | None = None) -> dict[str, str]:
     return {**base, **(extra or {})}
 
 
+_clientes: dict[int, httpx.AsyncClient] = {}
+
+
+def cliente_http() -> httpx.AsyncClient:
+    """Un cliente HTTP reutilizable por event loop: conserva la conexión (keep-alive) con Supabase.
+
+    Abrir un cliente por consulta repetía el saludo TLS en cada llamada (~100 ms cada una).
+    Se guarda por loop porque las pruebas crean un loop nuevo por cliente de pruebas.
+    """
+    loop = id(asyncio.get_running_loop())
+    http = _clientes.get(loop)
+    if http is None or http.is_closed:
+        http = _clientes[loop] = httpx.AsyncClient(
+            timeout=10, limits=httpx.Limits(max_keepalive_connections=10, keepalive_expiry=60)
+        )
+    return http
+
+
 async def _pedir(metodo: str, ruta: str, *, params=None, json=None, prefer: str | None = None) -> Any:
     s = get_settings()
     if not s.supabase_url:
         raise HTTPException(503, "Supabase no está configurado en el servidor")
     extra = {"Prefer": prefer} if prefer else None
-    async with httpx.AsyncClient(timeout=10) as http:
-        r = await http.request(
-            metodo, f"{s.supabase_url}/rest/v1/{ruta}", params=params, json=json, headers=_headers(extra)
-        )
+    r = await cliente_http().request(
+        metodo, f"{s.supabase_url}/rest/v1/{ruta}", params=params, json=json, headers=_headers(extra)
+    )
     if r.status_code == 409:
         raise HTTPException(409, "Ya existe")
     if r.status_code >= 400:
@@ -48,11 +66,17 @@ async def seleccionar(tabla: str, **filtros: str) -> list[dict]:
     return await _pedir("GET", tabla, params=params)
 
 
-async def insertar(tabla: str, fila: dict, *, ignorar_duplicado: bool = False) -> list[dict]:
+async def insertar(
+    tabla: str, fila: dict, *, ignorar_duplicado: bool = False, conflicto: str | None = None
+) -> list[dict]:
+    """`conflicto`: columnas de la llave única a ignorar (p. ej. "perfil_id,lugar_id"); por defecto, la llave primaria."""
     prefer = "return=representation"
+    params = None
     if ignorar_duplicado:
         prefer += ",resolution=ignore-duplicates"
-    return await _pedir("POST", tabla, json=fila, prefer=prefer)
+        if conflicto:
+            params = {"on_conflict": conflicto}
+    return await _pedir("POST", tabla, params=params, json=fila, prefer=prefer)
 
 
 async def actualizar(tabla: str, cambios: dict, **filtros: str) -> list[dict]:
