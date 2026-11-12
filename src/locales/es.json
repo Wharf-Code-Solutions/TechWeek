@@ -106,6 +106,10 @@
     "aviso": "Desliza <b>frente al mesero</b>: una vez canjeado no se puede deshacer."
   },
   "mapa": {
+    "menu": "Menú del mapa",
+    "menu_nombres": "Nombres de lugares",
+    "menu_comer": "Dónde comer",
+    "menu_ubicacion": "Mi ubicación",
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",
     "cerrar": "Cerrar",

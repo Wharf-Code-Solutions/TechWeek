@@ -4,7 +4,7 @@
 .agenda-encabezado h2 { margin: 0; font: 400 26px var(--fuente-titulo); }
 .agenda-encabezado span { font: 17px var(--fuente-nota); color: var(--rosa); }
 
-.agenda-dias { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.agenda-dias { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
 .agenda-dias button {
   height: 54px;
   display: flex;
@@ -19,7 +19,7 @@
   cursor: pointer;
 }
 .agenda-dias span { font-size: 10px; font-weight: 800; text-transform: uppercase; }
-.agenda-dias strong { font-size: 19px; font-weight: 900; }
+.agenda-dias strong { font-size: 17px; font-weight: 900; }
 .agenda-dias button[aria-pressed='true'] { border: 2.5px solid var(--tinta); box-shadow: 3px 3px 0 var(--tinta); background: var(--amarillo); }
 .agenda-dias button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 

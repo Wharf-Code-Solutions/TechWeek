@@ -191,8 +191,41 @@
   box-shadow: 0 3px 10px rgb(21 10 46 / 0.22);
   cursor: pointer;
 }
-.mapa-vitrina { top: calc(120px + env(safe-area-inset-top)); }
-.mapa-ubicacion { top: calc(170px + env(safe-area-inset-top)); }
+/* Menú que despliega el botón hamburguesa */
+.mapa-menu {
+  position: absolute;
+  top: calc(116px + env(safe-area-inset-top));
+  right: 12px;
+  z-index: 10;
+  min-width: 190px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 2px solid var(--tinta);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgb(21 10 46 / 0.3);
+  animation: mapa-menu-entra 160ms var(--suave);
+}
+.mapa-menu button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--tinta);
+  font: 800 14px var(--fuente-texto);
+  text-align: left;
+  cursor: pointer;
+}
+.mapa-menu button[aria-pressed='true'] { background: var(--amarillo); }
+.mapa-menu button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: -2px; }
+@keyframes mapa-menu-entra { from { opacity: 0; transform: translateY(-6px) scale(0.97); } }
+@media (prefers-reduced-motion: reduce) { .mapa-menu { animation: none; } }
 .mapa-nombres[aria-pressed='true'] { background: var(--tinta); color: var(--amarillo); }
 .mapa-nombres:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
 

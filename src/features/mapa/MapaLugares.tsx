@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Check, Crosshair, ForkKnife, Storefront, TextAa, X } from '@phosphor-icons/react'
+import { Check, Crosshair, ForkKnife, List, Storefront, TextAa, X } from '@phosphor-icons/react'
 import type { Comercio, Evento, Lugar } from '../../types/contratos'
 import type { Punto } from '../geo/tipos'
 import { moverManual } from '../geo/posicionManual'
@@ -156,6 +156,7 @@ export default function MapaLugares({
   const [elegido, setElegido] = useState<Lugar | null>(null)
   // ¿Dónde comer?: con el botón se marcan en el mapa los lugares de comida; al tocar uno se despliega su vitrina.
   const [comer, setComer] = useState(false)
+  const [menu, setMenu] = useState(false)
   const [comercio, setComercio] = useState<Comercio | null>(null)
   const { comercios } = useVitrina()
   const comida = useMemo(() => (comer ? comidaCercana(comercios, pos).map((x) => x.comercio) : []), [comer, comercios, pos])
@@ -325,6 +326,7 @@ export default function MapaLugares({
         maxTileCacheSize={60}
         fadeDuration={120}
         onClick={(e) => {
+          setMenu(false)
           // Un toque en el mapa mueve al turista; los toques en pines y en su propio marcador no.
           if (!modoManual || (e.originalEvent.target as HTMLElement).closest('.marcador, .mapa-yo')) return
           moverManual({ lat: e.lngLat.lat, lng: e.lngLat.lng })
@@ -461,38 +463,42 @@ export default function MapaLugares({
 
       {arriba && <div className="mapa-arriba">{arriba}</div>}
 
+      {/* Menú hamburguesa: reúne los botones del mapa (nombres, dónde comer, mi ubicación) en uno solo. */}
       <button
         type="button"
-        className="mapa-nombres"
-        aria-pressed={nombres}
-        aria-label={t('mapa.nombres')}
-        title={t('mapa.nombres')}
-        onClick={alternarNombres}
+        className="mapa-nombres mapa-hamburguesa"
+        aria-expanded={menu}
+        aria-controls="mapa-menu"
+        aria-pressed={comer || nombres}
+        aria-label={t('mapa.menu')}
+        title={t('mapa.menu')}
+        onClick={() => setMenu((v) => !v)}
       >
-        <TextAa size={22} weight="bold" aria-hidden="true" />
+        {menu ? <X size={22} weight="bold" aria-hidden="true" /> : <List size={22} weight="bold" aria-hidden="true" />}
       </button>
-
-      <button
-        type="button"
-        className="mapa-nombres mapa-vitrina"
-        aria-label={t('mapa.restaurantes')}
-        title={t('mapa.restaurantes')}
-        aria-pressed={comer}
-        onClick={alternarComer}
-      >
-        <ForkKnife size={22} weight="bold" aria-hidden="true" />
-      </button>
-
-      {pos && (
-        <button
-          type="button"
-          className="mapa-nombres mapa-ubicacion"
-          aria-label={t('mapa.miUbicacion')}
-          title={t('mapa.miUbicacion')}
-          onClick={irAMiUbicacion}
-        >
-          <Crosshair size={22} weight="bold" aria-hidden="true" />
-        </button>
+      {menu && (
+        <ul id="mapa-menu" className="mapa-menu" onKeyDown={(e) => e.key === 'Escape' && setMenu(false)}>
+          <li>
+            <button type="button" aria-pressed={nombres} onClick={() => { alternarNombres(); setMenu(false) }}>
+              <TextAa size={22} weight="bold" aria-hidden="true" />
+              {t('mapa.menu_nombres')}
+            </button>
+          </li>
+          <li>
+            <button type="button" aria-pressed={comer} onClick={() => { alternarComer(); setMenu(false) }}>
+              <ForkKnife size={22} weight="bold" aria-hidden="true" />
+              {t('mapa.menu_comer')}
+            </button>
+          </li>
+          {pos && (
+            <li>
+              <button type="button" onClick={() => { irAMiUbicacion(); setMenu(false) }}>
+                <Crosshair size={22} weight="bold" aria-hidden="true" />
+                {t('mapa.menu_ubicacion')}
+              </button>
+            </li>
+          )}
+        </ul>
       )}
 
       <div className="mapa-abajo">

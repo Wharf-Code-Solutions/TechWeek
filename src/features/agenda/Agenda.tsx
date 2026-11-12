@@ -20,7 +20,7 @@ export default function Agenda() {
   const campo = useCampo()
   const pos = usePosition()
   const [eventos, setEventos] = useState<Evento[]>(seed.eventos as Evento[])
-  const dias = proximosDias(5)
+  const dias = proximosDias(7)
   const [dia, setDia] = useState(dias[0])
 
   useEffect(() => {
