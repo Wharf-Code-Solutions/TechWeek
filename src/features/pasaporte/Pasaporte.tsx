@@ -87,12 +87,14 @@ export default function Pasaporte() {
             <li key={a.slug}>
               <span
                 className="pasaporte-sello"
-                style={{ ['--tinta-sello' as string]: TINTAS[i % TINTAS.length], rotate: `${i % 2 ? 6 : -8}deg` }}
+                style={{ ['--tinta-sello' as string]: TINTAS[i % TINTAS.length] }}
                 role="img"
                 aria-label={t('pasaporte.sello', { nombre: a.nombre })}
               >
-                <Ilustracion nombre={a.ilustracion} tamano={36} />
-                <span>{nombreCorto(a.nombre)}</span>
+                <Ilustracion nombre={a.ilustracion} tamano={52} />
+              </span>
+              <span className="pasaporte-sello-nombre" aria-hidden="true">
+                {nombreCorto(a.nombre)}
               </span>
             </li>
           ) : (
