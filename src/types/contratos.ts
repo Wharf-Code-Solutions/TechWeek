@@ -27,9 +27,12 @@ export interface ContenidoPalabras {
   opciones: string[]
 }
 
-/** Reto "Orden cronológico". `orden_correcto` lista los `id` de los eventos. */
+/**
+ * Reto "Orden cronológico". `orden_correcto` lista los `id` de los eventos.
+ * Si existe `anio_texto` (p. ej. "Siglo XVII"), la pantalla lo muestra en lugar de `anio`.
+ */
 export interface ContenidoOrden {
-  eventos: { id: string; anio: number; texto: string }[]
+  eventos: { id: string; anio: number; anio_texto?: string; texto: string }[]
   orden_correcto: string[]
 }
 

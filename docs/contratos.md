@@ -32,11 +32,11 @@ Celular (React) ──/api/*──▶ FastAPI (backend/) ──service_role─�
 ### Paradas de la demo
 | Orden | Lugar | Reto |
 | --- | --- | --- |
-| 1 | Catedral de la Asunción | por definir |
+| 1 | Catedral de la Asunción | Completa la frase ✅ |
 | 2 | Solar de la Condesa de Malibrán | Completa la leyenda ✅ |
 | 3 | Baluarte de Santiago (solo exterior) | Orden cronológico ✅ |
-| 4 | Portales y café lechero | por definir |
-| 5 | Zócalo / Plaza de Armas | por definir |
+| 4 | Portales y café lechero | Completa la frase ✅ |
+| 5 | Zócalo / Plaza de Armas | Orden cronológico ✅ |
 
 Fuera de la demo: Palacio Municipal y Faro Venustiano Carranza. **Regla:** solo lugares dentro del Centro Histórico del puerto. El Callejón del Diamante se descartó porque está en Xalapa.
 
@@ -56,7 +56,7 @@ El mapa, la detección de llegada y el recorrido virtual **solo** hablan con est
   "opciones": ["brujería", "medicina", "..."] }
 ```
 
-**Orden** (`tipo: 'orden'`): `orden_correcto` lista los `id` de los eventos.
+**Orden** (`tipo: 'orden'`): `orden_correcto` lista los `id` de los eventos. Si un evento trae `anio_texto` (por ejemplo "Siglo XVII"), la pantalla lo muestra en lugar de `anio`.
 ```json
 { "eventos": [{ "id": "e1", "anio": 1635, "texto": "..." }],
   "orden_correcto": ["e1", "e2"] }
