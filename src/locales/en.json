@@ -41,13 +41,13 @@
     "apodo_ejemplo": "E.g. Lupe"
   },
   "permiso": {
-    "titulo": "Your location",
-    "texto": "With your location we know when you reach each place and give you Tlacos.",
+    "titulo": "We'll tell you when you arrive",
+    "texto": "We use your location to unlock the fun fact and the mini-game at each place when you arrive. Only while the page is open.",
     "permitir": "Allow location",
-    "explorar": "Explore without location",
+    "explorar": "Not now: explorer mode",
     "buscando": "Finding your location…",
     "denegado": "We couldn't use your location. You can turn it on in your browser settings or continue as an explorer.",
-    "aviso_explorador": "Explorer mode: you'll see fun facts, but you won't earn Tlacos or stamps."
+    "aviso_explorador": "In explorer mode you see the fun facts, but you don't earn Tlacos or stamps."
   },
   "lugar": {
     "curiosidad": "Did you know…?",
@@ -58,7 +58,10 @@
     "registrando": "Registering your arrival…",
     "fuera": "You're not at this place yet. Get a little closer.",
     "no_encontrado": "We couldn't find this place.",
-    "activar_ubicacion": "Turn on location"
+    "activar_ubicacion": "Turn on location",
+    "antetitulo": "{{categoria}} · Stop {{n}} of {{total}}",
+    "jugar_premio": "Play the challenge · +{{n}} Tlacos",
+    "seguir": "Not now, keep walking"
   },
   "recompensa": {
     "ganaste": "You earned {{n}} Tlacos!",

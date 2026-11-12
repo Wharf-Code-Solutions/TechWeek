@@ -41,13 +41,13 @@
     "apodo_ejemplo": "Ej. Lupe"
   },
   "permiso": {
-    "titulo": "Tu ubicación",
-    "texto": "Con tu ubicación sabemos cuándo llegas a cada lugar y te damos Tlacos.",
+    "titulo": "Te avisamos cuando llegues",
+    "texto": "Usamos tu ubicación para desbloquear la curiosidad y el minijuego de cada lugar al llegar. Solo mientras tengas la página abierta.",
     "permitir": "Permitir ubicación",
-    "explorar": "Explorar sin ubicación",
+    "explorar": "Ahora no: modo explorador",
     "buscando": "Buscando tu ubicación…",
     "denegado": "No pudimos usar tu ubicación. Puedes activarla en los ajustes del navegador o seguir como explorador.",
-    "aviso_explorador": "Modo explorador: verás curiosidades, pero no ganarás Tlacos ni sellos."
+    "aviso_explorador": "En modo explorador ves las curiosidades, pero no ganas Tlacos ni sellos."
   },
   "lugar": {
     "curiosidad": "¿Sabías que…?",
@@ -58,7 +58,10 @@
     "registrando": "Registrando tu llegada…",
     "fuera": "Aún no estás en este lugar. Acércate un poco más.",
     "no_encontrado": "No encontramos este lugar.",
-    "activar_ubicacion": "Activar ubicación"
+    "activar_ubicacion": "Activar ubicación",
+    "antetitulo": "{{categoria}} · Parada {{n}} de {{total}}",
+    "jugar_premio": "Jugar el reto · +{{n}} Tlacos",
+    "seguir": "Ahora no, seguir caminando"
   },
   "recompensa": {
     "ganaste": "¡Ganaste {{n}} Tlacos!",

@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
+import { X } from '@phosphor-icons/react'
 import { useLugares } from '../app/datos'
 import { useCampo } from '../app/idioma'
-import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
-import Tarjeta from '../components/ui/Tarjeta'
+import { urlIlustracion } from '../components/ui/ilustraciones'
 import { activarExplorador } from '../features/geo/explorador'
 import { usePosition, useEstadoUbicacion } from '../features/geo/usePosition'
 import { ApiError, api } from '../lib/api'
@@ -31,6 +31,28 @@ export default function Lugar() {
   const [registro, setRegistro] = useState<Registro>('pendiente')
   // Solo fuerza un render tras salir del modo explorador (la bandera vive en sessionStorage).
   const [, setReintento] = useState(0)
+  const [parada, setParada] = useState<{ n: number; total: number } | null>(null)
+  const [premio, setPremio] = useState<number | null>(null)
+
+  // Parada n de N (ruta activa) y Tlacos del reto: son adornos, si fallan la pantalla funciona igual.
+  useEffect(() => {
+    if (!slug) return
+    let vivo = true
+    api
+      .rutaActual()
+      .then((r) => {
+        const i = r.lugares.findIndex((l) => l.slug === slug)
+        if (vivo && i >= 0) setParada({ n: i + 1, total: r.lugares.length })
+      })
+      .catch(() => {})
+    api
+      .retoDeLugar(slug)
+      .then((r) => vivo && setPremio((r as { tlacos?: number }).tlacos ?? null))
+      .catch(() => {})
+    return () => {
+      vivo = false
+    }
+  }, [slug])
 
   // La llegada se registra en el servidor una sola vez; con gps él valida el radio de 40 m.
   useEffect(() => {
@@ -49,8 +71,7 @@ export default function Lugar() {
   if (!lugar) {
     return (
       <main className={estilos.pantalla}>
-        <Banderines cuerda />
-        <div className={estilos.contenido}>
+        <div className={estilos.hoja}>
           <p role="alert">{t('lugar.no_encontrado')}</p>
           <Boton ancho onClick={() => navegar('/mapa')}>
             {t('lugar.volver')}
@@ -72,18 +93,31 @@ export default function Lugar() {
             : t('lugar.buscando')
           : null
 
+  const escena = lugar.categoria === 'leyendas' ? 'escena-leyenda' : 'escena-puerto'
+  const categoria = t(`preferencias.categorias.${lugar.categoria}`)
+
   return (
     <main className={estilos.pantalla}>
-      <Banderines cuerda />
-      <div className={estilos.contenido}>
-        <h1 className={estilos.titulo}>{t('pantallas.lugar')}</h1>
+      <div className={estilos.escena} style={{ backgroundImage: `url("${urlIlustracion(escena)}")` }}>
+        <span className={estilos.pildora}>{t('pantallas.lugar')}</span>
+        <button type="button" className={estilos.cerrar} aria-label={t('mapa.cerrar')} onClick={() => navegar('/mapa')}>
+          <X size={22} weight="bold" aria-hidden="true" />
+        </button>
+      </div>
 
-        <Tarjeta className={estilos.lugar}>
-          <Ilustracion nombre={lugar.ilustracion} tamano={96} />
-          <h2 className={estilos.nombre}>{campo(lugar, 'nombre')}</h2>
-          <h3 className={estilos.subtitulo}>{t('lugar.curiosidad')}</h3>
-          <p>{campo(lugar, 'curiosidad')}</p>
-        </Tarjeta>
+      <div className={estilos.hoja}>
+        <span className={estilos.antetitulo}>
+          {parada ? t('lugar.antetitulo', { categoria, n: parada.n, total: parada.total }) : categoria}
+        </span>
+        <h1 className={estilos.nombre}>{campo(lugar, 'nombre')}</h1>
+
+        <div className={estilos.curiosidad}>
+          <Ilustracion nombre="foco" tamano={40} />
+          <div>
+            <strong>{t('lugar.curiosidad')}</strong>
+            <p>{campo(lugar, 'curiosidad')}</p>
+          </div>
+        </div>
 
         {mensaje && <p role="status">{mensaje}</p>}
 
@@ -102,12 +136,12 @@ export default function Lugar() {
 
         {!explorador && (
           <Boton ancho disabled={registro !== 'ok'} onClick={() => navegar(`/reto/${lugar.slug}`)}>
-            {t('lugar.jugar')}
+            {premio ? t('lugar.jugar_premio', { n: premio }) : t('lugar.jugar')}
           </Boton>
         )}
-        <Boton ancho variante="blanco" onClick={() => navegar('/mapa')}>
-          {t('lugar.volver')}
-        </Boton>
+        <button type="button" className={estilos.enlace} onClick={() => navegar('/mapa')}>
+          {t('lugar.seguir')}
+        </button>
       </div>
     </main>
   )

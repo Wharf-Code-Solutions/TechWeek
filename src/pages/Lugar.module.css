@@ -1,43 +1,109 @@
+/* Diseño 04: escena ilustrada arriba y hoja blanca encima. */
 .pantalla {
   min-height: 100dvh;
   max-width: 480px;
   margin: 0 auto;
+  background: #2e1a66;
+}
+
+.escena {
+  position: relative;
+  height: 250px;
+  background-color: #2e1a66;
+  background-position: center;
+  background-size: cover;
+}
+
+.pildora {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px 16px;
+  border: var(--borde);
+  border-radius: 999px;
+  background: var(--amarillo);
+  font: 900 0.95rem var(--fuente-texto);
+  color: var(--tinta);
+}
+
+.cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 49px;
+  height: 49px;
+  padding: 0;
+  border: var(--borde);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.hoja {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: calc(100dvh - 250px + 24px);
+  margin-top: -24px;
+  padding: 20px 16px 24px;
+  border: var(--borde);
+  border-bottom: 0;
+  border-radius: 28px 28px 0 0;
   background: #fff;
 }
 
-.contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-}
-
-.titulo {
-  margin: 8px 0 0;
-  font-family: var(--fuente-titulo);
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--rosa);
-}
-
-.lugar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
+.antetitulo {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--morado);
 }
 
 .nombre {
-  margin: 8px 0 0;
-  font-size: 1.4rem;
-  font-weight: 900;
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--tinta);
 }
 
-.subtitulo {
-  margin: 8px 0 0;
-  font-family: var(--fuente-nota);
-  font-size: 1.3rem;
-  font-weight: 400;
+.curiosidad {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #f4f1fa;
+  color: #3a2f55;
+  font-size: 0.9rem;
+}
+
+.curiosidad strong {
+  color: var(--tinta);
+}
+
+.curiosidad p {
+  margin: 4px 0 0;
+}
+
+.enlace {
+  min-height: var(--tactil-min);
+  border: 0;
+  background: transparent;
   color: var(--morado);
+  font: 800 0.95rem var(--fuente-texto);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cerrar:focus-visible,
+.enlace:focus-visible {
+  outline: 3px solid var(--cobalto);
+  outline-offset: 3px;
 }
