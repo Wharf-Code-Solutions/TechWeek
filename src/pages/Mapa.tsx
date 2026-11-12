@@ -11,6 +11,7 @@ import Cabecera from '../features/mapa/Cabecera'
 import RutaLista from '../features/mapa/RutaLista'
 import type { Pestana } from '../features/mapa/Panel'
 import { altoNivel, type Nivel } from '../features/mapa/nivelesPanel'
+import { guardarSaltadas, leerSaltadas } from '../features/mapa/saltadas'
 import { progresoRuta } from '../features/mapa/progreso'
 import { usePosition } from '../features/geo/usePosition'
 import AvisoLlegada from '../features/geo/AvisoLlegada'
@@ -35,6 +36,15 @@ export default function Mapa() {
   // undefined: cargando · null: sin ruta activa (entró directo o falló la red) · Lugar[]: la ruta
   const [ruta, setRuta] = useState<Lugar[] | null | undefined>(() => rutaReciente()?.lugares)
   const [hechos, setHechos] = useState<ReadonlyMap<string, number>>(new Map())
+  // Paradas saltadas: siguen en la lista (detrás, en su lugar) pero ya no son la siguiente ni abren ¡Llegaste!
+  const [saltadas, setSaltadas] = useState<ReadonlySet<string>>(leerSaltadas)
+  const saltar = useCallback((slug: string) => {
+    setSaltadas((s) => {
+      const nuevas = new Set(s).add(slug)
+      guardarSaltadas(nuevas)
+      return nuevas
+    })
+  }, [])
   // Hasta saber qué lugares ya se visitaron no se vigila ninguna llegada (si no, se reabriría uno ya jugado).
   const [hechosListos, setHechosListos] = useState(false)
   const [saldo, setSaldo] = useState<number | null>(null)
@@ -88,8 +98,8 @@ export default function Mapa() {
   }, [mapaVisible])
   const alListoMapa = useCallback(() => setMapaVisible(true), [])
   const aVigilar = useMemo(
-    () => (ruta === undefined || !hechosListos || !vigilar ? NINGUNO : (ruta ?? todos).filter((l) => !hechos.has(l.slug))),
-    [ruta, hechosListos, vigilar, todos, hechos],
+    () => (ruta === undefined || !hechosListos || !vigilar ? NINGUNO : (ruta ?? todos).filter((l) => !hechos.has(l.slug) && !saltadas.has(l.slug))),
+    [ruta, hechosListos, vigilar, todos, hechos, saltadas],
   )
   const { llegando } = useIrAlLlegar(aVigilar)
 
@@ -100,7 +110,7 @@ export default function Mapa() {
   // y los controles del recorrido virtual hablan de la misma parada.
   const { siguiente } = progresoRuta(
     ruta ?? [],
-    new Set([...slugsHechos, ...(ruta ?? []).filter((l) => haLlegado(l.slug)).map((l) => l.slug)]),
+    new Set([...slugsHechos, ...saltadas, ...(ruta ?? []).filter((l) => haLlegado(l.slug)).map((l) => l.slug)]),
   )
   // Punto de partida guardado al armar la ruta (se lee una sola vez para que la línea no se redibuje).
   const origen = useMemo(() => leerOrigen(), [])
@@ -182,6 +192,8 @@ export default function Mapa() {
               <RutaLista
                 ruta={ruta}
                 hechos={hechos}
+                saltadas={saltadas}
+                onSaltar={saltar}
                 siguiente={siguiente}
                 pos={pos}
                 onCambio={setRuta}

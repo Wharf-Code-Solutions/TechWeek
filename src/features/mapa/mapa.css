@@ -378,6 +378,8 @@
   font-weight: 700;
 }
 .ruta-fila--hecha .ruta-num { border: 0; background: var(--turquesa); }
+.ruta-fila--saltada { opacity: 0.6; }
+.ruta-fila--saltada .ruta-num { color: #4a3f66; }
 .ruta-fila--siguiente .ruta-num { border: 0; background: var(--morado); color: #fff; }
 .ruta-texto { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .ruta-texto strong { font-size: 14px; font-weight: 700; }

@@ -19,11 +19,14 @@ interface Props {
   siguiente: Lugar | null
   pos: Posicion | null
   onCambio: (lugares: Lugar[]) => void
+  /** Paradas saltadas: se quedan en la lista, marcadas, en vez de desaparecer. */
+  saltadas: ReadonlySet<string>
+  onSaltar: (slug: string) => void
   /** Tocar un lugar de la lista: el mapa lo muestra (el turista no sale del mapa). */
   onEnfocar: (lugar: Lugar) => void
 }
 
-export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEnfocar }: Props) {
+export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente, pos, onCambio, onEnfocar }: Props) {
   const { t } = useTranslation()
   const campo = useCampo()
   const navegar = useNavigate()
@@ -43,7 +46,7 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEn
     )
   }
 
-  const pendientes = ruta.filter((l) => !hechos.has(l.slug))
+  const pendientes = ruta.filter((l) => !hechos.has(l.slug) && !saltadas.has(l.slug))
   const categoria = (l: Lugar) => t(`preferencias.categorias.${l.categoria}`)
 
   async function ajustar(slugs: string[]) {
@@ -80,6 +83,21 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEn
               </li>
             )
           }
+          if (saltadas.has(l.slug)) {
+            return (
+              <li key={l.slug} className="ruta-fila ruta-fila--saltada">
+                <button type="button" className="ruta-fila-boton" aria-label={t('ruta.verEnMapa', { nombre })} onClick={() => onEnfocar(l)}>
+                  <span className="ruta-num">
+                    <SkipForward size={16} weight="bold" aria-label={t('ruta.saltada')} />
+                  </span>
+                  <span className="ruta-texto">
+                    <strong>{nombre}</strong>
+                    <span className="ruta-sub">{t('ruta.saltada')}</span>
+                  </span>
+                </button>
+              </li>
+            )
+          }
           const metros = pos ? distanciaM(pos, l) : null
           const esSiguiente = l.slug === siguiente?.slug
           return (
@@ -103,7 +121,8 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEn
                   className="ruta-saltar"
                   aria-label={t('ruta.saltarLugar', { nombre })}
                   disabled={ocupado}
-                  onClick={() => void ajustar(ruta.filter((x) => x.slug !== l.slug).map((x) => x.slug))}
+                  // Saltar ya no la quita de la ruta: se queda en la lista marcada y la siguiente pasa a la que sigue.
+                  onClick={() => onSaltar(l.slug)}
                 >
                   <SkipForward size={18} weight="duotone" aria-hidden="true" />
                 </button>
@@ -128,7 +147,7 @@ export default function RutaLista({ ruta, hechos, siguiente, pos, onCambio, onEn
             type="button"
             className="ruta-accion"
             disabled={ocupado}
-            onClick={() => void ajustar(recortarRuta(ruta, new Set(hechos.keys())))}
+            onClick={() => void ajustar(recortarRuta(ruta, new Set([...hechos.keys(), ...saltadas])))}
           >
             {t('ruta.siRecortar')}
           </button>

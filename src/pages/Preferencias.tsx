@@ -25,6 +25,7 @@ import { esExplorador } from '../features/geo/explorador'
 import { esperarPosicion, obtenerGps } from '../features/geo/gpsStore'
 import { salidaDeLaRuta } from '../features/geo/posicionManual'
 import { guardarOrigen } from '../features/geo/origen'
+import { limpiarSaltadas } from '../features/mapa/saltadas'
 import PermisoUbicacion from '../features/geo/PermisoUbicacion'
 import { api } from '../lib/api'
 import type { Categoria, Idioma } from '../types/contratos'
@@ -75,6 +76,7 @@ export default function Preferencias() {
         ...(gps ? { lat: gps.lat, lng: gps.lng } : {}),
       })
       guardarOrigen(gps)
+      limpiarSaltadas()
       navegar('/mapa')
     } catch {
       setRuta('error')

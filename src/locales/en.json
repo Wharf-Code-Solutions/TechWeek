@@ -238,6 +238,7 @@
     "hecha": "Completed",
     "sub": "{{categoria}} · {{dist}}",
     "subSiguiente": "{{categoria}} · {{dist}} · {{min}} min",
+    "saltada": "Skipped",
     "saltarLugar": "Skip {{nombre}}",
     "pocoTiempo": "Short on time",
     "confirmarRecorte": "Keep only the next 2 stops?",
