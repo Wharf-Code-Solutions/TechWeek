@@ -2,7 +2,8 @@
   "_meta": {
     "version": 1,
     "actualizado": "2026-11-11",
-    "notas": "Coordenadas: monumentos de OpenStreetMap (Nominatim, nov 2026); Condesa de Malibrán = dirección Esteban Morales 123 en Mapbox Geocoding. Confirmar en campo antes de la expo (radio de llegada 40 m). Fuentes de contenido: sitios-turisticos-veracruz.csv e investigación del Centro Histórico."
+    "notas": "Coordenadas: monumentos de OpenStreetMap (Nominatim, nov 2026); Condesa de Malibrán = dirección Esteban Morales 123 en Mapbox Geocoding. Confirmar en campo antes de la expo (radio de llegada 40 m). Fuentes de contenido: sitios-turisticos-veracruz.csv e investigación del Centro Histórico.",
+    "notas_eventos": "Eventos de ejemplo para la demo (pendiente_confirmar: true). La exposición de la Fototeca y «Pasajes del Umbral» salen de la investigación (oct–nov 2026); fechas y horarios exactos por confirmar. Ajustar las fechas al día de la expo: la agenda oculta los eventos terminados."
   },
   "lugares": [
     {
@@ -507,14 +508,74 @@
   ],
   "eventos": [
     {
+      "slug": "fototeca-piel-ciudad",
+      "titulo_es": "Exposición «La piel de la ciudad»",
+      "titulo_en": "\"La piel de la ciudad\" photo exhibition",
+      "lugar": "Fototeca de Veracruz (Portal de Miranda 9)",
+      "lat": 19.20026,
+      "lng": -96.13752,
+      "inicio": "2026-10-20T11:00:00-06:00",
+      "fin": "2026-11-30T18:00:00-06:00",
+      "categoria": "historia",
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "marimba-portales",
+      "titulo_es": "Marimba en los Portales",
+      "titulo_en": "Marimba under the Arcades",
+      "lugar": "Portales de la Plaza Mayor",
+      "lat": 19.19964,
+      "lng": -96.13857,
+      "inicio": "2026-11-13T13:00:00-06:00",
+      "fin": "2026-11-13T16:00:00-06:00",
+      "categoria": "musica",
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "pasajes-umbral",
+      "titulo_es": "Recorrido nocturno «Pasajes del Umbral»",
+      "titulo_en": "\"Pasajes del Umbral\" night walk",
+      "lugar": "Plazuela de la Lagunilla",
+      "lat": 19.1983,
+      "lng": -96.13794,
+      "inicio": "2026-11-13T20:00:00-06:00",
+      "fin": "2026-11-13T22:00:00-06:00",
+      "categoria": "leyendas",
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "fandango-atarazanas",
+      "titulo_es": "Fandango de son jarocho",
+      "titulo_en": "Son jarocho fandango",
+      "lugar": "Centro Cultural Atarazanas",
+      "lat": 19.19839,
+      "lng": -96.13462,
+      "inicio": "2026-11-14T18:00:00-06:00",
+      "fin": "2026-11-14T21:00:00-06:00",
+      "categoria": "musica",
+      "pendiente_confirmar": true
+    },
+    {
       "slug": "danzon-zocalo",
       "titulo_es": "Danzón en el Zócalo",
       "titulo_en": "Danzón at the Zócalo",
       "lugar": "Zócalo / Plaza de Armas",
       "lat": 19.20023,
       "lng": -96.13853,
-      "inicio": "2026-11-20T19:00:00-06:00",
-      "fin": "2026-11-20T21:00:00-06:00",
+      "inicio": "2026-11-15T19:00:00-06:00",
+      "fin": "2026-11-15T21:00:00-06:00",
+      "categoria": "musica",
+      "pendiente_confirmar": true
+    },
+    {
+      "slug": "concierto-museo-ciudad",
+      "titulo_es": "Concierto en el patio del Museo de la Ciudad",
+      "titulo_en": "Concert in the City Museum courtyard",
+      "lugar": "Museo de la Ciudad (Zaragoza 397)",
+      "lat": 19.1979,
+      "lng": -96.13581,
+      "inicio": "2026-11-16T18:00:00-06:00",
+      "fin": "2026-11-16T19:30:00-06:00",
       "categoria": "musica",
       "pendiente_confirmar": true
     }
