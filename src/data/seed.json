@@ -1935,6 +1935,61 @@
       "fecha": "1880–1900",
       "licencia": "Dominio público",
       "fuente": "https://commons.wikimedia.org/wiki/File:Palacio_Veracruz_1880-1900.tif"
+    },
+    {
+      "slug": "postal-faro",
+      "url": "/rompecabezas/faro.svg",
+      "titulo_es": "Faro Carranza al amanecer",
+      "titulo_en": "Carranza Lighthouse at dawn",
+      "piezas": 6,
+      "autor": "JARANA",
+      "fecha": "2026",
+      "licencia": "Propia",
+      "fuente": "Ilustración original del proyecto"
+    },
+    {
+      "slug": "postal-baluarte",
+      "url": "/rompecabezas/baluarte.svg",
+      "titulo_es": "Baluarte de Santiago",
+      "titulo_en": "Santiago Bulwark",
+      "piezas": 6,
+      "autor": "JARANA",
+      "fecha": "2026",
+      "licencia": "Propia",
+      "fuente": "Ilustración original del proyecto"
+    },
+    {
+      "slug": "postal-catedral",
+      "url": "/rompecabezas/catedral.svg",
+      "titulo_es": "Catedral y portales",
+      "titulo_en": "Cathedral and arcades",
+      "piezas": 6,
+      "autor": "JARANA",
+      "fecha": "2026",
+      "licencia": "Propia",
+      "fuente": "Ilustración original del proyecto"
+    },
+    {
+      "slug": "postal-danzon",
+      "url": "/rompecabezas/danzon.svg",
+      "titulo_es": "Noche de danzón en el Zócalo",
+      "titulo_en": "Danzón night at the Zócalo",
+      "piezas": 6,
+      "autor": "JARANA",
+      "fecha": "2026",
+      "licencia": "Propia",
+      "fuente": "Ilustración original del proyecto"
+    },
+    {
+      "slug": "postal-puerto",
+      "url": "/rompecabezas/puerto.svg",
+      "titulo_es": "El puerto de Veracruz",
+      "titulo_en": "The port of Veracruz",
+      "piezas": 6,
+      "autor": "JARANA",
+      "fecha": "2026",
+      "licencia": "Propia",
+      "fuente": "Ilustración original del proyecto"
     }
   ],
   "comercios": [
