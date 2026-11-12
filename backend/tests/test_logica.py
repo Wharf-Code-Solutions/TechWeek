@@ -39,7 +39,11 @@ def test_catalogo_no_filtra_respuestas():
     assert "orden_correcto" not in o and "eventos" in o
 
 
-def test_sesion_sin_supabase_configurado():
+def test_sesion_sin_supabase_configurado(monkeypatch):
+    from app.config import Settings
+    from app.routers import sesion
+
+    monkeypatch.setattr(sesion, "get_settings", lambda: Settings(_env_file=None))
     assert TestClient(app).post("/api/sesion").status_code == 503
 
 
