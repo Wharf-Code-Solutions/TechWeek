@@ -10,8 +10,9 @@ type ConSlug = Punto & { slug: string }
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
 const MAX_PUNTOS = 25 // límite de Directions por petición
 
-/** Clave estable de una ruta: los slugs en orden. */
-export const claveRuta = (paradas: { slug: string }[]) => paradas.map((p) => p.slug).join('|')
+/** Clave estable de una ruta: los slugs en orden (y el origen, si lo hay, redondeado a ~10 m). */
+export const claveRuta = (paradas: { slug: string }[], origen?: Punto | null) =>
+  (origen ? `${origen.lat.toFixed(4)},${origen.lng.toFixed(4)}>` : '') + paradas.map((p) => p.slug).join('|')
 
 export const lineaRecta = (paradas: Punto[]): Coord[] => paradas.map((p) => [p.lng, p.lat])
 
@@ -46,20 +47,22 @@ async function pedirCalles(paradas: Punto[], señal: AbortSignal): Promise<Coord
 }
 
 /** Devuelve la línea [lng, lat] de la ruta por calles; mientras llega (o si falla) es la línea recta. */
-export function useRutaCaminable(paradas: ConSlug[]): Coord[] {
-  const clave = claveRuta(paradas)
-  const recta = useMemo(() => lineaRecta(paradas), [paradas])
+export function useRutaCaminable(paradas: ConSlug[], origen: Punto | null = null): Coord[] {
+  const clave = claveRuta(paradas, origen)
+  // La línea arranca donde estaba el turista al armar la ruta; en la demo, en la primera parada.
+  const puntos = useMemo<Punto[]>(() => (origen && !esDemo(paradas) ? [origen, ...paradas] : paradas), [origen, paradas])
+  const recta = useMemo(() => lineaRecta(puntos), [puntos])
   const [calles, setCalles] = useState<{ clave: string; linea: Coord[] } | null>(null)
 
   useEffect(() => {
-    if (paradas.length < 2 || paradas.length > MAX_PUNTOS || esDemo(paradas) || !TOKEN) return
+    if (puntos.length < 2 || puntos.length > MAX_PUNTOS || esDemo(paradas) || !TOKEN) return
     const guardada = leerCache(clave)
     if (guardada) {
       setCalles({ clave, linea: guardada })
       return
     }
     const control = new AbortController()
-    pedirCalles(paradas, control.signal)
+    pedirCalles(puntos, control.signal)
       .then((linea) => {
         guardarCache(clave, linea)
         setCalles({ clave, linea })
@@ -70,7 +73,7 @@ export function useRutaCaminable(paradas: ConSlug[]): Coord[] {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clave])
 
-  if (paradas.length < 2) return []
+  if (puntos.length < 2) return []
   if (esDemo(paradas)) return LINEA_DEMO
   return calles?.clave === clave ? calles.linea : recta
 }

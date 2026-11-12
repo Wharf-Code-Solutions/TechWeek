@@ -55,3 +55,21 @@ export function suscribirGps(oyente: () => void) {
 }
 
 export const obtenerGps = () => instantanea
+
+/** Espera la primera posición del GPS (hasta `ms`); resuelve con null si no llega. Si ya hay una, la devuelve al instante. */
+export function esperarPosicion(ms: number): Promise<Posicion | null> {
+  if (instantanea.posicion) return Promise.resolve(instantanea.posicion)
+  return new Promise((resolver) => {
+    let desuscribir = () => {}
+    const fin = (p: Posicion | null) => {
+      window.clearTimeout(plazo)
+      desuscribir()
+      resolver(p)
+    }
+    const plazo = window.setTimeout(() => fin(null), ms)
+    desuscribir = suscribirGps(() => {
+      if (instantanea.posicion) fin(instantanea.posicion)
+    })
+  })
+}
+

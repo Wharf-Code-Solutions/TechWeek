@@ -20,13 +20,17 @@ import {
 import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
 import Ilustracion from '../components/ui/Ilustracion'
-import { activarExplorador } from '../features/geo/explorador'
+import { activarExplorador, esExplorador } from '../features/geo/explorador'
 import { esModoDemo } from '../features/geo/demoStore'
-import { obtenerGps } from '../features/geo/gpsStore'
+import { esperarPosicion } from '../features/geo/gpsStore'
+import { guardarOrigen } from '../features/geo/origen'
 import PermisoUbicacion from '../features/geo/PermisoUbicacion'
 import { api } from '../lib/api'
 import type { Categoria, Idioma } from '../types/contratos'
 import estilos from './Preferencias.module.css'
+
+/** Cuánto se espera al GPS antes de armar la ruta sin posición (modo explorador o señal débil). */
+const ESPERA_GPS_MS = 4000
 
 export default function Preferencias() {
   const { t, i18n } = useTranslation()
@@ -57,7 +61,8 @@ export default function Preferencias() {
     armando.current = true
     setRuta('armando')
     const demo = esModoDemo()
-    const gps = demo ? null : obtenerGps().posicion
+    // La ruta parte de donde está el turista: si el GPS aún no responde se espera un momento.
+    const gps = demo || esExplorador() ? null : await esperarPosicion(ESPERA_GPS_MS)
     try {
       await api.crearRuta({
         tiempo_min: pref.tiempoMin,
@@ -65,6 +70,7 @@ export default function Preferencias() {
         demo,
         ...(gps ? { lat: gps.lat, lng: gps.lng } : {}),
       })
+      guardarOrigen(gps)
       navegar('/mapa')
     } catch {
       setRuta('error')

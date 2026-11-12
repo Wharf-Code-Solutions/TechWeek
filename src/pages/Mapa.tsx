@@ -17,6 +17,7 @@ import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import AvisoLlegada from '../features/geo/AvisoLlegada'
 import AvisoLejos from '../features/geo/AvisoLejos'
+import { leerOrigen } from '../features/geo/origen'
 import { haLlegado, useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
 import type { PasaporteDatos } from '../features/pasaporte/tipos'
@@ -88,6 +89,8 @@ export default function Mapa() {
     ruta ?? [],
     new Set([...slugsHechos, ...(ruta ?? []).filter((l) => haLlegado(l.slug)).map((l) => l.slug)]),
   )
+  // Punto de partida guardado al armar la ruta (se lee una sola vez para que la línea no se redibuje).
+  const origen = useMemo(() => leerOrigen(), [])
   const { intereses, personaje } = cargarPreferencias()
   const interes = intereses[0]
   const nombreRuta =
@@ -129,6 +132,7 @@ export default function Mapa() {
       <MapaLugares
         lugares={todos}
         ruta={ruta ?? undefined}
+        origen={origen}
         padAbajo={padAbajo}
         enfocar={enfocar}
         llegando={llegando?.slug ?? null}

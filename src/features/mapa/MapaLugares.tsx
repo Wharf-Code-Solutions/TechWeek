@@ -45,6 +45,8 @@ interface Props {
   lugares: Lugar[]
   /** Paradas de la ruta activa, en orden: se unen con una línea azul por las calles. */
   ruta?: Lugar[]
+  /** Dónde estaba el turista al armar la ruta: la línea azul arranca ahí. */
+  origen?: Punto | null
   /** Slugs de la ruta activa; vacío = sin ruta (todos se ven igual). */
   enRuta?: ReadonlySet<string>
   /** Slugs con reto completado. */
@@ -121,6 +123,7 @@ const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, 
 export default function MapaLugares({
   lugares,
   ruta = SIN_RUTA,
+  origen = null,
   enRuta = VACIO,
   hechos = VACIO,
   siguiente = null,
@@ -141,7 +144,7 @@ export default function MapaLugares({
   const [zoom, setZoom] = useState(ZOOM)
   const elegir = useCallback((l: Lugar) => setElegido(l), [])
   const navegar = useNavigate()
-  const linea = useRutaCaminable(ruta)
+  const linea = useRutaCaminable(ruta, origen)
   // Los textos de comercios y lugares de Mapbox estorban a los pines: apagados salvo que el turista los pida.
   // Los nombres de las calles siempre se ven.
   const [nombres, setNombres] = useState(leerNombres)

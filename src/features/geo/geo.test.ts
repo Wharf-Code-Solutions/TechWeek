@@ -99,6 +99,13 @@ describe('recorrido por calles', () => {
     )
   })
 
+  it('la clave cambia si cambia el punto de partida (y se redondea a unos 10 m)', () => {
+    const paradas = [{ slug: 'a' }, { slug: 'b' }]
+    expect(claveRuta(paradas, a)).not.toBe(claveRuta(paradas))
+    expect(claveRuta(paradas, a)).toBe(claveRuta(paradas, { lat: a.lat + 0.00001, lng: a.lng }))
+    expect(claveRuta(paradas, a)).not.toBe(claveRuta(paradas, { lat: a.lat + 0.01, lng: a.lng }))
+  })
+
   it('claveRuta y lineaRecta', () => {
     expect(claveRuta([{ slug: 'a' }, { slug: 'b' }])).toBe('a|b')
     expect(lineaRecta([a, b])).toEqual([[-96.14, 19.2], [-96.13, 19.2]])
