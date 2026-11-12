@@ -17,7 +17,7 @@ import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import { useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
-import { AVATAR, type PasaporteDatos } from '../features/pasaporte/tipos'
+import type { PasaporteDatos } from '../features/pasaporte/tipos'
 import { api } from '../lib/api'
 import seed from '../data/seed.json'
 import type { Evento, Lugar } from '../types/contratos'
@@ -70,7 +70,8 @@ export default function Mapa() {
   const slugsHechos = useMemo(() => new Set(hechos.keys()), [hechos])
   const enRuta = useMemo(() => new Set((ruta ?? []).map((l) => l.slug)), [ruta])
   const { siguiente, completados, total } = progresoRuta(ruta ?? [], slugsHechos)
-  const interes = cargarPreferencias().intereses[0]
+  const { intereses, personaje } = cargarPreferencias()
+  const interes = intereses[0]
   const nombreRuta =
     ruta === undefined
       ? undefined
@@ -104,7 +105,7 @@ export default function Mapa() {
           <>
             <Banderines />
             <Cabecera
-              avatar={AVATAR}
+              avatar={personaje}
               nombreRuta={nombreRuta}
               completados={completados}
               total={total}

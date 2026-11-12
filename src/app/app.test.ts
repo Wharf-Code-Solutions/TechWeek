@@ -10,12 +10,25 @@ describe('normalizar preferencias', () => {
 
   it('descarta idioma, tiempo e intereses inválidos', () => {
     const p = normalizar({ idioma: 'fr', tiempoMin: 7, intereses: ['mar', 'pizza', 42] })
-    expect(p).toEqual({ idioma: 'es', tiempoMin: 60, intereses: ['mar'] })
+    expect(p).toEqual({ ...PREFERENCIAS_INICIALES, intereses: ['mar'] })
   })
 
   it('conserva preferencias válidas', () => {
-    const p = { idioma: 'en', tiempoMin: 120, intereses: ['historia', 'comida'] }
+    const p = {
+      idioma: 'en',
+      tiempoMin: 120,
+      intereses: ['historia', 'comida'],
+      personaje: 'avatar-gorra',
+      apodo: 'Lupe',
+    }
     expect(normalizar(p)).toEqual(p)
+  })
+
+  it('valida personaje y apodo', () => {
+    const p = normalizar({ personaje: 'avatar-robot', apodo: `  ${'x'.repeat(40)}  ` })
+    expect(p.personaje).toBe('avatar-flor')
+    expect(p.apodo).toBe('x'.repeat(20))
+    expect(normalizar({ apodo: 7 }).apodo).toBe('')
   })
 })
 

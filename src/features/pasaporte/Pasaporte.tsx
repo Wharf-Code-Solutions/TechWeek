@@ -9,7 +9,7 @@ import { cargarPreferencias } from '../../app/preferencias'
 import { api } from '../../lib/api'
 import type { Lugar } from '../../types/contratos'
 import Rompecabezas from './Rompecabezas'
-import { AVATAR, nombreCorto, type PasaporteDatos } from './tipos'
+import { nombreCorto, type PasaporteDatos } from './tipos'
 import './pasaporte.css'
 
 // Color de cada sello del álbum (borde y texto)
@@ -53,16 +53,17 @@ export default function Pasaporte() {
     ? ruta.map((l) => ({ slug: l.slug, nombre: campo(l, 'nombre'), ilustracion: l.ilustracion, hecho: porSlug.has(l.slug) }))
     : sellos.map((s) => ({ slug: s.lugar_slug, nombre: campo(s, 'nombre'), ilustracion: s.ilustracion, hecho: true }))
   const hechos = album.filter((a) => a.hecho).length
-  const interes = cargarPreferencias().intereses[0]
+  const { intereses, personaje, apodo } = cargarPreferencias()
+  const interes = intereses[0]
   const faltan = piezas.total - piezas.ganadas
 
   return (
     <section className="pasaporte" aria-labelledby="titulo-pasaporte">
       <div className="pasaporte-tarjeta">
-        <Ilustracion nombre={AVATAR} tamano={72} />
+        <Ilustracion nombre={personaje} tamano={72} />
         <div>
           <span className="pasaporte-antetitulo">{t('pasaporte.antetitulo')}</span>
-          <h2 id="titulo-pasaporte">{t(`pasaporte.avatar_${AVATAR}`)}</h2>
+          <h2 id="titulo-pasaporte">{apodo || t(`pasaporte.avatar_${personaje}`)}</h2>
           <p className="pasaporte-saldo">
             <Ilustracion nombre="moneda" tamano={22} />
             {t('pasaporte.tlacos', { n: saldo ?? 0 })}

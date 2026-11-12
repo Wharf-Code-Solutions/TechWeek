@@ -1,8 +1,11 @@
 // Pantalla 01: Preferencias (entrada) · Responsable: Dev 3 (M3 lógica de ruta: Dev 1)
+// Diseño 01: hoja blanca con asa, personaje y apodo, tiempo e intereses.
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import {
+  APODO_MAX,
+  AVATARES,
   INTERESES,
   TIEMPOS_MIN,
   cargarPreferencias,
@@ -11,7 +14,7 @@ import {
 } from '../app/preferencias'
 import Banderines from '../components/ui/Banderines'
 import Boton from '../components/ui/Boton'
-import Tarjeta from '../components/ui/Tarjeta'
+import Ilustracion from '../components/ui/Ilustracion'
 import { activarExplorador } from '../features/geo/explorador'
 import { esModoDemo } from '../features/geo/demoStore'
 import { obtenerGps } from '../features/geo/gpsStore'
@@ -80,65 +83,94 @@ export default function Preferencias() {
   return (
     <main className={estilos.pantalla}>
       <Banderines cuerda />
-      <div className={estilos.contenido}>
-        <h1 className={estilos.titulo}>{t('pantallas.preferencias')}</h1>
+      <div className={estilos.hoja}>
+        <span className={estilos.asa} aria-hidden="true" />
 
         {paso === 'permiso' ? (
-          <PermisoUbicacion onListo={alListo} />
+          <>
+            <h1 className="solo-lectores">{t('pantallas.preferencias')}</h1>
+            <PermisoUbicacion onListo={alListo} />
+          </>
         ) : (
           <>
-            <Tarjeta>
-              <fieldset className={estilos.grupo}>
-                <legend>{t('preferencias.idioma')}</legend>
-                <div className={estilos.fila}>
-                  {(['es', 'en'] as Idioma[]).map((i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      className={estilos.opcion}
-                      aria-pressed={pref.idioma === i}
-                      onClick={() => cambiarIdioma(i)}
-                    >
-                      {i.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
+            <div className={estilos.encabezado}>
+              <span className={estilos.marca}>JARANA</span>
+              <div className={estilos.idiomas} role="group" aria-label={t('preferencias.idioma')}>
+                {(['es', 'en'] as Idioma[]).map((i) => (
+                  <button key={i} type="button" aria-pressed={pref.idioma === i} onClick={() => cambiarIdioma(i)}>
+                    {i.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-              <fieldset className={estilos.grupo}>
-                <legend>{t('preferencias.tiempo')}</legend>
-                <div className={estilos.fila}>
-                  {TIEMPOS_MIN.map((min) => (
-                    <button
-                      key={min}
-                      type="button"
-                      className={estilos.opcion}
-                      aria-pressed={pref.tiempoMin === min}
-                      onClick={() => setPref((p) => ({ ...p, tiempoMin: min }))}
-                    >
-                      {t(`preferencias.tiempos.t${min}`)}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
+            <h1 className={estilos.titulo}>{t('preferencias.bienvenida')}</h1>
+            <p className={estilos.bajada}>{t('preferencias.bajada')}</p>
 
-              <fieldset className={estilos.grupo}>
-                <legend>{t('preferencias.intereses')}</legend>
+            <fieldset className={estilos.grupo}>
+              <legend>{t('preferencias.personaje')}</legend>
+              <div className={estilos.personajes}>
                 <div className={estilos.fila}>
-                  {INTERESES.map((c) => (
+                  {AVATARES.map((a) => (
                     <button
-                      key={c}
+                      key={a}
                       type="button"
-                      className={estilos.opcion}
-                      aria-pressed={pref.intereses.includes(c)}
-                      onClick={() => alternarInteres(c)}
+                      className={estilos.avatar}
+                      aria-pressed={pref.personaje === a}
+                      aria-label={t(`pasaporte.avatar_${a}`)}
+                      onClick={() => setPref((p) => ({ ...p, personaje: a }))}
                     >
-                      {t(`preferencias.categorias.${c}`)}
+                      <Ilustracion nombre={a} tamano={44} />
                     </button>
                   ))}
                 </div>
-              </fieldset>
-            </Tarjeta>
+                <label className={estilos.apodo}>
+                  <input
+                    type="text"
+                    value={pref.apodo}
+                    maxLength={APODO_MAX}
+                    placeholder={t('preferencias.apodo_ejemplo')}
+                    aria-label={t('preferencias.apodo')}
+                    onChange={(e) => setPref((p) => ({ ...p, apodo: e.target.value }))}
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset className={estilos.grupo}>
+              <legend>{t('preferencias.tiempo')}</legend>
+              <div className={estilos.tiempos}>
+                {TIEMPOS_MIN.map((min) => (
+                  <button
+                    key={min}
+                    type="button"
+                    className={estilos.opcion}
+                    aria-pressed={pref.tiempoMin === min}
+                    onClick={() => setPref((p) => ({ ...p, tiempoMin: min }))}
+                  >
+                    {t(`preferencias.tiempos.t${min}`)}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset className={estilos.grupo}>
+              <legend>{t('preferencias.intereses')}</legend>
+              <div className={estilos.intereses}>
+                {INTERESES.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    className={estilos.interes}
+                    aria-pressed={pref.intereses.includes(c)}
+                    onClick={() => alternarInteres(c)}
+                  >
+                    <Ilustracion nombre={c} tamano={40} />
+                    {t(`preferencias.categorias.${c}`)}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
             <Boton ancho disabled={ruta === 'armando'} onClick={continuar}>
               {t('preferencias.continuar')}

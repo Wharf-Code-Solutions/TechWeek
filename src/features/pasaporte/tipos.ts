@@ -31,6 +31,3 @@ export function posicionPieza(i: number, total: number, columnas = 3) {
 
 /** Nombre corto para el álbum: "Catedral de la Asunción" → "Catedral", "Zócalo / Plaza de Armas" → "Zócalo". */
 export const nombreCorto = (nombre: string) => nombre.split(/\s+(?:de|del|y|\/|of|and)\s+/i)[0]
-
-// shortcut: avatar fijo; usar el personaje elegido cuando Preferencias (Dev 3) lo guarde.
-export const AVATAR = 'avatar-flor'

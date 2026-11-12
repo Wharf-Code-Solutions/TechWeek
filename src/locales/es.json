@@ -15,7 +15,7 @@
   "preferencias": {
     "idioma": "Idioma",
     "tiempo": "¿Cuánto tiempo tienes?",
-    "intereses": "¿Qué te gusta?",
+    "intereses": "¿Qué te interesa?",
     "continuar": "Armar mi ruta",
     "tiempos": {
       "t30": "30 min",
@@ -33,7 +33,12 @@
     },
     "armando": "Armando tu ruta…",
     "error_ruta": "No pudimos armar tu ruta.",
-    "reintentar": "Reintentar"
+    "reintentar": "Reintentar",
+    "bienvenida": "¡Bienvenido al puerto!",
+    "bajada": "Dinos qué te gusta y armamos tu ruta por el Centro Histórico.",
+    "personaje": "Tu personaje",
+    "apodo": "Tu apodo",
+    "apodo_ejemplo": "Ej. Lupe"
   },
   "permiso": {
     "titulo": "Tu ubicación",
@@ -213,6 +218,9 @@
     "selloPendiente": "{{nombre}}, sello pendiente",
     "fotoOculta": "Foto oculta",
     "faltan_one": "Te falta una pieza…",
-    "faltan_other": "Te faltan {{count}} piezas…"
+    "faltan_other": "Te faltan {{count}} piezas…",
+    "avatar_avatar-sombrero": "Jarocho",
+    "avatar_avatar-gorra": "Marinero",
+    "avatar_avatar-paliacate": "Paliacate"
   }
 }

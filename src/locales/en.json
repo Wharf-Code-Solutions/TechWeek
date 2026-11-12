@@ -15,7 +15,7 @@
   "preferencias": {
     "idioma": "Language",
     "tiempo": "How much time do you have?",
-    "intereses": "What do you like?",
+    "intereses": "What interests you?",
     "continuar": "Build my route",
     "tiempos": {
       "t30": "30 min",
@@ -33,7 +33,12 @@
     },
     "armando": "Building your route…",
     "error_ruta": "We couldn't build your route.",
-    "reintentar": "Try again"
+    "reintentar": "Try again",
+    "bienvenida": "Welcome to the port!",
+    "bajada": "Tell us what you like and we'll build your route through the Historic Center.",
+    "personaje": "Your character",
+    "apodo": "Your nickname",
+    "apodo_ejemplo": "E.g. Lupe"
   },
   "permiso": {
     "titulo": "Your location",
@@ -213,6 +218,9 @@
     "selloPendiente": "{{nombre}}, stamp pending",
     "fotoOculta": "Hidden photo",
     "faltan_one": "One piece to go…",
-    "faltan_other": "{{count}} pieces to go…"
+    "faltan_other": "{{count}} pieces to go…",
+    "avatar_avatar-sombrero": "Jarocho",
+    "avatar_avatar-gorra": "Sailor",
+    "avatar_avatar-paliacate": "Bandana"
   }
 }
