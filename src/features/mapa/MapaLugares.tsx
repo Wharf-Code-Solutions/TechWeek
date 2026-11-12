@@ -22,6 +22,7 @@ import { comidaCercana, ilustracionDeTipo } from '../vitrina/vitrina'
 import { useVitrina } from '../vitrina/useVitrina'
 import Tarjeta from '../../components/ui/Tarjeta'
 import Boton from '../../components/ui/Boton'
+import { tramoRecorrido } from './recorrido'
 import { FPS_MINIMOS, INCLINACION, INCLINACION_LIGERA, activarLigeroAuto, esLigero, fijarLigero, fpsPromedio, useModoLigero } from './modoLigero'
 import './mapa.css'
 
@@ -370,6 +371,14 @@ export default function MapaLugares({
     mapa.current?.flyTo({ center: [pos.lng, pos.lat], zoom: Math.max(zoom, ZOOM + 0.5), duration: 600 })
   }
 
+  // Checkpoints: lo ya recorrido (hasta la última parada pasada) se queda dibujado en turquesa, no desaparece.
+  const datosRecorrido = useMemo(() => {
+    const pasadas = siguiente ? ruta.findIndex((l) => l.slug === siguiente) : ruta.length
+    const coordinates = tramoRecorrido(linea, ruta, pasadas)
+    return { type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates } }
+  }, [linea, ruta, siguiente])
+  const hayRecorrido = datosRecorrido.geometry.coordinates.length > 1
+
   // La línea de la ruta solo se reconstruye cuando cambia la ruta, no con cada render.
   const datosRuta = useMemo(
     () => ({ type: 'Feature' as const, properties: {}, geometry: { type: 'LineString' as const, coordinates: linea } }),
@@ -440,6 +449,24 @@ export default function MapaLugares({
                 'line-opacity': hayGuia ? 0.45 : 1,
                 'line-emissive-strength': 1,
               }}
+            />
+          </Source>
+        )}
+        {hayRecorrido && (
+          <Source id="recorrido" type="geojson" data={datosRecorrido}>
+            <Layer
+              id="recorrido-contorno"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-emissive-strength': 1 }}
+            />
+            <Layer
+              id="recorrido-linea"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': '#00B5C8', 'line-width': 6, 'line-emissive-strength': 1 }}
             />
           </Source>
         )}
