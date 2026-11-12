@@ -1,0 +1,10 @@
+<tipo>(<módulo>): <resumen corto en modo imperativo>
+
+- Contexto: <Qué se hizo y por qué se necesitaba>
+- Detalles: <Cambios técnicos específicos o retos resueltos>
+- Dev: Manuel
+
+# Título: máximo 50 caracteres.
+# Tipos:   feat | fix | chore | refactor | style | docs
+# Módulos: db | map | geo | game | ui | core
+# Un commit por tarea terminada. Solo si el proyecto corre sin errores.
