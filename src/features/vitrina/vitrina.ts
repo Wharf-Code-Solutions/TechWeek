@@ -18,13 +18,13 @@ export const TIPOS: TipoComercio[] = [
 // Ilustración del set que representa a cada tipo cuando el comercio no tiene foto.
 const ILUSTRACION: Record<TipoComercio, string> = {
   cafeteria: 'cafe-lechero',
-  restaurante: 'comida',
-  fonda: 'volovan',
+  restaurante: 'fonda',
+  fonda: 'fonda',
   neveria: 'nieve',
   mercado: 'artesania',
-  libreria: 'historia',
+  libreria: 'libros',
   artesanias: 'artesania',
-  tienda: 'jarana',
+  tienda: 'tienda',
 }
 
 export const ilustracionDeTipo = (tipo: TipoComercio) => ILUSTRACION[tipo]
