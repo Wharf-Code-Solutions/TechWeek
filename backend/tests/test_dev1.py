@@ -55,7 +55,8 @@ def test_siempre_hay_una_parada():
 class BaseFalsa:
     def __init__(self):
         self.t = {"lugares": [dict(l) for l in LUGARES], "visitas": [], "rutas_usuario": [],
-                  "movimientos_tlacos": [], "perfiles": [], "fotos_historicas": [{"id": 1}]}
+                  "movimientos_tlacos": [], "perfiles": [],
+                  "fotos_historicas": [{"id": 1, "slug": "puerto-antiguo", "url": "", "piezas": 6}]}
         self.n = 100
 
     @staticmethod
@@ -84,7 +85,8 @@ class BaseFalsa:
         if tabla == "perfiles" and any(p["id"] == fila["id"] for p in self.t[tabla]):
             return []
         self.n += 1
-        nueva = {"id": self.n, "reto_ok": None, "estado": "activa", "creado_en": str(self.n), **fila}
+        nueva = {"id": self.n, "reto_ok": None, "estado": "activa", "creado_en": str(self.n),
+                 "llegada_en": str(self.n), "tlacos": 0, **fila}
         self.t[tabla].append(nueva)
         return [dict(nueva)]
 
@@ -182,3 +184,31 @@ def test_perfil(cliente):
     c, _ = cliente
     r = c.put("/api/perfil", json={"apodo": "Jarocho", "avatar": "jarana", "idioma": "en"})
     assert r.json()["apodo"] == "Jarocho" and c.get("/api/perfil").json()["idioma"] == "en"
+
+
+# ───────────── Pasaporte ─────────────
+
+def test_contar_piezas():
+    from app.routers.pasaporte import contar_piezas
+    assert contar_piezas(0, False, 6) == 0
+    assert contar_piezas(3, True, 6) == 4
+    assert contar_piezas(5, True, 6) == 6
+    assert contar_piezas(9, True, 6) == 6
+
+
+def test_pasaporte_sellos_y_piezas(cliente):
+    c, base = cliente
+    vacio = c.get("/api/pasaporte").json()
+    assert vacio["sellos"] == [] and vacio["piezas"]["ganadas"] == 0
+
+    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    for slug in ("catedral", "condesa-malibran", "baluarte-santiago"):
+        c.post("/api/visitas", json={"lugar_slug": slug, "metodo": "demo"})
+    for v in base.t["visitas"][:2]:
+        v["reto_ok"] = True  # dos retos completados; el tercero solo tiene llegada
+    p = c.get("/api/pasaporte").json()
+    assert [s["lugar_slug"] for s in p["sellos"]] == ["catedral", "condesa-malibran"]
+    assert p["piezas"] == {"total": 6, "ganadas": 2, "indices": [0, 1], "completa": False}
+
+    c.post("/api/rutas/actual/terminar")
+    assert c.get("/api/pasaporte").json()["piezas"]["ganadas"] == 3

@@ -7,7 +7,7 @@
 
 | Dev | Rol | Carpetas que le pertenecen |
 | --- | --- | --- |
-| **Dev 1 · Carlos Daniel** | Datos y API de negocio | `supabase/`, `src/data/`, `src/types/`, `src/hooks/`, `src/features/ruta/`, en `backend/`: `db.py`, `retos.py`, `ruta.py`, `routers/retos.py`, `routers/canjes.py`, `routers/visitas.py`, `routers/rutas.py`, `scripts/` y `tests/` |
+| **Dev 1 · Carlos Daniel** | Datos y API de negocio | `supabase/`, `src/data/`, `src/types/`, `src/hooks/`, `src/features/ruta/`, en `backend/`: `db.py`, `retos.py`, `ruta.py`, `routers/retos.py`, `routers/canjes.py`, `routers/visitas.py`, `routers/rutas.py`, `routers/pasaporte.py`, `scripts/` y `tests/` |
 | **Dev 2 · Luis** | Mapa e interfaz | `src/components/`, `src/styles/`, `src/features/mapa/`, `retos/` (pantallas), `pasaporte/`, `agenda/` |
 | **Dev 3 · Manuel** | Núcleo, posición y despliegue | `src/app/`, `src/lib/`, `src/features/geo/`, `cartera/`, en `backend/`: `main.py`, `config.py`, `auth.py`, `routers/sesion.py` y `routers/catalogo.py`; configuración de Vite y Vercel |
 

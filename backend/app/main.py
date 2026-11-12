@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
-from .routers import canjes, catalogo, retos, rutas, sesion, visitas
+from .routers import canjes, catalogo, pasaporte, retos, rutas, sesion, visitas
 
 app = FastAPI(title="JARANA API", version="0.1.0")
 
@@ -19,6 +19,7 @@ app.include_router(visitas.router)
 app.include_router(retos.router)
 app.include_router(canjes.router)
 app.include_router(rutas.router)
+app.include_router(pasaporte.router)
 
 
 @app.get("/health")

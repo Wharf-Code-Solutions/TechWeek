@@ -31,6 +31,7 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `GET /api/rutas/actual` | Ruta activa con sus lugares en orden | 404 si no hay |
 | `PATCH /api/rutas/actual` | Saltar o recortar: `{lugares: [slugs en orden]}` | Al menos 1 lugar |
 | `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 Tlacos una sola vez, si completó al menos un reto |
+| `GET /api/pasaporte` | `{sellos[], piezas: {total, ganadas, indices[], completa}, foto, ruta_terminada}` | 1 pieza por reto completado + 1 al terminar la ruta (máx. 6) |
 
 **Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición. Con `demo: true` devuelve las 5 paradas del guion en orden.
 
@@ -46,7 +47,7 @@ backend/
   app/db.py              Cliente PostgREST (service_role) y nombres de la moneda
   app/geo.py             Distancia en metros (radio de 40 m)
   app/retos.py           Validación de los dos minijuegos
-  app/routers/           sesion y catalogo (Dev 3); visitas, retos, canjes y rutas (Dev 1)
+  app/routers/           sesion y catalogo (Dev 3); visitas, retos, canjes, rutas y pasaporte (Dev 1)
   tests/                 pytest
 src/lib/api.ts           Único cliente del frontend (sesión + token)
 ```
