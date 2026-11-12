@@ -12,7 +12,7 @@ No hay servidor propio. **Supabase es el backend**:
 - **RLS:** controla quién lee y escribe cada fila.
 - **Funciones RPC:** contienen todo lo que mueve Clacos.
 
-El frontend usa `@supabase/supabase-js` (`src/lib/supabase.ts`).
+**Actualización de Dev 3:** el navegador ya no usa `supabase-js` ni habla con Supabase. Todo pasa por el backend FastAPI (`backend/`, ver `docs/backend.md`) mediante `src/lib/api.ts`. Las funciones RPC de la migración 0002 ya no se necesitan.
 
 ## 1 · Esquema de datos y `seed.json`
 
@@ -103,11 +103,12 @@ src/
     cartera/               M10 (Dev 3)
     agenda/                M11 (Dev 2)
   hooks/                   M2 capa de datos (Dev 1)
-  lib/                     supabase.ts, i18n.ts
+  lib/                     api.ts (cliente del backend), i18n.ts
   locales/                 es.json, en.json
   data/seed.json           Catálogo de respaldo
   types/                   Contratos y tipos generados
   styles/tokens.css        Tokens visuales
+backend/                   API FastAPI (Dev 1 negocio / Dev 3 base)
 supabase/migrations/       SQL versionado (Dev 1)
 ```
 
