@@ -250,3 +250,50 @@ def test_seed_comercios_validos():
         assert 19.18 < c["lat"] < 19.21 and -96.15 < c["lng"] < -96.12, c["slug"]
     slugs = {c["slug"] for c in comercios}
     assert all(p["comercio_slug"] in slugs for p in SEED["promociones"])
+
+
+# ───────────── Retos rápidos: trivia, verdadero/falso, intruso ─────────────
+
+def test_trivia_e_intruso():
+    from app.retos import validar
+    c = {"pregunta": "¿?", "opciones": ["Café lechero", "Agua"], "correcta": "Café lechero"}
+    assert validar("trivia", c, [" café LECHERO "])
+    assert not validar("trivia", c, ["Agua"])
+    assert not validar("trivia", c, ["Café lechero", "Agua"])
+    assert validar("intruso", {"opciones": ["a", "b"], "correcta": "Tornillos"}, ["tornillos"])
+
+
+def test_verdadero_falso():
+    from app.retos import validar
+    assert validar("verdadero_falso", {"afirmacion": "x", "correcta": True}, ["verdadero"])
+    assert validar("verdadero_falso", {"afirmacion": "x", "correcta": True}, ["true"])
+    assert validar("verdadero_falso", {"afirmacion": "x", "correcta": False}, ["Falso"])
+    assert not validar("verdadero_falso", {"afirmacion": "x", "correcta": False}, ["verdadero"])
+    assert not validar("verdadero_falso", {"afirmacion": "x", "correcta": True}, ["quizá"])
+
+
+def test_retos_rapidos_no_envian_la_respuesta():
+    from app.retos import ocultar_respuestas
+    for tipo in ("trivia", "verdadero_falso", "intruso"):
+        assert "correcta" not in ocultar_respuestas(tipo, {"pregunta": "p", "correcta": "x"})
+
+
+def test_seed_retos_bien_formados():
+    from app.retos import validar
+    demo = {l["slug"] for l in SEED["lugares"] if l["en_demo"]}
+    lugares = {l["slug"] for l in SEED["lugares"]}
+    assert {r["lugar_slug"] for r in SEED["retos"]} == lugares  # todos los lugares tienen reto
+    for r in SEED["retos"]:
+        for idioma in ("es", "en"):
+            c = r[f"contenido_{idioma}"]
+            if r["tipo"] == "palabras":
+                assert validar("palabras", c, c["respuestas"]) and set(c["respuestas"]) <= set(c["opciones"])
+            elif r["tipo"] == "orden":
+                assert validar("orden", c, c["orden_correcto"])
+            elif r["tipo"] == "verdadero_falso":
+                assert validar("verdadero_falso", c, ["verdadero" if c["correcta"] else "falso"])
+            else:
+                assert c["correcta"] in c["opciones"] and c["opciones"][0] != c["correcta"]
+                assert validar(r["tipo"], c, [c["correcta"]])
+        if r["tipo"] in ("trivia", "verdadero_falso", "intruso"):
+            assert r["lugar_slug"] not in demo and r["tlacos"] < 50, r["lugar_slug"]

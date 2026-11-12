@@ -62,6 +62,34 @@ El mapa, la detección de llegada y el recorrido virtual **solo** hablan con est
   "orden_correcto": ["e1", "e2"] }
 ```
 
+### Retos rápidos (un toque, más sencillos; dan 30 Tlacos, 10 si se revela)
+
+Solo en lugares fuera de la ruta demo. El backend **quita `correcta`** antes de enviar el reto.
+
+**Trivia** (`tipo: 'trivia'`): una pregunta y 3 opciones. Respuesta: `[opcionElegida]` (el texto).
+```json
+{ "pregunta": "¿Qué se vende en la Gran Nevería Yucatán?",
+  "opciones": ["Llantas", "Nieves y helados", "Zapatos"],
+  "correcta": "Nieves y helados" }
+```
+
+**¿Verdadero o falso?** (`tipo: 'verdadero_falso'`): dos botones. Respuesta: `['verdadero']` o `['falso']`. `intentos_max: 2`.
+```json
+{ "afirmacion": "Desde el malecón se pueden ver barcos.", "correcta": true }
+```
+
+**¿Cuál es el intruso?** (`tipo: 'intruso'`): 4 opciones, una no pertenece. Respuesta: `[opcionIntrusa]`.
+```json
+{ "pregunta": "¿Cuál NO es comida típica del mercado?",
+  "opciones": ["Picadas", "Tornillos", "Gorditas", "Empanadas"],
+  "correcta": "Tornillos" }
+```
+
+Tipos TS: `ContenidoTrivia`, `ContenidoVerdaderoFalso`, `ContenidoIntruso` y `TipoReto` en `src/types/contratos.ts`.
+Para la pantalla: `t('reto.titulo_<tipo>')`, `t('reto.instrucciones_<tipo>')` y `t('reto.comprobar_<tipo>')` necesitan sus claves nuevas en `es.json` y `en.json`.
+
+> **Estado:** el seed ya trae 15 retos rápidos (5 trivia, 6 verdadero/falso, 4 intruso), pero **no están cargados en Supabase** hasta que existan sus pantallas: hoy `Reto.tsx` trata cualquier tipo distinto de `palabras` como `orden`. Cuando las pantallas estén listas, Dev 1 corre `python -m scripts.cargar_seed`.
+
 Cada reto incluye `tlacos` (si acierta), `tlacos_revelado` (si usa "ver respuesta y seguir") e `intentos_max`. Nunca se bloquea al turista.
 
 ## 4 · API del backend (lista completa en `docs/backend.md`)

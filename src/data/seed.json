@@ -832,112 +832,32 @@
     },
     {
       "lugar_slug": "palacio-municipal",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "El Palacio Municipal fue sede del primer ",
-          "{0}",
-          " de la América continental. Su torre tiene un ",
-          "{1}",
-          " y sus arcos están hechos de piedra ",
-          "{2}",
-          ", un coral de los arrecifes."
-        ],
-        "respuestas": [
-          "cabildo",
-          "reloj",
-          "muca"
-        ],
-        "opciones": [
-          "reloj",
-          "mercado",
-          "muca",
-          "cabildo",
-          "cantera",
-          "campana"
-        ]
+        "afirmacion": "El Palacio Municipal tiene una torre con reloj.",
+        "correcta": true
       },
       "contenido_en": {
-        "texto": [
-          "City Hall was home to the first town ",
-          "{0}",
-          " in mainland America. Its tower has a ",
-          "{1}",
-          " and its arches are made of ",
-          "{2}",
-          " stone, a coral from the reefs."
-        ],
-        "respuestas": [
-          "council",
-          "clock",
-          "muca"
-        ],
-        "opciones": [
-          "clock",
-          "market",
-          "muca",
-          "council",
-          "quarry",
-          "bell"
-        ]
+        "afirmacion": "City Hall has a clock tower.",
+        "correcta": true
       }
     },
     {
       "lugar_slug": "faro-carranza",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "El Faro lo inauguró ",
-          "{0}",
-          " Díaz a inicios del siglo XX. En ",
-          "{1}",
-          " fue sede del gobierno de Venustiano Carranza y hoy es comandancia de la ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Porfirio",
-          "1914",
-          "Marina"
-        ],
-        "opciones": [
-          "1810",
-          "Marina",
-          "Benito",
-          "Porfirio",
-          "Aduana",
-          "1914"
-        ]
+        "afirmacion": "El Faro Venustiano Carranza está en medio de la selva.",
+        "correcta": false
       },
       "contenido_en": {
-        "texto": [
-          "The lighthouse was opened by ",
-          "{0}",
-          " Díaz in the early 20th century. In ",
-          "{1}",
-          " it was Venustiano Carranza's seat of government, and today it is a ",
-          "{2}",
-          " command."
-        ],
-        "respuestas": [
-          "Porfirio",
-          "1914",
-          "Navy"
-        ],
-        "opciones": [
-          "1810",
-          "Navy",
-          "Benito",
-          "Porfirio",
-          "Customs",
-          "1914"
-        ]
+        "afirmacion": "The Venustiano Carranza Lighthouse is in the middle of the jungle.",
+        "correcta": false
       }
     },
     {
@@ -1052,57 +972,29 @@
     },
     {
       "lugar_slug": "atarazanas",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "intruso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "Las Atarazanas eran los ",
-          "{0}",
-          " reales de marina; hoy se enseña el son ",
-          "{1}",
-          " y el telar de ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "almacenes",
-          "jarocho",
-          "cintura"
-        ],
+        "pregunta": "¿Cuál NO se practica en Atarazanas?",
         "opciones": [
-          "pedal",
-          "huasteco",
-          "cintura",
-          "almacenes",
-          "cuarteles",
-          "jarocho"
-        ]
+          "Telar de cintura",
+          "Patinaje sobre hielo",
+          "Fandango",
+          "Son jarocho"
+        ],
+        "correcta": "Patinaje sobre hielo"
       },
       "contenido_en": {
-        "texto": [
-          "Atarazanas were the royal navy ",
-          "{0}",
-          "; today they teach son ",
-          "{1}",
-          " and ",
-          "{2}",
-          " weaving."
-        ],
-        "respuestas": [
-          "warehouses",
-          "jarocho",
-          "backstrap"
-        ],
+        "pregunta": "Which one is NOT done at Atarazanas?",
         "opciones": [
-          "pedal",
-          "barracks",
-          "huasteco",
-          "warehouses",
-          "jarocho",
-          "backstrap"
-        ]
+          "Son jarocho",
+          "Ice skating",
+          "Backstrap weaving",
+          "Fandango"
+        ],
+        "correcta": "Ice skating"
       }
     },
     {
@@ -1162,57 +1054,27 @@
     },
     {
       "lugar_slug": "teatro-clavijero",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "trivia",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "El teatro, del siglo ",
-          "{0}",
-          ", tiene forma de ",
-          "{1}",
-          " al estilo ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "XIX",
-          "herradura",
-          "italiano"
-        ],
+        "pregunta": "¿Qué se presenta en el Teatro Clavijero?",
         "opciones": [
-          "estrella",
-          "italiano",
-          "francés",
-          "XVI",
-          "herradura",
-          "XIX"
-        ]
+          "Carreras de autos",
+          "Partidos de fútbol",
+          "Ópera, conciertos y danza"
+        ],
+        "correcta": "Ópera, conciertos y danza"
       },
       "contenido_en": {
-        "texto": [
-          "The theater, from the ",
-          "{0}",
-          " century, has a ",
-          "{1}",
-          " shape in the ",
-          "{2}",
-          " style."
-        ],
-        "respuestas": [
-          "19th",
-          "horseshoe",
-          "Italian"
-        ],
+        "pregunta": "What is staged at the Clavijero Theater?",
         "opciones": [
-          "Italian",
-          "horseshoe",
-          "French",
-          "19th",
-          "star",
-          "16th"
-        ]
+          "Car races",
+          "Opera, concerts and dance",
+          "Soccer matches"
+        ],
+        "correcta": "Opera, concerts and dance"
       }
     },
     {
@@ -1327,57 +1189,17 @@
     },
     {
       "lugar_slug": "callejon-tona-la-negra",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "Este callejón está en el barrio de La ",
-          "{0}",
-          ", cuna de Toña la Negra y Agustín ",
-          "{1}",
-          "; lo vigila una estatua de ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Huaca",
-          "Lara",
-          "bronce"
-        ],
-        "opciones": [
-          "Moré",
-          "bronce",
-          "Huaca",
-          "Lara",
-          "Merced",
-          "mármol"
-        ]
+        "afirmacion": "Toña la Negra fue una cantante.",
+        "correcta": true
       },
       "contenido_en": {
-        "texto": [
-          "This alley is in the La ",
-          "{0}",
-          " neighborhood, birthplace of Toña la Negra and Agustín ",
-          "{1}",
-          "; a ",
-          "{2}",
-          " statue watches over it."
-        ],
-        "respuestas": [
-          "Huaca",
-          "Lara",
-          "bronze"
-        ],
-        "opciones": [
-          "Lara",
-          "marble",
-          "Merced",
-          "Moré",
-          "Huaca",
-          "bronze"
-        ]
+        "afirmacion": "Toña la Negra was a singer.",
+        "correcta": true
       }
     },
     {
@@ -1437,332 +1259,146 @@
     },
     {
       "lugar_slug": "cafe-parroquia",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "trivia",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "La Parroquia abrió en ",
-          "{0}",
-          "; el café lechero se pide sonando la ",
-          "{1}",
-          " en el vaso y se acompaña con una ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "1808",
-          "cuchara",
-          "canilla"
-        ],
+        "pregunta": "¿Qué bebida es famosa en el Gran Café de la Parroquia?",
         "opciones": [
-          "campana",
-          "cuchara",
-          "torta",
-          "1808",
-          "canilla",
-          "1932"
-        ]
+          "Agua mineral",
+          "Malteada de fresa",
+          "Café lechero"
+        ],
+        "correcta": "Café lechero"
       },
       "contenido_en": {
-        "texto": [
-          "La Parroquia opened in ",
-          "{0}",
-          "; café lechero is ordered by clinking a ",
-          "{1}",
-          " on the glass and paired with a ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "1808",
-          "spoon",
-          "canilla"
-        ],
+        "pregunta": "What drink is Gran Café de la Parroquia famous for?",
         "opciones": [
-          "canilla",
-          "1932",
-          "bell",
-          "spoon",
-          "torta",
-          "1808"
-        ]
+          "Sparkling water",
+          "Strawberry milkshake",
+          "Café lechero"
+        ],
+        "correcta": "Café lechero"
       }
     },
     {
       "lugar_slug": "neveria-yucatan",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "trivia",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "La nevería nació en ",
-          "{0}",
-          " en medio del Parque ",
-          "{1}",
-          "; en el parque se venden nieves de sabores como ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "1932",
-          "Zamora",
-          "guanábana"
-        ],
+        "pregunta": "¿Qué se vende en la Gran Nevería Yucatán?",
         "opciones": [
-          "1808",
-          "guanábana",
-          "Zamora",
-          "chicle",
-          "1932",
-          "Juárez"
-        ]
+          "Zapatos",
+          "Llantas",
+          "Nieves y helados"
+        ],
+        "correcta": "Nieves y helados"
       },
       "contenido_en": {
-        "texto": [
-          "The ice cream parlor opened in ",
-          "{0}",
-          " in the middle of ",
-          "{1}",
-          " Park; the park sells sorbets in flavors like ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "1932",
-          "Zamora",
-          "soursop"
-        ],
+        "pregunta": "What does Gran Nevería Yucatán sell?",
         "opciones": [
-          "bubblegum",
-          "Juárez",
-          "1808",
-          "Zamora",
-          "soursop",
-          "1932"
-        ]
+          "Shoes",
+          "Tires",
+          "Sorbets and ice cream"
+        ],
+        "correcta": "Sorbets and ice cream"
       }
     },
     {
       "lugar_slug": "mercado-hidalgo",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "intruso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "En las fondas del mercado se comen ",
-          "{0}",
-          " con salsa, ",
-          "{1}",
-          " de dulce y ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "picadas",
-          "gorditas",
-          "empanadas"
-        ],
+        "pregunta": "¿Cuál NO es comida típica del mercado?",
         "opciones": [
-          "gorditas",
-          "picadas",
-          "sushi",
-          "hamburguesas",
-          "pizza",
-          "empanadas"
-        ]
+          "Picadas",
+          "Tornillos",
+          "Gorditas",
+          "Empanadas"
+        ],
+        "correcta": "Tornillos"
       },
       "contenido_en": {
-        "texto": [
-          "At the market's food stalls you eat ",
-          "{0}",
-          " with salsa, sweet ",
-          "{1}",
-          " and ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "picadas",
-          "gorditas",
-          "empanadas"
-        ],
+        "pregunta": "Which one is NOT typical market food?",
         "opciones": [
-          "burgers",
-          "sushi",
-          "empanadas",
-          "picadas",
-          "gorditas",
-          "pizza"
-        ]
+          "Gorditas",
+          "Picadas",
+          "Empanadas",
+          "Screws"
+        ],
+        "correcta": "Screws"
       }
     },
     {
       "lugar_slug": "museo-naval",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "trivia",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "El museo ocupa la antigua Escuela ",
-          "{0}",
-          " Militar y tiene más de ",
-          "{1}",
-          " salas con ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Naval",
-          "25",
-          "simuladores"
-        ],
+        "pregunta": "¿De qué trata el Museo Naval?",
         "opciones": [
-          "25",
-          "simuladores",
-          "Naval",
-          "Normal",
-          "5",
-          "acuarios"
-        ]
+          "De los aviones espaciales",
+          "De los dinosaurios",
+          "Del mar y la Marina"
+        ],
+        "correcta": "Del mar y la Marina"
       },
       "contenido_en": {
-        "texto": [
-          "The museum is in the old Military ",
-          "{0}",
-          " School and has more than ",
-          "{1}",
-          " rooms with ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Naval",
-          "25",
-          "simulators"
-        ],
+        "pregunta": "What is the Naval Museum about?",
         "opciones": [
-          "simulators",
-          "5",
-          "25",
-          "aquariums",
-          "Teachers",
-          "Naval"
-        ]
+          "Dinosaurs",
+          "Spaceships",
+          "The sea and the Navy"
+        ],
+        "correcta": "The sea and the Navy"
       }
     },
     {
       "lugar_slug": "malecon",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "Desde el malecón se ven los ",
-          "{0}",
-          " mercantes y a los nadadores de ",
-          "{1}",
-          ", que se lanzan al ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "barcos",
-          "monedas",
-          "mar"
-        ],
-        "opciones": [
-          "mar",
-          "barcos",
-          "aviones",
-          "río",
-          "monedas",
-          "perlas"
-        ]
+        "afirmacion": "Desde el malecón se pueden ver barcos.",
+        "correcta": true
       },
       "contenido_en": {
-        "texto": [
-          "From the boardwalk you see cargo ",
-          "{0}",
-          " and the ",
-          "{1}",
-          " divers who jump into the ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "ships",
-          "coin",
-          "sea"
-        ],
-        "opciones": [
-          "sea",
-          "river",
-          "coin",
-          "planes",
-          "pearl",
-          "ships"
-        ]
+        "afirmacion": "You can see ships from the boardwalk.",
+        "correcta": true
       }
     },
     {
       "lugar_slug": "mercado-artesanias",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "intruso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "En este mercado venden recuerdos de ",
-          "{0}",
-          " de mar, sombreros ",
-          "{1}",
-          " y artesanía ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "conchas",
-          "jarochos",
-          "marina"
-        ],
+        "pregunta": "¿Cuál NO es un recuerdo del mercado de artesanías?",
         "opciones": [
-          "piedras",
-          "marina",
-          "jarochos",
-          "espacial",
-          "conchas",
-          "charros"
-        ]
+          "Llavero",
+          "Sombrero jarocho",
+          "Conchas de mar",
+          "Llanta de coche"
+        ],
+        "correcta": "Llanta de coche"
       },
       "contenido_en": {
-        "texto": [
-          "This market sells souvenirs made of sea ",
-          "{0}",
-          ", ",
-          "{1}",
-          " hats and ",
-          "{2}",
-          " crafts."
-        ],
-        "respuestas": [
-          "shells",
-          "jarocho",
-          "sea"
-        ],
+        "pregunta": "Which one is NOT a souvenir from the crafts market?",
         "opciones": [
-          "jarocho",
-          "stones",
-          "space",
-          "charro",
-          "shells",
-          "sea"
-        ]
+          "Key chain",
+          "Seashells",
+          "Jarocho hat",
+          "Car tire"
+        ],
+        "correcta": "Car tire"
       }
     },
     {
@@ -1822,57 +1458,27 @@
     },
     {
       "lugar_slug": "fototeca",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "trivia",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "La Fototeca guarda el patrimonio ",
-          "{0}",
-          " del puerto; tiene salas de exposición, talleres y un ",
-          "{1}",
-          " fotográfico en el Portal de ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "visual",
-          "laboratorio",
-          "Miranda"
-        ],
+        "pregunta": "¿Qué guarda la Fototeca de Veracruz?",
         "opciones": [
-          "Miranda",
-          "musical",
-          "Santiago",
-          "laboratorio",
-          "visual",
-          "acuario"
-        ]
+          "Plantas tropicales",
+          "Coches antiguos",
+          "Fotografías históricas"
+        ],
+        "correcta": "Fotografías históricas"
       },
       "contenido_en": {
-        "texto": [
-          "The Photo Library keeps the port's ",
-          "{0}",
-          " heritage; it has galleries, workshops and a photo ",
-          "{1}",
-          " in the Portal de ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "visual",
-          "darkroom",
-          "Miranda"
-        ],
+        "pregunta": "What does the Veracruz Photo Library keep?",
         "opciones": [
-          "darkroom",
-          "visual",
-          "Miranda",
-          "Santiago",
-          "aquarium",
-          "musical"
-        ]
+          "Tropical plants",
+          "Historic photographs",
+          "Vintage cars"
+        ],
+        "correcta": "Historic photographs"
       }
     },
     {
@@ -2097,112 +1703,32 @@
     },
     {
       "lugar_slug": "plaza-republica",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "En esta plaza están el Palacio de ",
-          "{0}",
-          " (1902) y la antigua ",
-          "{1}",
-          " Marítima, hoy de la ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Correos",
-          "Aduana",
-          "Marina"
-        ],
-        "opciones": [
-          "Policía",
-          "Gobierno",
-          "Marina",
-          "Aduana",
-          "Correos",
-          "Escuela"
-        ]
+        "afirmacion": "En la Plaza de la República está el Palacio de Correos.",
+        "correcta": true
       },
       "contenido_en": {
-        "texto": [
-          "This square has the ",
-          "{0}",
-          " Palace (1902) and the old Maritime ",
-          "{1}",
-          " House, now used by the ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "Post",
-          "Customs",
-          "Navy"
-        ],
-        "opciones": [
-          "Police",
-          "Customs",
-          "Post",
-          "Government",
-          "Navy",
-          "School"
-        ]
+        "afirmacion": "The Post Office Palace is on Republic Square.",
+        "correcta": true
       }
     },
     {
       "lugar_slug": "iglesia-la-pastora",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
-      "intentos_max": 3,
+      "tipo": "verdadero_falso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
+      "intentos_max": 2,
       "contenido_es": {
-        "texto": [
-          "La Pastora es un templo del siglo ",
-          "{0}",
-          ", levantado con piedra ",
-          "{1}",
-          " sacada de los ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "XVII",
-          "muca",
-          "arrecifes"
-        ],
-        "opciones": [
-          "arrecifes",
-          "XX",
-          "cerros",
-          "volcánica",
-          "XVII",
-          "muca"
-        ]
+        "afirmacion": "La Iglesia de La Pastora es de vidrio y metal.",
+        "correcta": false
       },
       "contenido_en": {
-        "texto": [
-          "La Pastora is a ",
-          "{0}",
-          "-century church built of ",
-          "{1}",
-          " stone taken from the ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "17th",
-          "coral",
-          "reefs"
-        ],
-        "opciones": [
-          "20th",
-          "17th",
-          "volcanic",
-          "hills",
-          "reefs",
-          "coral"
-        ]
+        "afirmacion": "La Pastora Church is made of glass and metal.",
+        "correcta": false
       }
     },
     {
@@ -2372,57 +1898,29 @@
     },
     {
       "lugar_slug": "cevart",
-      "tipo": "palabras",
-      "tlacos": 50,
-      "tlacos_revelado": 20,
+      "tipo": "intruso",
+      "tlacos": 30,
+      "tlacos_revelado": 10,
       "intentos_max": 3,
       "contenido_es": {
-        "texto": [
-          "El CEVART enseña artes ",
-          "{0}",
-          ", plásticas y ",
-          "{1}",
-          " en una casona ",
-          "{2}",
-          "."
-        ],
-        "respuestas": [
-          "escénicas",
-          "música",
-          "virreinal"
-        ],
+        "pregunta": "¿Cuál NO es un arte que se enseña en el CEVART?",
         "opciones": [
-          "música",
-          "cocina",
-          "moderna",
-          "virreinal",
-          "escénicas",
-          "marciales"
-        ]
+          "Teatro",
+          "Música",
+          "Danza",
+          "Mecánica de autos"
+        ],
+        "correcta": "Mecánica de autos"
       },
       "contenido_en": {
-        "texto": [
-          "CEVART teaches ",
-          "{0}",
-          " arts, visual arts and ",
-          "{1}",
-          " in a ",
-          "{2}",
-          " mansion."
-        ],
-        "respuestas": [
-          "performing",
-          "music",
-          "colonial"
-        ],
+        "pregunta": "Which one is NOT an art taught at CEVART?",
         "opciones": [
-          "colonial",
-          "music",
-          "modern",
-          "performing",
-          "cooking",
-          "martial"
-        ]
+          "Dance",
+          "Theater",
+          "Music",
+          "Car mechanics"
+        ],
+        "correcta": "Car mechanics"
       }
     }
   ],

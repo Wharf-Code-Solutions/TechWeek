@@ -36,6 +36,31 @@ export interface ContenidoOrden {
   orden_correcto: string[]
 }
 
+/**
+ * Reto "Trivia": una pregunta y 3 opciones; se toca una. `correcta` es el texto de la opción buena
+ * (el backend la quita antes de enviarla). Respuesta: `[opcionElegida]`.
+ */
+export interface ContenidoTrivia {
+  pregunta: string
+  opciones: string[]
+  correcta: string
+}
+
+/** Reto "¿Verdadero o falso?". Respuesta: `['verdadero']` o `['falso']`. */
+export interface ContenidoVerdaderoFalso {
+  afirmacion: string
+  correcta: boolean
+}
+
+/** Reto "¿Cuál es el intruso?": 4 opciones, una no pertenece. Respuesta: `[opcionIntrusa]`. */
+export interface ContenidoIntruso {
+  pregunta: string
+  opciones: string[]
+  correcta: string
+}
+
+export type TipoReto = 'palabras' | 'orden' | 'trivia' | 'verdadero_falso' | 'intruso'
+
 interface RetoBase {
   lugar_slug: string
   tlacos: number
@@ -46,6 +71,9 @@ interface RetoBase {
 export type Reto =
   | (RetoBase & { tipo: 'palabras'; contenido_es: ContenidoPalabras; contenido_en: ContenidoPalabras })
   | (RetoBase & { tipo: 'orden'; contenido_es: ContenidoOrden; contenido_en: ContenidoOrden })
+  | (RetoBase & { tipo: 'trivia'; contenido_es: ContenidoTrivia; contenido_en: ContenidoTrivia })
+  | (RetoBase & { tipo: 'verdadero_falso'; contenido_es: ContenidoVerdaderoFalso; contenido_en: ContenidoVerdaderoFalso })
+  | (RetoBase & { tipo: 'intruso'; contenido_es: ContenidoIntruso; contenido_en: ContenidoIntruso })
 
 export type TipoComercio =
   | 'cafeteria'
