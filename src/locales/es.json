@@ -185,8 +185,6 @@
     "bonoCobrado": "El bono de fin ya lo ganaste en una ruta anterior."
   },
   "ruta": {
-    "siguiente": "Siguiente: {{nombre}}",
-    "saltar": "Saltar",
     "error_saltar": "No pudimos saltar la parada.",
     "hecha": "Completada",
     "sub": "{{categoria}} · {{dist}}",

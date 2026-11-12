@@ -185,8 +185,6 @@
     "bonoCobrado": "You already earned the end bonus on an earlier route."
   },
   "ruta": {
-    "siguiente": "Next: {{nombre}}",
-    "saltar": "Skip",
     "error_saltar": "We couldn't skip this stop.",
     "hecha": "Completed",
     "sub": "{{categoria}} · {{dist}}",
