@@ -171,7 +171,16 @@
     "quedan_one": "{{count}} try left",
     "quedan_other": "{{count}} tries left",
     "comprobar_palabras": "Check",
-    "comprobar_orden": "Check order"
+    "comprobar_orden": "Check order",
+    "titulo_trivia": "Do you know it?",
+    "instrucciones_trivia": "Tap the right answer.",
+    "titulo_verdadero_falso": "True or false?",
+    "instrucciones_verdadero_falso": "Tap an option: it is checked right away.",
+    "titulo_intruso": "Which one is the odd one out?",
+    "instrucciones_intruso": "Tap the option that doesn't belong.",
+    "verdadero": "True",
+    "falso": "False",
+    "descartada": "{{texto}}, already tried"
   },
   "panel": {
     "cartera": "Wallet",

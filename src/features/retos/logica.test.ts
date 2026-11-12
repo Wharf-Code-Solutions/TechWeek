@@ -1,5 +1,17 @@
 import { describe, expect, it } from 'vitest'
-import { barajar, colocar, colocarEn, contarHuecos, indiceHueco, mover, quitar } from './logica'
+import {
+  barajar,
+  colocar,
+  colocarEn,
+  contarHuecos,
+  esRapido,
+  indiceHueco,
+  mover,
+  opcionesRapido,
+  quitar,
+  respuestaInicial,
+  type RetoPublico,
+} from './logica'
 
 describe('palabras', () => {
   it('detecta los huecos', () => {
@@ -43,5 +55,36 @@ describe('arrastrar a un hueco', () => {
   it('ignora huecos que no existen', () => {
     expect(colocarEn([null], 'x', 3)).toEqual([null])
     expect(colocarEn([null], 'x', -1)).toEqual([null])
+  })
+})
+
+describe('retos rápidos', () => {
+  const base = { lugar_slug: 'x', tlacos: 30, tlacos_revelado: 10, intentos_max: 3 }
+  const trivia = {
+    ...base,
+    tipo: 'trivia',
+    contenido_es: { pregunta: 'P es', opciones: ['a', 'b'] },
+    contenido_en: { pregunta: 'P en', opciones: ['c', 'd'] },
+  } as RetoPublico
+  const vf = {
+    ...base,
+    tipo: 'verdadero_falso',
+    contenido_es: { afirmacion: 'A es' },
+    contenido_en: { afirmacion: 'A en' },
+  } as RetoPublico
+
+  it('reconoce los tipos de un toque', () => {
+    expect(['trivia', 'intruso', 'verdadero_falso'].every((t) => esRapido(t as RetoPublico['tipo']))).toBe(true)
+    expect(esRapido('palabras')).toBe(false)
+    expect(esRapido('orden')).toBe(false)
+  })
+  it('da enunciado y opciones en el idioma pedido', () => {
+    expect(opcionesRapido(trivia, 'en')).toEqual({ enunciado: 'P en', opciones: ['c', 'd'] })
+  })
+  it('verdadero/falso usa los ids que valida el servidor', () => {
+    expect(opcionesRapido(vf, 'es')).toEqual({ enunciado: 'A es', opciones: ['verdadero', 'falso'] })
+  })
+  it('no hay respuesta inicial: se manda al tocar', () => {
+    expect(respuestaInicial(trivia, 'es')).toEqual([])
   })
 })

@@ -1,12 +1,34 @@
 // M8 · Lógica pura de los minijuegos (UI). La validación vive en el servidor.
-import type { ContenidoOrden, ContenidoPalabras, Reto } from '../../types/contratos'
+import type {
+  ContenidoIntruso,
+  ContenidoOrden,
+  ContenidoPalabras,
+  ContenidoTrivia,
+  ContenidoVerdaderoFalso,
+  Reto,
+} from '../../types/contratos'
 
 /** Reto tal como lo entrega GET /api/lugares/{slug}/reto: sin respuestas correctas. */
 export type RetoPublico = Omit<Reto, 'contenido_es' | 'contenido_en'> &
   (
     | { tipo: 'palabras'; contenido_es: Omit<ContenidoPalabras, 'respuestas'>; contenido_en: Omit<ContenidoPalabras, 'respuestas'> }
     | { tipo: 'orden'; contenido_es: Omit<ContenidoOrden, 'orden_correcto'>; contenido_en: Omit<ContenidoOrden, 'orden_correcto'> }
+    | { tipo: 'trivia'; contenido_es: Omit<ContenidoTrivia, 'correcta'>; contenido_en: Omit<ContenidoTrivia, 'correcta'> }
+    | { tipo: 'intruso'; contenido_es: Omit<ContenidoIntruso, 'correcta'>; contenido_en: Omit<ContenidoIntruso, 'correcta'> }
+    | { tipo: 'verdadero_falso'; contenido_es: Omit<ContenidoVerdaderoFalso, 'correcta'>; contenido_en: Omit<ContenidoVerdaderoFalso, 'correcta'> }
   )
+
+/** Retos rápidos de un toque: trivia, verdadero/falso e intruso. */
+export const esRapido = (tipo: RetoPublico['tipo']) => tipo === 'trivia' || tipo === 'intruso' || tipo === 'verdadero_falso'
+
+/** Enunciado y opciones de un reto rápido. Verdadero/falso usa los ids que espera el servidor. */
+export function opcionesRapido(reto: RetoPublico, idioma: 'es' | 'en') {
+  if (reto.tipo === 'verdadero_falso')
+    return { enunciado: reto[`contenido_${idioma}`].afirmacion, opciones: ['verdadero', 'falso'] }
+  if (reto.tipo === 'trivia' || reto.tipo === 'intruso')
+    return { enunciado: reto[`contenido_${idioma}`].pregunta, opciones: reto[`contenido_${idioma}`].opciones }
+  return null
+}
 
 /** Índice del hueco si el fragmento es "{n}", o null si es texto. */
 export const indiceHueco = (fragmento: string): number | null => {
@@ -53,7 +75,7 @@ export function barajar<T>(lista: T[], azar = Math.random): T[] {
 
 /** Respuesta inicial: huecos vacíos o eventos barajados. */
 export function respuestaInicial(reto: RetoPublico, idioma: 'es' | 'en'): (string | null)[] {
-  return reto.tipo === 'palabras'
-    ? Array(contarHuecos(reto[`contenido_${idioma}`].texto)).fill(null)
-    : barajar(reto[`contenido_${idioma}`].eventos.map((e) => e.id))
+  if (reto.tipo === 'palabras') return Array(contarHuecos(reto[`contenido_${idioma}`].texto)).fill(null)
+  if (reto.tipo === 'orden') return barajar(reto[`contenido_${idioma}`].eventos.map((e) => e.id))
+  return [] // retos rápidos: la respuesta se manda al tocar una opción
 }

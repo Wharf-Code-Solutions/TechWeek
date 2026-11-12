@@ -171,7 +171,16 @@
     "quedan_one": "Te queda {{count}} intento",
     "quedan_other": "Te quedan {{count}} intentos",
     "comprobar_palabras": "Comprobar",
-    "comprobar_orden": "Comprobar orden"
+    "comprobar_orden": "Comprobar orden",
+    "titulo_trivia": "¿Lo sabes?",
+    "instrucciones_trivia": "Toca la respuesta correcta.",
+    "titulo_verdadero_falso": "¿Verdadero o falso?",
+    "instrucciones_verdadero_falso": "Toca una opción: se comprueba al instante.",
+    "titulo_intruso": "¿Cuál es el intruso?",
+    "instrucciones_intruso": "Toca la opción que no pertenece.",
+    "verdadero": "Verdadero",
+    "falso": "Falso",
+    "descartada": "{{texto}}, ya probada"
   },
   "panel": {
     "cartera": "Cartera",

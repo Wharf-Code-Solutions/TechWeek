@@ -10,6 +10,13 @@
   color: #fff;
   background: radial-gradient(circle, rgb(255 255 255 / 0.12) 1.5px, transparent 1.6px) 0 0 / 18px 18px var(--morado);
 }
+.reto--trivia,
+.reto--verdadero_falso,
+.reto--intruso {
+  --fondo-reto: var(--cobalto);
+  color: #fff;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.12) 1.5px, transparent 1.6px) 0 0 / 18px 18px var(--cobalto);
+}
 .reto--orden {
   --fondo-reto: var(--turquesa);
   color: var(--tinta);
@@ -194,3 +201,41 @@
 }
 .juego-flechas button:disabled { background: #f4f1fa; opacity: 0.5; cursor: default; }
 .juego-flechas button:focus-visible { outline: 3px solid var(--cobalto); outline-offset: 2px; }
+
+/* ── Retos rápidos (trivia, verdadero/falso, intruso) ──── */
+.juego-pregunta p { margin: 0; font: 800 19px/1.35 var(--fuente-texto); }
+.juego-rapidas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.juego-rapidas--pareja { flex-direction: row; }
+.juego-rapidas--pareja li { flex: 1; }
+.juego-rapida {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 3px solid var(--tinta);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--tinta);
+  background: #fff;
+  color: var(--tinta);
+  font: 900 17px/1.2 var(--fuente-texto);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.juego-rapida:not(:disabled):active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--tinta); }
+.juego-rapidas--pareja .juego-rapida { min-height: 110px; flex-direction: column; font-size: 20px; }
+.juego-rapida--verdadero { background: var(--verde); }
+.juego-rapida--falso { background: var(--rojo, #E5242B); color: #fff; }
+.juego-rapida--probada {
+  border: 2.5px dashed rgb(255 255 255 / 0.6);
+  box-shadow: none;
+  background: transparent;
+  color: rgb(255 255 255 / 0.75);
+  text-decoration: line-through;
+  cursor: default;
+}
+.juego-rapida:disabled:not(.juego-rapida--probada) { opacity: 0.7; cursor: wait; }
+.juego-rapida:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }

@@ -12,7 +12,8 @@ import { urlIlustracion } from '../components/ui/ilustraciones'
 import { useLugares } from '../app/datos'
 import JuegoPalabras from '../features/retos/JuegoPalabras'
 import JuegoOrden from '../features/retos/JuegoOrden'
-import { respuestaInicial, type RetoPublico } from '../features/retos/logica'
+import JuegoOpciones from '../features/retos/JuegoOpciones'
+import { esRapido, opcionesRapido, respuestaInicial, type RetoPublico } from '../features/retos/logica'
 import '../features/retos/retos.css'
 
 
@@ -29,6 +30,7 @@ export default function Reto() {
   const [enviando, setEnviando] = useState(false)
   const [error, setError] = useState(false)
   const [yaVisitado, setYaVisitado] = useState(false)
+  const [descartadas, setDescartadas] = useState<string[]>([]) // opciones rápidas ya probadas y falladas
 
   useEffect(() => {
     api
@@ -51,13 +53,16 @@ export default function Reto() {
       .catch(() => {})
   }, [slug])
 
-  async function enviar(revelar: boolean) {
+  async function enviar(revelar: boolean, respuesta?: string[]) {
     setEnviando(true)
     try {
-      const r = await api.completarReto(slug, valor.filter((v) => v !== null), revelar, idioma)
+      const r = await api.completarReto(slug, respuesta ?? valor.filter((v) => v !== null), revelar, idioma)
       if (r.ya_visitado) setYaVisitado(true)
       else if (r.completado) navigate(`/recompensa/${slug}`, { state: r })
-      else setFallos((f) => f + 1)
+      else {
+        setFallos((f) => f + 1)
+        if (respuesta) setDescartadas((d) => [...d, ...respuesta])
+      }
     } catch {
       setError(true)
     } finally {
@@ -116,7 +121,7 @@ export default function Reto() {
 
       <div className="reto-cuerpo">
         <div>
-          {reto.tipo === 'palabras' && (
+          {reto.tipo !== 'orden' && (
             <span className="reto-antetitulo">
               {parada ? t('reto.minijuegoParada', { n: parada.n, total: parada.total }) : t('reto.minijuego')}
             </span>
@@ -127,8 +132,20 @@ export default function Reto() {
 
         {reto.tipo === 'palabras' ? (
           <JuegoPalabras contenido={reto[`contenido_${idioma}`]} valor={valor} onCambio={setValor} />
-        ) : (
+        ) : reto.tipo === 'orden' ? (
           <JuegoOrden contenido={reto[`contenido_${idioma}`]} valor={valor as string[]} onCambio={setValor} />
+        ) : (
+          <JuegoOpciones
+            enunciado={opcionesRapido(reto, idioma)?.enunciado ?? ''}
+            opciones={(opcionesRapido(reto, idioma)?.opciones ?? []).map((id) => ({
+              id,
+              texto: reto.tipo === 'verdadero_falso' ? t(`reto.${id}`) : id,
+            }))}
+            descartadas={descartadas}
+            deshabilitado={enviando || sinIntentos}
+            pareja={reto.tipo === 'verdadero_falso'}
+            onElegir={(id) => void enviar(false, [id])}
+          />
         )}
       </div>
 
@@ -145,7 +162,7 @@ export default function Reto() {
             {sinIntentos ? t('reto.sinIntentos') : t('reto.incorrecto', { count: quedan })}
           </p>
         )}
-        {!sinIntentos && (
+        {!sinIntentos && !esRapido(reto.tipo) && (
           <button type="button" className="reto-comprobar" disabled={!completo || enviando} onClick={() => enviar(false)}>
             {t(`reto.comprobar_${reto.tipo}`)}
           </button>
