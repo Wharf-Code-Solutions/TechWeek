@@ -41,11 +41,11 @@ def test_mas_tiempo_mas_lugares():
 
 
 def test_prioriza_intereses():
-    # Con poco tiempo, el lugar de su interés entra aunque esté más lejos que otros.
-    r = calcular_ruta(LUGARES, 30, ["mar"], inicio=ZOCALO)
-    assert "faro-carranza" in [l["slug"] for l in r.lugares]
-    sin_interes = calcular_ruta(LUGARES, 30, ["leyendas"], inicio=ZOCALO)
-    assert "condesa-malibran" in [l["slug"] for l in sin_interes.lugares]
+    # Con poco tiempo, entran primero los lugares de su interés (3 puntos) y no los demás (1 punto).
+    for interes in ("mar", "leyendas"):
+        r = calcular_ruta(LUGARES, 30, [interes], inicio=ZOCALO)
+        categorias = [l["categoria"] for l in r.lugares]
+        assert interes in categorias and categorias.count(interes) >= len(categorias) / 2
 
 
 def test_siempre_hay_una_parada():
@@ -58,7 +58,7 @@ class BaseFalsa:
     def __init__(self):
         self.t = {"lugares": [dict(l) for l in LUGARES], "visitas": [], "rutas_usuario": [],
                   "movimientos_tlacos": [], "perfiles": [],
-                  "fotos_historicas": [{"id": 1, "slug": "puerto-antiguo", "url": "", "piezas": 6}]}
+                  "fotos_historicas": [{"id": i, "slug": f"foto-{i}", "url": "", "piezas": 6} for i in (1, 2, 3)]}
         self.n = 100
 
     @staticmethod
@@ -77,7 +77,13 @@ class BaseFalsa:
         return True
 
     async def seleccionar(self, tabla, **f):
-        return [dict(x) for x in self.t[tabla] if self._cumple(x, f)]
+        filas = [dict(x) for x in self.t[tabla] if self._cumple(x, f)]
+        orden = f.get("order", "")
+        if orden.endswith(".desc") and filas and orden.split(".")[0] in filas[0]:
+            filas.sort(key=lambda x: x[orden.split(".")[0]], reverse=True)
+        if "limit" in f:
+            filas = filas[: int(f["limit"])]
+        return filas
 
     async def insertar(self, tabla, fila, *, ignorar_duplicado=False, conflicto=None):
         if tabla == "movimientos_tlacos" and fila["motivo"] == "bono_fin" and any(
@@ -198,10 +204,9 @@ def test_perfil(cliente):
 
 def test_contar_piezas():
     from app.routers.pasaporte import contar_piezas
-    assert contar_piezas(0, False, 6) == 0
-    assert contar_piezas(3, True, 6) == 4
-    assert contar_piezas(5, True, 6) == 6
-    assert contar_piezas(9, True, 6) == 6
+    assert contar_piezas(0, 5) == 0
+    assert contar_piezas(3, 5) == 3
+    assert contar_piezas(9, 5) == 5
 
 
 def test_pasaporte_sellos_y_piezas(cliente):
@@ -216,10 +221,14 @@ def test_pasaporte_sellos_y_piezas(cliente):
         v["reto_ok"] = True  # dos retos completados; el tercero solo tiene llegada
     p = c.get("/api/pasaporte").json()
     assert [s["lugar_slug"] for s in p["sellos"]] == ["catedral", "condesa-malibran"]
-    assert p["piezas"] == {"total": 6, "ganadas": 2, "indices": [0, 1], "completa": False}
+    assert p["piezas"] == {"total": 5, "ganadas": 2, "indices": [0, 1], "completa": False}
 
-    c.post("/api/rutas/actual/terminar")
-    assert c.get("/api/pasaporte").json()["piezas"]["ganadas"] == 3
+    c.post("/api/rutas/actual/terminar")  # terminar ya no regala una pieza
+    assert c.get("/api/pasaporte").json()["piezas"]["ganadas"] == 2
+
+    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})  # otra ruta: el rompecabezas vuelve a cero
+    nuevo = c.get("/api/pasaporte").json()
+    assert nuevo["piezas"]["ganadas"] == 0 and len(nuevo["sellos"]) == 2  # los sellos se conservan
 
 
 # ───────────── Vitrina de comercios ─────────────
@@ -297,3 +306,109 @@ def test_seed_retos_bien_formados():
                 assert validar(r["tipo"], c, [c["correcta"]])
         if r["tipo"] in ("trivia", "verdadero_falso", "intruso"):
             assert r["lugar_slug"] not in demo and r["tlacos"] < 50, r["lugar_slug"]
+
+
+# ───────────── Bloque 2: ruta inteligente, piezas por ruta, distancia ─────────────
+
+def _largo_ruta(r, inicio):
+    from app.ruta import _largo
+    return _largo(r.lugares, inicio)
+
+
+def test_ruta_excluye_visitados():
+    visitados = {l["id"] for l in LUGARES if l["categoria"] == "historia"}
+    r = calcular_ruta(LUGARES, 240, [], inicio=ZOCALO, visitados=visitados)
+    assert r.lugares and not any(l["id"] in visitados for l in r.lugares)
+
+
+def test_ruta_con_todo_visitado_no_se_queda_vacia():
+    r = calcular_ruta(LUGARES, 60, [], inicio=ZOCALO, visitados={l["id"] for l in LUGARES})
+    assert len(r.lugares) >= 1
+
+
+def test_ruta_prefiere_intereses_y_completa_si_faltan_paradas():
+    r = calcular_ruta(LUGARES, 120, ["mar"], inicio=ZOCALO)
+    categorias = [l["categoria"] for l in r.lugares]
+    assert "mar" in categorias and r.tiempo_min <= 120
+    assert categorias.count("mar") == sum(1 for l in LUGARES if l["categoria"] == "mar") or len(r.lugares) >= 3
+
+
+def test_ruta_ordenada_no_es_peor_que_vecino_mas_cercano():
+    from app.ruta import _vecino
+    elegidos = calcular_ruta(LUGARES, 240, [], inicio=ZOCALO).lugares
+    ingenuo = _vecino(elegidos, None, ZOCALO)
+    from app.ruta import _largo
+    assert _largo(elegidos, ZOCALO) <= _largo(ingenuo, ZOCALO) + 1e-6
+
+
+def test_ruta_sin_inicio_empieza_donde_acorta():
+    from app.ruta import _largo, _ordenar
+    sel = [l for l in LUGARES if l["slug"] in ("catedral", "zocalo", "portales", "faro-carranza")]
+    orden = _ordenar(sel, None)
+    assert sorted(l["slug"] for l in orden) == sorted(l["slug"] for l in sel)
+    # ninguna permutación es más corta (4 lugares: se prueba entera)
+    from itertools import permutations
+    assert _largo(orden, None) <= min(_largo(list(p), None) for p in permutations(sel)) + 1e-6
+
+
+def test_tlacos_por_distancia():
+    from app.ruta import tlacos_por_distancia
+    assert tlacos_por_distancia(0) == 0 and tlacos_por_distancia(99) == 0
+    assert tlacos_por_distancia(250) == 2 and tlacos_por_distancia(10_000) == 60
+
+
+def test_crear_ruta_no_ofrece_lugares_con_sello(cliente):
+    c, base = cliente
+    c.post("/api/rutas", json={"tiempo_min": 240, "intereses": ["historia"], "demo": True})
+    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})
+    base.t["visitas"][0]["reto_ok"] = True
+    nueva = c.post("/api/rutas", json={"tiempo_min": 240, "intereses": ["historia"]}).json()
+    assert "catedral" not in [l["slug"] for l in nueva["lugares"]]
+
+
+def test_la_visita_queda_ligada_a_la_ruta_activa(cliente):
+    c, base = cliente
+    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})
+    assert base.t["visitas"][0]["ruta_id"] == ruta["id"]
+    otra = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    c.post("/api/visitas", json={"lugar_slug": "catedral", "metodo": "demo"})  # sin jugar: pasa a la ruta nueva
+    assert base.t["visitas"][0]["ruta_id"] == otra["id"]
+
+
+def test_ruta_nueva_cambia_de_foto(cliente):
+    c, _ = cliente
+    fotos = [c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["foto_id"] for _ in range(8)]
+    assert all(a != b for a, b in zip(fotos, fotos[1:]))
+
+
+def test_puntos_por_distancia_una_vez_por_ruta(cliente):
+    c, base = cliente
+    c.post("/api/rutas", json={"tiempo_min": 60, "demo": True})
+    for slug in ("catedral", "condesa-malibran", "baluarte-santiago"):
+        c.post("/api/visitas", json={"lugar_slug": slug, "metodo": "demo"})
+    for v in base.t["visitas"]:
+        v["reto_ok"] = True
+    fin = c.post("/api/rutas/actual/terminar").json()
+    assert fin["distancia_m"] > 0 and fin["tlacos_distancia"] == min(60, fin["distancia_m"] // 100)
+    assert fin["saldo"] == fin["bono"] + fin["tlacos_distancia"]
+    movs = [m for m in base.t["movimientos_tlacos"] if m["motivo"] == "distancia"]
+    assert len(movs) == 1
+
+
+def test_reto_ya_completado_no_es_error(monkeypatch):
+    async def seleccionar(tabla, **f):
+        return [{"id": 1, "retos": [{"tipo": "trivia"}], "visitas": [{"id": 9, "reto_ok": True}]}]
+
+    async def saldo_de(_):
+        return 50
+
+    monkeypatch.setattr(db, "seleccionar", seleccionar)
+    monkeypatch.setattr(db, "saldo_de", saldo_de)
+    app.dependency_overrides[perfil_id_actual] = lambda: "celular-1"
+    try:
+        r = TestClient(app).post("/api/retos/catedral/completar", json={"respuesta": ["x"]})
+    finally:
+        app.dependency_overrides.clear()
+    assert r.status_code == 200
+    assert r.json() == {"correcto": True, "completado": True, "tlacos_ganados": 0, "saldo": 50, "ya_visitado": True}

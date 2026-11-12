@@ -29,7 +29,10 @@ async def completar_reto(lugar_slug: str, datos: RetoIn, perfil_id: str = Depend
     if not visitas:
         raise HTTPException(409, "Primero registra la llegada al lugar")
     if visitas[0]["reto_ok"] is not None:
-        raise HTTPException(409, "El reto ya fue completado")
+        return RetoOut(
+            correcto=bool(visitas[0]["reto_ok"]), completado=True, tlacos_ganados=0,
+            saldo=await db.saldo_de(perfil_id), ya_visitado=True,
+        )
 
     retos = lugares[0].get("retos")
     reto = (retos[0] if retos else None) if isinstance(retos, list) else retos

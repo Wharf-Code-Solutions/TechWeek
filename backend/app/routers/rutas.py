@@ -6,7 +6,9 @@ from pydantic import BaseModel, Field
 
 from .. import db
 from ..auth import perfil_id_actual
-from ..ruta import calcular_ruta
+import random
+
+from ..ruta import calcular_ruta, metros_entre_paradas, tlacos_por_distancia
 
 router = APIRouter(prefix="/api", tags=["rutas"])
 
@@ -46,7 +48,7 @@ async def guardar_perfil(datos: PerfilIn, perfil_id: str = Depends(perfil_id_act
 
 # ───────────── Ruta ─────────────
 
-async def _ruta_activa(perfil_id: str) -> dict | None:
+async def ruta_activa(perfil_id: str) -> dict | None:
     filas = await db.seleccionar(
         "rutas_usuario", perfil_id=f"eq.{perfil_id}", estado="eq.activa", order="creado_en.desc", limit="1"
     )
@@ -61,6 +63,15 @@ async def _con_lugares(ruta: dict) -> dict:
     return {**ruta, "lugares": [por_id[i] for i in ids if i in por_id]}
 
 
+async def elegir_foto(ultima_id: int | None) -> int | None:
+    """Imagen del rompecabezas: al azar, distinta de la última ruta cuando hay más de una."""
+    fotos = await db.seleccionar("fotos_historicas", order="id.asc")
+    if not fotos:
+        return None
+    otras = [f for f in fotos if f["id"] != ultima_id]
+    return random.choice(otras or fotos)["id"]
+
+
 @router.post("/rutas", status_code=201)
 async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     """Arma la ruta con el algoritmo M3 y la guarda. Si había una activa, queda abandonada."""
@@ -68,11 +79,15 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
     if not lugares:
         raise HTTPException(503, "No hay lugares cargados")
     inicio = (datos.lat, datos.lng) if datos.lat is not None and datos.lng is not None else None
-    calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, datos.demo)
+    # Los lugares con sello (reto completado) no se vuelven a ofrecer: ya no dan Tlacos.
+    visitas = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}")
+    visitados = {v["lugar_id"] for v in visitas if v["reto_ok"] is not None}
+    calc = calcular_ruta(lugares, datos.tiempo_min, list(datos.intereses), inicio, datos.demo, visitados)
 
     await db.asegurar_perfil(perfil_id)
+    anterior = await db.seleccionar("rutas_usuario", perfil_id=f"eq.{perfil_id}", order="creado_en.desc", limit="1")
     await db.actualizar("rutas_usuario", {"estado": "abandonada"}, perfil_id=f"eq.{perfil_id}", estado="eq.activa")
-    fotos = await db.seleccionar("fotos_historicas", order="id.asc", limit="1")
+    foto_id = await elegir_foto(anterior[0].get("foto_id") if anterior else None)
     fila = (
         await db.insertar(
             "rutas_usuario",
@@ -81,7 +96,7 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
                 "lugares": [l["id"] for l in calc.lugares],
                 "tiempo_min": datos.tiempo_min,
                 "intereses": list(datos.intereses),
-                "foto_id": fotos[0]["id"] if fotos else None,
+                "foto_id": foto_id,
             },
         )
     )[0]
@@ -90,7 +105,7 @@ async def crear_ruta(datos: RutaIn, perfil_id: str = Depends(perfil_id_actual)):
 
 @router.get("/rutas/actual")
 async def ruta_actual(perfil_id: str = Depends(perfil_id_actual)):
-    ruta = await _ruta_activa(perfil_id)
+    ruta = await ruta_activa(perfil_id)
     if not ruta:
         raise HTTPException(404, "No hay ruta activa")
     return await _con_lugares(ruta)
@@ -103,7 +118,7 @@ class AjusteIn(BaseModel):
 
 @router.patch("/rutas/actual")
 async def ajustar_ruta(datos: AjusteIn, perfil_id: str = Depends(perfil_id_actual)):
-    ruta = await _ruta_activa(perfil_id)
+    ruta = await ruta_activa(perfil_id)
     if not ruta:
         raise HTTPException(404, "No hay ruta activa")
     if not datos.lugares:
@@ -120,7 +135,7 @@ async def ajustar_ruta(datos: AjusteIn, perfil_id: str = Depends(perfil_id_actua
 @router.post("/rutas/actual/terminar")
 async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
     """Cierra la ruta y paga el bono de fin una sola vez, si completó al menos un reto."""
-    ruta = await _ruta_activa(perfil_id)
+    ruta = await ruta_activa(perfil_id)
     if not ruta:
         raise HTTPException(404, "No hay ruta activa")
 
@@ -142,9 +157,30 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
                 if e.status_code != 409:
                     raise
 
+    # Puntos por distancia: 1 Tlaco por 100 m entre las paradas completadas (tope 60), una vez por ruta.
+    hechas = sorted(
+        (v for v in en_ruta if v.get("ruta_id") == ruta["id"] and v["reto_ok"] is not None),
+        key=lambda v: v["llegada_en"],
+    )
+    por_id = {l["id"]: l for l in await db.seleccionar("lugares", id=f"in.({','.join(str(v['lugar_id']) for v in hechas)})")} if hechas else {}
+    metros = metros_entre_paradas([por_id[v["lugar_id"]] for v in hechas if v["lugar_id"] in por_id])
+    por_distancia = 0
+    if tlacos_por_distancia(metros) > 0:
+        try:
+            await db.insertar(
+                db.TABLA_MOVIMIENTOS,
+                {"perfil_id": perfil_id, "cantidad": tlacos_por_distancia(metros), "motivo": "distancia", "ref_id": ruta["id"]},
+            )
+            por_distancia = tlacos_por_distancia(metros)
+        except HTTPException as e:  # 409: ya se pagó la distancia de esta ruta
+            if e.status_code != 409:
+                raise
+
     await db.actualizar("rutas_usuario", {"estado": "terminada"}, id=f"eq.{ruta['id']}")
     return {
         "bono": bono,
+        "distancia_m": round(metros),
+        "tlacos_distancia": por_distancia,
         "saldo": await db.saldo_de(perfil_id),
         "visitados": len(en_ruta),
         "retos_completados": retos_hechos,

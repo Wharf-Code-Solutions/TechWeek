@@ -4,6 +4,7 @@ from .. import db
 from ..auth import perfil_id_actual
 from ..geo import distancia_m
 from ..schemas import LlegadaIn
+from .rutas import ruta_activa
 
 router = APIRouter(prefix="/api", tags=["visitas"])
 
@@ -28,12 +29,17 @@ async def registrar_llegada(datos: LlegadaIn, perfil_id: str = Depends(perfil_id
             raise HTTPException(403, "Estás fuera del radio del lugar")
 
     await db.asegurar_perfil(perfil_id)
+    ruta = await ruta_activa(perfil_id)
+    ruta_id = ruta["id"] if ruta else None
     # Inserta directo; si ya existía (unique perfil_id+lugar_id) no se duplica y se lee la existente.
     filas = await db.insertar(
-        "visitas", {"perfil_id": perfil_id, "lugar_id": lugar["id"], "metodo": datos.metodo},
+        "visitas", {"perfil_id": perfil_id, "lugar_id": lugar["id"], "metodo": datos.metodo, "ruta_id": ruta_id},
         ignorar_duplicado=True, conflicto="perfil_id,lugar_id",
     )
     if filas:
         return filas[0]
-    existente = await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}", lugar_id=f"eq.{lugar['id']}")
-    return existente[0]
+    existente = (await db.seleccionar("visitas", perfil_id=f"eq.{perfil_id}", lugar_id=f"eq.{lugar['id']}"))[0]
+    # Llegó otra vez sin haber jugado: la visita pasa a la ruta de ahora (su rompecabezas cuenta aquí).
+    if ruta_id and existente["reto_ok"] is None and existente.get("ruta_id") != ruta_id:
+        existente = (await db.actualizar("visitas", {"ruta_id": ruta_id}, id=f"eq.{existente['id']}"))[0]
+    return existente

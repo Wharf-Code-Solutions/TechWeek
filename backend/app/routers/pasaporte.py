@@ -1,8 +1,8 @@
 """Pasaporte: sellos ganados y piezas del rompecabezas fotográfico (Dev 1, fase 3).
 
-Regla de piezas: 1 pieza por cada reto completado (acertado o con "ver respuesta")
-y 1 más al terminar la ruta, hasta el total de piezas de la foto (6).
-Así la ruta de la demo (5 paradas + fin) completa la foto.
+Regla de piezas (por ruta): 1 pieza por cada reto completado en la ruta actual
+(acertado o con "ver respuesta"). El total es el número de paradas de esa ruta.
+Al crear otra ruta el rompecabezas vuelve a cero y cambia de imagen; los sellos se conservan.
 """
 from fastapi import APIRouter, Depends
 
@@ -12,8 +12,8 @@ from ..auth import perfil_id_actual
 router = APIRouter(prefix="/api", tags=["pasaporte"])
 
 
-def contar_piezas(retos_completados: int, ruta_terminada: bool, total: int) -> int:
-    return min(total, retos_completados + (1 if ruta_terminada else 0))
+def contar_piezas(retos_completados: int, total: int) -> int:
+    return max(0, min(total, retos_completados))
 
 
 @router.get("/pasaporte")
@@ -49,11 +49,15 @@ async def pasaporte(perfil_id: str = Depends(perfil_id_actual)):
         fotos = await db.seleccionar("fotos_historicas", order="id.asc", limit="1")
         foto = fotos[0] if fotos else None
 
-    total = foto["piezas"] if foto else 6
-    ganadas = contar_piezas(len(sellos), terminada, total)
+    total = len(ruta["lugares"]) if ruta else (foto["piezas"] if foto else 6)
+    hechas = sum(
+        1 for v in visitas
+        if ruta and v.get("ruta_id") == ruta["id"] and v["reto_ok"] is not None and v["lugar_id"] in ruta["lugares"]
+    )
+    ganadas = contar_piezas(hechas, total)
     return {
         "sellos": sellos,
-        "piezas": {"total": total, "ganadas": ganadas, "indices": list(range(ganadas)), "completa": ganadas >= total},
+        "piezas": {"total": total, "ganadas": ganadas, "indices": list(range(ganadas)), "completa": total > 0 and ganadas >= total},
         "foto": foto,
         "ruta_terminada": terminada,
     }
