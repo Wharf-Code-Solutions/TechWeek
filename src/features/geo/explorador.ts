@@ -1,4 +1,4 @@
-// Modo explorador: el turista no comparte ubicación. Ve curiosidades, pero no gana Tlacos ni sellos.
+// Modo explorador: el turista no comparte ubicación. Ve curiosidades, pero no gana doblones ni sellos.
 const CLAVE = 'jarana.explorador'
 
 export function esExplorador(): boolean {

@@ -43,7 +43,7 @@ export default function Lugar() {
   // Un lugar ya jugado se puede volver a ver, pero no da puntos ni se vuelve a jugar.
   const [yaVisitado, setYaVisitado] = useState(false)
 
-  // Parada n de N (ruta activa) y Tlacos del reto: son adornos, si fallan la pantalla funciona igual.
+  // Parada n de N (ruta activa) y doblones del reto: son adornos, si fallan la pantalla funciona igual.
   useEffect(() => {
     if (!slug) return
     let vivo = true
@@ -94,16 +94,6 @@ export default function Lugar() {
     )
   }
 
-  // Lejos del lugar (el servidor responde 403) se puede jugar igual en modo demo: la visita se registra como demo.
-  function jugarEnDemo() {
-    if (!slug) return
-    setRegistro('pendiente')
-    api
-      .registrarLlegada(slug, 'demo')
-      .then(() => setRegistro('ok'))
-      .catch(() => setRegistro('error'))
-  }
-
   const mensaje = explorador
     ? t('lugar.explorador')
     : registro === 'fuera'
@@ -123,10 +113,6 @@ export default function Lugar() {
     <main className={estilos.pantalla}>
       <div className={estilos.escena} style={{ backgroundImage: `url("${urlIlustracion(escena)}")` }}>
         <span className={estilos.pildora}>{t('pantallas.lugar')}</span>
-        {/* La ilustración propia del lugar se suma a la escena de su categoría */}
-        <span className={estilos.emblema}>
-          <Ilustracion nombre={lugar.ilustracion} tamano={70} />
-        </span>
         <button type="button" className={estilos.cerrar} aria-label={t('mapa.cerrar')} onClick={() => navegar('/mapa')}>
           <X size={22} weight="bold" aria-hidden="true" />
         </button>
@@ -162,12 +148,6 @@ export default function Lugar() {
         )}
 
         {yaVisitado && <p role="status" className={estilos.visitado}>{t('lugar.ya_visitado')}</p>}
-
-        {registro === 'fuera' && !explorador && !yaVisitado && (
-          <Boton ancho variante="amarillo" onClick={jugarEnDemo}>
-            {t('lugar.jugar_demo')}
-          </Boton>
-        )}
 
         {!explorador && !yaVisitado && (
           <Boton ancho disabled={registro !== 'ok'} onClick={() => navegar(`/reto/${lugar.slug}`)}>

@@ -16,7 +16,6 @@ import { esModoDemo } from '../features/geo/demoStore'
 import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
 import AvisoLlegada from '../features/geo/AvisoLlegada'
-import AvisoLejos from '../features/geo/AvisoLejos'
 import { leerOrigen } from '../features/geo/origen'
 import { haLlegado, useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
@@ -164,7 +163,6 @@ export default function Mapa() {
         abajo={
           <>
             <AvisoLlegada lugar={llegando} />
-            {!demo && !llegando && <AvisoLejos />}
             <ControlRecorrido />
           </>
         }
