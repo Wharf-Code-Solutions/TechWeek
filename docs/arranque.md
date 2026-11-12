@@ -49,6 +49,18 @@ Nunca sumes ni restes Tlacos en el navegador, ni guardes llaves en el repo.
 | **Dev 2 · Luis** | Tokens y componentes base (`Boton`, `Tarjeta`, `Banderines`, `Ilustracion`); mapa con `api.lugares()`; pantallas de minijuegos contra `api.retoDeLugar()` y `api.completarReto()`. |
 | **Dev 3 · Manuel** | `usePosition()` real (GPS, 40 m, modo explorador); recorrido virtual `?demo=1`; pantallas de preferencias, ¡Llegaste! y recompensa; despliegue. |
 
+## Piezas de Dev 3 listas para usar (Dev 2: móntalas en el mapa y el reto)
+
+| Pieza | Dónde | Cómo usarla |
+| --- | --- | --- |
+| Flechas del recorrido virtual | `src/features/geo/ControlRecorrido.tsx` | `<ControlRecorrido />` sobre el mapa; solo se ve con `?demo=1`. |
+| Posición actual | `usePosition()` en `src/features/geo/usePosition.ts` | `{lat, lng, precision, fuente}` o `null` (modo explorador). Con `?demo=1` es la del recorrido. |
+| Abrir ¡Llegaste! al llegar | `useIrAlLlegar(lugares)` en `src/features/geo/useIrAlLlegar.ts` | Llámalo una vez en `Mapa.tsx` con los lugares de la ruta. |
+| Cartera | `import { Cartera } from '../features/cartera'` | Contenido de la pestaña Cartera del panel. |
+| Pantalla de recompensa | `/recompensa/:slug` | Desde el reto: `navigate('/recompensa/' + slug, { state: { tlacos_ganados, saldo } })` con lo que devuelve `api.completarReto`. |
+
+`Ilustracion` aún no tiene los nombres `puzzle` ni `moneda` (usa el ícono por defecto): Luis, agrégalos cuando tengas los SVG.
+
 ## Reglas de trabajo
 
 - **Commits:** `<tipo>(<módulo>): <resumen>` ≤ 50 caracteres, con Contexto, Detalles y Dev (plantilla `.gitmessage`: `git config commit.template .gitmessage`).
