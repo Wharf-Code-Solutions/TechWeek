@@ -31,8 +31,8 @@ Celular (React) ──/api/*──▶ FastAPI ──service_role──▶ Supaba
 | `POST /api/rutas` | Arma y guarda la ruta `{tiempo_min, intereses, lat?, lng?, demo?}` → `{lugares[], estimado_min, caminata_m, …}` | Algoritmo M3; la ruta activa anterior queda `abandonada` |
 | `GET /api/rutas/actual` | Ruta activa con sus lugares en orden | 404 si no hay |
 | `PATCH /api/rutas/actual` | Saltar o recortar: `{lugares: [slugs en orden]}` | Al menos 1 lugar |
-| `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 Tlacos una sola vez, si completó al menos un reto |
-| `GET /api/pasaporte` | `{sellos[], piezas: {total, ganadas, indices[], completa}, foto, ruta_terminada}` | 1 pieza por reto completado + 1 al terminar la ruta (máx. 6) |
+| `POST /api/rutas/actual/terminar` | Cierra la ruta → `{bono, distancia_m, tlacos_distancia, saldo, visitados, retos_completados, total_lugares, foto_id}` | Bono de 100 Tlacos una sola vez por celular, si completó al menos un reto; más 1 Tlaco por 100 m entre las paradas completadas (tope 60, una vez por ruta, motivo `distancia`) |
+| `GET /api/pasaporte` | `{sellos[], piezas: {total, ganadas, indices[], completa}, foto, ruta_terminada}` | Por ruta: 1 pieza por reto completado en la ruta actual; total = nº de paradas. Al crear otra ruta vuelve a cero y cambia de imagen (los sellos se quedan) |
 
 **Algoritmo de ruta (M3, `app/ruta.py`):** prioriza los lugares de sus intereses (en orden sugerido), agrega lugares mientras la ruta completa quepa en `tiempo_min` (caminata a 75 m/min × 1.3 por las calles + 10 min por parada) y los ordena por vecino más cercano desde su posición. Con `demo: true` devuelve las 5 paradas del guion en orden.
 
@@ -112,3 +112,11 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 - **Datos:** ~38 comercios del Centro Histórico tomados de `sitios-turisticos-veracruz.csv`, en `src/data/seed.json` → `comercios`. Se cargan con `python -m scripts.cargar_seed`.
 - **Fotos:** `foto_url` vacío. Para agregar una: guardar la imagen en `public/comercios/<slug>.jpg`, poner `"foto_url": "/comercios/<slug>.jpg"` en el seed y recargar. Solo fotos propias o con permiso del negocio. Sin foto, la tarjeta usa la ilustración de su tipo.
 - `verificar: true` marca coordenadas aproximadas (direcciones "s/n").
+
+## Ruta inteligente (migración 0005, Dev 3)
+
+- **`POST /api/rutas`** ya no ofrece lugares con sello, puntúa interés (3) vs otro (1), maximiza puntos dentro del tiempo y ordena como ruta abierta desde la posición (vecino más cercano + 2-opt). Si el turista ya visitó todo, no se excluye nada. La imagen del rompecabezas es al azar y distinta de la ruta anterior.
+- **`POST /api/visitas`** guarda `visitas.ruta_id` (ruta activa). Si llega otra vez a un lugar sin haber jugado, la visita pasa a la ruta de ahora.
+- **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 Tlacos (antes 409).
+- **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (únicos por ruta) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.
+- Pendiente (Bloque 3): `POST /api/rutas/{id}/compartir` (+30 Tlacos, motivo `compartir`).
