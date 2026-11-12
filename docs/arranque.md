@@ -1,6 +1,6 @@
 # JARANA · Guía de arranque para los 3 devs
 
-> Léela primero (5 min). Después, según tu rol: `docs/backend.md` (API y reparto) y `docs/contratos.md` (esquema, retos, rutas).
+> Léela primero (5 min). **Reglas obligatorias para los 3: `docs/reglas.md`.** Después, según tu rol: `docs/backend.md` (API y reparto) y `docs/contratos.md` (esquema, retos, rutas).
 
 ## Qué cambió con este push
 
