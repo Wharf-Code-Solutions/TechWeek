@@ -10,8 +10,7 @@ import Cabecera from '../features/mapa/Cabecera'
 import RutaLista from '../features/mapa/RutaLista'
 import type { Pestana } from '../features/mapa/Panel'
 import { altoNivel, type Nivel } from '../features/mapa/nivelesPanel'
-import { formatoDistancia, progresoRuta } from '../features/mapa/progreso'
-import { distanciaM } from '../features/geo/distancia'
+import { progresoRuta } from '../features/mapa/progreso'
 import { usePosition } from '../features/geo/usePosition'
 import AvisoLlegada from '../features/geo/AvisoLlegada'
 import { leerOrigen } from '../features/geo/origen'
@@ -142,11 +141,6 @@ export default function Mapa() {
         enRuta={enRuta}
         hechos={slugsHechos}
         siguiente={siguiente?.slug ?? null}
-        etiquetaSiguiente={
-          siguiente && pos
-            ? t('mapa.siguienteA', { dist: formatoDistancia(distanciaM(pos, siguiente)) })
-            : t('mapa.siguiente')
-        }
         eventos={eventos.filter((e) => enCurso(e))}
         onEvento={() => abrir('agenda')}
         arriba={

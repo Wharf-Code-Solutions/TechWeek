@@ -32,8 +32,6 @@ const ZOOM = 17
 const ZOOM_MIN = 16.6
 /** Duración de un pulso de la línea de la ruta (ms). */
 const PULSO_MS = 1600
-// Con este zoom o más cerca, todos los pines muestran su nombre; más lejos solo la siguiente parada y el pin tocado.
-const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
@@ -58,7 +56,6 @@ interface Props {
   hechos?: ReadonlySet<string>
   siguiente?: string | null
   /** Texto bajo la siguiente parada ("Siguiente · 120 m"). */
-  etiquetaSiguiente?: string
   /** Eventos en curso: se marcan en el mapa. */
   eventos?: Evento[]
   onEvento?: () => void
@@ -99,7 +96,6 @@ const AZUL_RUTA = '#1446C8'
 interface PinProps {
   lugar: Lugar
   estado: Estado
-  etiqueta: string | null
   etiquetaAria: string
   elegido: boolean
   llegando: boolean
@@ -107,7 +103,7 @@ interface PinProps {
 }
 
 /** Un pin del mapa. Está memoizado: mover la cámara o la posición no vuelve a dibujar los 24 pines. */
-const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, llegando, onElegir }: PinProps) {
+const Pin = memo(function Pin({ lugar, estado, etiquetaAria, elegido, llegando, onElegir }: PinProps) {
   return (
     <Marker latitude={lugar.lat} longitude={lugar.lng} anchor="bottom" style={{ zIndex: estado === 'siguiente' ? 2 : 1 }}>
       <button
@@ -124,7 +120,6 @@ const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, 
             <Ilustracion nombre={lugar.ilustracion} tamano={estado === 'siguiente' ? 28 : 24} />
           )}
         </span>
-        {etiqueta && <span className="marcador-etiqueta">{etiqueta}</span>}
       </button>
     </Marker>
   )
@@ -137,7 +132,6 @@ export default function MapaLugares({
   enRuta = VACIO,
   hechos = VACIO,
   siguiente = null,
-  etiquetaSiguiente,
   eventos = [],
   onEvento,
   padAbajo = 0,
@@ -397,13 +391,11 @@ export default function MapaLugares({
           const e = estado(l.slug)
           const nombre = en ? l.nombre_en : l.nombre_es
           const tocado = elegido?.slug === l.slug
-          const conNombre = e === 'siguiente' || tocado || zoom >= ZOOM_ETIQUETAS
           return (
             <Pin
               key={l.slug}
               lugar={l}
               estado={e}
-              etiqueta={conNombre ? (e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre) : null}
               etiquetaAria={e === 'ruta' || e === 'fuera' ? nombre : t(`mapa.estado_${e}`, { nombre })}
               elegido={tocado}
               llegando={llegando === l.slug}
