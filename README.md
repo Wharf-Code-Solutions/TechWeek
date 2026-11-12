@@ -23,8 +23,11 @@ El proyecto estará dirigido a tres grupos principales:
 # ¿Cómo usar JARANA?
 No hay que instalar nada ni crear una cuenta: se abre en el navegador del celular y el progreso se guarda en ese dispositivo con una sesión anónima.
 
-1. **Arma tu ruta.** Elige idioma (español o inglés), cuánto tiempo tienes (de 30 min a 5 h) y qué te gusta: historia, leyendas, música, comida, mar o artesanía. JARANA calcula una ruta a pie con los lugares que más te interesan y que caben en tu tiempo.
-2. **Camina el Centro.** El mapa te muestra la ruta por las calles. Al llegar a menos de 40 m de un lugar (por GPS) aparece **¡Llegaste!** con una curiosidad del sitio. Si estás lejos del Centro o sin GPS, la ruta sale del Zócalo y puedes moverte tocando el mapa.
+1. **Arma tu ruta.** Elige idioma (español, inglés o francés), cuánto tiempo tienes (de 30 min a 5 h) y qué te gusta: historia, leyendas, música, comida, mar o artesanía. JARANA calcula una ruta a pie con los lugares que más te interesan y que caben en tu tiempo, y evita los que en ese momento están llenos.
+2. **Camina el Centro.** El mapa te muestra la ruta por las calles y una línea amarilla hasta tu siguiente parada. Si te desvías (más de 60 m durante 5 s), esa línea se recalcula por otras calles hasta la misma parada. Lo que ya recorriste se queda marcado en turquesa como checkpoint. Al llegar a menos de 40 m de un lugar (por GPS) el mapa se acerca y aparece **¡Llegaste!** con una curiosidad del sitio. Si estás lejos del Centro o sin GPS, sales a una cuadra del Zócalo y te mueves tocando el mapa.
+   - En la lista de la ruta, cada parada tiene un **punto de color** según cuánta gente hay: 🟢 tranquilo, 🟡 concurrido, 🔴 lleno. Si la siguiente parada está llena, JARANA te sugiere una alternativa tranquila cercana.
+   - Puedes **saltar** una parada: se queda en la lista marcada como saltada y la ruta sigue con la siguiente.
+   - Si tu celular va lento, el mapa activa solo el **modo ligero** (sin edificios 3D ni animaciones); también puedes activarlo desde el menú del mapa.
 3. **Juega el reto del lugar** y gana doblones:
    - *Completa la frase* o la leyenda (50 doblones).
    - *Ordena los hechos* de la historia (60).
@@ -84,7 +87,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 | Tecnología | Uso |
 |---|---|
 | **Mapbox GL + react-map-gl** | Mapa 3D del Centro Histórico, pines de lugares, eventos y comercios, ruta animada por calles. |
-| **Mapbox Directions** | Trazo de la ruta a pie por las calles entre paradas. |
+| **Mapbox Directions** | Trazo de la ruta a pie por las calles entre paradas y recálculo de la guía cuando el turista se desvía. |
 | **Bounding Box** | Delimitación de la vista al Centro Histórico. |
 | **Geolocation API** | Posición del turista y detección de llegada en un radio de 40 m. |
 
@@ -95,7 +98,8 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 |---|---|
 | **FastAPI (Python)** | API propia: sesión, catálogo, llegadas, retos, ruta, pasaporte, canjes y vitrina. |
 | **httpx** | Consultas del backend a Supabase (REST y Auth). |
-| **Algoritmo de ruta** | Selección por intereses y tiempo, orden por vecino más cercano y mejora 2-opt. |
+| **Algoritmo de ruta** | Selección por intereses y tiempo, orden por vecino más cercano y mejora 2-opt; resta peso a los lugares concurridos y deja fuera los llenos. |
+| **Afluencia** | Ocupación de cada lugar con las llegadas de la última hora entre su capacidad (30 por hora): menos de 50 % tranquilo, de 50 % a 99 % concurrido, 100 % o más lleno. |
 | **PyJWT** | Validación local del token de la sesión anónima (llaves públicas de Supabase). |
 | **pytest** | Pruebas automáticas del backend. |
 
@@ -114,7 +118,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 
 | Tecnología | Uso |
 |---|---|
-| **react-i18next** | Interfaz y contenido bilingües (Español / Inglés). |
+| **react-i18next** | Interfaz y contenido en español, inglés y francés. Si un texto aún no está en francés se muestra en inglés, y los retos se juegan y validan en ese idioma. |
 
 ## 06. Despliegue
 **Publicación y alojamiento**
@@ -130,7 +134,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 
 ```text
             CELULAR DEL TURISTA
-         React + Vite (SPA, ES/EN)
+        React + Vite (SPA, ES/EN/FR)
                      |
           +----------+----------+
           |                     |
@@ -157,7 +161,7 @@ El equipo usó inteligencia artificial como apoyo durante el hackathon; todo lo 
 | Investigación | Gemini | Inventario de sitios del Centro Histórico y verificación de leyendas (p. ej. se descartó el Callejón del Diamante por ser de Xalapa). | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
 | Backend y datos | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap/Mapbox y pruebas. | Cada cambio se revisó y se probó contra la base real y en producción. |
 | Frontend y mapa | Claude Code | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
-| Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación. | Revisado por el equipo; ningún dato sin fuente. |
+| Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación, y su traducción al francés. | Revisado por el equipo; ningún dato sin fuente. Las traducciones al francés de los retos de "completa la frase" están pendientes de revisión por un hablante nativo. |
 
 
 # Datos

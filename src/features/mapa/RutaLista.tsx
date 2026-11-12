@@ -144,9 +144,13 @@ export default function RutaLista({ ruta, hechos, saltadas, onSaltar, siguiente,
                         ? t('ruta.subSiguiente', { categoria: categoria(l), dist: formatoDistancia(metros), min: minutosCaminando(metros) })
                         : t('ruta.sub', { categoria: categoria(l), dist: formatoDistancia(metros) })}
                     {' '}
-                    <span className={`ruta-nivel ruta-nivel--${nivelDe(afluencia, l.slug)}`}>
-                      {t(`ruta.nivel.${nivelDe(afluencia, l.slug)}`)}
-                    </span>
+                    {/* Afluencia: solo un punto de color; la palabra queda para lectores de pantalla y al pasar el dedo. */}
+                    <span
+                      className={`ruta-nivel ruta-nivel--${nivelDe(afluencia, l.slug)}`}
+                      role="img"
+                      aria-label={t(`ruta.nivel.${nivelDe(afluencia, l.slug)}`)}
+                      title={t(`ruta.nivel.${nivelDe(afluencia, l.slug)}`)}
+                    />
                   </span>
                 </span>
               </button>
