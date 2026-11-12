@@ -34,18 +34,11 @@
   padding: 16px;
 }
 
-.banderines { display: block; width: 100%; height: 48px; }
-.banderines--fondo { background: var(--tinta); }
+/* El SVG mide 390×64 como en el diseño; en pantallas anchas se centra sobre el fondo. */
+.banderines { display: flex; justify-content: center; overflow: hidden; }
+.banderines svg { display: block; flex-shrink: 0; }
 
-.ilustracion {
-  display: inline-grid;
-  place-items: center;
-  border: var(--borde);
-  border-radius: 50%;
-  background: var(--lila);
-  color: var(--tinta);
-  flex-shrink: 0;
-}
+.ilustracion { display: inline-block; flex-shrink: 0; vertical-align: middle; }
 
 /* Texto solo para lectores de pantalla */
 .solo-lectores {

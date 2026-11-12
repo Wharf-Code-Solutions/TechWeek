@@ -1,23 +1,18 @@
 // Componente base: Ilustracion · Responsable: Dev 2 (contrato 4)
-// `nombre` es el campo `ilustracion` de cada lugar en seed.json.
-// shortcut: íconos Phosphor duotono en lugar de ilustraciones; cambiar cuando lleguen los SVG del diseño.
-import {
-  Bank, CastleTurret, Church, Coffee, Coins, Ghost, Lighthouse, MapPin, MusicNotes, PuzzlePiece,
-  type Icon,
-} from '@phosphor-icons/react'
+// Vector plano sin contorno, del set del diseño (Sistema visual). Cada ilustración es un SVG en
+// ./ilustraciones/<nombre>.svg: para cambiar una, se reemplaza el archivo.
+// `nombre` es el campo `ilustracion` de los lugares, una categoría o un nombre del set (moneda, puzzle…).
 import './ui.css'
 
-const ICONOS: Record<string, Icon> = {
-  catedral: Church,
-  baluarte: CastleTurret,
-  'cafe-lechero': Coffee,
-  fantasma: Ghost,
-  'faro-carranza': Lighthouse,
-  'palacio-municipal': Bank,
-  'pareja-danzon': MusicNotes,
-  puzzle: PuzzlePiece,
-  moneda: Coins,
-}
+const ARCHIVOS = import.meta.glob('./ilustraciones/*.svg', { eager: true, query: '?url', import: 'default' }) as Record<
+  string,
+  string
+>
+const SVG: Record<string, string> = Object.fromEntries(
+  Object.entries(ARCHIVOS).map(([ruta, url]) => [ruta.slice('./ilustraciones/'.length, -'.svg'.length), url]),
+)
+// Categorías que comparten ilustración con un objeto del set
+const ALIAS: Record<string, string> = { leyendas: 'linterna', musica: 'jarana', comida: 'cafe-lechero' }
 
 interface Props {
   nombre: string
@@ -27,16 +22,6 @@ interface Props {
 }
 
 export default function Ilustracion({ nombre, tamano = 96, alt }: Props) {
-  const IconoLugar = ICONOS[nombre] ?? MapPin
-  return (
-    <span
-      className="ilustracion"
-      style={{ width: tamano, height: tamano }}
-      role={alt ? 'img' : undefined}
-      aria-label={alt}
-      aria-hidden={alt ? undefined : true}
-    >
-      <IconoLugar size={tamano * 0.6} weight="duotone" />
-    </span>
-  )
+  const url = SVG[nombre] ?? SVG[ALIAS[nombre]] ?? SVG.linterna
+  return <img className="ilustracion" src={url} width={tamano} height={tamano} alt={alt ?? ''} draggable={false} />
 }

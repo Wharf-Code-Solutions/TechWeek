@@ -72,7 +72,7 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
               aria-pressed={elegido?.slug === l.slug}
               onClick={() => setElegido(l)}
             >
-              <Ilustracion nombre={l.ilustracion} tamano={48} />
+              <Ilustracion nombre={l.ilustracion} tamano={32} />
             </button>
           </Marker>
         ))}
