@@ -35,7 +35,7 @@ No hay que instalar nada ni crear una cuenta: se abre en el navegador del celula
 6. **Termina la ruta** para recibir el bono final y doblones extra por la distancia recorrida, y compártela.
 
 # ¿Cómo instalar JARANA?
-Requisitos: **Node.js 20+**, **Python 3.12+** y acceso a las llaves del proyecto (se piden al administrador de Supabase y Vercel).
+Requisitos: **Node.js 20+**, **Python 3.12+** y acceso a las llaves del proyecto (Supabase y Vercel).
 
 ```bash
 git clone https://github.com/Wharf-Code-Solutions/TechWeek.git
@@ -44,7 +44,7 @@ npm install
 cp .env.example .env.local        # VITE_MAPBOX_TOKEN
 ```
 
-Backend (en otra terminal):
+Backend:
 ```bash
 cd backend
 python -m venv .venv
@@ -121,7 +121,7 @@ Más detalle para el equipo en `docs/`: `arranque.md`, `backend.md`, `contratos.
 
 | Tecnología | Uso |
 |---|---|
-| **Vercel** | Publicación del frontend y del backend (función de Python) en el mismo dominio. |
+| **Vercel** | Publicación del frontend y del backend en el mismo dominio. |
 | **GitHub** | Control de versiones con commits convencionales en español. |
 
 ---
@@ -153,10 +153,10 @@ El equipo usó inteligencia artificial como apoyo durante el hackathon; todo lo 
 
 | Etapa | Herramienta | Uso | Revisión humana |
 | --- | --- | --- | --- |
-| Planeación | Claude (artefactos) | Plan de módulos y dependencias, reparto entre 3 desarrolladores y lienzo de diseño de las pantallas. | El equipo validó decisiones, cambió el nombre (de Clacos a JARANA) y la moneda. |
-| Investigación | Asistente de IA + fuentes | Inventario de sitios del Centro Histórico y verificación de leyendas (p. ej. se descartó el Callejón del Diamante por ser de Xalapa). | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
+| Planeación | Gemini | Plan de módulos y dependencias, reparto entre 3 desarrolladores y lienzo de diseño de las pantallas. | El equipo validó decisiones, cambió el nombre y la moneda. |
+| Investigación | Gemini | Inventario de sitios del Centro Histórico y verificación de leyendas (p. ej. se descartó el Callejón del Diamante por ser de Xalapa). | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
 | Backend y datos (Dev 1) | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap/Mapbox y pruebas. | Cada cambio se revisó y aprobó antes del commit; se probó contra la base real y en producción. |
-| Frontend y mapa | Asistente de IA | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
+| Frontend y mapa | Claude Code | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
 | Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación. | Revisado por el equipo; ningún dato sin fuente. |
 
 
