@@ -14,18 +14,18 @@ import './mapa.css'
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
 // Todo el Centro Histórico del puerto (contratos §1), del Parque Zamora al norte del Faro y
-// del malecón a la avenida 5 de Mayo. Junto con ZOOM_MIN evita descargar el resto de la ciudad.
+// del malecón a la avenida 5 de Mayo. Sin poder alejarse (minZoom = ZOOM) evita descargar el resto de la ciudad.
 // shortcut: perímetro aproximado; ajustarlo si Dev 1 o el cronista dan el límite oficial.
 const LIMITES: [[number, number], [number, number]] = [[-96.148, 19.188], [-96.126, 19.209]]
-const ZOOM_MIN = 16.5
-const ZOOM_INICIAL = 17
+// Zoom de inicio y también el mínimo: se puede acercar, pero no alejar más.
+const ZOOM = 17
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
 /** Siempre empieza en el Zócalo; en el recorrido demo la cámara luego sigue al turista. */
 function vistaInicial(lugares: Lugar[]) {
   const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
-  return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM_INICIAL, pitch: 55 }
+  return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM, pitch: 55 }
 }
 
 interface Props {
@@ -56,7 +56,7 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
         mapboxAccessToken={TOKEN}
         initialViewState={vistaInicial(lugares)}
         maxBounds={LIMITES}
-        minZoom={ZOOM_MIN}
+        minZoom={ZOOM}
         maxPitch={60}
         // Standard trae edificios 3D con luz y sombras, y modelos de monumentos donde Mapbox los tiene.
         mapStyle="mapbox://styles/mapbox/standard"
