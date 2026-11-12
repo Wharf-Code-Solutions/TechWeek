@@ -6,6 +6,8 @@ import type { Punto } from './tipos'
 
 interface LugarSeed extends Punto {
   slug: string
+  nombre_es: string
+  nombre_en: string
   en_demo: boolean
   orden_sugerido: number
 }

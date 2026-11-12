@@ -90,7 +90,13 @@
     "avanzar": "Move forward",
     "retroceder": "Move back",
     "siguiente": "Next stop",
-    "parada": "Stop {{actual}} of {{total}}"
+    "parada": "Stop {{actual}} of {{total}}",
+    "demo": "Demo {{tiempo}}",
+    "siguiente_parada": "Next: {{nombre}} ({{n}} of {{total}})",
+    "distancia": "{{m}} m",
+    "completo": "Walk complete!",
+    "saltar_parada": "Go to the next stop",
+    "ayuda": "Tap to take a step, hold to keep walking."
   },
   "mapa": {
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",

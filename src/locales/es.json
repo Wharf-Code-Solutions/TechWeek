@@ -90,7 +90,13 @@
     "avanzar": "Avanzar",
     "retroceder": "Retroceder",
     "siguiente": "Siguiente parada",
-    "parada": "Parada {{actual}} de {{total}}"
+    "parada": "Parada {{actual}} de {{total}}",
+    "demo": "Demo {{tiempo}}",
+    "siguiente_parada": "Siguiente: {{nombre}} ({{n}} de {{total}})",
+    "distancia": "{{m}} m",
+    "completo": "¡Recorrido completo!",
+    "saltar_parada": "Ir a la siguiente parada",
+    "ayuda": "Toca para dar un paso, mantén presionado para caminar."
   },
   "mapa": {
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",

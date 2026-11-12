@@ -1,18 +1,93 @@
-.control {
+.superior {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 8px;
-  border: var(--borde);
-  border-radius: var(--radio);
-  background: #fff;
-  box-shadow: var(--sombra-dura);
 }
 
-.parada {
-  flex: 1;
-  text-align: center;
+.pildora {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--tinta);
+  color: var(--amarillo);
   font-weight: 900;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cronometro {
+  padding: 6px 14px;
+  border: var(--borde);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 900;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Panel inferior fijo: va sobre el mapa y debajo de cualquier diálogo. */
+.panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  gap: 10px;
+  padding: 16px 16px calc(14px + env(safe-area-inset-bottom));
+  border: var(--borde);
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background: #fff;
+}
+
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
   font-size: 0.95rem;
+}
+
+.distancia {
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.barra {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--lila);
+  overflow: hidden;
+}
+
+.barra > span {
+  display: block;
+  height: 100%;
+  background: var(--rosa);
+  transition: width 0.12s linear;
+}
+
+.botones {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.avanzar {
+  flex: 1;
+  touch-action: none; /* mantener presionado no debe desplazar la pantalla */
+  user-select: none;
+}
+
+.ayuda {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
 }

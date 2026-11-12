@@ -7,6 +7,7 @@ import { useCampo } from '../../app/idioma'
 import Boton from '../../components/ui/Boton'
 import { api } from '../../lib/api'
 import type { Lugar } from '../../types/contratos'
+import { esModoDemo } from './demoStore'
 import { yaAvisado } from './useIrAlLlegar'
 import estilos from './SaltarParada.module.css'
 
@@ -21,7 +22,8 @@ export default function SaltarParada({ ruta, onCambio }: Props) {
   const [ocupado, setOcupado] = useState(false)
   const [error, setError] = useState(false)
 
-  if (!ruta) return null
+  // En la demo el panel del recorrido ya muestra la siguiente parada.
+  if (!ruta || esModoDemo()) return null
   const siguiente = ruta.find((l) => !yaAvisado(l.slug))
   // Con una sola parada no hay a dónde saltar: se termina la ruta.
   if (!siguiente || ruta.length < 2) return null
