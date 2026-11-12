@@ -1,11 +1,12 @@
-// M4 Mapa Mapbox · Dev 2. Lugares del catálogo, posición de usePosition() y tarjeta del lugar elegido.
-// `arriba` y `abajo` son capas sobre el mapa (flechas del recorrido, botón del panel).
+// M4 Mapa Mapbox · Dev 2. Lugares del catálogo con su estado en la ruta (diseño 03), eventos en curso,
+// posición de usePosition() y tarjeta del lugar elegido.
+// `arriba` y `abajo` son capas sobre el mapa (cabecera, flechas del recorrido).
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Map, { Marker, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { X } from '@phosphor-icons/react'
-import type { Lugar } from '../../types/contratos'
+import { Check, X } from '@phosphor-icons/react'
+import type { Evento, Lugar } from '../../types/contratos'
 import { usePosition } from '../geo/usePosition'
 import Ilustracion from '../../components/ui/Ilustracion'
 import Tarjeta from '../../components/ui/Tarjeta'
@@ -29,13 +30,37 @@ function vistaInicial(lugares: Lugar[]) {
   return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM, pitch: 55 }
 }
 
+type Estado = 'hecho' | 'siguiente' | 'ruta' | 'fuera'
+
 interface Props {
   lugares: Lugar[]
+  /** Slugs de la ruta activa; vacío = sin ruta (todos se ven igual). */
+  enRuta?: ReadonlySet<string>
+  /** Slugs con reto completado. */
+  hechos?: ReadonlySet<string>
+  siguiente?: string | null
+  /** Texto bajo la siguiente parada ("Siguiente · 120 m"). */
+  etiquetaSiguiente?: string
+  /** Eventos en curso: se marcan en el mapa. */
+  eventos?: Evento[]
+  onEvento?: () => void
   arriba?: ReactNode
   abajo?: ReactNode
 }
 
-export default function MapaLugares({ lugares, arriba, abajo }: Props) {
+const VACIO: ReadonlySet<string> = new Set()
+
+export default function MapaLugares({
+  lugares,
+  enRuta = VACIO,
+  hechos = VACIO,
+  siguiente = null,
+  etiquetaSiguiente,
+  eventos = [],
+  onEvento,
+  arriba,
+  abajo,
+}: Props) {
   const { t, i18n } = useTranslation()
   const en = i18n.language === 'en'
   const pos = usePosition()
@@ -47,6 +72,9 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
   useEffect(() => {
     if (demo && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 400 })
   }, [demo, pos])
+
+  const estado = (slug: string): Estado =>
+    hechos.has(slug) ? 'hecho' : slug === siguiente ? 'siguiente' : enRuta.size === 0 || enRuta.has(slug) ? 'ruta' : 'fuera'
 
   if (!TOKEN) return <p className="mapa-aviso">{t('mapa.sinToken')}</p>
 
@@ -63,16 +91,37 @@ export default function MapaLugares({ lugares, arriba, abajo }: Props) {
         mapStyle="mapbox://styles/mapbox/standard"
         style={{ width: '100%', height: '100%' }}
       >
-        {lugares.map((l) => (
-          <Marker key={l.slug} latitude={l.lat} longitude={l.lng} anchor="bottom">
-            <button
-              type="button"
-              className="mapa-marcador"
-              aria-label={en ? l.nombre_en : l.nombre_es}
-              aria-pressed={elegido?.slug === l.slug}
-              onClick={() => setElegido(l)}
-            >
-              <Ilustracion nombre={l.ilustracion} tamano={32} />
+        {lugares.map((l) => {
+          const e = estado(l.slug)
+          const nombre = en ? l.nombre_en : l.nombre_es
+          return (
+            <Marker key={l.slug} latitude={l.lat} longitude={l.lng} anchor="bottom" style={{ zIndex: e === 'siguiente' ? 2 : 1 }}>
+              <button
+                type="button"
+                className={`marcador marcador--${e}`}
+                aria-label={e === 'ruta' || e === 'fuera' ? nombre : t(`mapa.estado_${e}`, { nombre })}
+                aria-pressed={elegido?.slug === l.slug}
+                onClick={() => setElegido(l)}
+              >
+                <span className="marcador-circulo">
+                  {e === 'hecho' ? (
+                    <Check size={24} weight="bold" color="#fff" aria-hidden="true" />
+                  ) : (
+                    <Ilustracion nombre={l.ilustracion} tamano={e === 'siguiente' ? 32 : 28} />
+                  )}
+                </span>
+                <span className="marcador-etiqueta">{e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre}</span>
+              </button>
+            </Marker>
+          )
+        })}
+        {eventos.map((ev) => (
+          <Marker key={ev.slug} latitude={ev.lat} longitude={ev.lng} anchor="bottom">
+            <button type="button" className="marcador marcador--evento" onClick={onEvento}>
+              <span className="marcador-circulo">
+                <Ilustracion nombre={ev.categoria} tamano={30} />
+              </span>
+              <span className="marcador-etiqueta">{t('mapa.eventoAhora', { titulo: en ? ev.titulo_en : ev.titulo_es })}</span>
             </button>
           </Marker>
         ))}

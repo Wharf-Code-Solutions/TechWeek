@@ -96,7 +96,19 @@
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
     "tuPosicion": "Your position",
     "cerrar": "Close",
-    "terminar": "End route"
+    "terminar": "End route",
+    "avatar": "Open passport",
+    "progreso": "{{ruta}} · {{n}} of {{total}}",
+    "completadas": "{{n}} of {{total}} stops completed",
+    "explora": "Explore the Historic Center",
+    "saldo": "{{n}} Tlacos, open wallet",
+    "rutaDe": "{{categoria}} route",
+    "tuRuta": "Your route",
+    "siguiente": "Next",
+    "siguienteA": "Next · {{dist}}",
+    "estado_hecho": "{{nombre}}, completed",
+    "estado_siguiente": "{{nombre}}, next stop",
+    "eventoAhora": "{{titulo}} now"
   },
   "reto": {
     "cargando": "Loading challenge…",
@@ -117,11 +129,12 @@
   },
   "panel": {
     "cartera": "Wallet",
-    "titulo": "Panel",
-    "descripcion": "Your stamps and puzzle, your Tlacos balance, promotions and upcoming events.",
-    "abrir": "My passport",
+    "titulo": "Route panel",
     "agenda": "Events",
-    "pasaporte": "Passport"
+    "pasaporte": "Passport",
+    "ruta": "Route",
+    "mostrar": "Show panel",
+    "ocultar": "Hide panel"
   },
   "agenda": {
     "titulo": "Events",
@@ -145,7 +158,17 @@
   "ruta": {
     "siguiente": "Next: {{nombre}}",
     "saltar": "Skip",
-    "error_saltar": "We couldn't skip this stop."
+    "error_saltar": "We couldn't skip this stop.",
+    "hecha": "Completed",
+    "sub": "{{categoria}} · {{dist}}",
+    "subSiguiente": "{{categoria}} · {{dist}} · {{min}} min",
+    "saltarLugar": "Skip {{nombre}}",
+    "pocoTiempo": "Short on time",
+    "confirmarRecorte": "Keep only the next 2 stops?",
+    "siRecortar": "Yes, shorten",
+    "cancelar": "Cancel",
+    "sinRuta": "You have not built your route yet.",
+    "armar": "Build my route"
   },
   "pasaporte": {
     "titulo": "My passport",

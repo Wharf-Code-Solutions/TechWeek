@@ -96,7 +96,19 @@
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",
     "cerrar": "Cerrar",
-    "terminar": "Terminar ruta"
+    "terminar": "Terminar ruta",
+    "avatar": "Abrir pasaporte",
+    "progreso": "{{ruta}} · {{n}} de {{total}}",
+    "completadas": "{{n}} de {{total}} paradas completadas",
+    "explora": "Explora el Centro Histórico",
+    "saldo": "{{n}} Tlacos, abrir cartera",
+    "rutaDe": "Ruta de {{categoria}}",
+    "tuRuta": "Tu ruta",
+    "siguiente": "Siguiente",
+    "siguienteA": "Siguiente · {{dist}}",
+    "estado_hecho": "{{nombre}}, completado",
+    "estado_siguiente": "{{nombre}}, siguiente parada",
+    "eventoAhora": "{{titulo}} ahora"
   },
   "reto": {
     "cargando": "Cargando reto…",
@@ -117,11 +129,12 @@
   },
   "panel": {
     "cartera": "Cartera",
-    "titulo": "Panel",
-    "descripcion": "Tus sellos y rompecabezas, tu saldo de Tlacos, las promociones y los eventos próximos.",
-    "abrir": "Mi pasaporte",
+    "titulo": "Panel de la ruta",
     "agenda": "Agenda",
-    "pasaporte": "Pasaporte"
+    "pasaporte": "Pasaporte",
+    "ruta": "Ruta",
+    "mostrar": "Mostrar panel",
+    "ocultar": "Ocultar panel"
   },
   "agenda": {
     "titulo": "Agenda",
@@ -145,7 +158,17 @@
   "ruta": {
     "siguiente": "Siguiente: {{nombre}}",
     "saltar": "Saltar",
-    "error_saltar": "No pudimos saltar la parada."
+    "error_saltar": "No pudimos saltar la parada.",
+    "hecha": "Completada",
+    "sub": "{{categoria}} · {{dist}}",
+    "subSiguiente": "{{categoria}} · {{dist}} · {{min}} min",
+    "saltarLugar": "Saltar {{nombre}}",
+    "pocoTiempo": "Me queda poco tiempo",
+    "confirmarRecorte": "¿Dejar solo las 2 próximas paradas?",
+    "siRecortar": "Sí, recortar",
+    "cancelar": "Cancelar",
+    "sinRuta": "Aún no armas tu ruta.",
+    "armar": "Armar mi ruta"
   },
   "pasaporte": {
     "titulo": "Mi pasaporte",
