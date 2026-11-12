@@ -2,7 +2,7 @@
 
 Plataforma web turística y gamificada del **Centro Histórico de Veracruz**. El turista entra desde su celular, elige qué le gusta y cuánto tiempo tiene, y JARANA le arma una ruta a pie por los lugares del Centro. En cada parada desbloquea una curiosidad y un minijuego, gana **doblones** (la moneda de JARANA), sellos y piezas de un rompecabezas, y canjea sus doblones en comercios locales.
 
-🌐 **Demo en vivo:** https://techweek-eta.vercel.app (pensada para celular)
+🌐 **Demo en vivo:** https://techweek-eta.vercel.app
 
 # Problema
 A pesar de contar con atractivos históricos, culturales y turísticos de primer nivel, el Centro Histórico de Veracruz no logra retener a los visitantes ni integrarlos plenamente en la vida comercial y cultural local. Los recorridos suelen ser breves y carecen de conexión con la oferta comercial, por lo que el gasto por visitante es bajo y el flujo turístico no se traduce en un consumo significativo para los negocios de la zona.
@@ -155,7 +155,7 @@ El equipo usó inteligencia artificial como apoyo durante el hackathon; todo lo 
 | --- | --- | --- | --- |
 | Planeación | Gemini | Plan de módulos y dependencias, reparto entre 3 desarrolladores y lienzo de diseño de las pantallas. | El equipo validó decisiones, cambió el nombre y la moneda. |
 | Investigación | Gemini | Inventario de sitios del Centro Histórico y verificación de leyendas (p. ej. se descartó el Callejón del Diamante por ser de Xalapa). | Se conservó solo información con fuente; contenido pendiente de validar con un cronista. |
-| Backend y datos (Dev 1) | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap/Mapbox y pruebas. | Cada cambio se revisó y aprobó antes del commit; se probó contra la base real y en producción. |
+| Backend y datos | Claude Code | Esquema y migraciones de la base, API de retos, ruta, pasaporte, canjes y vitrina, carga del seed, ubicación de lugares con OpenStreetMap/Mapbox y pruebas. | Cada cambio se revisó y aprobó antes del commit; se probó contra la base real y en producción. |
 | Frontend y mapa | Claude Code | Apoyo en componentes, mapa y animaciones. | Revisado por cada desarrollador. |
 | Contenido | Claude Code | Redacción de curiosidades y retos en español e inglés a partir del CSV y la investigación. | Revisado por el equipo; ningún dato sin fuente. |
 
