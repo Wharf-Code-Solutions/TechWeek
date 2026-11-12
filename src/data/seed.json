@@ -111,6 +111,246 @@
       "ilustracion": "faro-carranza",
       "orden_sugerido": 7,
       "en_demo": false
+    },
+    {
+      "slug": "museo-ciudad",
+      "nombre_es": "Museo de la Ciudad",
+      "nombre_en": "City Museum",
+      "categoria": "historia",
+      "lat": 19.1979,
+      "lng": -96.13581,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Ocupa el antiguo Hospicio Zamora, un edificio neoclásico del siglo XIX. Cuenta la historia de Veracruz desde la época prehispánica y su patio se usa para conciertos.",
+      "curiosidad_en": "It is housed in the old Zamora Hospice, a 19th-century neoclassical building. It tells the story of Veracruz from pre-Hispanic times, and its courtyard hosts concerts.",
+      "ilustracion": "historia",
+      "orden_sugerido": 8,
+      "en_demo": false
+    },
+    {
+      "slug": "casa-diaz-miron",
+      "nombre_es": "Casa Museo Salvador Díaz Mirón",
+      "nombre_en": "Salvador Díaz Mirón House Museum",
+      "categoria": "historia",
+      "lat": 19.19959,
+      "lng": -96.13672,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Casona del siglo XVIII hecha de piedra muca y ladrillo donde vivió el poeta Salvador Díaz Mirón. Conserva su biblioteca, manuscritos y muebles de época.",
+      "curiosidad_en": "An 18th-century mansion of coral stone and brick where the poet Salvador Díaz Mirón lived. It keeps his library, manuscripts and period furniture.",
+      "ilustracion": "historia",
+      "orden_sugerido": 9,
+      "en_demo": false
+    },
+    {
+      "slug": "atarazanas",
+      "nombre_es": "Centro Cultural Atarazanas",
+      "nombre_en": "Atarazanas Cultural Center",
+      "categoria": "artesania",
+      "lat": 19.19839,
+      "lng": -96.13461,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Fueron los almacenes reales de marina en 1764. Hoy cuidan el son jarocho, el fandango, el telar de cintura y la artesanía tradicional.",
+      "curiosidad_en": "These were the royal navy warehouses in 1764. Today they safeguard son jarocho, fandango, backstrap weaving and traditional crafts.",
+      "ilustracion": "artesania",
+      "orden_sugerido": 10,
+      "en_demo": false
+    },
+    {
+      "slug": "leyes-reforma",
+      "nombre_es": "Recinto de las Leyes de Reforma",
+      "nombre_en": "Reform Laws Site",
+      "categoria": "historia",
+      "lat": 19.20297,
+      "lng": -96.13969,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Recuerda la época en que Benito Juárez instaló en Veracruz el gobierno liberal y promulgó aquí las Leyes de Reforma.",
+      "curiosidad_en": "It recalls the time when Benito Juárez set up the liberal government in Veracruz and issued the Reform Laws here.",
+      "ilustracion": "historia",
+      "orden_sugerido": 11,
+      "en_demo": false
+    },
+    {
+      "slug": "teatro-clavijero",
+      "nombre_es": "Teatro Francisco Javier Clavijero",
+      "nombre_en": "Francisco Javier Clavijero Theater",
+      "categoria": "musica",
+      "lat": 19.20126,
+      "lng": -96.14026,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "El principal teatro de la ciudad, del siglo XIX, con forma de herradura al estilo italiano. Recibe ópera, conciertos sinfónicos y danza.",
+      "curiosidad_en": "The city's main theater, from the 19th century, with an Italian horseshoe shape. It hosts opera, symphony concerts and dance.",
+      "ilustracion": "jarana",
+      "orden_sugerido": 12,
+      "en_demo": false
+    },
+    {
+      "slug": "plazuela-lagunilla",
+      "nombre_es": "Callejón y Plazuela de la Lagunilla",
+      "nombre_en": "La Lagunilla Alley and Square",
+      "categoria": "leyendas",
+      "lat": 19.19829,
+      "lng": -96.13793,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Es la única calle del puerto que conserva su nombre desde hace más de 400 años. Por aquí pasaba el arroyo Tenoya y aquí empiezan los recorridos nocturnos de leyendas.",
+      "curiosidad_en": "It is the only street in the port that has kept its name for over 400 years. The Tenoya stream ran here, and night legend tours start here.",
+      "ilustracion": "escena-leyenda",
+      "orden_sugerido": 13,
+      "en_demo": false
+    },
+    {
+      "slug": "plazuela-campana",
+      "nombre_es": "Plazuela de la Campana",
+      "nombre_en": "Campana Square",
+      "categoria": "leyendas",
+      "lat": 19.19885,
+      "lng": -96.13699,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Rincón virreinal adoquinado y protegido por decreto, con arquitectura colonial y cafés al aire libre.",
+      "curiosidad_en": "A cobblestoned colonial corner protected by decree, with colonial architecture and open-air cafés.",
+      "ilustracion": "linterna",
+      "orden_sugerido": 14,
+      "en_demo": false
+    },
+    {
+      "slug": "callejon-tona-la-negra",
+      "nombre_es": "Callejón Toña la Negra",
+      "nombre_en": "Toña la Negra Alley",
+      "categoria": "musica",
+      "lat": 19.19517,
+      "lng": -96.13228,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Corazón del barrio de La Huaca, fundado por africanos liberados en el siglo XVII fuera de la muralla. Cuna de Toña la Negra y Agustín Lara, la vigila su estatua de bronce.",
+      "curiosidad_en": "The heart of La Huaca, a neighborhood founded by freed Africans in the 17th century outside the city wall. Birthplace of Toña la Negra and Agustín Lara; her bronze statue watches over it.",
+      "ilustracion": "pareja-danzon",
+      "orden_sugerido": 15,
+      "en_demo": false
+    },
+    {
+      "slug": "callejon-holtzinger",
+      "nombre_es": "Callejón Holtzinger",
+      "nombre_en": "Holtzinger Alley",
+      "categoria": "leyendas",
+      "lat": 19.19958,
+      "lng": -96.14118,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Pasaje estrecho catalogado por el INAH, muy presente en las crónicas de misterio del puerto. Evoca el ataque del pirata Lorencillo en 1683.",
+      "curiosidad_en": "A narrow passage listed by INAH and a staple of the port's mystery tales. It recalls the 1683 raid by the pirate Lorencillo.",
+      "ilustracion": "fantasma",
+      "orden_sugerido": 16,
+      "en_demo": false
+    },
+    {
+      "slug": "cafe-parroquia",
+      "nombre_es": "Gran Café de la Parroquia",
+      "nombre_en": "Gran Café de la Parroquia",
+      "categoria": "comida",
+      "lat": 19.20113,
+      "lng": -96.13509,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "El café más famoso del puerto, fundado en 1808. Aquí el café lechero se pide tintineando la cuchara en el vaso, con vista al malecón.",
+      "curiosidad_en": "The port's most famous café, founded in 1808. Here you order café lechero by clinking the spoon on the glass, with a view of the boardwalk.",
+      "ilustracion": "cafe-lechero",
+      "orden_sugerido": 17,
+      "en_demo": false
+    },
+    {
+      "slug": "neveria-yucatan",
+      "nombre_es": "Gran Nevería Yucatán",
+      "nombre_en": "Gran Nevería Yucatán",
+      "categoria": "comida",
+      "lat": 19.1946,
+      "lng": -96.13566,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Fundada en 1932 en medio del Parque Zamora; ícono jarocho de helados artesanales, malteadas y música en vivo.",
+      "curiosidad_en": "Founded in 1932 in the middle of Zamora Park; a jarocho icon of handmade ice cream, milkshakes and live music.",
+      "ilustracion": "nieve",
+      "orden_sugerido": 18,
+      "en_demo": false
+    },
+    {
+      "slug": "mercado-hidalgo",
+      "nombre_es": "Mercado Hidalgo",
+      "nombre_en": "Hidalgo Market",
+      "categoria": "comida",
+      "lat": 19.19347,
+      "lng": -96.13705,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "El principal mercado de abasto y comida popular del centro, remodelado en 2015. Sus fondas sirven picadas, gorditas y empanadas.",
+      "curiosidad_en": "The center's main food market, remodeled in 2015. Its food stalls serve picadas, gorditas and empanadas.",
+      "ilustracion": "volovan",
+      "orden_sugerido": 19,
+      "en_demo": false
+    },
+    {
+      "slug": "museo-naval",
+      "nombre_es": "Museo Naval México",
+      "nombre_en": "Mexico Naval Museum",
+      "categoria": "mar",
+      "lat": 19.19923,
+      "lng": -96.13507,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Está en el edificio de la antigua Escuela Naval Militar. Tiene más de 25 salas, simuladores y piezas de historia naval.",
+      "curiosidad_en": "It is in the former Military Naval School building. It has more than 25 rooms, simulators and pieces of naval history.",
+      "ilustracion": "lancha",
+      "orden_sugerido": 20,
+      "en_demo": false
+    },
+    {
+      "slug": "malecon",
+      "nombre_es": "Paseo del Malecón",
+      "nombre_en": "Boardwalk",
+      "categoria": "mar",
+      "lat": 19.20091,
+      "lng": -96.13109,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Corredor peatonal junto al mar: mirador de barcos mercantes, de los tradicionales nadadores de monedas y de desfiles cívicos.",
+      "curiosidad_en": "A seaside promenade: a lookout for cargo ships, the traditional coin divers and civic parades.",
+      "ilustracion": "escena-puerto",
+      "orden_sugerido": 21,
+      "en_demo": false
+    },
+    {
+      "slug": "mercado-artesanias",
+      "nombre_es": "Mercado de Artesanías Miguel Alemán",
+      "nombre_en": "Miguel Alemán Crafts Market",
+      "categoria": "artesania",
+      "lat": 19.20112,
+      "lng": -96.13681,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Mercado emblemático del malecón con recuerdos hechos de conchas de mar, sombreros jarochos y artesanía marina.",
+      "curiosidad_en": "An emblematic boardwalk market with souvenirs made of seashells, jarocho hats and sea-themed crafts.",
+      "ilustracion": "artesania",
+      "orden_sugerido": 22,
+      "en_demo": false
+    },
+    {
+      "slug": "cristo-buen-viaje",
+      "nombre_es": "Iglesia del Cristo del Buen Viaje",
+      "nombre_en": "Church of Christ of the Good Voyage",
+      "categoria": "mar",
+      "lat": 19.19433,
+      "lng": -96.13434,
+      "verificar": false,
+      "radio_m": 40,
+      "curiosidad_es": "Santuario marinero del siglo XVII a la salida sur de la ciudad. Aquí se encomendaban los marineros antes de zarpar al Atlántico.",
+      "curiosidad_en": "A 17th-century sailors' shrine at the south exit of the city. Sailors prayed here before setting sail to the Atlantic.",
+      "ilustracion": "mar",
+      "orden_sugerido": 23,
+      "en_demo": false
     }
   ],
   "retos": [
@@ -532,6 +772,886 @@
           "Porfirio",
           "Customs",
           "1914"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "museo-ciudad",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El museo ocupa el antiguo ",
+          "{0}",
+          " Zamora, un edificio ",
+          "{1}",
+          " del siglo XIX, y en su ",
+          "{2}",
+          " se dan conciertos."
+        ],
+        "respuestas": [
+          "Hospicio",
+          "neoclásico",
+          "patio"
+        ],
+        "opciones": [
+          "barroco",
+          "patio",
+          "Mercado",
+          "neoclásico",
+          "sótano",
+          "Hospicio"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The museum is in the old Zamora ",
+          "{0}",
+          ", a ",
+          "{1}",
+          " 19th-century building, and concerts are held in its ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Hospice",
+          "neoclassical",
+          "courtyard"
+        ],
+        "opciones": [
+          "baroque",
+          "Hospice",
+          "neoclassical",
+          "basement",
+          "courtyard",
+          "Market"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "casa-diaz-miron",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "En esta casona vivió el ",
+          "{0}",
+          " Salvador Díaz Mirón; aún guarda su ",
+          "{1}",
+          " y sus ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "poeta",
+          "biblioteca",
+          "manuscritos"
+        ],
+        "opciones": [
+          "cañones",
+          "biblioteca",
+          "manuscritos",
+          "poeta",
+          "pirata",
+          "barco"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The ",
+          "{0}",
+          " Salvador Díaz Mirón lived in this mansion; it still keeps his ",
+          "{1}",
+          " and his ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "poet",
+          "library",
+          "manuscripts"
+        ],
+        "opciones": [
+          "pirate",
+          "ship",
+          "poet",
+          "cannons",
+          "manuscripts",
+          "library"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "atarazanas",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Las Atarazanas eran los ",
+          "{0}",
+          " reales de marina; hoy se enseña el son ",
+          "{1}",
+          " y el telar de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "almacenes",
+          "jarocho",
+          "cintura"
+        ],
+        "opciones": [
+          "pedal",
+          "huasteco",
+          "cintura",
+          "almacenes",
+          "cuarteles",
+          "jarocho"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Atarazanas were the royal navy ",
+          "{0}",
+          "; today they teach son ",
+          "{1}",
+          " and ",
+          "{2}",
+          " weaving."
+        ],
+        "respuestas": [
+          "warehouses",
+          "jarocho",
+          "backstrap"
+        ],
+        "opciones": [
+          "pedal",
+          "barracks",
+          "huasteco",
+          "warehouses",
+          "jarocho",
+          "backstrap"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "leyes-reforma",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Aquí ",
+          "{0}",
+          " Juárez instaló el gobierno ",
+          "{1}",
+          " y promulgó las Leyes de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Benito",
+          "liberal",
+          "Reforma"
+        ],
+        "opciones": [
+          "imperial",
+          "Indias",
+          "Benito",
+          "Reforma",
+          "liberal",
+          "Porfirio"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Here ",
+          "{0}",
+          " Juárez set up the ",
+          "{1}",
+          " government and issued the ",
+          "{2}",
+          " Laws."
+        ],
+        "respuestas": [
+          "Benito",
+          "liberal",
+          "Reform"
+        ],
+        "opciones": [
+          "imperial",
+          "Benito",
+          "liberal",
+          "Indies",
+          "Reform",
+          "Porfirio"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "teatro-clavijero",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El teatro, del siglo ",
+          "{0}",
+          ", tiene forma de ",
+          "{1}",
+          " al estilo ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "XIX",
+          "herradura",
+          "italiano"
+        ],
+        "opciones": [
+          "estrella",
+          "italiano",
+          "francés",
+          "XVI",
+          "herradura",
+          "XIX"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The theater, from the ",
+          "{0}",
+          " century, has a ",
+          "{1}",
+          " shape in the ",
+          "{2}",
+          " style."
+        ],
+        "respuestas": [
+          "19th",
+          "horseshoe",
+          "Italian"
+        ],
+        "opciones": [
+          "Italian",
+          "horseshoe",
+          "French",
+          "19th",
+          "star",
+          "16th"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "plazuela-lagunilla",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Lagunilla conserva su nombre desde hace más de ",
+          "{0}",
+          " años; por aquí pasaba el ",
+          "{1}",
+          " Tenoya, y en su plazuela hay una estatua de Benny ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "400",
+          "arroyo",
+          "Moré"
+        ],
+        "opciones": [
+          "arroyo",
+          "100",
+          "Moré",
+          "río",
+          "Lara",
+          "400"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "La Lagunilla has kept its name for over ",
+          "{0}",
+          " years; the Tenoya ",
+          "{1}",
+          " ran here, and its square has a statue of Benny ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "400",
+          "stream",
+          "Moré"
+        ],
+        "opciones": [
+          "river",
+          "Lara",
+          "400",
+          "100",
+          "Moré",
+          "stream"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "plazuela-campana",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Plazuela de la ",
+          "{0}",
+          " es un rincón ",
+          "{1}",
+          " con piso ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Campana",
+          "virreinal",
+          "adoquinado"
+        ],
+        "opciones": [
+          "adoquinado",
+          "virreinal",
+          "Campana",
+          "Corona",
+          "moderno",
+          "alfombrado"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The ",
+          "{0}",
+          " Square is a ",
+          "{1}",
+          " corner with a ",
+          "{2}",
+          " floor."
+        ],
+        "respuestas": [
+          "Campana",
+          "colonial",
+          "cobblestone"
+        ],
+        "opciones": [
+          "modern",
+          "cobblestone",
+          "Campana",
+          "carpeted",
+          "colonial",
+          "Corona"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "callejon-tona-la-negra",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Este callejón está en el barrio de La ",
+          "{0}",
+          ", cuna de Toña la Negra y Agustín ",
+          "{1}",
+          "; lo vigila una estatua de ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Huaca",
+          "Lara",
+          "bronce"
+        ],
+        "opciones": [
+          "Moré",
+          "bronce",
+          "Huaca",
+          "Lara",
+          "Merced",
+          "mármol"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "This alley is in the La ",
+          "{0}",
+          " neighborhood, birthplace of Toña la Negra and Agustín ",
+          "{1}",
+          "; a ",
+          "{2}",
+          " statue watches over it."
+        ],
+        "respuestas": [
+          "Huaca",
+          "Lara",
+          "bronze"
+        ],
+        "opciones": [
+          "Lara",
+          "marble",
+          "Merced",
+          "Moré",
+          "Huaca",
+          "bronze"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "callejon-holtzinger",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El callejón evoca el ataque del ",
+          "{0}",
+          " Lorencillo en ",
+          "{1}",
+          "; está catalogado por el ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "pirata",
+          "1683",
+          "INAH"
+        ],
+        "opciones": [
+          "INAH",
+          "pirata",
+          "virrey",
+          "IMSS",
+          "1683",
+          "1810"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The alley recalls the raid by the ",
+          "{0}",
+          " Lorencillo in ",
+          "{1}",
+          "; it is listed by ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "pirate",
+          "1683",
+          "INAH"
+        ],
+        "opciones": [
+          "1810",
+          "viceroy",
+          "INAH",
+          "pirate",
+          "1683",
+          "IMSS"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "cafe-parroquia",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La Parroquia abrió en ",
+          "{0}",
+          "; el café lechero se pide sonando la ",
+          "{1}",
+          " en el vaso y se acompaña con una ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "1808",
+          "cuchara",
+          "canilla"
+        ],
+        "opciones": [
+          "campana",
+          "cuchara",
+          "torta",
+          "1808",
+          "canilla",
+          "1932"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "La Parroquia opened in ",
+          "{0}",
+          "; café lechero is ordered by clinking a ",
+          "{1}",
+          " on the glass and paired with a ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "1808",
+          "spoon",
+          "canilla"
+        ],
+        "opciones": [
+          "canilla",
+          "1932",
+          "bell",
+          "spoon",
+          "torta",
+          "1808"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "neveria-yucatan",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "La nevería nació en ",
+          "{0}",
+          " en medio del Parque ",
+          "{1}",
+          "; en el parque se venden nieves de sabores como ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "1932",
+          "Zamora",
+          "guanábana"
+        ],
+        "opciones": [
+          "1808",
+          "guanábana",
+          "Zamora",
+          "chicle",
+          "1932",
+          "Juárez"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The ice cream parlor opened in ",
+          "{0}",
+          " in the middle of ",
+          "{1}",
+          " Park; the park sells sorbets in flavors like ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "1932",
+          "Zamora",
+          "soursop"
+        ],
+        "opciones": [
+          "bubblegum",
+          "Juárez",
+          "1808",
+          "Zamora",
+          "soursop",
+          "1932"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "mercado-hidalgo",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "En las fondas del mercado se comen ",
+          "{0}",
+          " con salsa, ",
+          "{1}",
+          " de dulce y ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "picadas",
+          "gorditas",
+          "empanadas"
+        ],
+        "opciones": [
+          "gorditas",
+          "picadas",
+          "sushi",
+          "hamburguesas",
+          "pizza",
+          "empanadas"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "At the market's food stalls you eat ",
+          "{0}",
+          " with salsa, sweet ",
+          "{1}",
+          " and ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "picadas",
+          "gorditas",
+          "empanadas"
+        ],
+        "opciones": [
+          "burgers",
+          "sushi",
+          "empanadas",
+          "picadas",
+          "gorditas",
+          "pizza"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "museo-naval",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "El museo ocupa la antigua Escuela ",
+          "{0}",
+          " Militar y tiene más de ",
+          "{1}",
+          " salas con ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Naval",
+          "25",
+          "simuladores"
+        ],
+        "opciones": [
+          "25",
+          "simuladores",
+          "Naval",
+          "Normal",
+          "5",
+          "acuarios"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "The museum is in the old Military ",
+          "{0}",
+          " School and has more than ",
+          "{1}",
+          " rooms with ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Naval",
+          "25",
+          "simulators"
+        ],
+        "opciones": [
+          "simulators",
+          "5",
+          "25",
+          "aquariums",
+          "Teachers",
+          "Naval"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "malecon",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Desde el malecón se ven los ",
+          "{0}",
+          " mercantes y a los nadadores de ",
+          "{1}",
+          ", que se lanzan al ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "barcos",
+          "monedas",
+          "mar"
+        ],
+        "opciones": [
+          "mar",
+          "barcos",
+          "aviones",
+          "río",
+          "monedas",
+          "perlas"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "From the boardwalk you see cargo ",
+          "{0}",
+          " and the ",
+          "{1}",
+          " divers who jump into the ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "ships",
+          "coin",
+          "sea"
+        ],
+        "opciones": [
+          "sea",
+          "river",
+          "coin",
+          "planes",
+          "pearl",
+          "ships"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "mercado-artesanias",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "En este mercado venden recuerdos de ",
+          "{0}",
+          " de mar, sombreros ",
+          "{1}",
+          " y artesanía ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "conchas",
+          "jarochos",
+          "marina"
+        ],
+        "opciones": [
+          "piedras",
+          "marina",
+          "jarochos",
+          "espacial",
+          "conchas",
+          "charros"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "This market sells souvenirs made of sea ",
+          "{0}",
+          ", ",
+          "{1}",
+          " hats and ",
+          "{2}",
+          " crafts."
+        ],
+        "respuestas": [
+          "shells",
+          "jarocho",
+          "sea"
+        ],
+        "opciones": [
+          "jarocho",
+          "stones",
+          "space",
+          "charro",
+          "shells",
+          "sea"
+        ]
+      }
+    },
+    {
+      "lugar_slug": "cristo-buen-viaje",
+      "tipo": "palabras",
+      "tlacos": 50,
+      "tlacos_revelado": 20,
+      "intentos_max": 3,
+      "contenido_es": {
+        "texto": [
+          "Antes de zarpar al ",
+          "{0}",
+          ", los ",
+          "{1}",
+          " se encomendaban aquí al Cristo del Buen ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Atlántico",
+          "marineros",
+          "Viaje"
+        ],
+        "opciones": [
+          "Camino",
+          "soldados",
+          "Viaje",
+          "Pacífico",
+          "marineros",
+          "Atlántico"
+        ]
+      },
+      "contenido_en": {
+        "texto": [
+          "Before setting sail to the ",
+          "{0}",
+          ", ",
+          "{1}",
+          " prayed here to the Christ of the Good ",
+          "{2}",
+          "."
+        ],
+        "respuestas": [
+          "Atlantic",
+          "sailors",
+          "Voyage"
+        ],
+        "opciones": [
+          "Road",
+          "Pacific",
+          "sailors",
+          "Voyage",
+          "Atlantic",
+          "soldiers"
         ]
       }
     }

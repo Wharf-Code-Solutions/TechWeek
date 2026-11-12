@@ -34,8 +34,10 @@ def test_ruta_cabe_en_el_tiempo():
 
 def test_mas_tiempo_mas_lugares():
     corta = calcular_ruta(LUGARES, 30, [], inicio=ZOCALO)
+    media = calcular_ruta(LUGARES, 120, [], inicio=ZOCALO)
     larga = calcular_ruta(LUGARES, 240, [], inicio=ZOCALO)
-    assert len(corta.lugares) < len(larga.lugares) == len(LUGARES)
+    assert len(corta.lugares) < len(media.lugares) < len(larga.lugares) <= len(LUGARES)
+    assert larga.tiempo_min <= 240
 
 
 def test_prioriza_intereses():
