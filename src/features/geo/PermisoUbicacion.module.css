@@ -20,7 +20,7 @@
   margin: 0;
   font-family: var(--fuente-titulo);
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 700;
   text-shadow: none;
   color: var(--tinta);
 }
@@ -39,7 +39,7 @@
   border: 0;
   background: transparent;
   color: var(--morado);
-  font: 800 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   text-decoration: underline;
   cursor: pointer;
 }

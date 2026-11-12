@@ -29,9 +29,7 @@
   border-radius: 999px;
   background: var(--amarillo);
   color: var(--tinta);
-  font: 900 1.1rem var(--fuente-texto);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font: 700 1.1rem var(--fuente-texto);
   font-variant-numeric: tabular-nums;
 }
 
@@ -39,7 +37,7 @@
   margin: 8px 0 0;
   font-family: var(--fuente-titulo);
   font-size: 1.9rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--amarillo);
 }
@@ -51,7 +49,7 @@
 
 .saldo {
   margin: 0;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .premios {
@@ -101,7 +99,7 @@
 
 .etiqueta {
   font-size: 0.9rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .premio:focus-visible {

@@ -37,9 +37,7 @@
   border-radius: 999px;
   background: var(--tinta);
   color: var(--amarillo);
-  font: 900 0.8rem var(--fuente-texto);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 700 0.8rem var(--fuente-texto);
 }
 
 .boleto {
@@ -78,24 +76,22 @@
 }
 
 .comercio {
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: #a0005a;
 }
 
 .nombre {
   font-family: var(--fuente-titulo);
   font-size: 1.9rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.1;
   color: var(--rosa);
 }
 
 .detalle {
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #4a3f66;
 }
 
@@ -129,7 +125,7 @@
 
 .valido p {
   margin: 0;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .sello {
@@ -139,21 +135,19 @@
 
 .etiqueta {
   font-size: 0.8rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .codigo {
   font-family: var(--fuente-titulo);
   font-size: 2.4rem;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.1em;
 }
 
 .reloj {
   margin: 0;
-  font: 900 1.6rem var(--fuente-texto);
+  font: 700 1.6rem var(--fuente-texto);
   font-variant-numeric: tabular-nums;
 }
 
@@ -163,7 +157,7 @@
   border: var(--borde);
   border-radius: 14px;
   background: #fff;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .pista {
@@ -191,7 +185,7 @@
   position: relative;
   padding-left: 56px;
   color: #fff;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .asa {

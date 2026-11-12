@@ -1,2 +1,5 @@
 * { box-sizing: border-box; }
 body { margin: 0; font-family: var(--fuente-texto); color: var(--tinta); background: #fff; }
+/* Títulos con la fuente de display: algo más juntos y con el tamaño óptico automático. */
+h1, h2, h3 { letter-spacing: -0.015em; font-optical-sizing: auto; }
+body { font-optical-sizing: auto; -webkit-font-smoothing: antialiased; }

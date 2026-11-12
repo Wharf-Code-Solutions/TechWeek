@@ -22,7 +22,7 @@
   border: var(--borde);
   border-radius: 999px;
   background: var(--amarillo);
-  font: 900 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   color: var(--tinta);
 }
 
@@ -57,10 +57,8 @@
 }
 
 .antetitulo {
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: var(--morado);
 }
 
@@ -68,7 +66,7 @@
   margin: 0;
   font-family: var(--fuente-titulo);
   font-size: 1.75rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--tinta);
 }
@@ -97,7 +95,7 @@
   border: 0;
   background: transparent;
   color: var(--morado);
-  font: 800 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -114,5 +112,5 @@
   border-radius: 14px;
   background: #e3f7e8;
   color: #0b5a24;
-  font-weight: 800;
+  font-weight: 700;
 }

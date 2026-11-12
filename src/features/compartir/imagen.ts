@@ -6,8 +6,8 @@ const ANCHO = 1080
 const ALTO = 1350
 const TINTA = '#150A2E'
 const COLORES = ['#E4007C', '#FFD400', '#00B5C8', '#FF6B00', '#7B2FBE', '#22B24C']
-const TITULO = '"Shrikhand", "Nunito", system-ui, sans-serif'
-const TEXTO = '"Nunito", system-ui, sans-serif'
+const TITULO = '"Bricolage Grotesque", system-ui, sans-serif'
+const TEXTO = '"DM Sans", system-ui, sans-serif'
 
 export interface EtiquetasImagen {
   logrado: string
@@ -33,6 +33,8 @@ function rectRedondo(c: CanvasRenderingContext2D, x: number, y: number, w: numbe
 }
 
 export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Promise<Blob> {
+  // Las fuentes del lienzo no se piden solas: se cargan aquí para que no salga la fuente de respaldo.
+  await Promise.all([document.fonts?.load('800 40px "Bricolage Grotesque"'), document.fonts?.load('700 30px "DM Sans"')])
   await document.fonts?.ready
   const foto = d.fotoUrl ? await cargar(d.fotoUrl) : null
   const lienzo = document.createElement('canvas')
@@ -66,10 +68,10 @@ export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Pro
 
   c.textAlign = 'center'
   c.fillStyle = '#FFD400'
-  c.font = `900 34px ${TEXTO}`
+  c.font = `700 34px ${TEXTO}`
   c.fillText(et.logrado.toUpperCase(), ANCHO / 2, 250)
   c.fillStyle = '#fff'
-  c.font = `400 110px ${TITULO}`
+  c.font = `800 110px ${TITULO}`
   c.fillText('JARANA', ANCHO / 2, 360)
 
   // Rompecabezas 3:2 con las piezas ganadas; las demás, en lila.
@@ -107,9 +109,9 @@ export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Pro
   }
 
   c.fillStyle = '#fff'
-  c.font = `800 40px ${TEXTO}`
+  c.font = `700 40px ${TEXTO}`
   c.fillText(d.titulo, ANCHO / 2, my + mh + 75, mw)
-  c.font = `900 30px ${TEXTO}`
+  c.font = `700 30px ${TEXTO}`
   c.fillStyle = '#FFD400'
   c.fillText(et.piezas, ANCHO / 2, my + mh + 115)
 
@@ -127,14 +129,14 @@ export async function generarImagen(d: DatosCompartir, et: EtiquetasImagen): Pro
     c.fill()
     c.stroke()
     c.fillStyle = TINTA
-    c.font = `400 54px ${TITULO}`
+    c.font = `800 54px ${TITULO}`
     c.fillText(valor, x + cw / 2, cy + 64, cw - 20)
-    c.font = `800 24px ${TEXTO}`
+    c.font = `700 24px ${TEXTO}`
     c.fillText(etiqueta, x + cw / 2, cy + 98, cw - 20)
   })
 
   c.fillStyle = '#fff'
-  c.font = `800 30px ${TEXTO}`
+  c.font = `700 30px ${TEXTO}`
   c.fillText(et.pie, ANCHO / 2, ALTO - 38)
 
   return new Promise((resolve, reject) =>

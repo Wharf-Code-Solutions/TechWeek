@@ -35,6 +35,7 @@
 
 .marca {
   font-family: var(--fuente-titulo);
+  font-weight: 700;
   font-size: 1.6rem;
   color: var(--rosa);
 }
@@ -55,7 +56,7 @@
   border-radius: 999px;
   background: transparent;
   color: #fff;
-  font: 900 0.85rem var(--fuente-texto);
+  font: 700 0.85rem var(--fuente-texto);
   cursor: pointer;
 }
 
@@ -68,7 +69,7 @@
   margin: 0;
   font-family: var(--fuente-titulo);
   font-size: 1.65rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--tinta);
 }
@@ -88,10 +89,8 @@
 .grupo legend {
   padding: 0;
   margin-bottom: 8px;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: var(--morado);
 }
 
@@ -111,7 +110,7 @@
   border-radius: 16px;
   background: #f4f1fa;
   color: var(--tinta);
-  font: 800 0.9rem var(--fuente-texto);
+  font: 700 0.9rem var(--fuente-texto);
   cursor: pointer;
 }
 
@@ -134,13 +133,13 @@
   border-radius: 14px;
   background: #fff;
   color: var(--tinta);
-  font: 800 1rem var(--fuente-texto);
+  font: 700 1rem var(--fuente-texto);
 }
 
 /* Tiempo disponible: deslizador de 30 min a 8 h */
 .tiempoValor {
   margin: 0 0 4px;
-  font: 400 1.7rem var(--fuente-titulo);
+  font: 700 1.7rem var(--fuente-titulo);
   color: var(--rosa);
 }
 
@@ -192,7 +191,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #4a3f66;
 }
 
@@ -210,7 +209,7 @@
   border-radius: 14px;
   background: #fff;
   color: var(--tinta);
-  font: 800 0.95rem var(--fuente-texto);
+  font: 700 0.95rem var(--fuente-texto);
   cursor: pointer;
 }
 
@@ -233,7 +232,7 @@
 
 .error {
   margin: -6px 0 0;
-  font-weight: 800;
+  font-weight: 700;
   color: #b0121a;
 }
 
@@ -246,7 +245,7 @@
   border-radius: 14px;
   background: #f4f1fa;
   color: var(--tinta);
-  font: 800 0.85rem var(--fuente-texto);
+  font: 700 0.85rem var(--fuente-texto);
   cursor: pointer;
 }
 
