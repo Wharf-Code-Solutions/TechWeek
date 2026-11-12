@@ -8,6 +8,86 @@
     "cupon": "Desliza para canjear",
     "fin": "Fin de ruta"
   },
+  "comun": {
+    "cargando": "Cargando…",
+    "error": "Algo salió mal. Intenta de nuevo."
+  },
+  "preferencias": {
+    "idioma": "Idioma",
+    "tiempo": "¿Cuánto tiempo tienes?",
+    "intereses": "¿Qué te gusta?",
+    "continuar": "Armar mi ruta",
+    "tiempos": {
+      "t30": "30 min",
+      "t60": "1 h",
+      "t120": "2 h",
+      "t240": "Medio día"
+    },
+    "categorias": {
+      "historia": "Historia",
+      "leyendas": "Leyendas",
+      "musica": "Música",
+      "comida": "Comida",
+      "mar": "Mar",
+      "artesania": "Artesanía"
+    }
+  },
+  "permiso": {
+    "titulo": "Tu ubicación",
+    "texto": "Con tu ubicación sabemos cuándo llegas a cada lugar y te damos Tlacos.",
+    "permitir": "Permitir ubicación",
+    "explorar": "Explorar sin ubicación",
+    "buscando": "Buscando tu ubicación…",
+    "denegado": "No pudimos usar tu ubicación. Puedes activarla en los ajustes del navegador o seguir como explorador.",
+    "aviso_explorador": "Modo explorador: verás curiosidades, pero no ganarás Tlacos ni sellos."
+  },
+  "lugar": {
+    "curiosidad": "¿Sabías que…?",
+    "jugar": "Jugar el reto",
+    "volver": "Volver al mapa",
+    "explorador": "Modo explorador: aquí no ganas Tlacos ni sellos.",
+    "buscando": "Buscando tu ubicación…",
+    "registrando": "Registrando tu llegada…",
+    "fuera": "Aún no estás en este lugar. Acércate un poco más.",
+    "no_encontrado": "No encontramos este lugar."
+  },
+  "recompensa": {
+    "ganaste": "¡Ganaste {{n}} Tlacos!",
+    "completado": "¡Reto completado!",
+    "saldo": "Saldo: {{n}} Tlacos",
+    "sello": "Nuevo sello",
+    "pieza": "Pieza del rompecabezas",
+    "seguir": "Seguir la ruta"
+  },
+  "cartera": {
+    "titulo": "Mi cartera",
+    "saldo": "{{n}} Tlacos",
+    "promos": "Canjea tus Tlacos",
+    "costo": "{{n}} Tlacos",
+    "canjear": "Canjear",
+    "faltan": "Te faltan {{n}} Tlacos",
+    "sin_saldo": "No pudimos cargar tu saldo."
+  },
+  "cupon": {
+    "deslizar": "Desliza para canjear",
+    "confirmar": "Confirmar canje",
+    "canjeando": "Canjeando…",
+    "valido": "Cupón válido",
+    "muestralo": "Muéstralo al mesero",
+    "codigo": "Código",
+    "hora": "Hora actual",
+    "sello": "Sello de canje",
+    "saldo_insuficiente": "No te alcanzan los Tlacos para este cupón.",
+    "no_disponible": "Esta promoción ya no está disponible.",
+    "volver": "Volver al mapa"
+  },
+  "recorrido": {
+    "etiqueta": "Recorrido virtual",
+    "avanzar": "Avanzar",
+    "retroceder": "Retroceder",
+    "siguiente": "Siguiente parada",
+    "parada": "Parada {{actual}} de {{total}}"
+  },
   "mapa": {
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
     "tuPosicion": "Tu posición",

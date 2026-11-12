@@ -8,6 +8,86 @@
     "cupon": "Swipe to redeem",
     "fin": "End of route"
   },
+  "comun": {
+    "cargando": "Loading…",
+    "error": "Something went wrong. Please try again."
+  },
+  "preferencias": {
+    "idioma": "Language",
+    "tiempo": "How much time do you have?",
+    "intereses": "What do you like?",
+    "continuar": "Build my route",
+    "tiempos": {
+      "t30": "30 min",
+      "t60": "1 h",
+      "t120": "2 h",
+      "t240": "Half a day"
+    },
+    "categorias": {
+      "historia": "History",
+      "leyendas": "Legends",
+      "musica": "Music",
+      "comida": "Food",
+      "mar": "Sea",
+      "artesania": "Crafts"
+    }
+  },
+  "permiso": {
+    "titulo": "Your location",
+    "texto": "With your location we know when you reach each place and give you Tlacos.",
+    "permitir": "Allow location",
+    "explorar": "Explore without location",
+    "buscando": "Finding your location…",
+    "denegado": "We couldn't use your location. You can turn it on in your browser settings or continue as an explorer.",
+    "aviso_explorador": "Explorer mode: you'll see fun facts, but you won't earn Tlacos or stamps."
+  },
+  "lugar": {
+    "curiosidad": "Did you know…?",
+    "jugar": "Play the challenge",
+    "volver": "Back to the map",
+    "explorador": "Explorer mode: you don't earn Tlacos or stamps here.",
+    "buscando": "Finding your location…",
+    "registrando": "Registering your arrival…",
+    "fuera": "You're not at this place yet. Get a little closer.",
+    "no_encontrado": "We couldn't find this place."
+  },
+  "recompensa": {
+    "ganaste": "You earned {{n}} Tlacos!",
+    "completado": "Challenge completed!",
+    "saldo": "Balance: {{n}} Tlacos",
+    "sello": "New stamp",
+    "pieza": "Puzzle piece",
+    "seguir": "Continue the route"
+  },
+  "cartera": {
+    "titulo": "My wallet",
+    "saldo": "{{n}} Tlacos",
+    "promos": "Redeem your Tlacos",
+    "costo": "{{n}} Tlacos",
+    "canjear": "Redeem",
+    "faltan": "You need {{n}} more Tlacos",
+    "sin_saldo": "We couldn't load your balance."
+  },
+  "cupon": {
+    "deslizar": "Swipe to redeem",
+    "confirmar": "Confirm redemption",
+    "canjeando": "Redeeming…",
+    "valido": "Valid coupon",
+    "muestralo": "Show it to the waiter",
+    "codigo": "Code",
+    "hora": "Current time",
+    "sello": "Redemption stamp",
+    "saldo_insuficiente": "You don't have enough Tlacos for this coupon.",
+    "no_disponible": "This promotion is no longer available.",
+    "volver": "Back to the map"
+  },
+  "recorrido": {
+    "etiqueta": "Virtual walk",
+    "avanzar": "Move forward",
+    "retroceder": "Move back",
+    "siguiente": "Next stop",
+    "parada": "Stop {{actual}} of {{total}}"
+  },
   "mapa": {
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
     "tuPosicion": "Your position",
