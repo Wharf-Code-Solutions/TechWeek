@@ -1,6 +1,6 @@
 // Pantalla 01: Preferencias (entrada) · Responsable: Dev 3 (M3 lógica de ruta: Dev 1)
 // Diseño 01: hoja blanca con asa, personaje y apodo, tiempo e intereses.
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -40,11 +40,6 @@ export default function Preferencias() {
   const [paso, setPaso] = useState<'preferencias' | 'permiso'>('preferencias')
   const [ruta, setRuta] = useState<'inactivo' | 'armando' | 'error'>('inactivo')
   const armando = useRef(false)
-  // El mapa es lo más pesado (mapbox-gl): se baja en segundo plano mientras el turista elige sus preferencias.
-  useEffect(() => {
-    const id = window.setTimeout(() => void import('./Mapa'), 800)
-    return () => window.clearTimeout(id)
-  }, [])
   // El aviso de interés obligatorio aparece solo después de intentar continuar.
   const [faltaInteres, setFaltaInteres] = useState(false)
 
@@ -65,6 +60,8 @@ export default function Preferencias() {
   async function armarRuta() {
     if (armando.current) return
     armando.current = true
+    // El mapa es lo más pesado (mapbox-gl, casi 2 MB): se empieza a bajar ya, mientras se arma la ruta y se ve la carga.
+    void import('./Mapa')
     setRuta('armando')
     // La ruta parte de donde está el turista: si el GPS aún no responde se espera un momento.
     // Lejos del Centro (o sin GPS) la ruta sale del Zócalo; la ruta siempre se arma con las preferencias elegidas.

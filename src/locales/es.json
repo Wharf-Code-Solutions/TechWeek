@@ -13,7 +13,8 @@
   },
   "comun": {
     "cargando": "Cargando…",
-    "error": "Algo salió mal. Intenta de nuevo."
+    "error": "Algo salió mal. Intenta de nuevo.",
+    "recargar": "Recargar"
   },
   "preferencias": {
     "idioma": "Idioma",

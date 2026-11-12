@@ -13,7 +13,8 @@
   },
   "comun": {
     "cargando": "Loading…",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "recargar": "Reload"
   },
   "preferencias": {
     "idioma": "Language",
