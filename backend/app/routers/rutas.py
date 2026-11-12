@@ -13,6 +13,7 @@ from ..ruta import calcular_ruta, metros_entre_paradas, tlacos_por_distancia
 router = APIRouter(prefix="/api", tags=["rutas"])
 
 BONO_FIN = 100  # Tlacos al terminar la ruta (una sola vez por celular)
+BONO_COMPARTIR = 30  # Tlacos por compartir una ruta terminada (una vez por ruta)
 CATEGORIAS = Literal["historia", "leyendas", "musica", "comida", "mar", "artesania"]
 
 
@@ -178,6 +179,7 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
 
     await db.actualizar("rutas_usuario", {"estado": "terminada"}, id=f"eq.{ruta['id']}")
     return {
+        "ruta_id": ruta["id"],
         "bono": bono,
         "distancia_m": round(metros),
         "tlacos_distancia": por_distancia,
@@ -187,3 +189,24 @@ async def terminar_ruta(perfil_id: str = Depends(perfil_id_actual)):
         "total_lugares": len(ruta["lugares"]),
         "foto_id": ruta["foto_id"],
     }
+
+
+@router.post("/rutas/{ruta_id}/compartir")
+async def compartir_ruta(ruta_id: int, perfil_id: str = Depends(perfil_id_actual)):
+    """+30 Tlacos una sola vez por ruta terminada. No se puede verificar que de verdad compartió: premia el intento."""
+    rutas = await db.seleccionar("rutas_usuario", id=f"eq.{ruta_id}", perfil_id=f"eq.{perfil_id}")
+    if not rutas:
+        raise HTTPException(404, "Ruta no encontrada")
+    if rutas[0]["estado"] != "terminada":
+        raise HTTPException(409, "Solo se puede compartir una ruta terminada")
+    tlacos = 0
+    try:
+        await db.insertar(
+            db.TABLA_MOVIMIENTOS,
+            {"perfil_id": perfil_id, "cantidad": BONO_COMPARTIR, "motivo": "compartir", "ref_id": ruta_id},
+        )
+        tlacos = BONO_COMPARTIR
+    except HTTPException as e:  # 409: esta ruta ya pagó su bono por compartir (índice único)
+        if e.status_code != 409:
+            raise
+    return {"tlacos": tlacos, "saldo": await db.saldo_de(perfil_id)}

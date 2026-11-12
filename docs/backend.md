@@ -119,4 +119,4 @@ Con `npm run dev`, Vite redirige `/api` a `localhost:8000`. Documentación inter
 - **`POST /api/visitas`** guarda `visitas.ruta_id` (ruta activa). Si llega otra vez a un lugar sin haber jugado, la visita pasa a la ruta de ahora.
 - **`POST /api/retos/{slug}/completar`** con el lugar ya jugado responde 200 con `ya_visitado: true` y 0 Tlacos (antes 409).
 - **Migración 0005:** `visitas.ruta_id`, motivos `distancia` y `compartir` en `movimientos_tlacos` (únicos por ruta) y 5 postales en `fotos_historicas`. **Aplicar antes de desplegar el backend**: si no, registrar una llegada falla por la columna que falta.
-- Pendiente (Bloque 3): `POST /api/rutas/{id}/compartir` (+30 Tlacos, motivo `compartir`).
+- **`POST /api/rutas/{id}/compartir`** → `{tlacos, saldo}`: +30 Tlacos (motivo `compartir`) una vez por ruta terminada; 404 si la ruta no es del celular, 409 si sigue activa, `tlacos: 0` si ya se cobró. No verifica que se compartió: premia el intento. `terminar` y `GET /api/pasaporte` devuelven `ruta_id`.

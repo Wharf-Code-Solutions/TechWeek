@@ -60,4 +60,5 @@ async def pasaporte(perfil_id: str = Depends(perfil_id_actual)):
         "piezas": {"total": total, "ganadas": ganadas, "indices": list(range(ganadas)), "completa": total > 0 and ganadas >= total},
         "foto": foto,
         "ruta_terminada": terminada,
+        "ruta_id": ruta["id"] if ruta else None,
     }

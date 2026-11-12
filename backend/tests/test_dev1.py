@@ -90,6 +90,11 @@ class BaseFalsa:
             m["perfil_id"] == fila["perfil_id"] and m["motivo"] == "bono_fin" for m in self.t[tabla]
         ):
             raise HTTPException(409, "Ya existe")
+        if tabla == "movimientos_tlacos" and fila["motivo"] in ("distancia", "compartir") and any(
+            m["perfil_id"] == fila["perfil_id"] and m["motivo"] == fila["motivo"] and m["ref_id"] == fila["ref_id"]
+            for m in self.t[tabla]
+        ):
+            raise HTTPException(409, "Ya existe")
         if tabla == "perfiles" and any(p["id"] == fila["id"] for p in self.t[tabla]):
             return []
         if tabla == "visitas" and any(  # unique (perfil_id, lugar_id)
@@ -412,3 +417,32 @@ def test_reto_ya_completado_no_es_error(monkeypatch):
         app.dependency_overrides.clear()
     assert r.status_code == 200
     assert r.json() == {"correcto": True, "completado": True, "tlacos_ganados": 0, "saldo": 50, "ya_visitado": True}
+
+
+def test_compartir_paga_una_vez_por_ruta_terminada(cliente):
+    c, base = cliente
+    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 409  # sigue activa
+    fin = c.post("/api/rutas/actual/terminar").json()
+    assert fin["ruta_id"] == ruta["id"]
+    a = c.post(f"/api/rutas/{ruta['id']}/compartir").json()
+    b = c.post(f"/api/rutas/{ruta['id']}/compartir").json()
+    assert a == {"tlacos": 30, "saldo": 30} and b == {"tlacos": 0, "saldo": 30}
+    assert len([m for m in base.t["movimientos_tlacos"] if m["motivo"] == "compartir"]) == 1
+
+
+def test_compartir_otra_ruta_vuelve_a_pagar(cliente):
+    c, _ = cliente
+    ids = []
+    for _ in range(2):
+        ids.append(c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()["id"])
+        c.post("/api/rutas/actual/terminar")
+    assert [c.post(f"/api/rutas/{i}/compartir").json()["tlacos"] for i in ids] == [30, 30]
+
+
+def test_compartir_ruta_ajena_o_inexistente(cliente):
+    c, base = cliente
+    assert c.post("/api/rutas/999/compartir").status_code == 404
+    ruta = c.post("/api/rutas", json={"tiempo_min": 60, "demo": True}).json()
+    base.t["rutas_usuario"][0]["perfil_id"] = "otro-celular"
+    assert c.post(f"/api/rutas/{ruta['id']}/compartir").status_code == 404
