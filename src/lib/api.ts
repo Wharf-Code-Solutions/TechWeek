@@ -1,7 +1,33 @@
 // Único punto de contacto con el backend. El navegador ya no habla con Supabase:
 // sesión, catálogo, llegada, retos y canjes pasan por FastAPI.
 
+import type { Lugar } from '../types/contratos'
+
 const BASE = import.meta.env.VITE_API_URL ?? ''
+
+/** Error del backend con su código HTTP (403 fuera de radio, 402 saldo insuficiente, 404...). */
+export class ApiError extends Error {
+  status: number
+  constructor(status: number, mensaje: string) {
+    super(mensaje)
+    this.status = status
+  }
+}
+
+/** Filas de la API (la base usa id; el seed usa slug). */
+export interface PromocionFila {
+  id: number
+  slug: string
+  comercio_id: number
+  titulo_es: string
+  titulo_en: string
+  costo_tlacos: number
+}
+export interface ComercioFila {
+  id: number
+  slug: string
+  nombre: string
+}
 const CLAVE = 'jarana.sesion'
 
 interface Sesion {
@@ -37,12 +63,25 @@ async function http<T>(ruta: string, init: RequestInit = {}, token?: string): Pr
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   })
-  if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail ?? `Error ${res.status}`)
+  if (!res.ok) {
+    const detalle = (await res.json().catch(() => null))?.detail
+    throw new ApiError(res.status, typeof detalle === 'string' ? detalle : `Error ${res.status}`)
+  }
   return res.json() as Promise<T>
 }
 
 /** Abre (o renueva) la sesión anónima del celular y devuelve un token vigente. */
-export async function asegurarSesion(): Promise<string> {
+export function asegurarSesion(): Promise<string> {
+  // Llamadas simultáneas comparten la misma petición: así no se crean dos usuarios anónimos.
+  enCurso ??= obtenerSesion().finally(() => {
+    enCurso = null
+  })
+  return enCurso
+}
+
+let enCurso: Promise<string> | null = null
+
+async function obtenerSesion(): Promise<string> {
   let s = memoria ?? leerSesion()
   const vigente = s && s.expires_at > Date.now() / 1000 + 30
   if (!s || !vigente) {
@@ -56,20 +95,35 @@ export async function asegurarSesion(): Promise<string> {
   return s.access_token
 }
 
+const llegadas = new Map<string, Promise<unknown>>()
+
 const privado = async <T>(ruta: string, init?: RequestInit) => http<T>(ruta, init, await asegurarSesion())
 
 export const api = {
   // Catálogo (público)
-  lugares: () => http<unknown[]>('/api/lugares'),
+  lugares: () => http<Lugar[]>('/api/lugares'),
   retoDeLugar: (slug: string) => http<unknown>(`/api/lugares/${slug}/reto`),
-  comercios: () => http<unknown[]>('/api/comercios'),
-  promociones: () => http<unknown[]>('/api/promociones'),
+  comercios: () => http<ComercioFila[]>('/api/comercios'),
+  promociones: () => http<PromocionFila[]>('/api/promociones'),
   eventos: () => http<unknown[]>('/api/eventos'),
   fotos: () => http<unknown[]>('/api/fotos'),
   // Progreso del celular (con sesión)
   saldo: () => privado<{ saldo: number }>('/api/saldo'),
-  registrarLlegada: (lugar_slug: string, metodo: 'gps' | 'demo', lat?: number, lng?: number) =>
-    privado('/api/visitas', { method: 'POST', body: JSON.stringify({ lugar_slug, metodo, lat, lng }) }),
+  /** Idempotente: una sola petición por lugar y sesión; un 409 ("ya existe") cuenta como éxito. */
+  registrarLlegada: (lugar_slug: string, metodo: 'gps' | 'demo', lat?: number, lng?: number) => {
+    let p = llegadas.get(lugar_slug)
+    if (!p) {
+      p = privado('/api/visitas', { method: 'POST', body: JSON.stringify({ lugar_slug, metodo, lat, lng }) }).catch(
+        (e) => {
+          llegadas.delete(lugar_slug) // permite reintentar si falló de verdad
+          if (e instanceof ApiError && e.status === 409) return null
+          throw e
+        },
+      )
+      llegadas.set(lugar_slug, p)
+    }
+    return p
+  },
   completarReto: (slug: string, respuesta: string[], revelar = false, idioma: 'es' | 'en' = 'es') =>
     privado<{ correcto: boolean; completado: boolean; tlacos_ganados: number; saldo: number }>(
       `/api/retos/${slug}/completar`,
