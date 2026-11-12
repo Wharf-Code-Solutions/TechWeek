@@ -15,7 +15,9 @@ import ControlRecorrido from '../features/geo/ControlRecorrido'
 import { esModoDemo } from '../features/geo/demoStore'
 import { distanciaM } from '../features/geo/distancia'
 import { usePosition } from '../features/geo/usePosition'
-import { useIrAlLlegar } from '../features/geo/useIrAlLlegar'
+import AvisoLlegada from '../features/geo/AvisoLlegada'
+import AvisoLejos from '../features/geo/AvisoLejos'
+import { haLlegado, useIrAlLlegar } from '../features/geo/useIrAlLlegar'
 import { enCurso } from '../features/agenda/eventos'
 import type { PasaporteDatos } from '../features/pasaporte/tipos'
 import { api } from '../lib/api'
@@ -23,6 +25,8 @@ import seed from '../data/seed.json'
 import type { Evento, Lugar } from '../types/contratos'
 
 const NINGUNO: Lugar[] = []
+/** Alto aproximado del panel del recorrido virtual (px): espacio que la cámara deja libre abajo. */
+const ALTO_CONTROL_DEMO = 200
 
 
 export default function Mapa() {
@@ -65,11 +69,17 @@ export default function Mapa() {
   }, [])
 
   // Mientras carga la ruta no se vigila nada, para no abrir un lugar que no está en ella.
-  useIrAlLlegar(ruta === undefined ? NINGUNO : (ruta ?? todos))
+  const { llegando } = useIrAlLlegar(ruta === undefined ? NINGUNO : (ruta ?? todos))
 
   const slugsHechos = useMemo(() => new Set(hechos.keys()), [hechos])
   const enRuta = useMemo(() => new Set((ruta ?? []).map((l) => l.slug)), [ruta])
-  const { siguiente, completados, total } = progresoRuta(ruta ?? [], slugsHechos)
+  const { completados, total } = progresoRuta(ruta ?? [], slugsHechos)
+  // La siguiente parada es la primera a la que todavía no se ha llegado (con o sin reto hecho): así el mapa, la lista
+  // y los controles del recorrido virtual hablan de la misma parada.
+  const { siguiente } = progresoRuta(
+    ruta ?? [],
+    new Set([...slugsHechos, ...(ruta ?? []).filter((l) => haLlegado(l.slug)).map((l) => l.slug)]),
+  )
   const { intereses, personaje } = cargarPreferencias()
   const interes = intereses[0]
   const nombreRuta =
@@ -91,7 +101,8 @@ export default function Mapa() {
   }, [])
   const altoPanel = demo ? 0 : altoNivel(nivel, altoVentana)
   // En pantalla completa el mapa queda tapado: la cámara se queda como en el nivel medio.
-  const padAbajo = demo ? 0 : altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
+  // En el recorrido virtual los controles tapan la parte baja: la cámara deja ese espacio para ver al personaje.
+  const padAbajo = demo ? ALTO_CONTROL_DEMO : altoNivel(nivel === 'completo' ? 'medio' : nivel, altoVentana)
 
   const abrir = (p: Pestana) => {
     setPestana(p)
@@ -112,6 +123,7 @@ export default function Mapa() {
         ruta={ruta ?? undefined}
         padAbajo={padAbajo}
         enfocar={enfocar}
+        llegando={llegando?.slug ?? null}
         enRuta={enRuta}
         hechos={slugsHechos}
         siguiente={siguiente?.slug ?? null}
@@ -133,7 +145,13 @@ export default function Mapa() {
             onSaldo={() => abrir('cartera')}
           />
         }
-        abajo={<ControlRecorrido />}
+        abajo={
+          <>
+            <AvisoLlegada lugar={llegando} />
+            {!demo && !llegando && <AvisoLejos />}
+            <ControlRecorrido />
+          </>
+        }
       />
       {/* En la demo el recorrido virtual ocupa la parte baja: el panel se oculta para no encimarse. */}
       {!demo && (

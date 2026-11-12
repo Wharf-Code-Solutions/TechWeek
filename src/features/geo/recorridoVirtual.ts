@@ -18,6 +18,22 @@ export interface Recorrido {
   metrosDeParada: (indice: number) => number
   /** Índice de la parada más cercana por detrás o en `metros`. */
   paradaActual: (metros: number) => number
+  /** Puntos [lng, lat] del trayecto entre dos distancias (cada `pasoM` metros): sirve para resaltar el tramo que falta. */
+  camino: (desdeM: number, hastaM: number, pasoM?: number) => [number, number][]
+}
+
+/** Rumbo en grados (0 = norte) de `a` hacia `b`. */
+export function rumboHacia(a: Punto, b: Punto): number {
+  return (bearing([a.lng, a.lat], [b.lng, b.lat]) + 360) % 360
+}
+
+/**
+ * Hacia dónde queda el objetivo respecto a la dirección en que mira el turista, de -180° a 180°:
+ * 0 = al frente, 90 = a la derecha, -90 = a la izquierda, ±180 = atrás.
+ */
+export function anguloRelativo(rumboTurista: number, rumboObjetivo: number): number {
+  const d = (((rumboObjetivo - rumboTurista) % 360) + 540) % 360 - 180
+  return d === -180 ? 180 : d
 }
 
 /**
@@ -58,6 +74,18 @@ export function crearRecorrido(puntos: Punto[], tramos?: [number, number][][]): 
       return { lat, lng, rumbo: (rumbo + 360) % 360 }
     },
     metrosDeParada: (indice) => acumulado[Math.min(Math.max(indice, 0), acumulado.length - 1)],
+    camino(desdeM, hastaM, pasoM = 8) {
+      const a = limitar(Math.min(desdeM, hastaM))
+      const b = limitar(Math.max(desdeM, hastaM))
+      const puntos: [number, number][] = []
+      for (let m = a; m < b; m += pasoM) {
+        const { lng, lat } = this.en(m)
+        puntos.push([lng, lat])
+      }
+      const fin = this.en(b)
+      puntos.push([fin.lng, fin.lat])
+      return puntos
+    },
     paradaActual(metros) {
       const d = limitar(metros)
       let actual = 0

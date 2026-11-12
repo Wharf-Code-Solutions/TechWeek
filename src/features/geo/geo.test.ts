@@ -4,6 +4,8 @@ import { crearRecorrido } from './recorridoVirtual'
 import { RECORRIDO_DEMO, PARADAS_DEMO } from './rutaDemo'
 import { lugarCercano } from './useLlegada'
 import { claveRuta, lineaRecta } from './useRutaCaminable'
+import { RADIO_CENTRO_M, ZOCALO, distanciaAlCentro, estaLejosDelCentro } from './centro'
+import { anguloRelativo, rumboHacia } from './recorridoVirtual'
 import type { Lugar } from '../../types/contratos'
 
 const A = { lat: 19.19935, lng: -96.13705 }
@@ -100,5 +102,50 @@ describe('recorrido por calles', () => {
   it('claveRuta y lineaRecta', () => {
     expect(claveRuta([{ slug: 'a' }, { slug: 'b' }])).toBe('a|b')
     expect(lineaRecta([a, b])).toEqual([[-96.14, 19.2], [-96.13, 19.2]])
+  })
+})
+
+describe('lejos del Centro', () => {
+  it('en el Zócalo y a unas cuadras no es lejos', () => {
+    expect(estaLejosDelCentro(ZOCALO)).toBe(false)
+    expect(estaLejosDelCentro({ lat: ZOCALO.lat + 0.004, lng: ZOCALO.lng })).toBe(false)
+  })
+  it('a varios kilómetros sí es lejos (y sin posición no se avisa)', () => {
+    const lejos = { lat: ZOCALO.lat + 0.1, lng: ZOCALO.lng } // unos 11 km
+    expect(distanciaAlCentro(lejos)).toBeGreaterThan(RADIO_CENTRO_M)
+    expect(estaLejosDelCentro(lejos)).toBe(true)
+    expect(estaLejosDelCentro(null)).toBe(false)
+  })
+})
+
+describe('guía de dirección', () => {
+  const origen = { lat: 19.2, lng: -96.14 }
+  it('rumbo hacia el norte, este, sur y oeste', () => {
+    expect(rumboHacia(origen, { lat: 19.21, lng: -96.14 })).toBeCloseTo(0, 0)
+    expect(rumboHacia(origen, { lat: 19.2, lng: -96.13 })).toBeCloseTo(90, 0)
+    expect(rumboHacia(origen, { lat: 19.19, lng: -96.14 })).toBeCloseTo(180, 0)
+    expect(rumboHacia(origen, { lat: 19.2, lng: -96.15 })).toBeCloseTo(270, 0)
+  })
+  it('ángulo relativo: al frente, derecha, izquierda y atrás', () => {
+    expect(anguloRelativo(90, 90)).toBe(0)
+    expect(anguloRelativo(0, 90)).toBe(90)
+    expect(anguloRelativo(90, 0)).toBe(-90)
+    expect(anguloRelativo(0, 180)).toBe(180)
+    expect(anguloRelativo(350, 10)).toBe(20) // cruza el norte sin dar la vuelta larga
+  })
+})
+
+describe('tramo del camino', () => {
+  it('empieza y termina en las distancias pedidas', () => {
+    const t = RECORRIDO_DEMO.camino(100, 400)
+    const ini = RECORRIDO_DEMO.en(100)
+    const fin = RECORRIDO_DEMO.en(400)
+    expect(distanciaM({ lat: t[0][1], lng: t[0][0] }, ini)).toBeLessThan(1)
+    expect(distanciaM({ lat: t[t.length - 1][1], lng: t[t.length - 1][0] }, fin)).toBeLessThan(1)
+    expect(t.length).toBeGreaterThan(10)
+  })
+  it('no importa el orden de las distancias y un tramo vacío da un solo punto', () => {
+    expect(RECORRIDO_DEMO.camino(400, 100).length).toBe(RECORRIDO_DEMO.camino(100, 400).length)
+    expect(RECORRIDO_DEMO.camino(50, 50)).toHaveLength(1)
   })
 })

@@ -19,6 +19,15 @@ export function esModoDemo(): boolean {
   }
 }
 
+/** Activa el modo demo sin tocar la URL (la bandera se recuerda en la sesión). Quien llama debe volver a dibujar. */
+export function activarDemo() {
+  try {
+    sessionStorage.setItem(CLAVE, '1')
+  } catch {
+    /* sin almacenamiento: solo funciona con ?demo=1 */
+  }
+}
+
 let metros = 0
 const oyentes = new Set<() => void>()
 

@@ -1,12 +1,13 @@
 // M6 · Recorrido virtual (?demo=1): píldora y cronómetro arriba, panel con "Avanzar" abajo.
 // Solo se muestra en modo demo. Dev 2: móntalo sobre el mapa (Mapa.tsx): <ControlRecorrido />
 // y oculta tu panel/botones inferiores cuando esModoDemo() para que no se encimen.
-import { CaretLeft, CaretRight, PlayCircle, SkipForward } from '@phosphor-icons/react'
+import { ArrowUp, CaretLeft, CaretRight, PlayCircle, SkipForward } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useCampo } from '../../app/idioma'
 import Boton from '../../components/ui/Boton'
 import { esModoDemo, useRecorridoDemo } from './demoStore'
+import { anguloRelativo, rumboHacia } from './recorridoVirtual'
 import { RECORRIDO_DEMO } from './rutaDemo'
 import estilos from './ControlRecorrido.module.css'
 
@@ -50,6 +51,8 @@ function Controles() {
   const siguiente = r.paradas[sigIdx]
   const terminada = r.parada >= ultima
   const faltan = Math.max(0, Math.round(RECORRIDO_DEMO.metrosDeParada(sigIdx) - r.metros))
+  // Flecha hacia la siguiente parada: como el mapa gira con el personaje, "arriba" es hacia donde mira.
+  const giro = Math.round(anguloRelativo(r.rumbo, rumboHacia(r, siguiente)))
 
   // Tocar da un paso; mantener presionado camina hasta soltar.
   const espera = useRef<number | undefined>(undefined)
@@ -81,6 +84,11 @@ function Controles() {
 
       <div className={estilos.panel} role="group" aria-label={t('recorrido.etiqueta')}>
         <div className={estilos.cabecera}>
+          {!terminada && (
+            <span className={estilos.flecha} role="img" aria-label={t('recorrido.direccion', { grados: giro })}>
+              <ArrowUp size={22} weight="bold" style={{ transform: `rotate(${giro}deg)`, transition: 'transform 0.4s' }} />
+            </span>
+          )}
           <strong role="status">
             {terminada
               ? t('recorrido.completo')

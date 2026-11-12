@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Boton from '../../components/ui/Boton'
 import Tarjeta from '../../components/ui/Tarjeta'
+import { activarDemo } from './demoStore'
 import { activarExplorador } from './explorador'
 import { useEstadoUbicacion } from './usePosition'
 import estilos from './PermisoUbicacion.module.css'
@@ -79,6 +80,18 @@ export default function PermisoUbicacion({ onListo }: Props) {
             {t('permiso.explorar')}
           </button>
           <p className={estilos.aviso}>{t('permiso.aviso_explorador')}</p>
+          {/* Para probar la app lejos del Centro (por ejemplo, en un hackatón): el recorrido virtual hace de GPS. */}
+          <button
+            type="button"
+            className={estilos.enlace}
+            onClick={() => {
+              activarExplorador(false)
+              activarDemo()
+              onListo()
+            }}
+          >
+            {t('permiso.demo')}
+          </button>
         </>
       )}
     </Tarjeta>

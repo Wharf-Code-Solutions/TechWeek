@@ -42,7 +42,8 @@
     "explorar": "Ahora no: modo explorador",
     "buscando": "Buscando tu ubicación…",
     "denegado": "No pudimos usar tu ubicación. Puedes activarla en los ajustes del navegador o seguir como explorador.",
-    "aviso_explorador": "En modo explorador ves las curiosidades, pero no ganas Tlacos ni sellos."
+    "aviso_explorador": "En modo explorador ves las curiosidades, pero no ganas Tlacos ni sellos.",
+    "demo": "Estoy lejos del Centro: probar en modo demo"
   },
   "lugar": {
     "curiosidad": "¿Sabías que…?",
@@ -56,7 +57,8 @@
     "activar_ubicacion": "Activar ubicación",
     "antetitulo": "{{categoria}} · Parada {{n}} de {{total}}",
     "jugar_premio": "Jugar el reto · +{{n}} Tlacos",
-    "seguir": "Ahora no, seguir caminando"
+    "seguir": "Ahora no, seguir caminando",
+    "jugar_demo": "Estoy lejos: jugar en modo demo"
   },
   "recompensa": {
     "ganaste": "¡Ganaste {{n}} Tlacos!",
@@ -112,7 +114,9 @@
     "distancia": "{{m}} m",
     "completo": "¡Recorrido completo!",
     "saltar_parada": "Ir a la siguiente parada",
-    "ayuda": "Toca para dar un paso, mantén presionado para caminar."
+    "ayuda": "Toca para dar un paso, mantén presionado para caminar.",
+    "llegaste": "¡Llegaste a {{nombre}}!",
+    "direccion": "La siguiente parada queda a {{grados}} grados de hacia donde miras"
   },
   "mapa": {
     "sinToken": "Falta VITE_MAPBOX_TOKEN en .env.local para mostrar el mapa.",
@@ -133,7 +137,10 @@
     "eventoAhora": "{{titulo}} ahora",
     "nombres": "Mostrar u ocultar nombres de lugares",
     "irAlLugar": "Ir al lugar y jugar",
-    "miUbicacion": "Ir a mi ubicación"
+    "miUbicacion": "Ir a mi ubicación",
+    "lejos": "Estás lejos del Centro Histórico. ¿Quieres probar la app con el recorrido virtual?",
+    "lejos_activar": "Probar recorrido virtual",
+    "lejos_cerrar": "Ahora no"
   },
   "reto": {
     "cargando": "Cargando reto…",

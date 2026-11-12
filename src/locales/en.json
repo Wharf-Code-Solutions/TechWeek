@@ -42,7 +42,8 @@
     "explorar": "Not now: explorer mode",
     "buscando": "Finding your location…",
     "denegado": "We couldn't use your location. You can turn it on in your browser settings or continue as an explorer.",
-    "aviso_explorador": "In explorer mode you see the fun facts, but you don't earn Tlacos or stamps."
+    "aviso_explorador": "In explorer mode you see the fun facts, but you don't earn Tlacos or stamps.",
+    "demo": "I'm far from the Center: try demo mode"
   },
   "lugar": {
     "curiosidad": "Did you know…?",
@@ -56,7 +57,8 @@
     "activar_ubicacion": "Turn on location",
     "antetitulo": "{{categoria}} · Stop {{n}} of {{total}}",
     "jugar_premio": "Play the challenge · +{{n}} Tlacos",
-    "seguir": "Not now, keep walking"
+    "seguir": "Not now, keep walking",
+    "jugar_demo": "I'm far away: play in demo mode"
   },
   "recompensa": {
     "ganaste": "You earned {{n}} Tlacos!",
@@ -112,7 +114,9 @@
     "distancia": "{{m}} m",
     "completo": "Walk complete!",
     "saltar_parada": "Go to the next stop",
-    "ayuda": "Tap to take a step, hold to keep walking."
+    "ayuda": "Tap to take a step, hold to keep walking.",
+    "llegaste": "You reached {{nombre}}!",
+    "direccion": "The next stop is {{grados}} degrees from where you are facing"
   },
   "mapa": {
     "sinToken": "Missing VITE_MAPBOX_TOKEN in .env.local to show the map.",
@@ -133,7 +137,10 @@
     "eventoAhora": "{{titulo}} now",
     "nombres": "Show or hide place names",
     "irAlLugar": "Go to the place and play",
-    "miUbicacion": "Go to my location"
+    "miUbicacion": "Go to my location",
+    "lejos": "You're far from the Historic Center. Want to try the app with the virtual walk?",
+    "lejos_activar": "Try the virtual walk",
+    "lejos_cerrar": "Not now"
   },
   "reto": {
     "cargando": "Loading challenge…",

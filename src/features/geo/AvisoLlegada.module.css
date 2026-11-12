@@ -1,0 +1,26 @@
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: var(--borde);
+  border-radius: var(--radio);
+  background: var(--amarillo);
+  color: var(--tinta);
+  font-weight: 900;
+  box-shadow: var(--sombra-dura);
+  animation: entrar 0.3s ease-out;
+}
+
+@keyframes entrar {
+  from {
+    transform: translateY(-12px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso {
+    animation: none;
+  }
+}

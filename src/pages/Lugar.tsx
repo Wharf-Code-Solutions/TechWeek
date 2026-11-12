@@ -81,6 +81,16 @@ export default function Lugar() {
     )
   }
 
+  // Lejos del lugar (el servidor responde 403) se puede jugar igual en modo demo: la visita se registra como demo.
+  function jugarEnDemo() {
+    if (!slug) return
+    setRegistro('pendiente')
+    api
+      .registrarLlegada(slug, 'demo')
+      .then(() => setRegistro('ok'))
+      .catch(() => setRegistro('error'))
+  }
+
   const mensaje = explorador
     ? t('lugar.explorador')
     : registro === 'fuera'
@@ -131,6 +141,12 @@ export default function Lugar() {
             }}
           >
             {t('lugar.activar_ubicacion')}
+          </Boton>
+        )}
+
+        {registro === 'fuera' && !explorador && (
+          <Boton ancho variante="amarillo" onClick={jugarEnDemo}>
+            {t('lugar.jugar_demo')}
           </Boton>
         )}
 

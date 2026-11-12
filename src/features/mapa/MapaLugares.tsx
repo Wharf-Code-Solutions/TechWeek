@@ -8,6 +8,10 @@ import Map, { Layer, Marker, Source, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Check, Crosshair, TextAa, X } from '@phosphor-icons/react'
 import type { Evento, Lugar } from '../../types/contratos'
+import { useRecorridoDemo } from '../geo/demoStore'
+import { distanciaM } from '../geo/distancia'
+import { RECORRIDO_DEMO } from '../geo/rutaDemo'
+import type { Punto } from '../geo/tipos'
 import { usePosition } from '../geo/usePosition'
 import { useRutaCaminable } from '../geo/useRutaCaminable'
 import Ilustracion from '../../components/ui/Ilustracion'
@@ -28,8 +32,9 @@ const ZOOM_ETIQUETAS = 17.6
 // El Zócalo, corazón del Centro Histórico: aquí empieza el mapa.
 const ZOCALO = { lat: 19.20023, lng: -96.13853 }
 
-/** Siempre empieza en el Zócalo; en el recorrido demo la cámara luego sigue al turista. */
-function vistaInicial(lugares: Lugar[]) {
+/** Empieza en el Zócalo; en el recorrido demo, donde está el personaje y mirando hacia donde camina. */
+function vistaInicial(lugares: Lugar[], demo: { lat: number; lng: number; rumbo: number } | null) {
+  if (demo) return { latitude: demo.lat, longitude: demo.lng, zoom: ZOOM + 0.5, pitch: 55, bearing: demo.rumbo }
   const zocalo = lugares.find((l) => l.slug === 'zocalo') ?? ZOCALO
   return { latitude: zocalo.lat, longitude: zocalo.lng, zoom: ZOOM, pitch: 55 }
 }
@@ -54,6 +59,8 @@ interface Props {
   padAbajo?: number
   /** Lugar que hay que mostrar (la lista de la ruta lo pide): el mapa vuela hasta él y abre su tarjeta. `n` cambia en cada toque. */
   enfocar?: { slug: string; n: number } | null
+  /** Slug de la parada a la que el turista acaba de llegar: su pin hace un pulso mientras sale el aviso. */
+  llegando?: string | null
   arriba?: ReactNode
   abajo?: ReactNode
 }
@@ -83,16 +90,17 @@ interface PinProps {
   etiqueta: string | null
   etiquetaAria: string
   elegido: boolean
+  llegando: boolean
   onElegir: (l: Lugar) => void
 }
 
 /** Un pin del mapa. Está memoizado: mover la cámara o la posición no vuelve a dibujar los 24 pines. */
-const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, onElegir }: PinProps) {
+const Pin = memo(function Pin({ lugar, estado, etiqueta, etiquetaAria, elegido, llegando, onElegir }: PinProps) {
   return (
     <Marker latitude={lugar.lat} longitude={lugar.lng} anchor="bottom" style={{ zIndex: estado === 'siguiente' ? 2 : 1 }}>
       <button
         type="button"
-        className={`marcador marcador--${estado}`}
+        className={`marcador marcador--${estado}${llegando ? ' marcador--llegando' : ''}`}
         aria-label={etiquetaAria}
         aria-pressed={elegido}
         onClick={() => onElegir(lugar)}
@@ -121,6 +129,7 @@ export default function MapaLugares({
   onEvento,
   padAbajo = 0,
   enfocar = null,
+  llegando = null,
   arriba,
   abajo,
 }: Props) {
@@ -155,11 +164,34 @@ export default function MapaLugares({
     }
   }
 
-  // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
+  // En el recorrido virtual la cámara sigue al turista y gira hacia donde camina; con GPS se deja mover libre.
   const demo = pos?.fuente === 'demo'
+  const rec = useRecorridoDemo()
+  const previa = useRef<Punto | null>(null)
   useEffect(() => {
-    if (demo && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 400 })
-  }, [demo, pos])
+    if (!demo || !pos) return
+    const m = mapa.current
+    // Un salto grande (ir a la siguiente parada) se recorre volando; un paso corto, con un movimiento suave.
+    const salto = previa.current ? distanciaM(previa.current, pos) > 60 : false
+    previa.current = pos
+    const camara = { center: [pos.lng, pos.lat] as [number, number], bearing: rec.rumbo, pitch: 55 }
+    if (salto) m?.flyTo({ ...camara, duration: 1200 })
+    else m?.easeTo({ ...camara, duration: 500 })
+  }, [demo, pos, rec.rumbo])
+
+  // Guía: el tramo que falta hasta la siguiente parada se resalta sobre el resto de la ruta.
+  const siguienteParada = Math.min(rec.parada + 1, rec.paradas.length - 1)
+  const datosGuia = useMemo(
+    () => ({
+      type: 'Feature' as const,
+      properties: {},
+      geometry: {
+        type: 'LineString' as const,
+        coordinates: demo ? RECORRIDO_DEMO.camino(rec.metros, RECORRIDO_DEMO.metrosDeParada(siguienteParada)) : [],
+      },
+    }),
+    [demo, rec.metros, siguienteParada],
+  )
 
   // El mapa ocupa toda la pantalla (sin redimensionar el lienzo); al plegar o abrir el panel solo se mueve el centro.
   const ultimoEnfoque = useRef(0)
@@ -199,7 +231,10 @@ export default function MapaLugares({
       <Map
         ref={mapa}
         mapboxAccessToken={TOKEN}
-        initialViewState={{ ...vistaInicial(lugares), padding: { top: 0, left: 0, right: 0, bottom: padAbajo } }}
+        initialViewState={{
+          ...vistaInicial(lugares, demo && pos ? { lat: pos.lat, lng: pos.lng, rumbo: rec.rumbo } : null),
+          padding: { top: 0, left: 0, right: 0, bottom: padAbajo },
+        }}
         maxBounds={LIMITES}
         // Rendimiento: sin suavizado de bordes ni copias del mundo, y una caché de teselas acotada.
         antialias={false}
@@ -226,14 +261,32 @@ export default function MapaLugares({
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-emissive-strength': 1 }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 11, 'line-opacity': demo ? 0.5 : 1, 'line-emissive-strength': 1 }}
             />
             <Layer
               id="ruta-linea"
               type="line"
               slot="middle"
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-emissive-strength': 1 }}
+              paint={{ 'line-color': AZUL_RUTA, 'line-width': 6, 'line-opacity': demo ? 0.45 : 1, 'line-emissive-strength': 1 }}
+            />
+          </Source>
+        )}
+        {demo && datosGuia.geometry.coordinates.length > 1 && (
+          <Source id="guia" type="geojson" data={datosGuia}>
+            <Layer
+              id="guia-contorno"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': '#ffffff', 'line-width': 14, 'line-emissive-strength': 1 }}
+            />
+            <Layer
+              id="guia-linea"
+              type="line"
+              slot="middle"
+              layout={{ 'line-cap': 'round', 'line-join': 'round' }}
+              paint={{ 'line-color': AZUL_RUTA, 'line-width': 8, 'line-emissive-strength': 1 }}
             />
           </Source>
         )}
@@ -250,6 +303,7 @@ export default function MapaLugares({
               etiqueta={conNombre ? (e === 'siguiente' && etiquetaSiguiente ? etiquetaSiguiente : nombre) : null}
               etiquetaAria={e === 'ruta' || e === 'fuera' ? nombre : t(`mapa.estado_${e}`, { nombre })}
               elegido={tocado}
+              llegando={llegando === l.slug}
               onElegir={elegir}
             />
           )
@@ -270,7 +324,7 @@ export default function MapaLugares({
         ))}
         {pos && (
           <Marker latitude={pos.lat} longitude={pos.lng} style={{ zIndex: 3 }}>
-            <span className="mapa-yo" role="img" aria-label={t('mapa.tuPosicion')} />
+            <span className={`mapa-yo${demo ? ' mapa-yo--demo' : ''}`} role="img" aria-label={t('mapa.tuPosicion')} />
           </Marker>
         )}
       </Map>
