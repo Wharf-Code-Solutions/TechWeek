@@ -109,5 +109,10 @@
     "incorrecto_other": "Casi. Te quedan {{count}} intentos.",
     "sinIntentos": "Se acabaron los intentos, pero puedes seguir.",
     "revelar": "Seguir con {{n}} Tlacos"
+  },
+  "panel": {
+    "cartera": "Cartera",
+    "titulo": "Panel",
+    "descripcion": "Tu saldo de Tlacos y las promociones para canjear."
   }
 }

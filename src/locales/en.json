@@ -109,5 +109,10 @@
     "incorrecto_other": "Almost. {{count}} tries left.",
     "sinIntentos": "No tries left, but you can keep going.",
     "revelar": "Continue with {{n}} Tlacos"
+  },
+  "panel": {
+    "cartera": "Wallet",
+    "titulo": "Panel",
+    "descripcion": "Your Tlacos balance and promotions to redeem."
   }
 }

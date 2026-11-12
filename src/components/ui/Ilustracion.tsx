@@ -2,7 +2,7 @@
 // `nombre` es el campo `ilustracion` de cada lugar en seed.json.
 // shortcut: íconos Phosphor duotono en lugar de ilustraciones; cambiar cuando lleguen los SVG del diseño.
 import {
-  Bank, CastleTurret, Church, Coffee, Ghost, Lighthouse, MapPin, MusicNotes,
+  Bank, CastleTurret, Church, Coffee, Coins, Ghost, Lighthouse, MapPin, MusicNotes, PuzzlePiece,
   type Icon,
 } from '@phosphor-icons/react'
 import './ui.css'
@@ -15,6 +15,8 @@ const ICONOS: Record<string, Icon> = {
   'faro-carranza': Lighthouse,
   'palacio-municipal': Bank,
   'pareja-danzon': MusicNotes,
+  puzzle: PuzzlePiece,
+  moneda: Coins,
 }
 
 interface Props {

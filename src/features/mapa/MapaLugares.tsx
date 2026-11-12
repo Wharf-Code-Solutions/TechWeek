@@ -1,11 +1,10 @@
 // M4 Mapa Mapbox · Dev 2. Lugares del catálogo, posición de usePosition() y tarjeta del lugar elegido.
-import { useEffect, useState } from 'react'
+// `arriba` y `abajo` son capas sobre el mapa (flechas del recorrido, botón del panel).
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import Map, { Marker } from 'react-map-gl/mapbox'
+import Map, { Marker, type MapRef } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { X } from '@phosphor-icons/react'
-import { api } from '../../lib/api'
-import seed from '../../data/seed.json'
 import type { Lugar } from '../../types/contratos'
 import { usePosition } from '../geo/usePosition'
 import Ilustracion from '../../components/ui/Ilustracion'
@@ -17,28 +16,33 @@ const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined
 // Cámara limitada al Centro Histórico del puerto (regla de contratos §1)
 const LIMITES: [[number, number], [number, number]] = [[-96.145, 19.19], [-96.127, 19.207]]
 
-export default function MapaLugares() {
+interface Props {
+  lugares: Lugar[]
+  arriba?: ReactNode
+  abajo?: ReactNode
+}
+
+export default function MapaLugares({ lugares, arriba, abajo }: Props) {
   const { t, i18n } = useTranslation()
   const en = i18n.language === 'en'
   const pos = usePosition()
-  const [lugares, setLugares] = useState<Lugar[]>([])
   const [elegido, setElegido] = useState<Lugar | null>(null)
+  const mapa = useRef<MapRef>(null)
 
+  // En el recorrido virtual la cámara sigue al turista; con GPS se deja mover libre.
+  const demo = pos?.fuente === 'demo'
   useEffect(() => {
-    api
-      .lugares()
-      .then((l) => setLugares(l as Lugar[]))
-      // Sin backend o sin base: catálogo de respaldo
-      .catch(() => setLugares(seed.lugares as Lugar[]))
-  }, [])
+    if (demo && pos) mapa.current?.easeTo({ center: [pos.lng, pos.lat], duration: 400 })
+  }, [demo, pos])
 
   if (!TOKEN) return <p className="mapa-aviso">{t('mapa.sinToken')}</p>
 
   return (
     <div className="mapa">
       <Map
+        ref={mapa}
         mapboxAccessToken={TOKEN}
-        initialViewState={{ latitude: 19.1985, longitude: -96.1365, zoom: 16 }}
+        initialViewState={{ latitude: pos?.lat ?? 19.1985, longitude: pos?.lng ?? -96.1365, zoom: 16 }}
         maxBounds={LIMITES}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         style={{ width: '100%', height: '100%' }}
@@ -63,15 +67,20 @@ export default function MapaLugares() {
         )}
       </Map>
 
-      {elegido && (
-        <Tarjeta className="mapa-tarjeta">
-          <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>
-            <X size={20} weight="bold" />
-          </Boton>
-          <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
-          <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
-        </Tarjeta>
-      )}
+      {arriba && <div className="mapa-arriba">{arriba}</div>}
+
+      <div className="mapa-abajo">
+        {elegido && (
+          <Tarjeta className="mapa-tarjeta">
+            <Boton variante="blanco" className="mapa-cerrar" aria-label={t('mapa.cerrar')} onClick={() => setElegido(null)}>
+              <X size={20} weight="bold" />
+            </Boton>
+            <h2>{en ? elegido.nombre_en : elegido.nombre_es}</h2>
+            <p>{en ? elegido.curiosidad_en : elegido.curiosidad_es}</p>
+          </Tarjeta>
+        )}
+        {abajo}
+      </div>
     </div>
   )
 }
