@@ -3,6 +3,7 @@
 // Con ?demo=1 la posición viene del recorrido virtual (fuente 'demo'), sin tocar el GPS.
 import { useMemo, useSyncExternalStore } from 'react'
 import { esModoDemo, metrosDemo, suscribirDemo } from './demoStore'
+import { esExplorador } from './explorador'
 import { obtenerGps, suscribirGps } from './gpsStore'
 import { RECORRIDO_DEMO } from './rutaDemo'
 import type { EstadoUbicacion, Posicion } from './tipos'
@@ -12,9 +13,9 @@ export type { EstadoUbicacion, FuentePosicion, Posicion } from './tipos'
 const sinSuscripcion = () => () => {}
 
 function useGps() {
-  const demo = esModoDemo()
-  // En demo no se pide permiso de ubicación.
-  return useSyncExternalStore(demo ? sinSuscripcion : suscribirGps, obtenerGps)
+  // En demo o en modo explorador no se pide permiso de ubicación.
+  const sinGps = esModoDemo() || esExplorador()
+  return useSyncExternalStore(sinGps ? sinSuscripcion : suscribirGps, obtenerGps)
 }
 
 export function usePosition(): Posicion | null {
@@ -27,11 +28,13 @@ export function usePosition(): Posicion | null {
     return { lat, lng, precision: 5, fuente: 'demo' }
   }, [metros])
 
-  return demo ? posDemo : gps.posicion
+  if (demo) return posDemo
+  return esExplorador() ? null : gps.posicion
 }
 
 /** Para las pantallas de permiso y el modo explorador. */
 export function useEstadoUbicacion(): EstadoUbicacion {
   const gps = useGps()
-  return esModoDemo() ? 'demo' : gps.estado
+  if (esModoDemo()) return 'demo'
+  return esExplorador() ? 'denegado' : gps.estado
 }

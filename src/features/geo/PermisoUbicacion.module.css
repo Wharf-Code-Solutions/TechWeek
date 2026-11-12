@@ -1,0 +1,19 @@
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.titulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--rosa);
+}
+
+.aviso {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--tinta);
+}
